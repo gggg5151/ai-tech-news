@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gggg5151.github.io/ai-tech-news/sitemap.xml

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Desktopに2つ目のSlackワークスペースを接続 — AI・技術ニュースまとめ</title>
+<meta name="description" content="Claude Desktopのデフォルト機能では1つのSlackワークスペースしか接続できませんが、筆者はカスタムコネクタを使うことで2つ目のワークスペースも接続できる方法を発見し、手順を共有しています。まずSlack API（https://api.slack.com/apps）でアプリを作成し、Agentsメニュー…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:title" content="Claude Desktopに2つ目のSlackワークスペースを接続 — AI・技術ニュースまとめ">
+<meta property="og:description" content="Claude Desktopのデフォルト機能では1つのSlackワークスペースしか接続できませんが、筆者はカスタムコネクタを使うことで2つ目のワークスペースも接続できる方法を発見し、手順を共有しています。まずSlack API（https://api.slack.com/apps）でアプリを作成し、Agentsメニュー…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-03/265ba0719d191aa4/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-03/265ba0719d191aa4/">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Desktopに2つ目のSlackワークスペースを接続", "datePublished": "2026-09-03", "description": "Claude Desktopのデフォルト機能では1つのSlackワークスペースしか接続できませんが、筆者はカスタムコネクタを使うことで2つ目のワークスペースも接続できる方法を発見し、手順を共有しています。まずSlack API（https://api.slack.com/apps）でアプリを作成し、Agentsメニューで「Slack MCP Server」を…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-03/265ba0719d191aa4/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://qiita.com/moritalous/items/fa8e5e0c4a784103b8c6?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items"}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude Desktopに2つ目のSlackワークスペースを接続</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-03">2026.09.03</time></div>
+</header>
+<div class="article-body">
+<p>Claude Desktopのデフォルト機能では1つのSlackワークスペースしか接続できませんが、筆者はカスタムコネクタを使うことで2つ目のワークスペースも接続できる方法を発見し、手順を共有しています。まずSlack API（https://api.slack.com/apps）でアプリを作成し、Agentsメニューで「Slack MCP Server」をチェック、OAuth &amp; Permissionsのリダイレクト URLに<code>https://claude.ai/api/mcp/auth_callback</code>を登録してClient IDとClient Secretを取得します。</p>
+<p>次にClaude Desktop側でカスタムコネクタを追加し、MCPサーバーURLに<code>https://mcp.slack.com/mcp?aaa</code>のようにクエリパラメータを付けて重複登録を回避、認証設定を「常に必要」にしたうえでOAuth認証を行うと、2つ目のワークスペースとの接続が完了するとしています。筆者は「<strong>やったらできたレベルですので、個人の責任で実施ください</strong>」と述べており、公式手順ではない点に注意が必要です。</p>
+<aside class="source-box"><a href="https://qiita.com/moritalous/items/fa8e5e0c4a784103b8c6?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<a class="back-to-issue" href="../../../issues/2026-09-03/">← 2026.09.03 の号を読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-09-06/385711a9de5667e0/">sqlcでGoのUnit of Workを実装する</a></h3>
+<p class="excerpt">著者が、Go言語でsqlcを使いUnit of Work(UoW、複数のDB書き込みを1つのアトミックな操作としてまとめるパターン)を実装した経験を紹介しています。Go 1.26、sqlc v1.31.1、PostgreSQL 17.6…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-06">2026.09.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-09-06/fe6156440a676af7/">gitignoreは全部無視から始める、という提案</a></h3>
+<p class="excerpt">Go言語系ブログpackagemain.techが、従来の「不要なファイルを個別に.gitignoreへ追加していく」方式ではなく、先頭に*を書いて全ファイルをデフォルトで無視し、!プレフィックスで必要なファイルだけを明示的に許可する逆…</p>
+<div class="article-meta"><span class="badge rumor">噂</span><span>packagemain.tech</span><time datetime="2026-09-06">2026.09.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-09-06/334eac76f40977c8/">Claude CodeのRules機能、8月から機能不全に</a></h3>
+<p class="excerpt">kawasin73氏が自身のブログで、Claude CodeのRules機能が2026年8月18日以降、事実上機能しなくなっている問題を報告しています。自身の利用体験の中でこの不具合に気づき、原因究明と対処法をまとめた記事です。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>kawasin73.hatenablog.com</span><time datetime="2026-09-06">2026.09.06</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+</footer>
+</body>
+</html>

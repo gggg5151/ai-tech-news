@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>chiミドルウェアのRoutePattern()、実は未確定だった — AI・技術ニュースまとめ</title>
+<meta name="description" content="シフト管理SaaSを開発するフリーランスエンジニアの著者は、お知らせ既読化のPOST処理をBillingGuard（課金ゲート）の除外対象にする修正で思わぬ問題に遭遇しました。chi（Go向けの軽量HTTPルーティングライブラリ）のミドルウェア実行時点では、chiはまだリーフ（最終）のルートパターンを確定していません。…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:title" content="chiミドルウェアのRoutePattern()、実は未確定だった — AI・技術ニュースまとめ">
+<meta property="og:description" content="シフト管理SaaSを開発するフリーランスエンジニアの著者は、お知らせ既読化のPOST処理をBillingGuard（課金ゲート）の除外対象にする修正で思わぬ問題に遭遇しました。chi（Go向けの軽量HTTPルーティングライブラリ）のミドルウェア実行時点では、chiはまだリーフ（最終）のルートパターンを確定していません。…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-03/58df79d46a57f7f7/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-03/58df79d46a57f7f7/">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "chiミドルウェアのRoutePattern()、実は未確定だった", "datePublished": "2026-09-03", "description": "シフト管理SaaSを開発するフリーランスエンジニアの著者は、お知らせ既読化のPOST処理をBillingGuard（課金ゲート）の除外対象にする修正で思わぬ問題に遭遇しました。chi（Go向けの軽量HTTPルーティングライブラリ）のミドルウェア実行時点では、chiはまだリーフ（最終）のルートパターンを確定していません。著者が期待した値は/api/v1/ann…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-03/58df79d46a57f7f7/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://zenn.dev/erenoa6622/articles/chi-routepattern-unresolved-in-middleware"}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>chiミドルウェアのRoutePattern()、実は未確定だった</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-03">2026.09.03</time></div>
+</header>
+<div class="article-body">
+<p>シフト管理SaaSを開発するフリーランスエンジニアの著者は、お知らせ既読化のPOST処理をBillingGuard（課金ゲート）の除外対象にする修正で思わぬ問題に遭遇しました。<strong>chi</strong>（Go向けの軽量HTTPルーティングライブラリ）のミドルウェア実行時点では、chiはまだリーフ（最終）のルートパターンを確定していません。著者が期待した値は<code>/api/v1/announcements/{id}/read</code>でしたが、実際にミドルウェア内の<code>RoutePattern()</code>が返したのはマウント側のワイルドカード<code>/api/v1/*</code>のみでした。この結果、除外されるべきリクエストが誤分類され、支払い保留テナントが403エラーを受けるという不具合につながりました。</p>
+<p>さらに厄介だったのは、ユニットテストも課金マトリクステストも両方グリーン（パス）のまま、本番相当の不具合が見逃されていたことです。原因は、ルーターを経由しないテストではchiのルートコンテキストが存在せず、フォールバック処理が常に成立してしまうため、実運用の条件を再現できていなかったことにありました。著者は「ルーター無しで呼ぶテストは、ルーターがある時だけ壊れるバグを原理的に検出できない」と振り返っています。</p>
+<p>対応として、著者は実行時の厳密化を諦め、テスト層での対策に切り替えました。<code>chi.Walk()</code>で全ルートを列挙し分類表と照合する「RouteCompletenessテスト」と、分類表と判定関数の整合性を確認する「ExemptSingleSourceOfTruthテスト」を導入し、<strong>乖離を実行時の静かな誤作動からCI段階での失敗に変換した</strong>としています。</p>
+<aside class="source-box"><a href="https://zenn.dev/erenoa6622/articles/chi-routepattern-unresolved-in-middleware" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<a class="back-to-issue" href="../../../issues/2026-09-03/">← 2026.09.03 の号を読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-09-06/385711a9de5667e0/">sqlcでGoのUnit of Workを実装する</a></h3>
+<p class="excerpt">著者が、Go言語でsqlcを使いUnit of Work(UoW、複数のDB書き込みを1つのアトミックな操作としてまとめるパターン)を実装した経験を紹介しています。Go 1.26、sqlc v1.31.1、PostgreSQL 17.6…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-06">2026.09.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-09-06/fe6156440a676af7/">gitignoreは全部無視から始める、という提案</a></h3>
+<p class="excerpt">Go言語系ブログpackagemain.techが、従来の「不要なファイルを個別に.gitignoreへ追加していく」方式ではなく、先頭に*を書いて全ファイルをデフォルトで無視し、!プレフィックスで必要なファイルだけを明示的に許可する逆…</p>
+<div class="article-meta"><span class="badge rumor">噂</span><span>packagemain.tech</span><time datetime="2026-09-06">2026.09.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-09-06/334eac76f40977c8/">Claude CodeのRules機能、8月から機能不全に</a></h3>
+<p class="excerpt">kawasin73氏が自身のブログで、Claude CodeのRules機能が2026年8月18日以降、事実上機能しなくなっている問題を報告しています。自身の利用体験の中でこの不具合に気づき、原因究明と対処法をまとめた記事です。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>kawasin73.hatenablog.com</span><time datetime="2026-09-06">2026.09.06</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+</footer>
+</body>
+</html>
