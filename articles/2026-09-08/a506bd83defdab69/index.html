@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>エージェントの記憶はモデルを乗り換えても生き残るか — AI・技術ニュースまとめ</title>
+<meta name="description" content="AIエージェントのメモリ(会話履歴や知識)が、LLMモデルをアップグレードした際にどれだけ引き継げるかを検証した論文です。新しいモデルは旧モデルが作ったメモ書きの解釈が異なったり、埋め込み(embedding)のバージョン混在が検索精度を損なったりする問題があると指摘しています。48件の合成履歴と、100億(10B)未…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:title" content="エージェントの記憶はモデルを乗り換えても生き残るか — AI・技術ニュースまとめ">
+<meta property="og:description" content="AIエージェントのメモリ(会話履歴や知識)が、LLMモデルをアップグレードした際にどれだけ引き継げるかを検証した論文です。新しいモデルは旧モデルが作ったメモ書きの解釈が異なったり、埋め込み(embedding)のバージョン混在が検索精度を損なったりする問題があると指摘しています。48件の合成履歴と、100億(10B)未…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/a506bd83defdab69/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/a506bd83defdab69/">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "エージェントの記憶はモデルを乗り換えても生き残るか", "datePublished": "2026-09-08", "description": "AIエージェントのメモリ(会話履歴や知識)が、LLMモデルをアップグレードした際にどれだけ引き継げるかを検証した論文です。新しいモデルは旧モデルが作ったメモ書きの解釈が異なったり、埋め込み(embedding)のバージョン混在が検索精度を損なったりする問題があると指摘しています。48件の合成履歴と、100億(10B)未満のパラメータを持つ2つのオープンウェイ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/a506bd83defdab69/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://arxiv.org/abs/2609.05339"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>エージェントの記憶はモデルを乗り換えても生き残るか</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-08">2026.09.08</time></div>
+</header>
+<div class="article-body">
+<p>AIエージェントのメモリ(会話履歴や知識)が、LLMモデルをアップグレードした際にどれだけ引き継げるかを検証した論文です。新しいモデルは旧モデルが作ったメモ書きの解釈が異なったり、埋め込み(embedding)のバージョン混在が検索精度を損なったりする問題があると指摘しています。48件の合成履歴と、100億(10B)未満のパラメータを持つ2つのオープンウェイトモデルを使い、4種類のメモリ保存方式を比較しました。この論文は2026年9月4日にarXivに投稿されています。</p>
+<p>履歴を逐語的に保持するLC-RAW、検索拡張生成のRAG、自然言語に圧縮するNOTES、固定スキーマの知識グラフKG-fixedのうち、<strong>KG-fixedが最もモデル交換に強く、精度変化はわずか+0.0004±0.0020</strong>にとどまりました。一方、NOTES方式は精度が-13.28ポイントから+9.91ポイントの範囲で変動し、モデル交換後の性能低下から回復した修復成功率も48例中0例と低い結果でした。RAG方式は埋め込みを完全に再生成すると11.90ポイントの改善が得られる一方、新旧埋め込みを50/50で混合した場合は4.96ポイントの改善にとどまり、埋め込みの取り扱いが結果を大きく左右することが示されました。</p>
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.05339" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../d575aa41cc2ba2f8/">AIエージェントは動物を殺さないためにコストを払うか「HarvestBench」</a></h3>
+<p class="excerpt">「HarvestBench」という新しいベンチマークを提案する論文です。農場シミュレーション上で2台のトラクターが穀物を収穫する設定において、動物がトラクターの経路を塞いだ場合にLLMエージェントが「そのまま進む(燃料コスト無し)」か「…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../878d8978ec2b49b2/">LLM主導の進化的探索で円充填の世界記録を28ドルで10件更新</a></h3>
+<p class="excerpt">Wes Sander氏が開発した「Discovery Loop」という軽量システムに関する論文です。LLMがシンプルなソルバーから出発し、スコアボードと過去のアイデア履歴を参照しながら改善案を反復的に提案・進化させる仕組みで、単位正方形…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-07/30b4baa139f388e6/">LLMを「認知ウイルス」と捉える数理モデル</a></h3>
+<p class="excerpt">arXivに投稿された論文「Large-Language Models as a Cognitive Virus」は、LLMの普及をウイルスの比喩でモデル化しています。著者はRicard Solé氏ら9名で、社会内でのLLM利用の広がり…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>arxiv.org</span><time datetime="2026-09-07">2026.09.07</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+</footer>
+</body>
+</html>

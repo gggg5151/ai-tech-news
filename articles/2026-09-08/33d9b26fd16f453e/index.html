@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>不具合修正PRを2分割する「Red-Green Stacked PR」 — AI・技術ニュースまとめ</title>
+<meta name="description" content="Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:title" content="不具合修正PRを2分割する「Red-Green Stacked PR」 — AI・技術ニュースまとめ">
+<meta property="og:description" content="Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "不具合修正PRを2分割する「Red-Green Stacked PR」", "datePublished": "2026-09-08", "description": "Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手を付けません。このテストは現在のコードで…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://zenn.dev/bmth/articles/red-green-stacked-pr"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>不具合修正PRを2分割する「Red-Green Stacked PR」</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</header>
+<div class="article-body">
+<p>Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手を付けません。このテストは現在のコードで落ちるため、CI(継続的インテグレーション)はGreenと判定されます。</p>
+<p>2つ目のPRは1つ目のブランチをベースにスタックし、test.failsを外して実装を修正し、テストを通します。従来はレビュアーが手元でブランチをcheckoutし、修正コードをコメントアウトしてテストが落ちることを確認する手作業が必要でしたが、この手法では<strong>Red(失敗)からGreen(成功)への遷移がCIの履歴として自動的に記録されます</strong>。</p>
+<p>筆者自身、CIが保証するのは「テストが現在のコードで落ちる」ことまでで、「落ちる理由が対象の不具合そのものであること」までは保証しないという限界も明記しています。</p>
+<aside class="source-box"><a href="https://zenn.dev/bmth/articles/red-green-stacked-pr" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ebd6b30869354cf4/">ADRは経緯より「決まったこと」を最新に保て</a></h3>
+<p class="excerpt">ADR(Architecture Decision Record、設計上の決定を記録する文書)の書き方について、実務経験を踏まえた提言記事です。筆者はADRの経緯記述は実際にはあまり読み返されないと指摘し、Railsプロジェクトでの経験…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../43fce341d519d986/">Go 1.25の go.mod「ignore」ディレクティブを検証</a></h3>
+<p class="excerpt">Go 1.25でgo.modに追加された新しいignoreディレクティブについて、Finatextグループのテックブログを筆者Reo Uehara氏が検証しています。ignoreはgo build ./...やgo list allなど…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../59bd95012457e5ba/">JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際</a></h3>
+<p class="excerpt">JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+</footer>
+</body>
+</html>

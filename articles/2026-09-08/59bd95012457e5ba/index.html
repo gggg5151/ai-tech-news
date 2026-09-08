@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際 — AI・技術ニュースまとめ</title>
+<meta name="description" content="JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明して…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:title" content="JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際 — AI・技術ニュースまとめ">
+<meta property="og:description" content="JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明して…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際", "datePublished": "2026-09-08", "description": "JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明しています。Base64URLは暗号化処理で…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://zenn.dev/kitakita3110/articles/fb671cf331d84c"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</header>
+<div class="article-body">
+<p>JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行う<strong>JWS</strong>(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行う<strong>JWE</strong>(ドット4個で区切られる構造)の違いを説明しています。Base64URLは暗号化処理ではなく、URLで使える文字列形式への変換処理にすぎない点も指摘されています。</p>
+<p>RS256(RSASSA-PKCS1-v1_5 using SHA-256)方式では署名は秘密鍵でのみ可能で、検証は公開鍵があれば誰でも実行できます。JWT Claims Setには仕様で定義された7つの登録済みクレーム(iss、sub、aud、exp、nbf、iat、jti)があり、Auth0のデフォルトのアクセストークン有効期限は86400秒(24時間)です。セッションCookie(名前は<code>__session</code>)はJWE形式で暗号化されているとのことです。</p>
+<p>実装上の注意点として、IDトークンとアクセストークンを見分ける確実な方法は<code>aud</code>クレームの確認であること、JWTの検証に使う鍵の取得先は設定値から決定すべきで、トークン内の<code>iss</code>から動的に決定してはいけないことが挙げられています。「署名が言えるのは『誰が作ったか』と『途中で変わっていないこと』まで。『自分宛か』は、受け取る側が<code>aud</code>を照合して初めて分かる」という指摘は、認証実装の基本を押さえるうえで参考になります。</p>
+<aside class="source-box"><a href="https://zenn.dev/kitakita3110/articles/fb671cf331d84c" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ebd6b30869354cf4/">ADRは経緯より「決まったこと」を最新に保て</a></h3>
+<p class="excerpt">ADR(Architecture Decision Record、設計上の決定を記録する文書)の書き方について、実務経験を踏まえた提言記事です。筆者はADRの経緯記述は実際にはあまり読み返されないと指摘し、Railsプロジェクトでの経験…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../33d9b26fd16f453e/">不具合修正PRを2分割する「Red-Green Stacked PR」</a></h3>
+<p class="excerpt">Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../43fce341d519d986/">Go 1.25の go.mod「ignore」ディレクティブを検証</a></h3>
+<p class="excerpt">Go 1.25でgo.modに追加された新しいignoreディレクティブについて、Finatextグループのテックブログを筆者Reo Uehara氏が検証しています。ignoreはgo build ./...やgo list allなど…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-08">2026.09.08</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+</footer>
+</body>
+</html>
