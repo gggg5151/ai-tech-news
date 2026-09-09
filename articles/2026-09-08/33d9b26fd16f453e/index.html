@@ -3,28 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>不具合修正PRを2分割する「Red-Green Stacked PR」 — AI・技術ニュースまとめ</title>
+<title>不具合修正PRを2分割する「Red-Green Stacked PR」 — エンジニア朝刊</title>
 <meta name="description" content="Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
-<meta property="og:title" content="不具合修正PRを2分割する「Red-Green Stacked PR」 — AI・技術ニュースまとめ">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="不具合修正PRを2分割する「Red-Green Stacked PR」 — エンジニア朝刊">
 <meta property="og:description" content="Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手…">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../../feed.xml">
 <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
 <link rel="stylesheet" href="../../../assets/style.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "不具合修正PRを2分割する「Red-Green Stacked PR」", "datePublished": "2026-09-08", "description": "Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手を付けません。このテストは現在のコードで…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://zenn.dev/bmth/articles/red-green-stacked-pr"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "不具合修正PRを2分割する「Red-Green Stacked PR」", "datePublished": "2026-09-08", "description": "Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手を付けません。このテストは現在のコードで…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/", "publisher": {"@type": "Organization", "name": "エンジニア朝刊"}, "isBasedOn": "https://zenn.dev/bmth/articles/red-green-stacked-pr", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
 <header class="masthead wrap">
-<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<div class="brand-block"><a class="brand" href="../../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
 <a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
 </header>
-<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-08/">2026.09.08 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
 <article class="article-layout cat-tech">
 <header class="article-header">
 <a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
@@ -35,8 +36,12 @@
 <p>Webエンジニアの筆者「じょうげん」氏が、不具合修正のPR(プルリクエスト)を2つに分割する「Red-Green Stacked PR」という手法を提案しています。この名称は本記事のために自身で考案したとのことです。1つ目のPRでは不具合を再現するテストのみを追加し(test.fails修飾子を付与)、実装コードには手を付けません。このテストは現在のコードで落ちるため、CI(継続的インテグレーション)はGreenと判定されます。</p>
 <p>2つ目のPRは1つ目のブランチをベースにスタックし、test.failsを外して実装を修正し、テストを通します。従来はレビュアーが手元でブランチをcheckoutし、修正コードをコメントアウトしてテストが落ちることを確認する手作業が必要でしたが、この手法では<strong>Red(失敗)からGreen(成功)への遷移がCIの履歴として自動的に記録されます</strong>。</p>
 <p>筆者自身、CIが保証するのは「テストが現在のコードで落ちる」ことまでで、「落ちる理由が対象の不具合そのものであること」までは保証しないという限界も明記しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者は「Red-Green Stacked PR」という名称を本論執筆の便宜上、自身で考案したと述べている</li><li>提案手法は不具合修正PRを2つのスタックされたPRに分割するというもの</li><li>1つ目のPRでは、test.fails修飾子を付与して不具合を再現するテストのみを追加し、実装コードには手を付けない</li><li>1つ目のPRのテストは現在のコードで落ちるため、CIはGreenと判定される</li><li>2つ目のPRは1つ目のPRのブランチをbaseに指定する</li><li>2つ目のPRでは、test.failsを外して通常のtestに変更し、実装を修正してテストを通す</li><li>従来の不具合修正PRのレビューでは、ブランチをcheckoutして修正コードをコメントアウトし、テストを実行し、修正を戻すという手作業が必要だった</li><li>Red-Green Stacked PR手法では、Red(失敗)からGreen(成功)への遷移がCI履歴として記録される</li><li>著者は、CIが保証するのは「このテストは現在のコードで落ちる」ところまでで、「落ちる理由が対象の不具合であること」までは保証しないと述べている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>現在の実装に対して、このテストが期待通り落ちたということです。レビュアーが手元でやっていた3番目の手順が、そのままCIの記録になります。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/bmth/articles/red-green-stacked-pr" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
 <aside class="source-box"><a href="https://zenn.dev/bmth/articles/red-green-stacked-pr" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
-<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を読む</a>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E4%B8%8D%E5%85%B7%E5%90%88%E4%BF%AE%E6%AD%A3PR%E3%82%922%E5%88%86%E5%89%B2%E3%81%99%E3%82%8B%E3%80%8CRed-Green%20Stacked%20PR%E3%80%8D%20%7C%20%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%9C%9D%E5%88%8A&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-08%2F33d9b26fd16f453e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E4%B8%8D%E5%85%B7%E5%90%88%E4%BF%AE%E6%AD%A3PR%E3%82%922%E5%88%86%E5%89%B2%E3%81%99%E3%82%8B%E3%80%8CRed-Green%20Stacked%20PR%E3%80%8D%20%7C%20%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%9C%9D%E5%88%8A%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-08/33d9b26fd16f453e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-08%2F33d9b26fd16f453e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../ebd6b30869354cf4/"><span>前の記事</span>ADRは経緯より「決まったこと」を最新に保て</a><a class="next" href="../43fce341d519d986/"><span>次の記事</span>Go 1.25の go.mod「ignore」ディレクティブを検証</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を通しで読む</a>
 </div>
 </article>
 <section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
@@ -60,7 +65,7 @@
 </main>
 <footer class="footer wrap">
 <p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
-<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
 </footer>
 </body>
 </html>

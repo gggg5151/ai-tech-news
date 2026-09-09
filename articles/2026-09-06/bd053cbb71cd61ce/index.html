@@ -3,28 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>脆弱性パッチ評価、PoC合格だけでは不十分 — AI・技術ニュースまとめ</title>
+<title>脆弱性パッチ評価、PoC合格だけでは不十分 — エンジニア朝刊</title>
 <meta name="description" content="「PatchBench: Evaluating AI Agents for Vulnerability Patching」は、AIエージェントによる自動脆弱性パッチ生成の既存評価手法に問題があると指摘する論文です。既存評価はPoC(概念実証)入力がクラッシュを再現しなくなったかどうかのみで合否判定しており、エージェント…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
-<meta property="og:title" content="脆弱性パッチ評価、PoC合格だけでは不十分 — AI・技術ニュースまとめ">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="脆弱性パッチ評価、PoC合格だけでは不十分 — エンジニア朝刊">
 <meta property="og:description" content="「PatchBench: Evaluating AI Agents for Vulnerability Patching」は、AIエージェントによる自動脆弱性パッチ生成の既存評価手法に問題があると指摘する論文です。既存評価はPoC(概念実証)入力がクラッシュを再現しなくなったかどうかのみで合否判定しており、エージェント…">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../../feed.xml">
 <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
 <link rel="stylesheet" href="../../../assets/style.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "脆弱性パッチ評価、PoC合格だけでは不十分", "datePublished": "2026-09-06", "description": "「PatchBench: Evaluating AI Agents for Vulnerability Patching」は、AIエージェントによる自動脆弱性パッチ生成の既存評価手法に問題があると指摘する論文です。既存評価はPoC(概念実証)入力がクラッシュを再現しなくなったかどうかのみで合否判定しており、エージェントが過去の開発者パッチを記憶して再現してい…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://arxiv.org/abs/2609.04075"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "脆弱性パッチ評価、PoC合格だけでは不十分", "datePublished": "2026-09-06", "description": "「PatchBench: Evaluating AI Agents for Vulnerability Patching」は、AIエージェントによる自動脆弱性パッチ生成の既存評価手法に問題があると指摘する論文です。既存評価はPoC(概念実証)入力がクラッシュを再現しなくなったかどうかのみで合否判定しており、エージェントが過去の開発者パッチを記憶して再現してい…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/", "publisher": {"@type": "Organization", "name": "エンジニア朝刊"}, "isBasedOn": "https://arxiv.org/abs/2609.04075", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
 <header class="masthead wrap">
-<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<div class="brand-block"><a class="brand" href="../../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
 <a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
 </header>
-<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-06/">2026.09.06 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
 <article class="article-layout cat-papers">
 <header class="article-header">
 <a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
@@ -34,8 +35,12 @@
 <div class="article-body">
 <p>「PatchBench: Evaluating AI Agents for Vulnerability Patching」は、AIエージェントによる自動脆弱性パッチ生成の既存評価手法に問題があると指摘する論文です。既存評価は<strong>PoC(概念実証)</strong>入力がクラッシュを再現しなくなったかどうかのみで合否判定しており、エージェントが過去の開発者パッチを記憶して再現しているだけの可能性や、報告されたクラッシュだけを表面的に抑制する修正である可能性という2つの妥当性への脅威があるとしています。</p>
 <p>著者らは根本原因の修正を選別する仕組みや、脆弱性の移植・コード変異によって文脈を変えた評価、パッチのセキュリティ面と意味的正当性の評価を導入した新しいベンチマーク「PatchBench」を提案しています。実験では、従来のPoCのみによる検証方法がエージェントのパッチングタスク解決率を過大評価していたと報告されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「PatchBench: Evaluating AI Agents for Vulnerability Patching」である。</li><li>著者はChihao Shen、Jiacheng Li、Aastha Mahajan、Jeffery Siyuan Tian、Yonghwi Kwon、Yizheng Chenの6名である。</li><li>arXiv IDは2609.04075で、Cryptography and Securityカテゴリに分類されている。</li><li>既存の自動脆弱性パッチ生成の評価は、提供されたPoC(Proof-of-Concept)入力が依然としてクラッシュを引き起こすかどうかのみでパッチを検証していると論文は述べている。</li><li>この評価方法には2つの妥当性への脅威があると論文は指摘している:エージェントが過去の開発者による既知のパッチを記憶して再現している可能性があること。</li><li>もう一つの脅威として、エージェントが報告されたクラッシュのみを抑制する表面的な修正を生成している可能性があることを論文は指摘している。</li><li>著者らはこれらの課題に対応するためPatchBenchという新しい評価ベンチマークを提案している。</li><li>PatchBenchは、クラッシュスタック外の根本原因修正を選別する仕組みを持つ。</li><li>PatchBenchは脆弱性の移植(vulnerability porting)とコード変異(code mutation)によって評価の文脈を変える手法を用いる。</li><li>PatchBenchはパッチのセキュリティ面と意味的な正当性を評価する。</li><li>論文は、従来のPoCのみによる検証方法が、エージェントのパッチングタスク解決率を過大評価していたと報告している。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>AI agents have recently demonstrated strong performance in automated vulnerability patching. However, existing evaluations often validate a patch only by testing whether the provided Proof-of-Concept (PoC) input still triggers a crash.</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2609.04075" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
 <aside class="source-box"><a href="https://arxiv.org/abs/2609.04075" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
-<a class="back-to-issue" href="../../../issues/2026-09-06/">← 2026.09.06 の号を読む</a>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E8%84%86%E5%BC%B1%E6%80%A7%E3%83%91%E3%83%83%E3%83%81%E8%A9%95%E4%BE%A1%E3%80%81PoC%E5%90%88%E6%A0%BC%E3%81%A0%E3%81%91%E3%81%A7%E3%81%AF%E4%B8%8D%E5%8D%81%E5%88%86%20%7C%20%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%9C%9D%E5%88%8A&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-06%2Fbd053cbb71cd61ce%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E8%84%86%E5%BC%B1%E6%80%A7%E3%83%91%E3%83%83%E3%83%81%E8%A9%95%E4%BE%A1%E3%80%81PoC%E5%90%88%E6%A0%BC%E3%81%A0%E3%81%91%E3%81%A7%E3%81%AF%E4%B8%8D%E5%8D%81%E5%88%86%20%7C%20%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%9C%9D%E5%88%8A%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-06/bd053cbb71cd61ce/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-06%2Fbd053cbb71cd61ce%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2cd7ab9598a8c1c6/"><span>前の記事</span>乗っ取られたフックがエージェントを操る</a><a class="next" href="../9ef0fd05c445d552/"><span>次の記事</span>記憶は最新でも計画は古びる問題</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-06/">← 2026.09.06 の号を通しで読む</a>
 </div>
 </article>
 <section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
@@ -59,7 +64,7 @@
 </main>
 <footer class="footer wrap">
 <p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
-<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
 </footer>
 </body>
 </html>

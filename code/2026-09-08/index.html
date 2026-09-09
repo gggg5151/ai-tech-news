@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>colinhacks/zod の packages/zod/src/compile.ts を読む — エンジニア朝刊</title>
+<meta name="description" content="zodはTypeScript製の人気バリデーションライブラリです。今回選んだcompile.tsは「読み込むだけで効果を発揮する」副作用専用モジュールで、スキーマの実行部分を高速なコンパイル版にこっそり差し替える仕組みが55行に凝縮されています。ラッパー(shim)パターン、再入防止フラグ、設定によるフォールバックなど…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="colinhacks/zod の packages/zod/src/compile.ts を読む — エンジニア朝刊">
+<meta property="og:description" content="zodはTypeScript製の人気バリデーションライブラリです。今回選んだcompile.tsは「読み込むだけで効果を発揮する」副作用専用モジュールで、スキーマの実行部分を高速なコンパイル版にこっそり差し替える仕組みが55行に凝縮されています。ラッパー(shim)パターン、再入防止フラグ、設定によるフォールバックなど…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-08/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-08/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.08</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>colinhacks/zod の <code>packages/zod/src/compile.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/colinhacks/zod/blob/HEAD/packages/zod/src/compile.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-08">2026.09.08</time></div>
+</header>
+<div class="article-body">
+<p>zodはTypeScript製の人気バリデーションライブラリです。今回選んだcompile.tsは「読み込むだけで効果を発揮する」副作用専用モジュールで、スキーマの実行部分を高速なコンパイル版にこっそり差し替える仕組みが55行に凝縮されています。ラッパー(shim)パターン、再入防止フラグ、設定によるフォールバックなど、実務でそのまま使えるパターンが詰まっているので選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// Side-effect-only: installs the post-processor on `globalConfig`. Listed in `package.json`&#x27;s `sideEffects`, and nothing else references it, so apps that never import it drop the compiler.
+//
+// Usage:
+//
+//   import &quot;zod/compile&quot;;
+//   import * as z from &quot;zod&quot;;
+//   // every schema constructed below this is compiled on first parse
+//
+// Module evaluation order matters: schemas constructed in modules that evaluate before this import will not be compiled. Place this import in the app entry point, before any module that constructs schemas at top level.
+//
+// Failure handling: if the compiler refuses a schema (async refinement, unsupported feature, etc.) the shim permanently restores the runtime `_zod.run` for that schema. The schema continues to work via the regular runtime parser — no observable difference to the caller.
+
+import { compile } from &quot;./v4/core/compile.js&quot;;
+import * as core from &quot;./v4/core/index.js&quot;;
+
+let compiling = false;
+
+core.globalConfig.postProcessor = (inst: any) =&gt; {
+  if (compiling) return;
+  const originalRun = inst._zod?.run;
+  if (typeof originalRun !== &quot;function&quot;) return;
+
+  const shim = (payload: any, ctx: any): any =&gt; {
+    // Bypass the fast path for any non-forward / non-sync / check-skipping call. The runtime owns those contracts.
+    if (ctx?.async || ctx?.direction === &quot;backward&quot; || ctx?.skipChecks) {
+      return originalRun(payload, ctx);
+    }
+
+    compiling = true;
+    try {
+      // Respect the jitless config: it exists precisely so CSP/no-eval environments never reach `new Function`. Global mode must not bypass it (explicit z.compile calls remain an explicit opt-in).
+      if (core.globalConfig.jitless) {
+        inst._zod.run = originalRun;
+        return originalRun(payload, ctx);
+      }
+      // Strict: the shim owns its own fallback below, and a non-strict compile would hand back `inst` — whose run is this shim — and reinstall it on itself.
+      const compiled = compile(inst, { strict: true });
+      // Only the run wrapper. Copying the compiled parse/safeParse closures would make their fallback re-enter this instance and run user callbacks a third time.
+      inst._zod.run = compiled._zod.run;
+      inst._zod.bag.fallbackRun = compiled._zod.bag.fallbackRun;
+      inst._zod.bag.validator = compiled._zod.bag.validator;
+    } catch {
+      // Permanent fallback for unsupported schemas.
+      inst._zod.run = originalRun;
+    } finally {
+      compiling = false;
+    }
+
+    return inst._zod.run(payload, ctx);
+  };
+
+  // Expose the pre-shim runtime so `compile()` invoked elsewhere can unwrap past the shim and capture the source-of-truth runtime. Without this, a user calling `z.compile(s)` after global mode is enabled would capture the shim itself, which would feed the wrapper into itself on fallback.
+  (shim as any).__originalRun = originalRun;
+
+  inst._zod.run = shim;
+};</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>import { compile } from &quot;./v4/core/compile.js&quot;;
+import * as core from &quot;./v4/core/index.js&quot;;</code></pre><p>import文です。ソースファイルの拡張子は.tsですが、importのパスには.jsと書きます。これはNode.jsのESモジュール解決ルールに合わせたもので、TSはビルドされると.jsファイルになるため、実行時に読み込まれるファイル名を指しています。2行目の`* as core`は「core」という1つの名前の中に、そのモジュールがエクスポートしている全部をひとまとめにして詰め込むimportの書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>let compiling = false;</code></pre><p>モジュールの一番外側（どの関数の中でもない場所）で宣言された変数です。関数の外にあるので、このファイルが一度読み込まれると、この後出てくる複数の関数呼び出しがすべてこの同じ変数を共有します。後の処理で「今まさに処理中かどうか」を示す旗（フラグ）として使われます。</p></div><div class="walk-step"><pre class="walk-quote"><code>core.globalConfig.postProcessor = (inst: any) =&gt; {</code></pre><p>オブジェクトのプロパティに関数を代入しています。`core.globalConfig`というオブジェクトが持つ`postProcessor`というプロパティ（フック用の差し込み口）に、無名のアロー関数を割り当てています。こうしておくと、zod側のどこかで「postProcessorがあれば呼び出す」という処理があり、スキーマが作られるたびにこの関数が実行される仕組みになります。`inst: any`は引数instの型をanyにする指定で、「型チェックはせず何でも受け取る」という意味です。</p></div><div class="walk-step"><pre class="walk-quote"><code>const originalRun = inst._zod?.run;
+  if (typeof originalRun !== &quot;function&quot;) return;</code></pre><p>`?.`はオプショナルチェイニングという書き方です。`inst._zod`がnullやundefinedだった場合、その先の`.run`にアクセスしようとせずに全体がundefinedになります（エラーで止まりません）。次の行の`typeof`は値の型を文字列（&quot;function&quot;や&quot;undefined&quot;など）で返す演算子で、それが関数でなければ`return`でこの関数の処理をここで打ち切ります（early return、早期リターン）。</p></div><div class="walk-step"><pre class="walk-quote"><code>const shim = (payload: any, ctx: any): any =&gt; {</code></pre><p>「shim」（差し替え役、詰め物）という名前の変数に、新しいアロー関数を代入しています。この関数は元の`run`関数と同じ引数（payloadとctx）を受け取り、内部で元の関数を呼び出しつつ前後に追加の処理を挟みます。既存の処理を壊さずに包んで機能を足す、いわゆる「ラッパー」や「デコレーター」と呼ばれる作り方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (ctx?.async || ctx?.direction === &quot;backward&quot; || ctx?.skipChecks) {
+      return originalRun(payload, ctx);
+    }</code></pre><p>`||`はOR演算子で、左右どちらかがtrueなら全体がtrueになります。3つの条件のうち1つでも当てはまれば、最適化をせずに元の関数`originalRun`にそのまま処理を任せて`return`します。コメントにある通り、高速化の仕組みは「同期・順方向・チェック省略なし」の場合しか対応していないため、それ以外は安全に元の実装へ逃がしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>compiling = true;
+    try {</code></pre><p>最初に説明した共有フラグ`compiling`をtrueにしてから、`try`ブロックに入ります。tryブロックは「この中で例外（エラー）が起きるかもしれない処理」を囲むための構文です。フラグを先に立てることで、この処理の途中でもし再びこの`postProcessor`が同じインスタンスに対して呼ばれても、「今コンパイル中だ」と判断できるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (core.globalConfig.jitless) {
+        inst._zod.run = originalRun;
+        return originalRun(payload, ctx);
+      }</code></pre><p>設定オブジェクトのプロパティ`jitless`（evalが使えない環境向けの設定）を読んで分岐しています。trueなら、`inst._zod.run`というプロパティに元の関数を代入し直して元の状態に戻し、その場でも元の関数を呼び出します。オブジェクトが持つメソッド（ここでは`run`）を後から別の関数に差し替えることを「モンキーパッチ」と呼びます。</p></div><div class="walk-step"><pre class="walk-quote"><code>const compiled = compile(inst, { strict: true });</code></pre><p>別ファイルからimportした関数`compile`を呼び出しています。第1引数はインスタンス自身、第2引数は`{ strict: true }`という設定オブジェクトです。関数にオプションをたくさん渡したいとき、引数を並べるのではなく1つのオブジェクトにまとめて渡すのはTypeScript・JavaScriptでよく使われる書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>inst._zod.run = compiled._zod.run;
+      inst._zod.bag.fallbackRun = compiled._zod.bag.fallbackRun;
+      inst._zod.bag.validator = compiled._zod.bag.validator;</code></pre><p>コンパイルによって作られた`compiled`というオブジェクトから3つのプロパティを取り出し、元の`inst`の同名プロパティに上書き代入しています。これにより、呼び出し側は同じ`inst`というオブジェクトを使い続けられるのに、中身の実装だけが高速版に置き換わります。</p></div><div class="walk-step"><pre class="walk-quote"><code>} catch {
+      // Permanent fallback for unsupported schemas.
+      inst._zod.run = originalRun;
+    } finally {
+      compiling = false;
+    }</code></pre><p>`catch`の後に変数名を書いていません。これはエラーオブジェクトの中身を使わない場合に使える省略記法です。コンパイルが失敗したら、`inst._zod.run`を元の関数に戻して安全側に倒します。`finally`ブロックはtryが成功しても失敗しても必ず実行される部分で、ここで`compiling`フラグを確実にfalseに戻しています。フラグを立てたら、結果に関わらずfinallyで必ず下ろす、というのは覚えておくと便利な後片付けのパターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>(shim as any).__originalRun = originalRun;</code></pre><p>`as any`はTypeScriptの型アサーションで、「この値をany型として扱ってコンパイラのチェックを通してほしい」という指示です。JavaScriptでは関数も一種のオブジェクトなので、`shim`という関数の上に`__originalRun`という独自のプロパティを後から追加できます。ここでは、他の場所からこのshimを見たときに元の実装を取り出せるように、目印として付けています。</p></div><div class="walk-step"><pre class="walk-quote"><code>inst._zod.run = shim;</code></pre><p>最後に`inst`の`run`プロパティを、これまで作ってきた`shim`関数に置き換えています。これで`postProcessor`フックの処理が完了し、以降このインスタンスの`run`が呼ばれるたびに、まずshimが動いて必要なら高速化されたコードにこっそり切り替わる、という仕組みが出来上がります。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>既存の関数を壊さずに機能を足したいときは、元の関数を変数に保存してから同じシグネチャの新しい関数（shim）で包み、状態フラグはtry/finallyで必ず元に戻す——このラッパーパターンは明日から使える定番の書き方です。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-07/"><span>前の日</span>marsbos/mador</a><a class="next" href="../2026-09-09/"><span>次の日</span>ollama/ollama</a></nav>
+<a class="back-to-issue" href="../../issues/2026-09-08/">← 2026.09.08 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pmndrs/react-three-fiber の packages/fiber/src/core/loop.ts を読む — エンジニア朝刊</title>
+<meta name="description" content="react-three-fiberはThree.js（3DグラフィックスのJSライブラリ）をReactの宣言的な書き方で使えるようにするレンダラーです。今日読むloop.tsは、画面を毎フレーム描き直す「アニメーションループ」の心臓部。無駄な再描画をしないよう、必要なときだけループを回す設計が詰まっているので、ファイル…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="pmndrs/react-three-fiber の packages/fiber/src/core/loop.ts を読む — エンジニア朝刊">
+<meta property="og:description" content="react-three-fiberはThree.js（3DグラフィックスのJSライブラリ）をReactの宣言的な書き方で使えるようにするレンダラーです。今日読むloop.tsは、画面を毎フレーム描き直す「アニメーションループ」の心臓部。無駄な再描画をしないよう、必要なときだけループを回す設計が詰まっているので、ファイル…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-06/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-06/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.06</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>pmndrs/react-three-fiber の <code>packages/fiber/src/core/loop.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/pmndrs/react-three-fiber/blob/HEAD/packages/fiber/src/core/loop.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-06">2026.09.06</time></div>
+</header>
+<div class="article-body">
+<p>react-three-fiberはThree.js（3DグラフィックスのJSライブラリ）をReactの宣言的な書き方で使えるようにするレンダラーです。今日読むloop.tsは、画面を毎フレーム描き直す「アニメーションループ」の心臓部。無駄な再描画をしないよう、必要なときだけループを回す設計が詰まっているので、ファイル一覧の中からここを選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>export function loop(timestamp: number): void {
+  frame = requestAnimationFrame(loop)
+  running = true
+  repeat = 0
+
+  // Run effects
+  flushGlobalEffects(&#x27;before&#x27;, timestamp)
+
+  // Render all roots
+  useFrameInProgress = true
+  for (const root of _roots.values()) {
+    state = root.store.getState()
+
+    // If the frameloop is invalidated, do not run another frame
+    if (
+      state.internal.active &amp;&amp;
+      (state.frameloop === &#x27;always&#x27; || state.internal.frames &gt; 0) &amp;&amp;
+      !state.gl.xr?.isPresenting
+    ) {
+      repeat += update(timestamp, state)
+    }
+  }
+  useFrameInProgress = false
+
+  // Run after-effects
+  flushGlobalEffects(&#x27;after&#x27;, timestamp)
+
+  // Stop the loop if nothing invalidates it
+  if (repeat === 0) {
+    // Tail call effects, they are called when rendering stops
+    flushGlobalEffects(&#x27;tail&#x27;, timestamp)
+
+    // Flag end of operation
+    running = false
+    return cancelAnimationFrame(frame)
+  }
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>export function loop(timestamp: number): void {</code></pre><p>関数宣言です。`timestamp: number` は引数timestampの型がnumberであるという注釈（TypeScriptの型アノテーション）。`: void` は「この関数は値を返さない」という戻り値の型宣言です。ブラウザのrequestAnimationFrame APIは、コールバック関数に『いつ呼ばれたか』を示すtimestampを渡してくれる約束になっているので、それを受け取る形になっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>frame = requestAnimationFrame(loop)</code></pre><p>requestAnimationFrameはブラウザが用意している関数で、『次に画面を描き直すタイミングで、渡した関数を1回だけ呼んでね』とブラウザに予約するものです。ここでは自分自身（loop）を渡しています。つまりloopが呼ばれるたびに『次のloop呼び出し』を予約し直す、自己再帰的なスケジューリングです。戻り値（予約ID）を変数frameに保存しておくと、後で予約をキャンセルできます。</p></div><div class="walk-step"><pre class="walk-quote"><code>running = true
+  repeat = 0</code></pre><p>runningとrepeatはこのファイルの一番外側（関数の外）で定義されている変数です。関数の中だけで完結せず、ファイル全体で共有される『状態』として使われています。runningは『ループが今動いているか』のフラグ、repeatは『このフレームで実際に何か描画処理をした回数』を数えるカウンターです。関数が呼ばれるたびに0にリセットされます。</p></div><div class="walk-step"><pre class="walk-quote"><code>flushGlobalEffects(&#x27;before&#x27;, timestamp)</code></pre><p>&#x27;before&#x27;という文字列そのものを引数として渡しています。flushGlobalEffects関数の中はswitch文になっていて、&#x27;before&#x27;なら描画前に登録されたコールバック集合（addEffectで登録されたもの）をまとめて実行します。ライブラリ利用者が『毎フレーム、描画の前に何かしたい』と登録した処理をここでまとめて呼び出しているわけです。</p></div><div class="walk-step"><pre class="walk-quote"><code>useFrameInProgress = true</code></pre><p>これもファイル外側で定義された共有フラグです。ここから『useFrameというReactフックのコールバックを実行する区間に入るよ』という目印を立てています。後述するinvalidate関数がこのフラグを見て『今useFrameの中から呼ばれたのか、それとも外から呼ばれたのか』を判断し、動作を変えるために使われます。</p></div><div class="walk-step"><pre class="walk-quote"><code>for (const root of _roots.values()) {</code></pre><p>`for...of`は配列やMap、Setなど『順番に取り出せるもの（イテラブル）』を1つずつ処理する構文です。_rootsはMap（キーと値のペアを持つデータ構造）で、`.values()`はそのMapに入っている『値』だけを順番に取り出すためのメソッドです。react-three-fiberは1ページに複数の`&lt;Canvas&gt;`（3D描画領域）を置けるので、_rootsにはCanvasごとの管理データが入っており、それを1つずつ処理しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>state = root.store.getState()</code></pre><p>各rootはstore（状態管理オブジェクト）を持っていて、`.getState()`を呼ぶと『今この瞬間の状態のスナップショット』が返ってきます。カメラの位置やレンダラーの設定など、そのCanvasに関するあらゆる情報がこのstate変数にまとまります。</p></div><div class="walk-step"><pre class="walk-quote"><code>state.internal.active &amp;&amp;
+      (state.frameloop === &#x27;always&#x27; || state.internal.frames &gt; 0) &amp;&amp;
+      !state.gl.xr?.isPresenting</code></pre><p>3つの条件を`&amp;&amp;`（AND、すべて真なら真）でつないでいます。1つ目はそのCanvasが有効か。2つ目は丸括弧でグループ化されていて`||`（OR、どちらか真なら真）で『常に描画するモードか』『まだ描画すべきフレームが残っているか』のどちらかを満たすか。3つ目の`state.gl.xr?.isPresenting`の`?.`はオプショナルチェイニングという構文で、`state.gl.xr`がnullやundefinedなら、そこでエラーにならず全体がundefinedになります（VRヘッドセット表示中でないことを確認しています）。先頭の`!`は否定（真偽を反転）です。</p></div><div class="walk-step"><pre class="walk-quote"><code>repeat += update(timestamp, state)</code></pre><p>`update`関数を呼び出し、その戻り値（このCanvasで実際に描画が必要だったフレーム数）をrepeatに足し込んでいます。`+=`は「右辺の値を左辺に足して代入し直す」という複合代入演算子です。複数のCanvasを合計して、最終的に『1つでも描画が必要なCanvasがあったか』を判定するための集計になっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>useFrameInProgress = false</code></pre><p>ループの区間を抜けたのでフラグを元に戻しています。フラグを立てて処理をし、必ず戻す、という『区間を示すフラグ』のパターンは他の言語やコードでもよく使われる書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (repeat === 0) {</code></pre><p>全Canvasを見終わってrepeatが0（＝どこも描画する必要がなかった）なら、ループを止める処理に入ります。`===`は型も含めて厳密に等しいかを比較する演算子です。</p></div><div class="walk-step"><pre class="walk-quote"><code>flushGlobalEffects(&#x27;tail&#x27;, timestamp)
+
+    // Flag end of operation
+    running = false</code></pre><p>まず終了時専用のコールバック（&#x27;tail&#x27;）を実行し、次にrunningフラグをfalseに戻します。これにより、後で誰かがinvalidateを呼んだときに『今ループが止まっているから、新しく起動し直す必要がある』と判断できるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>return cancelAnimationFrame(frame)</code></pre><p>`return`の後に値を返さない関数呼び出しを書いていますが、これは「ここで関数を終える」という意図で、cancelAnimationFrameの戻り値（undefined）自体には意味がありません。冒頭で予約しておいた『次のloop呼び出し』をキャンセルします。repeatが0でなければ何もせず関数が終わり、冒頭で予約済みの次のrequestAnimationFrameが自然に発火してloopがまた呼ばれます。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「毎フレーム律儀に描画し続ける」のではなく、requestAnimationFrameで自分自身を再予約しつつ『描画が必要な間だけ回り、不要ならcancelAnimationFrameで止める』という自己終了型のループは、無駄な処理を避けたい場面（アニメーション・ポーリングなど）で応用できる汎用パターンです。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-05/"><span>前の日</span>mlc-ai/web-llm</a><a class="next" href="../2026-09-07/"><span>次の日</span>marsbos/mador</a></nav>
+<a class="back-to-issue" href="../../issues/2026-09-06/">← 2026.09.06 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -3,28 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際 — AI・技術ニュースまとめ</title>
+<title>JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際 — エンジニア朝刊</title>
 <meta name="description" content="JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明して…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
-<meta property="og:title" content="JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際 — AI・技術ニュースまとめ">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際 — エンジニア朝刊">
 <meta property="og:description" content="JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明して…">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../../feed.xml">
 <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
 <link rel="stylesheet" href="../../../assets/style.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際", "datePublished": "2026-09-08", "description": "JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明しています。Base64URLは暗号化処理で…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/", "publisher": {"@type": "Organization", "name": "AI・技術ニュースまとめ"}, "isBasedOn": "https://zenn.dev/kitakita3110/articles/fb671cf331d84c"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "JWS/JWEの違いとNext.js＋Go APIでのJWT認証の実際", "datePublished": "2026-09-08", "description": "JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行うJWS(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行うJWE(ドット4個で区切られる構造)の違いを説明しています。Base64URLは暗号化処理で…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/", "publisher": {"@type": "Organization", "name": "エンジニア朝刊"}, "isBasedOn": "https://zenn.dev/kitakita3110/articles/fb671cf331d84c", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
 <header class="masthead wrap">
-<a class="brand" href="../../../">AI・技術ニュースまとめ</a>
+<div class="brand-block"><a class="brand" href="../../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
 <a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
 </header>
-<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">最新号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<div class="breadcrumb"><a href="../../../">最新号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-08/">2026.09.08 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
 <article class="article-layout cat-tech">
 <header class="article-header">
 <a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
@@ -35,8 +36,12 @@
 <p>JWT(JSON Web Token)の仕組みを解説する記事です。筆者は個人開発で採用しているNext.js＋Go API＋Auth0構成をもとに、署名のみ行う<strong>JWS</strong>(header.payload.signatureの3要素をドット2個で連結した構造)と、暗号化も行う<strong>JWE</strong>(ドット4個で区切られる構造)の違いを説明しています。Base64URLは暗号化処理ではなく、URLで使える文字列形式への変換処理にすぎない点も指摘されています。</p>
 <p>RS256(RSASSA-PKCS1-v1_5 using SHA-256)方式では署名は秘密鍵でのみ可能で、検証は公開鍵があれば誰でも実行できます。JWT Claims Setには仕様で定義された7つの登録済みクレーム(iss、sub、aud、exp、nbf、iat、jti)があり、Auth0のデフォルトのアクセストークン有効期限は86400秒(24時間)です。セッションCookie(名前は<code>__session</code>)はJWE形式で暗号化されているとのことです。</p>
 <p>実装上の注意点として、IDトークンとアクセストークンを見分ける確実な方法は<code>aud</code>クレームの確認であること、JWTの検証に使う鍵の取得先は設定値から決定すべきで、トークン内の<code>iss</code>から動的に決定してはいけないことが挙げられています。「署名が言えるのは『誰が作ったか』と『途中で変わっていないこと』まで。『自分宛か』は、受け取る側が<code>aud</code>を照合して初めて分かる」という指摘は、認証実装の基本を押さえるうえで参考になります。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>JWT Claims Setには仕様で定義された7つの登録済みクレーム(iss、sub、aud、exp、nbf、iat、jti)がある</li><li>JWS(署名型)はheader.payload.signatureの3要素をドット2個で連結した構造を持つ</li><li>JWE(暗号化型)はドット4個で区切られる構造を持つ</li><li>Base64URLは暗号化処理ではなく、URLで使える文字列形式への変換処理である</li><li>RS256(RSASSA-PKCS1-v1_5 using SHA-256)では署名は秘密鍵でのみ可能で、検証は公開鍵を使えば誰でも実行できる</li><li>Auth0のデフォルトのアクセストークン有効期限は86400秒(24時間)である</li><li>セッションCookie(名前は<code>__session</code>)はJWE形式で暗号化されている</li><li>IDトークンとアクセストークンを見分ける確実な方法は<code>aud</code>クレームを確認することである</li><li>JWTの検証に使う鍵の取得先は設定値から決定すべきで、トークン内の<code>iss</code>から動的に決定してはいけない</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>署名が言えるのは『誰が作ったか』と『途中で変わっていないこと』まで。『自分宛か』は、受け取る側が `aud` を照合して初めて分かる。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/kitakita3110/articles/fb671cf331d84c" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
 <aside class="source-box"><a href="https://zenn.dev/kitakita3110/articles/fb671cf331d84c" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
-<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を読む</a>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=JWS/JWE%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8Next.js%EF%BC%8BGo%20API%E3%81%A7%E3%81%AEJWT%E8%AA%8D%E8%A8%BC%E3%81%AE%E5%AE%9F%E9%9A%9B%20%7C%20%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%9C%9D%E5%88%8A&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-08%2F59bd95012457e5ba%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=JWS/JWE%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8Next.js%EF%BC%8BGo%20API%E3%81%A7%E3%81%AEJWT%E8%AA%8D%E8%A8%BC%E3%81%AE%E5%AE%9F%E9%9A%9B%20%7C%20%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%9C%9D%E5%88%8A%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-08/59bd95012457e5ba/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-08%2F59bd95012457e5ba%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../43fce341d519d986/"><span>前の記事</span>Go 1.25の go.mod「ignore」ディレクティブを検証</a><a class="next" href="../4462e1131278e2a1/"><span>次の記事</span>AI CLI間で記憶を共有するローカルファーストなSQLiteエンジン「engrim」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-08/">← 2026.09.08 の号を通しで読む</a>
 </div>
 </article>
 <section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
@@ -60,7 +65,7 @@
 </main>
 <footer class="footer wrap">
 <p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
-<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a></div>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
 </footer>
 </body>
 </html>

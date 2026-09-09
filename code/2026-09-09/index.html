@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ollama/ollama の format/bytes.go を読む — エンジニア朝刊</title>
+<meta name="description" content="ollamaはローカルでLLMを動かすためのツールです。モデルファイルは数GB〜数十GBあるため、ダウンロード進捗やディスク使用量を「1073741824 B」ではなく「1.0 GB」のように人間が読みやすい形で表示する必要があります。format/bytes.goはその変換だけを担う小さなファイルで、switch文と…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="ollama/ollama の format/bytes.go を読む — エンジニア朝刊">
+<meta property="og:description" content="ollamaはローカルでLLMを動かすためのツールです。モデルファイルは数GB〜数十GBあるため、ダウンロード進捗やディスク使用量を「1073741824 B」ではなく「1.0 GB」のように人間が読みやすい形で表示する必要があります。format/bytes.goはその変換だけを担う小さなファイルで、switch文と…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-09/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-09/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.09</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>ollama/ollama の <code>format/bytes.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/ollama/ollama/blob/HEAD/format/bytes.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-09">2026.09.09</time></div>
+</header>
+<div class="article-body">
+<p>ollamaはローカルでLLMを動かすためのツールです。モデルファイルは数GB〜数十GBあるため、ダウンロード進捗やディスク使用量を「1073741824 B」ではなく「1.0 GB」のように人間が読みやすい形で表示する必要があります。format/bytes.goはその変換だけを担う小さなファイルで、switch文と型変換という基本文法だけで書かれているため、実務コードの「型変換のクセ」や「早期returnの使い方」を学ぶのにちょうど良い教材です。同じファイルにはKiB単位版のHumanBytes2という関数もありますが、今回はKB/MB/GB版のHumanBytesに絞って解説します。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>package format
+
+import (
+	&quot;fmt&quot;
+	&quot;math&quot;
+)
+
+const (
+	Byte = 1
+
+	KiloByte = Byte * 1000
+	MegaByte = KiloByte * 1000
+	GigaByte = MegaByte * 1000
+	TeraByte = GigaByte * 1000
+
+	KibiByte = Byte * 1024
+	MebiByte = KibiByte * 1024
+	GibiByte = MebiByte * 1024
+)
+
+func HumanBytes(b int64) string {
+	var value float64
+	var unit string
+
+	switch {
+	case b &gt;= TeraByte:
+		value = float64(b) / TeraByte
+		unit = &quot;TB&quot;
+	case b &gt;= GigaByte:
+		value = float64(b) / GigaByte
+		unit = &quot;GB&quot;
+	case b &gt;= MegaByte:
+		value = float64(b) / MegaByte
+		unit = &quot;MB&quot;
+	case b &gt;= KiloByte:
+		value = float64(b) / KiloByte
+		unit = &quot;KB&quot;
+	default:
+		return fmt.Sprintf(&quot;%d B&quot;, b)
+	}
+
+	switch {
+	case value &gt;= 10:
+		return fmt.Sprintf(&quot;%d %s&quot;, int(value), unit)
+	case value != math.Trunc(value):
+		return fmt.Sprintf(&quot;%.1f %s&quot;, value, unit)
+	default:
+		return fmt.Sprintf(&quot;%d %s&quot;, int(value), unit)
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>const (
+	Byte = 1
+
+	KiloByte = Byte * 1000
+	MegaByte = KiloByte * 1000
+	GigaByte = MegaByte * 1000
+	TeraByte = GigaByte * 1000</code></pre><p>const ( ... ) は複数の定数をまとめて宣言する構文です。Byteを1と定義し、KiloByteはByteの1000倍、MegaByteはKiloByteの1000倍…と、前の定数を使って次の定数を作っています。これらは型を明示していない「型なし定数」なので、後でint64にもfloat64にも自然に変換して使えます。SI単位（1000区切り）なのでKB=1000バイト、MB=1000000バイトという定義です。</p></div><div class="walk-step"><pre class="walk-quote"><code>KibiByte = Byte * 1024
+	MebiByte = KibiByte * 1024
+	GibiByte = MebiByte * 1024
+)</code></pre><p>こちらは2進接頭辞（1024区切り）の定数です。KB(1000)とKiB(1024)は本来別物ですが、この関数群では前半のKiloByte系を使い、後半のKibiByte系は別関数（HumanBytes2）で使われます。同じファイル内で両方の単位系を定数として用意し、用途によって使い分けているのがポイントです。</p></div><div class="walk-step"><pre class="walk-quote"><code>func HumanBytes(b int64) string {
+	var value float64
+	var unit string</code></pre><p>関数シグネチャです。引数bはint64型（64ビットの符号付き整数）で受け取ったバイト数、戻り値はstring型の1つだけです。var value float64とvar unit stringは変数宣言で、値を代入していないので初期値（ゼロ値）が入ります。float64のゼロ値は0.0、stringのゼロ値は空文字列&quot;&quot;です。この後のswitch文の中でこの2つの変数に値を詰めていきます。</p></div><div class="walk-step"><pre class="walk-quote"><code>switch {
+	case b &gt;= TeraByte:
+		value = float64(b) / TeraByte
+		unit = &quot;TB&quot;</code></pre><p>switch の後に条件式を書かず { だけを置くと、「switch true」と同じ意味になり、各caseに書かれた真偽値を上から順に評価して、最初にtrueになったcaseの中身を実行します。if-elseif-elseの連続をswitchで書き直したものだと考えてください。case b &gt;= TeraByte: は「bがTeraByte（1兆）以上なら」という条件で、一番大きい単位から先に判定しているのは、例えば5兆バイトのとき先にKiloByte以上に該当してしまわないようにするためです。</p></div><div class="walk-step"><pre class="walk-quote"><code>value = float64(b) / TeraByte</code></pre><p>float64(b) はint64型の変数bをfloat64型に変換する型変換（キャスト）の書き方です。Goでは型が違う値同士の演算はできないため、bをint64のまま/TeraByte（型なし定数）で割ると整数除算になり小数点以下が切り捨てられてしまいます。それを避けるため先にfloat64に変換してから割り算し、value（float64型の変数）に代入しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>default:
+		return fmt.Sprintf(&quot;%d B&quot;, b)
+	}</code></pre><p>switch文の default節はどのcaseにも当てはまらなかったときに実行されます。ここではbがKiloByte未満、つまり1000バイト未満だったときの処理で、fmt.Sprintf(&quot;%d B&quot;, b)で「123 B」のような文字列を作ってすぐにreturnしています。ここでreturnすると関数はここで終了するので、この後の2つ目のswitchは実行されません。これが「早期return」というパターンで、単純なケースを先に片付けて、複雑な処理（後続コード）をネストさせずに済ませる書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>switch {
+	case value &gt;= 10:
+		return fmt.Sprintf(&quot;%d %s&quot;, int(value), unit)</code></pre><p>1つ目のswitchでvalueとunitに値が入った後（例えばvalue=2.5, unit=&quot;GB&quot;）、2つ目のswitchで表示形式を決めています。value &gt;= 10（値が2桁以上）のときは小数点を表示せず整数に丸めて表示します。int(value)はfloat64をint型に変換しており、Goのこの変換は小数点以下を切り捨てる（2.9でも2になる）ことを覚えておいてください。%dは整数、%sは文字列を埋め込むfmt.Sprintfの書式指定子です。</p></div><div class="walk-step"><pre class="walk-quote"><code>case value != math.Trunc(value):
+		return fmt.Sprintf(&quot;%.1f %s&quot;, value, unit)</code></pre><p>math.Trunc(value)はvalueの小数部分を切り捨てて整数部分だけを返す関数です（例: math.Trunc(2.5)は2.0）。value != math.Trunc(value)は「valueと、その整数部分が一致しない」つまり「小数部分がある」ことを判定するイディオムです。小数部分があれば%.1fという書式指定子で小数点以下1桁まで表示します（例: 2.5 GB）。</p></div><div class="walk-step"><pre class="walk-quote"><code>default:
+		return fmt.Sprintf(&quot;%d %s&quot;, int(value), unit)
+	}
+}</code></pre><p>10未満かつ小数部分もない（つまりvalueがちょうど3.0のようなきりのいい数）場合はここに落ちてきて、整数表示（3 GB）で返します。2つの条件どちらにも当てはまらなかった残りのケースをdefaultで拾うことで、switch全体が必ずどれか1つのcaseかdefaultを通り、関数が必ずstringを返すことが保証されています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>整数同士の割り算では小数点以下が切り捨てられるため、小数を扱いたい場合は先にfloat64(x)のように型変換してから演算する、という基本パターンを覚えて帰ってください。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-08/"><span>前の日</span>colinhacks/zod</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-09/">← 2026.09.09 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

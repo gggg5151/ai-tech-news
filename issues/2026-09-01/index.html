@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2026.09.01 の記事 — AI・技術ニュースまとめ</title>
-<meta name="description" content="AIニュース・注目リポジトリ・技術記事・論文を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。">
+<title>2026.09.01 の号 — エンジニア朝刊</title>
+<meta name="description" content="2026.09.01の号: JetBrains、無料のローカル動作コーディングエージェント「Junie Local」公開(現状Macのみ対応) / DHH氏のOmarchy Quattro、OSレベルでAIエージェントを統合 / GitHub Copilotデスクトップアプリ、並列エージェント運用をプレビュー公開 / Next.js matcherの落とし穴、1時間後にログアウトされた体験談 /…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
-<meta property="og:title" content="2026.09.01 の記事 — AI・技術ニュースまとめ">
-<meta property="og:description" content="AIニュース・注目リポジトリ・技術記事・論文を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="2026.09.01 の号 — エンジニア朝刊">
+<meta property="og:description" content="2026.09.01の号: JetBrains、無料のローカル動作コーディングエージェント「Junie Local」公開(現状Macのみ対応) / DHH氏のOmarchy Quattro、OSレベルでAIエージェントを統合 / GitHub Copilotデスクトップアプリ、並列エージェント運用をプレビュー公開 / Next.js matcherの落とし穴、1時間後にログアウトされた体験談 /…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-09-01/"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-09-01/">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-09-01/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-09-01/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
 <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
 <link rel="stylesheet" href="../../assets/style.css">
 <script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -19,105 +20,122 @@
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
 <header class="masthead wrap">
-<a class="brand" href="../../">AI・技術ニュースまとめ</a>
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
 <a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
 </header>
-<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">最新号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="archive-nav active" href="../../archive/">過去の号</a></nav></div>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav active" href="../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading"><h1>2026.09.01 の記事</h1><p>15記事</p></header><div class="news-grid"><article class="news-card cat-ai_news">
-<a class="category-name" href="../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<div class="edition-bar"><span class="edition-status past">過去の号</span><time datetime="2026-09-01">2026年9月1日（火）</time><span class="edition-count">15記事・読了まで約13分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>JetBrains、無料のローカル動作コーディングエージェント「Junie Local」公開(現状Macのみ対応)</li><li>DHH氏のOmarchy Quattro、OSレベルでAIエージェントを統合</li><li>GitHub Copilotデスクトップアプリ、並列エージェント運用をプレビュー公開</li><li>Next.js matcherの落とし穴、1時間後にログアウトされた体験談</li><li>ast-grep×HookでAI生成コードに規約を守らせる実践</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-9cea4cd4e71ed2b3">JetBrains、完全ローカル動作の無料コーディングエージェント「Junie Local」公開</a></li><li><a href="#a-8bff457a1cf8efc5">DHH氏、AIエージェント統合のLinux OS「Omarchy Quattro」発表</a></li><li><a href="#a-68fd8a12f3aa9f6d">GitHub Copilot、並列エージェント運用向けデスクトップアプリを技術プレビュー公開</a></li><li><a href="#a-bdd109dfbcb3dae8">OpenClaw、7週間ぶりにPR1万6千件超の大型更新</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-9caec7a372313540">matcherは保護ではなく実行範囲、1時間後のログアウトから学ぶ教訓</a></li><li><a href="#a-906fc31f3f86d9b5">Next.jsで学ぶReact Server Componentsの仕組み</a></li><li><a href="#a-a654ed9d592cffd9">AIエージェントに規約を守らせる、ast-grep×Hookの仕組み</a></li><li><a href="#a-2af211db4d0a699f">会話セッションを邪魔せずに外部イベントで動かす、Claude Code/Codex/Cursor活用術</a></li><li><a href="#a-0d068f6456c75e09">Goで型安全にLLM構造化出力を扱う「instructor-go」</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-69d8503f68864ef1">SSL証明書のライフサイクルをGUIで自動化する「certimate」</a></li><li><a href="#a-35cb8b2353bd3cf2">Anthropic公式、Claude Codeプラグインのキュレーション済みディレクトリを公開</a></li><li><a href="#a-4d0d3acded79473a">GitHub公式、MarkdownでAI駆動の自動化を書ける「gh-aw」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-1340c605413aaca1">長期タスクをこなすツール利用エージェントの信頼性を高める「CAST」</a></li><li><a href="#a-80ba222d7b85be87">VLMエージェントの嘘、勝敗を分けるのは非言語の手がかり</a></li><li><a href="#a-451ddfbdfbf10202">Qwen3.8-Next、学習コストを大幅圧縮しつつ前任モデルに匹敵</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-9cea4cd4e71ed2b3">
 <h3><a href="../../articles/2026-09-01/9cea4cd4e71ed2b3/">JetBrains、完全ローカル動作の無料コーディングエージェント「Junie Local」公開</a></h3>
-<p class="excerpt">JetBrainsは8月31日、Mac上で完全にローカル動作するコーディングエージェント「Junie Local」の提供を開始しました。ダウンロードと利用はいずれも無料で、既存のJunieからはコマンド「/local」を入力するだけで切…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-ai_news">
-<a class="category-name" href="../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span></div>
+<div class="paper-body"><p>JetBrainsは8月31日、Mac上で完全にローカル動作するコーディングエージェント「Junie Local」の提供を開始しました。ダウンロードと利用はいずれも無料で、既存のJunieからはコマンド「/local」を入力するだけで切り替えられます。「Junieは今や完全に自分のマシン上で動作し、しかも無料で使える」と説明されています。</p>
+<p>中身に採用されているのは、アリババクラウドが公開したモデル「Qwen3.6-27B」を4ビット量子化して最適化したものです。性能は、推論制限を1万トークンに設定した<strong>Claude Sonnet 4.5</strong>と同等とされています。処理量を「ミディアム・エフォート」設定にした場合はGPT-5がJunie Localよりわずかに優位という比較結果も示されています。</p>
+<p>現時点で対応するハードウェアはM5プロセッサと64GBメモリを搭載したMacに限られていますが、JetBrainsはRTX5090搭載PC、DGX Spark、24GBメモリ搭載GPUへの対応も開発中としています。今後の展開次第では、自前のマシンでコーディングエージェントを回す選択肢が一気に広がりそうです。</p></div>
+<p class="paper-source"><a href="https://www.publickey1.jp/blog/26/jetbrainsmacjunie_localclaude_sonnet_45rtx5909.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/9cea4cd4e71ed2b3/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-8bff457a1cf8efc5">
 <h3><a href="../../articles/2026-09-01/8bff457a1cf8efc5/">DHH氏、AIエージェント統合のLinux OS「Omarchy Quattro」発表</a></h3>
-<p class="excerpt">Ruby on Railsの作者として知られるDHH氏が、AIエージェント統合を最大の特徴とするデスクトップ向けLinux OS「Omarchy Quattro」(Omarchy 4.0)を発表しました。「プロの人生で最高のソフトウェア…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-ai_news">
-<a class="category-name" href="../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span></div>
+<div class="paper-body"><p>Ruby on Railsの作者として知られるDHH氏が、AIエージェント統合を最大の特徴とするデスクトップ向けLinux OS「Omarchy Quattro」(Omarchy 4.0)を発表しました。「プロの人生で最高のソフトウェアリリースの1つ」と紹介されています。Arch Linuxをベースに、タイル型ウィンドウマネージャHyperlandとシェルフレームワークQuick Shellを統合しています。</p>
+<p>対応するAIエージェントはClaude、Codex、Copilot、Gemini、Grokの5種です。<strong>スキルファイル</strong>を読み込ませることで、AIエージェントがアプリのインストール、キーバインドや各種設定の変更、カスタムテーマやプラグインの生成、さらにはクラッシュログの自動解析と修正提案まで担ってくれる仕組みになっています。OSの設定作業そのものをAIエージェントに任せられる点が新しいところです。</p>
+<p>WindowsとのデュアルブートやDocker VM上でのWindows実行にも対応しており、開発・運用業務を行うITエンジニアを主なターゲットに据えています。</p></div>
+<p class="paper-source"><a href="https://www.publickey1.jp/blog/26/dhhlinux_osomarchy_quattroaiosaios.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/8bff457a1cf8efc5/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-68fd8a12f3aa9f6d">
 <h3><a href="../../articles/2026-09-01/68fd8a12f3aa9f6d/">GitHub Copilot、並列エージェント運用向けデスクトップアプリを技術プレビュー公開</a></h3>
-<p class="excerpt">GitHubは6月17日(日本語版記事の公開は8月31日)、Copilotのデスクトップアプリケーションを発表しました。対象はCopilot Pro、Pro+、Business、Enterpriseの各プランで、現在はテクニカルプレビュ…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-ai_news">
-<a class="category-name" href="../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span></div>
+<div class="paper-body"><p>GitHubは6月17日(日本語版記事の公開は8月31日)、Copilotのデスクトップアプリケーションを発表しました。対象はCopilot Pro、Pro+、Business、Enterpriseの各プランで、現在はテクニカルプレビュー段階にあります。発表はGitHubのMario Rodriguez氏によるブログ記事で行われました。</p>
+<p>最大の特徴は<strong>複数のAIコーディングエージェントの並列実行</strong>です。各エージェントセッションは独自のGitワークツリー上で動作し、同時に走らせられます。セッションやイシュー、プルリクエストをまとめて見られる「My Work」ビュー、プルリクエストのレビュー・チェック・マージ状況を追う「Agent Merge」、計画やブラウザセッション、ターミナル、デプロイ、ダッシュボードを統合表示する「キャンバス」画面を備えています。</p>
+<p>実行環境は開発者マシン上で隔離実行する「ローカルサンドボックス」と、GitHubホストのLinux環境で動く「クラウドサンドボックス」の2種類です。あわせてGitHub Copilot SDKも一般提供が始まり、Node.js、Python、Go、.NET、Rust、Javaに対応します。「判断、検証、説明責任」がプロフェッショナルソフトウェアに求められる、というコメントも紹介されています。</p></div>
+<p class="paper-source"><a href="https://www.infoq.com/jp/news/2026/08/github-copilot-app/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/68fd8a12f3aa9f6d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-bdd109dfbcb3dae8">
 <h3><a href="../../articles/2026-09-01/bdd109dfbcb3dae8/">OpenClaw、7週間ぶりにPR1万6千件超の大型更新</a></h3>
-<p class="excerpt">AIエージェントソフト「OpenClaw」が8月30日(米国時間)、7週間の沈黙を破り史上最大規模とうたう「OpenClaw 2.0」(v2026.8.1)を発表しました。プルリクエストは1万6000件以上に達し、新規貢献者569名を含…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>pc.watch.impress.co.jp</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<div class="article-meta"><span class="badge reported">報道</span><span>pc.watch.impress.co.jp</span></div>
+<div class="paper-body"><p>AIエージェントソフト「OpenClaw」が8月30日(米国時間)、7週間の沈黙を破り史上最大規模とうたう「OpenClaw 2.0」(v2026.8.1)を発表しました。プルリクエストは<strong>1万6000件以上</strong>に達し、新規貢献者569名を含む総開発者数は933名に膨れ上がりました。</p>
+<p>改善内容は多岐にわたります。インストール手順の明確化、iOS/Androidのペアリングや権限設定の最適化、会話中心のレイアウトに刷新されたWeb UI、Telegram・Slack・Discordなどのメッセージング連携強化、メモリ機能の改善、そしてデータベースのSQLite移行などが盛り込まれています。</p></div>
+<p class="paper-source"><a href="https://pc.watch.impress.co.jp/docs/news/2137191.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/bdd109dfbcb3dae8/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-9caec7a372313540">
 <h3><a href="../../articles/2026-09-01/9caec7a372313540/">matcherは保護ではなく実行範囲、1時間後のログアウトから学ぶ教訓</a></h3>
-<p class="excerpt">筆者は認証保護のため、Next.jsのmiddleware(Proxy)のmatcherを、保護したいパス「/dashboard」だけに絞って設定しました。ところが公開ページを閲覧している間はプロキシがそもそも実行されずトークンの更新も…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者は認証保護のため、Next.jsのmiddleware(Proxy)のmatcherを、保護したいパス「/dashboard」だけに絞って設定しました。ところが公開ページを閲覧している間はプロキシがそもそも実行されずトークンの更新も行われず、1時間後にセッションが切れてログアウトされてしまったといいます。</p>
+<p><strong>matcherはアクセスを保護する範囲を決める設定ではなく</strong>、あくまでプロキシが実行される「スコープ」を指定するものです。対象外のパスではセッション更新が効かないだけでなく、そこに置かれたServer Actionの保護も及ばなくなります。matcherの変更や、Server Functionをmatcherにマッチしないルートへ移すリファクタが、静かにProxyのカバレッジを外してしまうことがあるといいます。</p>
+<p>厄介なのは動作確認をした時点では問題が見えないことです。matcherの値はビルド時に静的解析されるため、変更した場合はdevサーバーの再起動が必要になる点も含め、筆者は手順書に「matcherは保護対象ではない」と自ら書いていたにもかかわらず、実装時に同じ誤りを犯したと振り返っています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/matsutake_prgrm/articles/matcher-is-scope-not-protection" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/9caec7a372313540/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-906fc31f3f86d9b5">
 <h3><a href="../../articles/2026-09-01/906fc31f3f86d9b5/">Next.jsで学ぶReact Server Componentsの仕組み</a></h3>
-<p class="excerpt">Server Component(RSC)はブラウザではなくサーバー側、具体的にはNode.js環境で実行されるReact Componentです。Node.js APIに直接アクセスでき、そのJavaScript自体はブラウザへ送信さ…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Server Component(RSC)はブラウザではなくサーバー側、具体的には<strong>Node.js環境</strong>で実行されるReact Componentです。Node.js APIに直接アクセスでき、そのJavaScript自体はブラウザへ送信されません。レンダリング結果はRSC Payloadという形式でクライアントに渡されます。</p>
+<p>記事ではnode:fs/promisesを使ってサーバー側からファイルを読み込む例など、async/awaitによる非同期処理のコードが示されています。一方でServer ComponentはuseStateやuseEffect、イベントハンドラ、ブラウザ用APIを使えず、クライアント側の対話性が必要な部分をClient Componentとして定義するには&quot;use client&quot;ディレクティブが必要になります。</p>
+<p>Pages Router時代のgetServerSidePropsはデータ取得がComponentから分離されていましたが、RSCでは<strong>データ取得がComponentに統合される</strong>点が大きな違いです。記事はSSRとRSCが別概念であることも重ねて強調しています。著者はRSC自体の開発者ではなく、実務でキャッチアップした個人の学習記録として書かれています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/kiyoma/articles/a8266597684e36" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/906fc31f3f86d9b5/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a654ed9d592cffd9">
 <h3><a href="../../articles/2026-09-01/a654ed9d592cffd9/">AIエージェントに規約を守らせる、ast-grep×Hookの仕組み</a></h3>
-<p class="excerpt">著者(deresmos氏)はAIコーディングエージェント(Claude Code)にプロジェクト固有のコーディング規約を守らせるため、コードの構文木(AST)にパターンマッチングをかけるツール「ast-grep」と、Claude Cod…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>著者(deresmos氏)はAIコーディングエージェント(Claude Code)にプロジェクト固有のコーディング規約を守らせるため、コードの構文木(AST)にパターンマッチングをかけるツール「ast-grep」と、Claude Codeの「Hook」機能を組み合わせた仕組みを作りました。ast-grepはRust製で、YAMLでルールを定義でき、JavaScript、Go、Dartなど20以上の言語に対応します。</p>
+<p>採用したのは<strong>「Stop Hook」方式</strong>です。検査スクリプト(.claude/hooks/run-ast-grep.sh)が違反を検出すると終了コード2を返し、エージェントの停止そのものをブロックして修正を強制します。「PostToolUse」方式では強制力がなく、修正されない確率が高いことが分かったためだといいます。</p>
+<p>GoのValue Object生成やDartのWidget実装など、特定の違反パターンを禁止する規約を実際に導入したと紹介しています。テストにはast-grep test、スキャンにはast-grep scanのコマンドを使います。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/deresmos/articles/ast-grep-hook" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/a654ed9d592cffd9/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-2af211db4d0a699f">
 <h3><a href="../../articles/2026-09-01/2af211db4d0a699f/">会話セッションを邪魔せずに外部イベントで動かす、Claude Code/Codex/Cursor活用術</a></h3>
-<p class="excerpt">筆者(coji)が開発する成果物共有サービス「Artifact Share」に、ブラウザのプレビュー画面上でのクリック指摘といった外部イベントから、Claude Code・Codex・Cursorという3つのAIエージェントを、会話セッ…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者(coji)が開発する成果物共有サービス「Artifact Share」に、ブラウザのプレビュー画面上でのクリック指摘といった外部イベントから、Claude Code・Codex・Cursorという3つのAIエージェントを、会話セッションを邪魔せずに起動・再開させる仕組みを実装しました。preview &lt;file&gt;コマンドでローカルサーバーが起動し、要素をクリックして入力した指摘をもとにエージェントが自動修正を行います。</p>
+<p>3つのエージェントは<strong>再開メカニズムがそれぞれ異なります</strong>。Claude Codeはバックグラウンドタスク完了時に自動でターンが再開される仕組みを、Codexは実行中セッションへのメッセージキュー投入機能を、CursorはAgent Client Protocol(ACP)経由で専用セッションに固定プロンプトを送信する方式を、それぞれ利用しているといいます。</p>
+<p>常駐デーモンを使わず「1ファイル1プロセス」を設計方針としており、preview next --waitで指摘の到着を待機し、preview done --stdinで修正結果を報告します。実装コードはGitHubのPR #198として公開されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/coji/articles/artifactshare-preview-claude-codex-cursor" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/2af211db4d0a699f/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-0d068f6456c75e09">
 <h3><a href="../../articles/2026-09-01/0d068f6456c75e09/">Goで型安全にLLM構造化出力を扱う「instructor-go」</a></h3>
-<p class="excerpt">Go言語でLLMの出力を構造化データとして扱う際、手動でのJSONスキーマ定義やエラーハンドリングが煩雑になりがちだという課題に対し、オープンソースライブラリ「instructor-go」(github.com/jxnl/instruc…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-github">
-<a class="category-name" href="../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Go言語でLLMの出力を構造化データとして扱う際、手動でのJSONスキーマ定義やエラーハンドリングが煩雑になりがちだという課題に対し、オープンソースライブラリ「instructor-go」(github.com/jxnl/instructor-go)を紹介する記事です。Go 1.24以上に対応し、OpenAI、Anthropic、Google Gemini、Cohere、Ollamaといった複数のプロバイダーで使えます。</p>
+<p>ModeToolCall、ModeJSON、ModeJSONSchema、ModeToolCallStrictといった主要モードを備え、go-playground/validatorによるバリデーションを行います。記事内の実測ではGPT-4o-miniでinstructor-go経由の実行に平均2.2秒・312トークン(入力277、出力35)を要し、生API呼び出しの約1.1秒・152トークンより遅いものの、<strong>自動リトライ機能</strong>がある点を利点として挙げています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/nonejp/articles/92d3d20c6f6cbf" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/0d068f6456c75e09/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-69d8503f68864ef1">
 <h3><a href="../../articles/2026-09-01/69d8503f68864ef1/">SSL証明書のライフサイクルをGUIで自動化する「certimate」</a></h3>
-<p class="excerpt">certimateは証明書の発行・デプロイ・更新・監視をビジュアルインターフェースで自動化する、Go言語製のオープンソース・セルフホスト型ツールです。単一・複数・ワイルドカード・IPアドレス証明書に対応し、DNS-01/HTTP-01の…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-github">
-<a class="category-name" href="../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>certimateは証明書の発行・デプロイ・更新・監視をビジュアルインターフェースで自動化する、Go言語製のオープンソース・セルフホスト型ツールです。単一・複数・ワイルドカード・IPアドレス証明書に対応し、DNS-01/HTTP-01のチャレンジ方式やRSA・ECC暗号化を選択できます。PEM・PFX・JKSなど複数の証明書フォーマットにも対応しています。</p>
+<p>70以上のドメインレジストラ、150以上のデプロイ先に対応し、メール、Discord、Slack、Telegramなど複数の通知チャネルも備えています。Let&#x27;s EncryptやZeroSSLなど他のACME認証局とも互換性があります。GitHub上で<strong>9.2kスター</strong>・891フォークを獲得しており、ライセンスはMITです。</p></div>
+<p class="paper-source"><a href="https://github.com/certimate-go/certimate" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/69d8503f68864ef1/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-35cb8b2353bd3cf2">
 <h3><a href="../../articles/2026-09-01/35cb8b2353bd3cf2/">Anthropic公式、Claude Codeプラグインのキュレーション済みディレクトリを公開</a></h3>
-<p class="excerpt">「claude-plugins-official」はClaude Code向けプラグインの公式キュレーション済みディレクトリです。Anthropicチームが開発・保守する/pluginsディレクトリの「内部プラグイン」と、パートナー・コ…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-github">
-<a class="category-name" href="../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>「claude-plugins-official」はClaude Code向けプラグインの公式キュレーション済みディレクトリです。Anthropicチームが開発・保守する/pluginsディレクトリの「内部プラグイン」と、パートナー・コミュニティ提供で品質・セキュリティ基準を満たした/external_pluginsディレクトリの「外部プラグイン」の2種類で構成されます。</p>
+<p>「/plugin install {プラグイン名}@claude-plugins-official」コマンドや、Claude Codeの「/plugin &gt; Discover」からインストールできます。プラグインの標準構造には.claude-plugin/plugin.json(必須)やcommands/、agents/、skills/などが含まれ、一度公開した「name」フィールドは変更できない仕様です。なお、<strong>Anthropicはプラグインの内容自体は検証していない</strong>ため、利用者側での信頼性確認が必要と注意書きがあります。</p></div>
+<p class="paper-source"><a href="https://github.com/anthropics/claude-plugins-official" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/35cb8b2353bd3cf2/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4d0d3acded79473a">
 <h3><a href="../../articles/2026-09-01/4d0d3acded79473a/">GitHub公式、MarkdownでAI駆動の自動化を書ける「gh-aw」</a></h3>
-<p class="excerpt">「gh-aw(GitHub Agentic Workflows)」はGitHub公式のCLI拡張で、開発者がMarkdownファイルでAI駆動のリポジトリ自動化を定義できます。YAMLフロントマターでトリガーや権限、使用ツール、AIエン…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>「gh-aw(GitHub Agentic Workflows)」はGitHub公式のCLI拡張で、開発者がMarkdownファイルでAI駆動のリポジトリ自動化を定義できます。YAMLフロントマターでトリガーや権限、使用ツール、AIエンジンを設定し、Issueトリアージ、PRレビュー、CI失敗調査、ドキュメント管理などをGitHub Actions上で自動化できます。対応AIエンジンはGitHub Copilot、Claude、OpenAI、Google Geminiなどです。</p>
+<p>セキュリティを重視した設計で、<strong>エージェントの実行は読み取り専用でサンドボックス化</strong>され、書き込み操作は検証済みの内容を別ジョブで実行します。過去にv0.83.3〜v0.85.4でセキュリティ脆弱性が発見されており、これらのバージョンは廃止(deprecated)されています。インストールは「gh extension install github/gh-aw」、ライセンスはMITです。</p></div>
+<p class="paper-source"><a href="https://github.com/github/gh-aw" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/4d0d3acded79473a/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-1340c605413aaca1">
 <h3><a href="../../articles/2026-09-01/1340c605413aaca1/">長期タスクをこなすツール利用エージェントの信頼性を高める「CAST」</a></h3>
-<p class="excerpt">論文「CAST: Critique-Aware Supervision for Training Reliable Long-Horizon Tool-Calling Agents」は、長期にわたるツール呼び出しエージェントの信頼性向上…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>論文「CAST: Critique-Aware Supervision for Training Reliable Long-Horizon Tool-Calling Agents」は、長期にわたるツール呼び出しエージェントの信頼性向上を目指す学習フレームワークを提案しています。タスク結果を行動レベルの教師信号に変換し、エージェントの行動軌跡を分析して部分観測下での各行動の妥当性を説明する<strong>構造化された根拠(rationale)</strong>を生成、これを批評学習と方策最適化に用います。</p>
+<p>Qwen3モデルを微調整して評価したところ、小売業務でGPT-OSS-120Bを10%以上上回り、ドメイン外設定であるテレヘルス分野でもさらに9%の改善が得られたとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2608.30147" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/1340c605413aaca1/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-80ba222d7b85be87">
 <h3><a href="../../articles/2026-09-01/80ba222d7b85be87/">VLMエージェントの嘘、勝敗を分けるのは非言語の手がかり</a></h3>
-<p class="excerpt">論文「Lies We Can See」は、視覚言語モデル(VLM)エージェントが社会的な欺瞞ゲームで言語的・非言語的手段を用いて他者を欺く行動を調べた研究です。「戦略的欺瞞はAIのアライメントと安全性における中心的な懸念事項として浮上し…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>論文「Lies We Can See」は、視覚言語モデル(VLM)エージェントが社会的な欺瞞ゲームで言語的・非言語的手段を用いて他者を欺く行動を調べた研究です。「戦略的欺瞞はAIのアライメントと安全性における中心的な懸念事項として浮上している」と述べ、既存の欺瞞研究の多くがテキストのみに限定され身体的コミュニケーションチャネルを見落としていると指摘しています。</p>
+<p>そこでAmong Usを模した3Dマルチモーダル環境「MineAmongUs」と、エージェントの認知プロセスを分析できる構成可能なシステム「ARIA」を開発し、LLMジャッジによる行動注釈スキームで大規模に欺瞞戦略を分析しました。結果、<strong>非言語チャネルの方が言語よりも欺瞞の勝敗を左右する決定的要因</strong>であることが示されました。COLM 2026のAgent Behavior Workshopに採択されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2608.30428" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/80ba222d7b85be87/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-451ddfbdfbf10202">
 <h3><a href="../../articles/2026-09-01/451ddfbdfbf10202/">Qwen3.8-Next、学習コストを大幅圧縮しつつ前任モデルに匹敵</a></h3>
-<p class="excerpt">Qwen3.8-Nextは総パラメータ125B、トークンあたり活性パラメータ6Bという構成の新アーキテクチャです。トークン混合ではGated DeltaNetと全注意層を組み合わせたハイブリッド層設計(4層ごとに全注意層を配置)を採用し…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-01">2026.09.01</time></div>
-</article></div>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>Qwen3.8-Nextは総パラメータ125B、トークンあたり活性パラメータ6Bという構成の新アーキテクチャです。トークン混合ではGated DeltaNetと全注意層を組み合わせたハイブリッド層設計(4層ごとに全注意層を配置)を採用し、継続事前学習時には全注意層をQwen Sparse Attention(QSA)に置き換えます。さらに「Gated Residual(GR)」と呼ばれる4分岐の残差ストリーム設計も導入しました。</p>
+<p>前任モデル(397B-A17B)と比べ、<strong>学習トークン数は約1/3、学習FLOPsは約1/9</strong>にまで削減しながら、14の事前学習ベンチマークのうち8つで上回り、劣った項目でも最大2.6ポイント差にとどめたとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2608.30320" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-01/451ddfbdfbf10202/">要点と引用を見る</a></p>
+</article></section>
+<section class="code-teaser" id="code">
+<h2><span class="category-dot"></span>今日のコード</h2>
+<p class="code-teaser-repo"><span class="mono">certimate-go/certimate</span> / <code>internal/certacme/certifiers/registry.go</code></p>
+<p>certimateはSSL証明書の発行・デプロイ・更新を自動化するセルフホスト型ツールです。ファイル一覧には internal/certacme/certifiers/ 配下に sp_cloudflare.go, sp_aws_route53.go など80個以上のDNSプロバイダー用ファイルが並んでいます。これだけの数の「同じ形をした部品」をif文やswitch文の羅列で管理すると読みにくくなります。それを防ぐために使われているのがこ…</p>
+<a class="button-link" href="../../code/2026-09-01/">コードを読む</a>
+</section><nav class="neighbors issue-neighbors" aria-label="前後の号"><span></span><a class="next" href="../2026-09-02/"><span>次の号</span>2026.09.02</a></nav>
 </main>
 <footer class="footer wrap">
 <p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
-<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a></div>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
 </footer>
 </body>
 </html>

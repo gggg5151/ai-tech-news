@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChromeDevTools/chrome-devtools-mcp の src/utils/pagination.ts を読む — エンジニア朝刊</title>
+<meta name="description" content="chrome-devtools-mcpは、AIエージェント（Claudeなど）がChrome DevToolsを操作してWebページのデバッグやパフォーマンス計測を行えるようにするMCPサーバーです。ネットワークログやコンソールメッセージなど大量の結果を返すツールが多いため、結果を「ページ単位」に分割するページネーショ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="ChromeDevTools/chrome-devtools-mcp の src/utils/pagination.ts を読む — エンジニア朝刊">
+<meta property="og:description" content="chrome-devtools-mcpは、AIエージェント（Claudeなど）がChrome DevToolsを操作してWebページのデバッグやパフォーマンス計測を行えるようにするMCPサーバーです。ネットワークログやコンソールメッセージなど大量の結果を返すツールが多いため、結果を「ページ単位」に分割するページネーショ…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-02/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-02/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.02</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>ChromeDevTools/chrome-devtools-mcp の <code>src/utils/pagination.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/HEAD/src/utils/pagination.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-02">2026.09.02</time></div>
+</header>
+<div class="article-body">
+<p>chrome-devtools-mcpは、AIエージェント（Claudeなど）がChrome DevToolsを操作してWebページのデバッグやパフォーマンス計測を行えるようにするMCPサーバーです。ネットワークログやコンソールメッセージなど大量の結果を返すツールが多いため、結果を「ページ単位」に分割するページネーション処理が随所で使われています。src/utils/pagination.tsはその共通ロジックを1箇所に集めたユーティリティで、外部ライブラリ依存もなく30〜60行で完結しているため、TypeScriptのジェネリクスや早期return、null安全演算子を学ぶのに最適な題材として選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>const DEFAULT_PAGE_SIZE = 20;
+
+export function paginate&lt;Item&gt;(
+  items: readonly Item[],
+  options?: PaginationOptions,
+): PaginationResult&lt;Item&gt; {
+  const total = items.length;
+
+  if (!options || noPaginationOptions(options)) {
+    return {
+      items,
+      currentPage: 0,
+      totalPages: 1,
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startIndex: 0,
+      endIndex: total,
+      invalidPage: false,
+    };
+  }
+
+  const pageSize = options.pageSize ?? DEFAULT_PAGE_SIZE;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const {currentPage, invalidPage} = resolvePageIndex(
+    options.pageIdx,
+    totalPages,
+  );
+
+  const startIndex = currentPage * pageSize;
+  const pageItems = items.slice(startIndex, startIndex + pageSize);
+  const endIndex = startIndex + pageItems.length;
+
+  return {
+    items: pageItems,
+    currentPage,
+    totalPages,
+    hasNextPage: currentPage &lt; totalPages - 1,
+    hasPreviousPage: currentPage &gt; 0,
+    startIndex,
+    endIndex,
+    invalidPage,
+  };
+}
+
+function noPaginationOptions(options: PaginationOptions): boolean {
+  return options.pageSize === undefined &amp;&amp; options.pageIdx === undefined;
+}
+
+function resolvePageIndex(
+  pageIdx: number | undefined,
+  totalPages: number,
+): {
+  currentPage: number;
+  invalidPage: boolean;
+} {
+  if (pageIdx === undefined) {
+    return {currentPage: 0, invalidPage: false};
+  }
+
+  if (pageIdx &lt; 0 || pageIdx &gt;= totalPages) {
+    return {currentPage: 0, invalidPage: true};
+  }
+
+  return {currentPage: pageIdx, invalidPage: false};
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>export function paginate&lt;Item&gt;(
+  items: readonly Item[],
+  options?: PaginationOptions,
+): PaginationResult&lt;Item&gt; {</code></pre><p>`&lt;Item&gt;` はジェネリクス（総称型）という仕組みです。「このItemという名前は呼び出し時に決まる型のプレースホルダー」という意味で、これによりpaginate関数は文字列の配列でもオブジェクトの配列でも同じロジックで扱えます。引数の`items: readonly Item[]`は「Item型の配列だが、この関数内では要素を書き換えない（readonly）」という約束を型で表現したものです。`options?: PaginationOptions`の`?`は「このパラメータは省略可能」という意味で、呼び出し側が渡さなければ`undefined`になります。戻り値の型`PaginationResult&lt;Item&gt;`も同じくItemに応じて中身の型が決まる総称型です。</p></div><div class="walk-step"><pre class="walk-quote"><code>const total = items.length;
+
+  if (!options || noPaginationOptions(options)) {</code></pre><p>まず`items.length`で配列の要素数を`total`という定数に入れています。次の行の`!options`は「optionsがfalsy（undefinedやnullなど）なら真になる」という否定演算子`!`の使い方です。`||`は論理OR演算子で、左側が真ならその時点で右側`noPaginationOptions(options)`は評価されずに済みます（短絡評価）。つまり「optionsが渡されていない、またはoptionsの中身が空だった」という条件をこの1行で表現しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return {
+      items,
+      currentPage: 0,
+      totalPages: 1,
+      hasNextPage: false,</code></pre><p>条件に合致したら、ここで関数の実行をすぐ終わらせて値を返します（これを「早期return（ガード節）」と呼びます）。ページ指定がない場合は「全件を1ページ目として返す」という結果を作っています。`items,`のようにキー名だけ書いているのはオブジェクトのショートハンド記法で、`items: items,`と同じ意味です。すべてのフィールドを毎回明示的に埋めているのは、呼び出し側が`PaginationResult`型のどのプロパティにも安心してアクセスできるようにするためです。</p></div><div class="walk-step"><pre class="walk-quote"><code>const pageSize = options.pageSize ?? DEFAULT_PAGE_SIZE;</code></pre><p>`??`はnullish coalescing演算子（null合体演算子）です。`||`と似ていますが、左側が`null`または`undefined`のときだけ右側を使う点が違います（`0`や`&quot;&quot;`のような値は左側のまま採用される）。ここでは「options.pageSizeが指定されていればそれを使い、指定されていなければファイル冒頭で定義した`DEFAULT_PAGE_SIZE = 20`を使う」というデフォルト値の設定パターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>const totalPages = Math.max(1, Math.ceil(total / pageSize));</code></pre><p>`total / pageSize`は普通の割り算ですが、小数になることがあります（例: 45件を20件ずつなら2.25ページ）。`Math.ceil()`は小数点以下を切り上げる関数なので、2.25は3になります。さらに`Math.max(1, ...)`で「計算結果と1を比べて大きい方を採用する」ことで、要素数が0件でも最低1ページはある、という結果にしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const {currentPage, invalidPage} = resolvePageIndex(
+    options.pageIdx,
+    totalPages,
+  );</code></pre><p>`resolvePageIndex`はこのファイルの下の方で定義されているヘルパー関数で、`{currentPage: number, invalidPage: boolean}`というオブジェクトを返します。左辺の`const {currentPage, invalidPage} = ...`は分割代入（destructuring）と呼ばれる書き方で、返ってきたオブジェクトから同名のプロパティを取り出して、その場で同名の定数として使えるようにしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const startIndex = currentPage * pageSize;
+  const pageItems = items.slice(startIndex, startIndex + pageSize);
+  const endIndex = startIndex + pageItems.length;</code></pre><p>`currentPage`は0始まりのページ番号なので、`currentPage * pageSize`で「そのページの最初の要素が元の配列の何番目にあたるか」を計算しています（0ページ目なら0番目から、1ページ目ならpageSize番目から）。`Array.prototype.slice(開始, 終了)`は元の配列を書き換えずに、指定範囲だけを新しい配列としてコピーして返すメソッドです。最後のページは要素数が足りないことがあるため、`pageItems.length`（実際に取れた件数）を使って`endIndex`を計算し直しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>function noPaginationOptions(options: PaginationOptions): boolean {
+  return options.pageSize === undefined &amp;&amp; options.pageIdx === undefined;
+}</code></pre><p>「ページサイズもページ番号もどちらも指定されていない」という条件を、`&amp;&amp;`（論理AND、両方とも真のときだけ真になる）を使って1つの関数に切り出しています。こうして条件に名前（`noPaginationOptions`）を付けておくと、呼び出し側の`if (!options || noPaginationOptions(options))`が「optionsがない、またはページネーション指定が何もない」と英語のように読めるようになります。これは新卒のうちから真似しやすいテクニックで、複雑な条件式は変数や関数に切り出すと読みやすくなります。</p></div><div class="walk-step"><pre class="walk-quote"><code>function resolvePageIndex(
+  pageIdx: number | undefined,
+  totalPages: number,
+): {
+  currentPage: number;
+  invalidPage: boolean;
+} {</code></pre><p>戻り値の型を、わざわざ`interface`を定義せずにその場で`{currentPage: number; invalidPage: boolean;}`とオブジェクト形のリテラル型として書いています。これは「この関数専用の、他では使い回さない小さな型」なので、名前を付けるほどでもないという判断です。引数の型`number | undefined`は「numberかundefinedのどちらか」を表すユニオン型（合併型）です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (pageIdx === undefined) {
+    return {currentPage: 0, invalidPage: false};
+  }</code></pre><p>ここでも早期returnのガード節が3段構えになっています。1つ目は「ページ番号が指定されていなければ0ページ目で正常」というケースです。この後には「指定されたページ番号が0未満か、総ページ数以上なら範囲外なので0ページ目に戻すが`invalidPage: true`で異常を記録する」ケース、「それ以外（正しい範囲内）ならそのページ番号をそのまま使う」ケースが続きます。呼び出し側はこの`invalidPage`フラグを見て、ユーザーに「指定したページ番号は無効でした」と伝えることができます。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>境界条件（今回なら「オプションなし」「範囲外のページ番号」）は関数の先頭で早期returnして分岐させ、それぞれに専用の小さな条件判定関数（noPaginationOptionsなど）を切り出すと、本体ロジックがシンプルなまま複雑な例外ケースを漏れなく扱える。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-01/"><span>前の日</span>certimate-go/certimate</a><a class="next" href="../2026-09-05/"><span>次の日</span>mlc-ai/web-llm</a></nav>
+<a class="back-to-issue" href="../../issues/2026-09-02/">← 2026.09.02 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

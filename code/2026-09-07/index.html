@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>marsbos/mador の src/mador.js を読む — エンジニア朝刊</title>
+<meta name="description" content="madorは「どんなDOMでもリアクティブにする」を掲げる小さなライブラリで、状態の読み書きを [r, w] という2つの関数に凝縮しています。フレームワークを使わずにReactの「状態が変わったら勝手に画面が更新される」を実現している核心部分が、JavaScript標準のProxyとReflectを使った30行弱のコ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="marsbos/mador の src/mador.js を読む — エンジニア朝刊">
+<meta property="og:description" content="madorは「どんなDOMでもリアクティブにする」を掲げる小さなライブラリで、状態の読み書きを [r, w] という2つの関数に凝縮しています。フレームワークを使わずにReactの「状態が変わったら勝手に画面が更新される」を実現している核心部分が、JavaScript標準のProxyとReflectを使った30行弱のコ…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-07/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-07/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.07</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・javascript</span>
+<h1>marsbos/mador の <code>src/mador.js</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/marsbos/mador/blob/HEAD/src/mador.js" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-07">2026.09.07</time></div>
+</header>
+<div class="article-body">
+<p>madorは「どんなDOMでもリアクティブにする」を掲げる小さなライブラリで、状態の読み書きを [r, w] という2つの関数に凝縮しています。フレームワークを使わずにReactの「状態が変わったら勝手に画面が更新される」を実現している核心部分が、JavaScript標準のProxyとReflectを使った30行弱のコードです。仕組みが全部見えるサイズなので、Proxyという概念を初めて触る人にちょうどいい教材として選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>  // Temp. track reading &amp; writing paths
+  let activeEffect = null;
+  let pendingPaths = [];
+  // state proxy
+  function state(target, path = []) {
+    return new Proxy(target, {
+      get(obj, prop) {
+        const fullPath = path.concat(prop).join(&quot;.&quot;);
+        activeEffect?.(fullPath);
+
+        const val = Reflect.get(obj, prop);
+        // make it recursive so we can &#x27;track&#x27; each property
+        if (val !== null &amp;&amp; typeof val === &quot;object&quot; &amp;&amp; !Array.isArray(val)) {
+          return state(val, path.concat(prop));
+        }
+        return val;
+      },
+      set(obj, prop, value) {
+        const fullPath = path.concat(prop).join(&quot;.&quot;);
+        const oldVal = Reflect.get(obj, prop);
+        // functional update support
+        const newVal = typeof value === &quot;function&quot; ? value(oldVal) : value;
+
+        if (oldVal !== newVal) {
+          pendingPaths.push(fullPath);
+          Reflect.set(obj, prop, newVal);
+        }
+        return true;
+      },
+    });
+  }</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>let activeEffect = null;
+  let pendingPaths = [];</code></pre><p>letは再代入できる変数を宣言するキーワードです。この2つの変数は、mador(initialState)という外側の関数の中で宣言されているので、この後出てくるstate関数やget/setトラップから見えるクロージャ変数になります。activeEffectは「今どのUI更新処理が状態を読んでいるか」を覚えておく箱、pendingPathsは「今回の書き込みで実際に変わったプロパティのパス」を溜めておく配列（[]は空の配列リテラル）です。</p></div><div class="walk-step"><pre class="walk-quote"><code>function state(target, path = []) {</code></pre><p>targetは監視したい生のオブジェクト（例えば {count: 0} ）です。path = [] は「デフォルト引数」という書き方で、呼び出し時にpathを渡さなければ自動的に空配列が使われます。pathは今トップレベルからどこまで潜ってきたかを表す、プロパティ名の配列（例: [&#x27;user&#x27;,&#x27;name&#x27;]）です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return new Proxy(target, {</code></pre><p>ProxyはJavaScript標準の組み込みオブジェクトで、「元のオブジェクト(target)に対する操作を横取りして、代わりに自分で決めた処理を実行する」ラッパーを作ります。new Proxy(target, handler) の第二引数handlerに、後述するget/setという名前の関数（トラップと呼びます）を渡すと、そのオブジェクトのプロパティを読んだり書いたりするたびにこのトラップが呼ばれるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>get(obj, prop) {
+        const fullPath = path.concat(prop).join(&quot;.&quot;);
+        activeEffect?.(fullPath);</code></pre><p>getトラップは「someObj.count のようにプロパティを読み取ったとき」に自動で呼ばれる関数で、obj（対象オブジェクト）とprop（読まれたプロパティ名、例:&#x27;count&#x27;）を受け取ります。path.concat(prop)は配列pathの末尾にpropを追加した新しい配列を作り、.join(&quot;.&quot;)でそれを&#x27;.&#x27;区切りの文字列（例:&#x27;user.name&#x27;）に変換します。activeEffect?.(fullPath) の?. はオプショナルチェイニングで、「activeEffectがnullやundefinedでなければ呼び出す、そうでなければ何もしない」という安全な関数呼び出しです。つまりここで「今このパスが読まれた」という情報を、実行中の更新処理に伝えています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const val = Reflect.get(obj, prop);</code></pre><p>Reflectは、Proxyのトラップの中で「本来（横取りしなかった場合）の動作」を安全に呼び出すための組み込みオブジェクトです。Reflect.get(obj, prop) は「objのpropプロパティの値を普通に取得する」処理で、obj[prop]と同じ結果になりますが、Proxyの中で使う定石の書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (val !== null &amp;&amp; typeof val === &quot;object&quot; &amp;&amp; !Array.isArray(val)) {
+          return state(val, path.concat(prop));
+        }</code></pre><p>typeof val === &quot;object&quot; は「valの型がオブジェクトかどうか」を調べます（ただしJavaScriptの仕様上nullも&quot;object&quot;型になるため、val !== nullで別途除外しています）。!Array.isArray(val) は「valが配列でない」ことの確認（!は否定）です。この3条件が全部真のとき、つまりネストしたオブジェクト（例: user.profile）が読まれたときは、そのオブジェクトをそのまま返さずに、もう一度state()を再帰呼び出ししてProxyで包み直してから返します。こうすることで、user.profile.name のようにさらに深い階層を読んでも同じ仕組みで追跡できます。</p></div><div class="walk-step"><pre class="walk-quote"><code>return val;</code></pre><p>読まれた値が数値や文字列などのプリミティブ値（それ以上分解できない値）だった場合は、Proxyで包む必要がないのでそのまま返します。</p></div><div class="walk-step"><pre class="walk-quote"><code>set(obj, prop, value) {
+        const fullPath = path.concat(prop).join(&quot;.&quot;);
+        const oldVal = Reflect.get(obj, prop);</code></pre><p>setトラップは「someObj.count = 5 のようにプロパティへ代入したとき」に自動で呼ばれます。valueは新しく代入しようとしている値です。ここでもgetと同じ要領でfullPathを組み立て、さらにReflect.getで「代入される前の古い値」を先に取得しておきます。</p></div><div class="walk-step"><pre class="walk-quote"><code>const newVal = typeof value === &quot;function&quot; ? value(oldVal) : value;</code></pre><p>三項演算子（条件 ? 真の場合の値 : 偽の場合の値）です。もしvalueが関数なら、value(oldVal)を呼び出してその戻り値を新しい値とします。これはReactのsetState(prev =&gt; prev + 1)のような「関数的更新」を許すためのしくみで、そうでなければvalue自体をそのまま新しい値として使います。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (oldVal !== newVal) {
+          pendingPaths.push(fullPath);
+          Reflect.set(obj, prop, newVal);
+        }</code></pre><p>!==は「型も値も含めて等しくない」ことを調べる厳密不等価演算子です。古い値と新しい値が実際に違っている場合だけ、pendingPaths（冒頭で宣言した配列）にfullPathをpush（末尾に追加）し、Reflect.set(obj, prop, newVal)で実際にオブジェクトへ値を書き込みます。値が変わっていなければ何もしない、つまり無駄な再描画を防ぐ工夫です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return true;
+      },
+    });
+  }</code></pre><p>Proxyのsetトラップは、代入が成功したことを示すためにtrue（真偽値の「真」）を返す必要がある、というJavaScriptの仕様上の決まりです。falseを返すと、strictモードでは代入時にエラーが発生します。最後の});とfunctionの}は、それぞれnew Proxy(...)の引数オブジェクトを閉じる括弧、state関数自体を閉じる波括弧です。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>JavaScript標準のProxyとReflectを組み合わせると、「オブジェクトのプロパティが読まれた／書き換わった」という出来事そのものをフックできる——この仕組みさえ知っていれば、状態管理ライブラリの心臓部は自分でも書けます。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-06/"><span>前の日</span>pmndrs/react-three-fiber</a><a class="next" href="../2026-09-08/"><span>次の日</span>colinhacks/zod</a></nav>
+<a class="back-to-issue" href="../../issues/2026-09-07/">← 2026.09.07 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

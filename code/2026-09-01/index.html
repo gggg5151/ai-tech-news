@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>certimate-go/certimate の internal/certacme/certifiers/registry.go を読む — エンジニア朝刊</title>
+<meta name="description" content="certimateはSSL証明書の発行・デプロイ・更新を自動化するセルフホスト型ツールです。ファイル一覧には internal/certacme/certifiers/ 配下に sp_cloudflare.go, sp_aws_route53.go など80個以上のDNSプロバイダー用ファイルが並んでいます。これだけの…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="エンジニア朝刊">
+<meta property="og:title" content="certimate-go/certimate の internal/certacme/certifiers/registry.go を読む — エンジニア朝刊">
+<meta property="og:description" content="certimateはSSL証明書の発行・デプロイ・更新を自動化するセルフホスト型ツールです。ファイル一覧には internal/certacme/certifiers/ 配下に sp_cloudflare.go, sp_aws_route53.go など80個以上のDNSプロバイダー用ファイルが並んでいます。これだけの…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-01/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-01/"><link rel="alternate" type="application/rss+xml" title="エンジニア朝刊" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">エンジニア朝刊</a><span class="brand-tagline">1年目エンジニアのための、通勤15分で読み切る毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.01</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>certimate-go/certimate の <code>internal/certacme/certifiers/registry.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/certimate-go/certimate/blob/HEAD/internal/certacme/certifiers/registry.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-01">2026.09.01</time></div>
+</header>
+<div class="article-body">
+<p>certimateはSSL証明書の発行・デプロイ・更新を自動化するセルフホスト型ツールです。ファイル一覧には internal/certacme/certifiers/ 配下に sp_cloudflare.go, sp_aws_route53.go など80個以上のDNSプロバイダー用ファイルが並んでいます。これだけの数の「同じ形をした部品」をif文やswitch文の羅列で管理すると読みにくくなります。それを防ぐために使われているのがこのregistry.goの「ジェネリクスを使った登録レジストリ」パターンです。同じ形の実装が大量にある場面は1年目でも必ず出会うので教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>type ProviderFactoryFunc func(options *ProviderFactoryOptions) (core.ACMEChallenger, error)
+
+// …略…
+
+type Registry[T comparable] interface {
+	Register(T, ProviderFactoryFunc) error
+	RegisterAlias(T, T) error
+	MustRegister(T, ProviderFactoryFunc)
+	MustRegisterAlias(T, T)
+	Get(T) (ProviderFactoryFunc, error)
+}
+
+type registry[T comparable] struct {
+	factories map[T]ProviderFactoryFunc
+}
+
+func (r *registry[T]) Register(name T, factory ProviderFactoryFunc) error {
+	if _, exists := r.factories[name]; exists {
+		return fmt.Errorf(&quot;provider &#x27;%v&#x27; already registered&quot;, name)
+	}
+
+	r.factories[name] = factory
+	return nil
+}
+
+func (r *registry[T]) RegisterAlias(name T, alias T) error {
+	factory, err := r.Get(alias)
+	if err != nil {
+		return err
+	}
+
+	err = r.Register(name, factory)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *registry[T]) MustRegister(name T, factory ProviderFactoryFunc) {
+	if err := r.Register(name, factory); err != nil {
+		panic(err)
+	}
+}
+
+// …略…
+
+func (r *registry[T]) Get(name T) (ProviderFactoryFunc, error) {
+	if factory, exists := r.factories[name]; exists {
+		return factory, nil
+	}
+
+	return nil, fmt.Errorf(&quot;provider &#x27;%v&#x27; not registered&quot;, name)
+}
+
+func newRegistry[T comparable]() Registry[T] {
+	return &amp;registry[T]{factories: make(map[T]ProviderFactoryFunc)}
+}
+
+var (
+	ACMEDns01Registries  = newRegistry[domain.ACMEDns01ProviderType]()
+	ACMEHttp01Registries = newRegistry[domain.ACMEHttp01ProviderType]()
+)</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>type ProviderFactoryFunc func(options *ProviderFactoryOptions) (core.ACMEChallenger, error)</code></pre><p>Goでは関数そのものに型をつけられます。この行は「ProviderFactoryFuncという名前は、*ProviderFactoryOptions（構造体へのポインタ。*は『このアドレスにある値を指す』という意味）を1つ受け取り、core.ACMEChallengerとerrorの2つを返す関数」だという型エイリアスです。以降、長い関数シグネチャを毎回書かずに「ProviderFactoryFunc型の値」として関数を変数や引数に渡せます。Goの関数は変数に代入したり引数として渡したりできる値（第一級オブジェクト）なので、こういう『関数を作る関数（ファクトリ）』の型を定義するのはよくあるパターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>type Registry[T comparable] interface {</code></pre><p>`[T comparable]`はGoのジェネリクス（型引数）の書き方です。`T`はこの型の中で使う仮の型名で、呼び出し側が使うときに実際の型（例えばstringなど）に置き換わります。`comparable`は「T型は`==`や`!=`で比較できる型でなければならない」という制約です。map（辞書）のキーにするには比較可能である必要があるため、この制約がついています。`interface`は「これらのメソッドを持っていること」だけを約束し、実装の詳細を外部に隠すためのGoの型です。</p></div><div class="walk-step"><pre class="walk-quote"><code>Register(T, ProviderFactoryFunc) error
+	RegisterAlias(T, T) error
+	MustRegister(T, ProviderFactoryFunc)</code></pre><p>インターフェース内のメソッド宣言は、引数名を省略して型だけを書けます（例：`Register(T, ProviderFactoryFunc) error`は「T型とProviderFactoryFunc型の引数を受け取り、errorを返すRegisterというメソッドを持つこと」の宣言）。これを実装する型は、Registryが持つ5つのメソッドすべてを同じシグネチャで持って初めて「Registry[T]を満たしている」とみなされます。</p></div><div class="walk-step"><pre class="walk-quote"><code>type registry[T comparable] struct {
+	factories map[T]ProviderFactoryFunc
+}</code></pre><p>先頭が大文字の`Registry`（インターフェース）に対し、こちらは小文字始まりの`registry`（構造体）です。Goでは識別子の先頭が大文字だとパッケージ外からも見える(exported)、小文字だとパッケージ内限定(unexported)というルールがあります。外部のコードは`Registry`インターフェース経由でしか操作できず、内部実装の`registry`構造体やそのフィールド`factories`（プロバイダー名から生成関数を引く辞書。`map[キーの型]値の型`という書き方）には直接触れません。これがカプセル化です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (r *registry[T]) Register(name T, factory ProviderFactoryFunc) error {
+	if _, exists := r.factories[name]; exists {</code></pre><p>`(r *registry[T])`はレシーバといい、「このメソッドは*registry[T]型（registry構造体へのポインタ）に対して呼び出せる」ことを示します。ポインタレシーバを使うのは、メソッド内でフィールドを書き換えたいからです（値レシーバだとコピーへの変更になり、呼び出し元には反映されません）。`if _, exists := r.factories[name]; exists {`はmapから値を取り出す『カンマOKイディオム』で、1つ目の戻り値（ここでは`_`で捨てている）がキーに対応する値、2つ目`exists`がキーが存在したかを示すbool値です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return fmt.Errorf(&quot;provider &#x27;%v&#x27; already registered&quot;, name)
+	}
+
+	r.factories[name] = factory
+	return nil
+}</code></pre><p>すでに同じ名前が登録済みなら`fmt.Errorf`でエラーメッセージを作って返します。`%v`は値をデフォルト形式で文字列化する書式指定子です。まだ登録されていなければ`r.factories[name] = factory`でmapに新しいキーと値を書き込み、最後に`return nil`で『エラーなし』を表して処理を終えます。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (r *registry[T]) RegisterAlias(name T, alias T) error {
+	factory, err := r.Get(alias)
+	if err != nil {
+		return err
+	}</code></pre><p>『alias（別名）を実際の名前に対応させる』メソッドです。まず`r.Get(alias)`で既存の生成関数を取得し、エラーがあればそこで打ち切って呼び出し元に伝えます。`if err != nil { return err }`はGoで最も頻出するエラーハンドリングの型で、`err`にエラーが入っていたら即座にreturnして後続の処理を実行しません。</p></div><div class="walk-step"><pre class="walk-quote"><code>err = r.Register(name, factory)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}</code></pre><p>取得できた`factory`を新しい`name`として登録し直します。`err =`が`:=`ではなく`=`である点に注目してください。`err`はすでに直前で`:=`により宣言済みなので、ここでは再宣言せず既存の変数に上書き代入しています。どちらのエラーチェックも通過したら最後に`return nil`で成功を表します。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (r *registry[T]) MustRegister(name T, factory ProviderFactoryFunc) {
+	if err := r.Register(name, factory); err != nil {
+		panic(err)
+	}
+}</code></pre><p>Go標準ライブラリの流儀では『失敗したら回復不能なのでプログラムを止める』バージョンの関数に`Must`という接頭辞をつける慣習があります（`regexp.MustCompile`が有名）。ここでは通常の`Register`が返すエラーを`panic(err)`でプログラムをクラッシュさせる形に変換しています。`if err := r.Register(...); err != nil`はif文の条件式の前にセミコロンで区切って変数を宣言できるGo特有の構文で、`err`のスコープをこのif文の中だけに限定します。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (r *registry[T]) Get(name T) (ProviderFactoryFunc, error) {
+	if factory, exists := r.factories[name]; exists {
+		return factory, nil
+	}</code></pre><p>ここでも『カンマOKイディオム』が使われていますが、今度は取り出した値`factory`を実際に使っています。見つかれば`(factory, nil)`という『値とerrorのペアを返す』Goの定番パターンでそのまま返します。呼び出し側は2つ目の戻り値(error)を必ずチェックしてから1つ目の値を使うことが期待されています。</p></div><div class="walk-step"><pre class="walk-quote"><code>func newRegistry[T comparable]() Registry[T] {
+	return &amp;registry[T]{factories: make(map[T]ProviderFactoryFunc)}
+}</code></pre><p>レジストリを作るコンストラクタです。戻り値の型が具体的な`*registry[T]`ではなくインターフェースの`Registry[T]`になっている点が重要で、呼び出し側はインターフェースが約束するメソッドしか使えないため内部実装を後から変更しても影響しません。`&amp;registry[T]{...}`は構造体リテラルの前に`&amp;`をつけて『その構造体のポインタ』を作る書き方です。`make(map[T]ProviderFactoryFunc)`はmapを使える状態で初期化する組み込み関数で、これを呼ばずに`var m map[T]F`だけだとnil mapになり書き込み時にパニックします。</p></div><div class="walk-step"><pre class="walk-quote"><code>var (
+	ACMEDns01Registries  = newRegistry[domain.ACMEDns01ProviderType]()
+	ACMEHttp01Registries = newRegistry[domain.ACMEHttp01ProviderType]()
+)</code></pre><p>パッケージレベルの`var`ブロックで、プログラム起動時（パッケージが読み込まれるタイミング）にこの2つの変数が初期化されます。`newRegistry[domain.ACMEDns01ProviderType]()`は、先ほど定義したジェネリック関数`newRegistry`に`[domain.ACMEDns01ProviderType]`という具体的な型を指定して呼び出している箇所です。これにより『DNS-01用のプロバイダーだけを集めたレジストリ』と『HTTP-01用のプロバイダーだけを集めたレジストリ』という、型引数だけが違う2つの独立したレジストリが1つずつ作られます。各`sp_*.go`ファイルは起動時にこの`ACMEDns01Registries`などへ自分自身を登録します。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「同じインターフェースを実装するものが大量にある」場面では、if/switchの羅列ではなく、名前をキーにしたmapへ関数を登録しておく「レジストリパターン」を使うと、新しい実装を追加するたびに既存コードを触らずに済みます。Goのジェネリクス`[T comparable]`は、そのレジストリの仕組みを型ごとに複製せず使い回すために使えます。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><span></span><a class="next" href="../2026-09-02/"><span>次の日</span>ChromeDevTools/chrome-devtools-mcp</a></nav>
+<a class="back-to-issue" href="../../issues/2026-09-01/">← 2026.09.01 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
