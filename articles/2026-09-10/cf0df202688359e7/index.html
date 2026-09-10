@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CORS設定ミスによる個人情報漏洩、実例に学ぶ — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Qiitaに投稿された記事で、著者(@nolanlover0527)は第三者の立場から、CORS(Cross-Origin Resource Sharing、異なるオリジン間でのリソース共有を制御する仕組み)の設定ミスがどのように個人情報漏洩事故につながるかを解説しています。危険なパターンとして、「Access-Con…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="CORS設定ミスによる個人情報漏洩、実例に学ぶ — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Qiitaに投稿された記事で、著者(@nolanlover0527)は第三者の立場から、CORS(Cross-Origin Resource Sharing、異なるオリジン間でのリソース共有を制御する仕組み)の設定ミスがどのように個人情報漏洩事故につながるかを解説しています。危険なパターンとして、「Access-Con…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/cf0df202688359e7/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/cf0df202688359e7/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "CORS設定ミスによる個人情報漏洩、実例に学ぶ", "datePublished": "2026-09-10", "description": "Qiitaに投稿された記事で、著者(@nolanlover0527)は第三者の立場から、CORS(Cross-Origin Resource Sharing、異なるオリジン間でのリソース共有を制御する仕組み)の設定ミスがどのように個人情報漏洩事故につながるかを解説しています。危険なパターンとして、「Access-Control-Allow-Origin: *…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/cf0df202688359e7/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/nolanlover0527/items/e6e0b5c18263fbfd656f?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-10/">2026.09.10 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>CORS設定ミスによる個人情報漏洩、実例に学ぶ</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-10">2026.09.10</time></div>
+</header>
+<div class="article-body">
+<p>Qiitaに投稿された記事で、著者(@nolanlover0527)は第三者の立場から、<strong>CORS(Cross-Origin Resource Sharing、異なるオリジン間でのリソース共有を制御する仕組み)</strong>の設定ミスがどのように個人情報漏洩事故につながるかを解説しています。危険なパターンとして、「Access-Control-Allow-Origin: *」と「Access-Control-Allow-Credentials: true」の同時指定(ブラウザ仕様上エラーになるため直接の原因にはならない)、Originヘッダーの値を無検証でそのまま反射する実装(最も危険とされる)、nullオリジンを許可するケース(sandbox化されたiframeから攻撃可能)の3つが挙げられています。</p>
+<p>実害事例としてZomato、Rockstar Games、米国防総省、LY Corporation(LINE)、UPchieveの5件が紹介されています。LY Corporationのケースでは<strong>「悪意あるWebページのリンクをユーザーがクリックしただけで個人情報が渡ってしまう」</strong>状態だったとされ、Rockstar Gamesでは「ユーザーのメールアドレスやIDなどの情報が本来意図しない形で外部に共有」される状態だったとされています。</p>
+<p>対策としては、ホワイトリスト方式による厳格なオリジン管理が提案されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>記事はQiitaに投稿された技術記事で、著者は@nolanlover0527(Yuuki)である。</li><li>記事はCORS設定ミスによる個人情報漏洩の危険性を第三者の立場で解説している。</li><li>CORS設定ミスのパターン1として、「Access-Control-Allow-Origin: *」と「Access-Control-Allow-Credentials: true」を同時指定するケースが挙げられている。</li><li>このパターン1はブラウザ仕様上エラーになるため直接的な漏洩原因にはならないとされている。</li><li>CORS設定ミスのパターン2として、リクエストのOriginヘッダーの値を無検証でそのまま反射する実装が挙げられ、最も危険とされている。</li><li>この場合、攻撃者が指定した任意のオリジンが許可される状態になるとされている。</li><li>CORS設定ミスのパターン3として、nullオリジンを許可するケースが挙げられ、sandbox化されたiframeから攻撃可能とされている。</li><li>実害事例としてZomatoが挙げられ、ドメイン判定ロジックの不備により他ユーザーのアカウント情報が読み取り可能な状態だったとされている。</li><li>実害事例としてRockstar Gamesが挙げられ、ユーザーのメールアドレスやIDなどの情報が意図しない形で外部に共有される状態だったとされている。</li><li>実害事例として米国防総省(DoD)が挙げられ、Originの無検証反射と認証情報許可の組み合わせによる問題が指摘されている。</li><li>実害事例としてLY Corporation(LINE)が挙げられ、悪意あるWebページのリンクをユーザーがクリックしただけで個人情報が渡ってしまう状態だったとされている。</li><li>実害事例としてUPchieveが挙げられ、任意サイトから認証付きリクエストを送信しレスポンスを読み取ることが可能な状態だったとされている。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>ユーザーのメールアドレスやIDなどの情報が本来意図しない形で外部に共有</blockquote><blockquote>悪意あるWebページのリンクをユーザーがクリックしただけで個人情報が渡ってしまう</blockquote><p class="quotes-source">出典: <a href="https://qiita.com/nolanlover0527/items/e6e0b5c18263fbfd656f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">qiita.com</a></p></section>
+<aside class="source-box"><a href="https://qiita.com/nolanlover0527/items/e6e0b5c18263fbfd656f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=CORS%E8%A8%AD%E5%AE%9A%E3%83%9F%E3%82%B9%E3%81%AB%E3%82%88%E3%82%8B%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E6%BC%8F%E6%B4%A9%E3%80%81%E5%AE%9F%E4%BE%8B%E3%81%AB%E5%AD%A6%E3%81%B6%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-10%2Fcf0df202688359e7%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=CORS%E8%A8%AD%E5%AE%9A%E3%83%9F%E3%82%B9%E3%81%AB%E3%82%88%E3%82%8B%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E6%BC%8F%E6%B4%A9%E3%80%81%E5%AE%9F%E4%BE%8B%E3%81%AB%E5%AD%A6%E3%81%B6%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-10/cf0df202688359e7/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-10%2Fcf0df202688359e7%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../9f7f933e8e6e1424/"><span>前の記事</span>京都芸術大学、AIエージェントによる開発パイプラインを内製</a><a class="next" href="../95078ba1e8e595dd/"><span>次の記事</span>React 19.3リリース、View TransitionsとFragment Refsが正式版に</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-10/">← 2026.09.10 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../065605305ab9b100/">Tailwind Labs、Shopify入りを発表</a></h3>
+<p class="excerpt">Tailwind Labs創設者のAdam Wathan氏は2026年9月9日、TailwindがShopifyに統合されることを発表しました。TailwindCSSは週間110万回以上インストールされており、ChatGPT、X、Clo…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tailwindcss.com</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../61df1e136ee7dfd9/">LLMのトークン効率化、実践のコツまとめ</a></h3>
+<p class="excerpt">LLM(大規模言語モデル)のトークン消費、つまりコストを抑えるための実践ポイントをまとめたZenn記事です。著者は「友人に送ったメモを清書した」形式で執筆しており、プロンプトキャッシュ機構の理解と活用、不要な処理の削減、タスク難度に応じ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../cf39d0f920487d27/">AIエージェントのコーディングルール、ArchUnitで機械検証</a></h3>
+<p class="excerpt">ZOZO Tech Blogの記事で、商品基盤部の藤本氏が、AIエージェント(主にClaude Code)にコーディングルールを守らせるための取り組みを紹介しています。課題として「ルール同士の矛盾や重複」と「ルール遵守がレビューに依存し…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>techblog.zozo.com</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

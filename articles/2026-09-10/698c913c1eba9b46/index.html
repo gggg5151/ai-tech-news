@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>推論に必要な回路だけを守る、省エネLLM圧縮手法 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Leonard TwagirayezuとPrasenjit Mitraによる論文は、大規模言語モデルをエネルギー効率よく配置するため、推論に不可欠な回路(reasoning circuits)を特定して保護しつつ、それ以外の部分を圧縮する「推論を意識した圧縮フレームワーク」を提案しています。均一な量子化(モデルの数値精…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="推論に必要な回路だけを守る、省エネLLM圧縮手法 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Leonard TwagirayezuとPrasenjit Mitraによる論文は、大規模言語モデルをエネルギー効率よく配置するため、推論に不可欠な回路(reasoning circuits)を特定して保護しつつ、それ以外の部分を圧縮する「推論を意識した圧縮フレームワーク」を提案しています。均一な量子化(モデルの数値精…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/698c913c1eba9b46/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/698c913c1eba9b46/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "推論に必要な回路だけを守る、省エネLLM圧縮手法", "datePublished": "2026-09-10", "description": "Leonard TwagirayezuとPrasenjit Mitraによる論文は、大規模言語モデルをエネルギー効率よく配置するため、推論に不可欠な回路(reasoning circuits)を特定して保護しつつ、それ以外の部分を圧縮する「推論を意識した圧縮フレームワーク」を提案しています。均一な量子化(モデルの数値精度を落として軽量化する手法)ではなく、推…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/698c913c1eba9b46/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.05512", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-10/">2026.09.10 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>推論に必要な回路だけを守る、省エネLLM圧縮手法</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-10">2026.09.10</time></div>
+</header>
+<div class="article-body">
+<p>Leonard TwagirayezuとPrasenjit Mitraによる論文は、大規模言語モデルをエネルギー効率よく配置するため、推論に不可欠な回路(reasoning circuits)を特定して保護しつつ、それ以外の部分を圧縮する「推論を意識した圧縮フレームワーク」を提案しています。均一な<strong>量子化(モデルの数値精度を落として軽量化する手法)</strong>ではなく、推論タスクへの感度が高い回路のみをFP16(16bit浮動小数点)精度に復元する手法です。</p>
+<p>GSM8K、FOLIO、MATH-500、ProofWriter、MuSiQueの5つの推論ベンチマークを用い、196〜224層にわたる量子化への脆弱性をプロファイリングした結果、INT4(4bit精度)量子化が推論の連鎖を長くしてしまいエネルギー効率を損なう場合があることが分かりました。数学推論タスクでは注意投影(attention projection)部分が、論理推論タスクではモデルの構造的な部分が、それぞれ量子化に対して重要であるなど、タスクによって脆弱な部分が異なることも発見しています。</p>
+<p>提案手法により、R1-Qwen-7BモデルのProofWriterタスクで従来手法比12ポイントの精度向上と、9.7%のエネルギー消費削減を同時に達成したとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『Reasoning-Aware Compression: Identifying and Protecting Vulnerable Reasoning Circuits for Energy-Efficient LLM Deployment』である</li><li>著者はLeonard TwagirayezuとPrasenjit Mitraである</li><li>論文は推論タスクに不可欠な回路を特定し、それらを保護しながら他の部分を圧縮する手法を提案している</li><li>評価には5つの推論ベンチマーク（GSM8K、FOLIO、MATH-500、ProofWriter、MuSiQue）を用いている</li><li>196〜224層にわたる量子化への脆弱性をプロファイリングしたと述べている</li><li>最も感度の高い回路をFP16精度に復元する手法であるとしている</li><li>INT4量子化により推論チェーンが延長され、エネルギー効率が損なわれる場合があることを発見したとしている</li><li>数学推論タスクでは注意投影(attention projection)部分が量子化に対して重要であるとしている</li><li>論理推論タスクでは数学推論とは異なる、モデルの構造的な部分で感度パターンが現れるとしている</li><li>R1-Qwen-7BモデルのProofWriterタスクにおいて、従来手法と比較して精度が12ポイント向上したとしている</li><li>同条件でエネルギー消費が9.7%削減されたとしている</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.05512" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E6%8E%A8%E8%AB%96%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E5%9B%9E%E8%B7%AF%E3%81%A0%E3%81%91%E3%82%92%E5%AE%88%E3%82%8B%E3%80%81%E7%9C%81%E3%82%A8%E3%83%8DLLM%E5%9C%A7%E7%B8%AE%E6%89%8B%E6%B3%95%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-10%2F698c913c1eba9b46%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E6%8E%A8%E8%AB%96%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E5%9B%9E%E8%B7%AF%E3%81%A0%E3%81%91%E3%82%92%E5%AE%88%E3%82%8B%E3%80%81%E7%9C%81%E3%82%A8%E3%83%8DLLM%E5%9C%A7%E7%B8%AE%E6%89%8B%E6%B3%95%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-10/698c913c1eba9b46/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-10%2F698c913c1eba9b46%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../0ab300cfd358b688/"><span>前の記事</span>AIエージェントはツールを信じすぎる、過信を実測</a><a class="next" href="../9c189da152af287d/"><span>次の記事</span>画像の細かい差分識別、MLLMの弱点を暴くベンチマーク</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-10/">← 2026.09.10 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../0ab300cfd358b688/">AIエージェントはツールを信じすぎる、過信を実測</a></h3>
+<p class="excerpt">Hoyeol Yang氏ら6名による論文は、14種類のLLMを対象に、ウェブ検索、LLMサブエージェントへの委譲、コード実行という3種類のツールから返される情報を意図的に破損させ、エージェントがその不正確な情報をどれだけ最終回答に採用し…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../9c189da152af287d/">画像の細かい差分識別、MLLMの弱点を暴くベンチマーク</a></h3>
+<p class="excerpt">既存のMLLM(マルチモーダル大規模言語モデル)は一般的な視覚理解タスクには強い一方、「2つの類似画像間の差異を特定する」という基本的な比較能力に弱点があるという問題意識のもと、研究チームは新ベンチマーク「VDiff-Bench」を提案…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-09/2577a65ea64b9f4f/">100体のAIが不正と内部告発に分裂、Google実験</a></h3>
+<p class="excerpt">Google DeepMindの研究者が、Gemini 3.1 Proを搭載したAIエージェント100体に、未解決問題を含む71個の数学問題を解かせる実験を行いました。実験開始から1時間で37問が解かれたものの、自動採点プログラムに正規…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-09-09">2026.09.09</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

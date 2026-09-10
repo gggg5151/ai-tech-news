@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>React 19.3リリース、View TransitionsとFragment Refsが正式版に — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Reactチームは2026年9月9日、React 19.3をリリースしました。目玉はView Transitions(ブラウザのView Transition APIを用いたアニメーション機能)とFragment Refs(単一の親要素を持たない兄弟要素グループにrefを設定できる機能)の正式版化です。View Tra…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="React 19.3リリース、View TransitionsとFragment Refsが正式版に — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Reactチームは2026年9月9日、React 19.3をリリースしました。目玉はView Transitions(ブラウザのView Transition APIを用いたアニメーション機能)とFragment Refs(単一の親要素を持たない兄弟要素グループにrefを設定できる機能)の正式版化です。View Tra…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/95078ba1e8e595dd/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/95078ba1e8e595dd/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "React 19.3リリース、View TransitionsとFragment Refsが正式版に", "datePublished": "2026-09-10", "description": "Reactチームは2026年9月9日、React 19.3をリリースしました。目玉はView Transitions(ブラウザのView Transition APIを用いたアニメーション機能)とFragment Refs(単一の親要素を持たない兄弟要素グループにrefを設定できる機能)の正式版化です。View Transitionsのアニメーションタイプは…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-10/95078ba1e8e595dd/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://react.dev/blog/2026/09/09/react-19-3", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-10/">2026.09.10 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>React 19.3リリース、View TransitionsとFragment Refsが正式版に</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>react.dev</span><time datetime="2026-09-10">2026.09.10</time></div>
+</header>
+<div class="article-body">
+<p>Reactチームは2026年9月9日、React 19.3をリリースしました。目玉は<strong>View Transitions(ブラウザのView Transition APIを用いたアニメーション機能)</strong>とFragment Refs(単一の親要素を持たない兄弟要素グループにrefを設定できる機能)の正式版化です。View Transitionsのアニメーションタイプはenter、exit、update、shareの4種類があり、addTransitionType機能により同じ状態更新でも異なるアニメーションタイプを指定できるようになりました。</p>
+<p>react-domには、サーバー側レンダリングをスキップしてlocalStorageなどブラウザのみの機能を扱えるbrowser() APIが追加されたほか、DOM-based XSS攻撃を防ぐTrusted Types APIへの対応も加わりました。Server Componentsではプロバイダー用ラッパーコンポーネントなしにContextを直接レンダリングできるようになるなど、多数の改善とバグ修正が行われています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Reactチームは2026年9月9日にReact 19.3をリリースした。</li><li>React 19.3ではView Transitions機能がブラウザのView Transition APIを使用し、実験的APIから正式版になった。</li><li>View Transitionsのアニメーションタイプにはenter、exit、update、shareの4種類がある。</li><li>addTransitionType機能により、同じ状態更新でも異なるアニメーションタイプを指定できるようになった。</li><li>React 19.3ではFragment Refsが追加され、単一の親要素を持たない兄弟要素グループに対してrefを設定できるようになった。</li><li>Fragment refで得られるFragmentInstanceは、addEventListener、focus、getClientRects、scrollIntoViewなどのメソッドを持つ。</li><li>react-domに新しいbrowser() APIが追加され、サーバー側レンダリングをスキップしてブラウザのみの機能(localStorageなど)を扱えるようになった。</li><li>React 19.3ではDOM-based XSS攻撃を防ぐTrusted Types APIに対応し、TrustedHTML、TrustedScript、TrustedScriptURLオブジェクトを直接渡せるようになった。</li><li>Server Componentsで、プロバイダー用ラッパーコンポーネントなしにContextを直接レンダリングできるようになった。</li><li>React DOMではonFullscreenChangeとonFullscreenErrorイベントに対応した。</li><li>Reactサーバー機能でError.causeとAggregateError.errorsをクライアントに転送できるようになった。</li><li>バグ修正として、useDeferredValueの古い値がスタックする問題やuseSyncExternalStoreの更新漏れなどが修正された。</li></ul></section>
+
+<aside class="source-box"><a href="https://react.dev/blog/2026/09/09/react-19-3" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">react.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=React%2019.3%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%80%81View%20Transitions%E3%81%A8Fragment%20Refs%E3%81%8C%E6%AD%A3%E5%BC%8F%E7%89%88%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-10%2F95078ba1e8e595dd%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=React%2019.3%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%80%81View%20Transitions%E3%81%A8Fragment%20Refs%E3%81%8C%E6%AD%A3%E5%BC%8F%E7%89%88%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-10/95078ba1e8e595dd/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-10%2F95078ba1e8e595dd%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../cf0df202688359e7/"><span>前の記事</span>CORS設定ミスによる個人情報漏洩、実例に学ぶ</a><a class="next" href="../92f64fb354a0c2c0/"><span>次の記事</span>Next.jsのHydration Error、原因と対処法を整理</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-10/">← 2026.09.10 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../065605305ab9b100/">Tailwind Labs、Shopify入りを発表</a></h3>
+<p class="excerpt">Tailwind Labs創設者のAdam Wathan氏は2026年9月9日、TailwindがShopifyに統合されることを発表しました。TailwindCSSは週間110万回以上インストールされており、ChatGPT、X、Clo…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tailwindcss.com</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../61df1e136ee7dfd9/">LLMのトークン効率化、実践のコツまとめ</a></h3>
+<p class="excerpt">LLM(大規模言語モデル)のトークン消費、つまりコストを抑えるための実践ポイントをまとめたZenn記事です。著者は「友人に送ったメモを清書した」形式で執筆しており、プロンプトキャッシュ機構の理解と活用、不要な処理の削減、タスク難度に応じ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../cf39d0f920487d27/">AIエージェントのコーディングルール、ArchUnitで機械検証</a></h3>
+<p class="excerpt">ZOZO Tech Blogの記事で、商品基盤部の藤本氏が、AIエージェント(主にClaude Code)にコーディングルールを守らせるための取り組みを紹介しています。課題として「ルール同士の矛盾や重複」と「ルール遵守がレビューに依存し…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>techblog.zozo.com</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
