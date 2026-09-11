@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anthropic公式Go SDKでtool use・streamingを検証 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Finatextのエンジニア、Reo Uehara氏がAnthropic公式のGo SDK「anthropic-sdk-go」を実際に試した検証記事を公開しました。SDKの利用にはGo 1.24以上が必要で、Goアプリケーションから直接Claude APIを呼び出せます。「Goで書かれた既存のサービスに、別言語のランタ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Anthropic公式Go SDKでtool use・streamingを検証 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Finatextのエンジニア、Reo Uehara氏がAnthropic公式のGo SDK「anthropic-sdk-go」を実際に試した検証記事を公開しました。SDKの利用にはGo 1.24以上が必要で、Goアプリケーションから直接Claude APIを呼び出せます。「Goで書かれた既存のサービスに、別言語のランタ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/fe5d6723cd5bbf96/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/fe5d6723cd5bbf96/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Anthropic公式Go SDKでtool use・streamingを検証", "datePublished": "2026-09-11", "description": "Finatextのエンジニア、Reo Uehara氏がAnthropic公式のGo SDK「anthropic-sdk-go」を実際に試した検証記事を公開しました。SDKの利用にはGo 1.24以上が必要で、Goアプリケーションから直接Claude APIを呼び出せます。「Goで書かれた既存のサービスに、別言語のランタイムを増やさずそのままClaudeを組み…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/fe5d6723cd5bbf96/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/finatext/articles/anthropic-go-sdk-tool-use-streaming", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-11/">2026.09.11 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Anthropic公式Go SDKでtool use・streamingを検証</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>Finatextのエンジニア、Reo Uehara氏がAnthropic公式のGo SDK「anthropic-sdk-go」を実際に試した検証記事を公開しました。SDKの利用にはGo 1.24以上が必要で、Goアプリケーションから直接Claude APIを呼び出せます。「Goで書かれた既存のサービスに、別言語のランタイムを増やさずそのままClaudeを組み込める」としています。</p>
+<p>記事では基本的なメッセージ送信（Messages.New()による同期的な応答取得）に加え、外部関数・APIをClaudeに呼び出させる<strong>Tool Use</strong>機能、ストリーミングでの応答受信の3つの使い方をコード例とともに解説しています。認証は環境変数ANTHROPIC_API_KEYの設定が最もシンプルとしつつ、antというCLIでのOAuth認証も紹介しています。天気予報を題材にした検証では、ツールなしでは「予報不可」という回答だったのに対し、ツールありの場合はダミーデータから具体的なアドバイスを返す回答になったと報告されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者はFinatextのエンジニア、Reo Uehara(上原玲緒)である</li><li>記事はAnthropic公式Go SDK「anthropic-sdk-go」について解説している</li><li>SDKのGitHubリポジトリはgithub.com/anthropics/anthropic-sdk-goである</li><li>SDKの利用にはGo 1.24以上が必要である</li><li>SDKを使うとGoアプリケーションから直接Claude APIを呼び出せる</li><li>SDKにはTool Use機能があり、外部関数・APIをClaudeに呼び出させることができる</li><li>SDKはストリーミングでの応答受信に対応している</li><li>認証方法として環境変数ANTHROPIC_API_KEYの設定が最もシンプルだと説明している</li><li>認証の代替案としてantというCLIでのOAuth認証も可能だと説明している</li><li>基本メッセージ送信はMessages.New()メソッドで同期的に応答を取得する</li><li>Tool UseはMessages.New()にツール定義を渡し、ツール呼び出しに対して自動実行と結果返却のループを実装する形で行う</li><li>記事内の検証で、天気予報に関する質問に対しツールなしでは「予報不可」という回答になったが、ツールありの場合はダミーデータから具体的なアドバイスを提供する回答になったと述べている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Goで書かれた既存のサービスに、別言語のランタイムを増やさずそのままClaudeを組み込める</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/finatext/articles/anthropic-go-sdk-tool-use-streaming" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/finatext/articles/anthropic-go-sdk-tool-use-streaming" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Anthropic%E5%85%AC%E5%BC%8FGo%20SDK%E3%81%A7tool%20use%E3%83%BBstreaming%E3%82%92%E6%A4%9C%E8%A8%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2Ffe5d6723cd5bbf96%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Anthropic%E5%85%AC%E5%BC%8FGo%20SDK%E3%81%A7tool%20use%E3%83%BBstreaming%E3%82%92%E6%A4%9C%E8%A8%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-11/fe5d6723cd5bbf96/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2Ffe5d6723cd5bbf96%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../38b04fc07de96e93/"><span>前の記事</span>動的ルートが/dashboardを飲み込む　Next.jsで見つけた予約語バグ</a><a class="next" href="../e46ed6a558d0a1ca/"><span>次の記事</span>Go×sqlcでDBアクセスの定型コードを消す</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-11/">← 2026.09.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../38b04fc07de96e93/">動的ルートが/dashboardを飲み込む　Next.jsで見つけた予約語バグ</a></h3>
+<p class="excerpt">個人プロジェクト「Hubpin」を開発する筆者が、Next.js App Routerで遭遇した不具合をZennで綴っています。/dashboardにアクセスしても404エラーにならず、公開ユーザーページの表示に「@dashboard」…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e46ed6a558d0a1ca/">Go×sqlcでDBアクセスの定型コードを消す</a></h3>
+<p class="excerpt">Go言語のDBアクセスにおいて、SQLから型安全なGoコードを自動生成するツール「sqlc」を紹介する記事です。ORMを使わずSQLは自分で書きつつ、rows.Scan()など、SQLとGoコードをつなぐ定型的なボイラープレート（毎回同…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../209bc3312152b7df/">OpenAPI定義を単一情報源に、Go×Next.jsの型を自動生成</a></h3>
+<p class="excerpt">Go（バックエンド）とNext.js（フロントエンド）構成で個人開発を行う著者が、「同じAPIの型をBackendとFrontendで2回書いている」という課題を解消した手法を紹介しています。従来は両者で同じAPIの型情報を別々に手書き…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

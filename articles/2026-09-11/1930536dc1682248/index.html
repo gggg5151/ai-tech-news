@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="LLMアーキテクチャの研究者・解説者であるSebastian Raschka氏は2026年9月9日、GPT-6 Astraをめぐる噂とその背景にあるとされるアーキテクチャについて解説する記事を公開しました。The InformationはOpenAIの公式発表の2日前、Astraが「recurrent depth」また…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="LLMアーキテクチャの研究者・解説者であるSebastian Raschka氏は2026年9月9日、GPT-6 Astraをめぐる噂とその背景にあるとされるアーキテクチャについて解説する記事を公開しました。The InformationはOpenAIの公式発表の2日前、Astraが「recurrent depth」また…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/1930536dc1682248/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/1930536dc1682248/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証", "datePublished": "2026-09-11", "description": "LLMアーキテクチャの研究者・解説者であるSebastian Raschka氏は2026年9月9日、GPT-6 Astraをめぐる噂とその背景にあるとされるアーキテクチャについて解説する記事を公開しました。The InformationはOpenAIの公式発表の2日前、Astraが「recurrent depth」または「looped transformer…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/1930536dc1682248/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://magazine.sebastianraschka.com/p/gpt-6-astra-looped-transformers-and", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-11/">2026.09.11 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>magazine.sebastianraschka.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>LLMアーキテクチャの研究者・解説者であるSebastian Raschka氏は2026年9月9日、GPT-6 Astraをめぐる噂とその背景にあるとされるアーキテクチャについて解説する記事を公開しました。The InformationはOpenAIの公式発表の2日前、Astraが「recurrent depth」または「<strong>looped transformers</strong>」（同じtransformerブロックに中間表現を複数回通す設計）を使っているという未確認の内部情報をスクープ報道していました。</p>
+<p>Astraはベンチマーク「ARC-AGI-3」で99.9%を達成したと報告されており、同じベンチマークで7.8%だったGPT-5.6 Solを大きく上回ります。3Dレンダリング・アニメーションタスクや数学・コーディングでも前身モデルを大幅に上回るとされ、PaintやBlenderなどのGUIを操作できるコンピュータ使用機能も備えます。OpenAIは強化学習用に「数万台のMac MiniとMac Studio」を購入したと報じられており、NVIDIAのCEOはAstraが約10万個のGrace Blackwell GPUで学習されたと述べています。</p>
+<p>一方でOpenAIは公式に、Astraを含む現行フロンティアモデルの「計算グラフの深さはGPT-4の2倍以内」だと説明しています。Chief ScientistのJakub Pachocki氏は「混乱した報道によって引き起こされる、監視不能性への競争を防ぎたい」という趣旨の発言をしています。Raschka氏はこの記事で、Astraが短い推論トレースを使う傾向はモデルの能力向上による自然な結果であり、looped transformersが意図的に推論を隠しているという証拠はないとの立場を示しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>OpenAIは2026年9月にGPT-6 Astraを公式リリースした</li><li>The InformationはOpenAIの公式発表の2日前にAstraについてスクープ報道した</li><li>The Informationのリポートは、Astraが「recurrent depth」または「looped transformers」を使用しているという未確認の内部情報を伝えた</li><li>Astraはベンチマーク「ARC-AGI-3」で99.9%を達成したと報告されている</li><li>比較対象のGPT-5.6 Solは同じARC-AGI-3ベンチマークで7.8%だった</li><li>Astraは3Dレンダリング・アニメーションタスクで特に優れているとされる</li><li>Astraは数学・コーディングで前身モデルを大幅に上回るとされる</li><li>Astraはグラフィカルユーザーインターフェース(PaintやBlenderなど)を操作できるコンピュータ使用機能を持つ</li><li>OpenAIは強化学習用に「数万台のMac MiniとMac Studio」を購入したと報告されている</li><li>NVIDIAのCEOは、Astraは約100,000個のGrace Blackwell GPUで学習されたと述べた</li><li>OpenAIは、Astraを含む現行のフロンティアモデルの計算グラフの深さはGPT-4の2倍以内であると公式に述べている</li><li>OpenAIのChief ScientistであるJakub Pachockiは「混乱した報道によって引き起こされる、監視不能性への競争を防ぎたい」という趣旨の発言をした</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>depth of the computation graph for our present frontier models, including Astra, is within a factor of two of GPT-4</blockquote><blockquote>I want to prevent a race into unmonitorability kicked off by confused reporting</blockquote><blockquote>essentially an architectural tweak, with the main idea being to pass the intermediate representations through the same transformer blocks multiple times</blockquote><p class="quotes-source">出典: <a href="https://magazine.sebastianraschka.com/p/gpt-6-astra-looped-transformers-and" target="_blank" rel="noopener noreferrer">magazine.sebastianraschka.com</a></p></section>
+<aside class="source-box"><a href="https://magazine.sebastianraschka.com/p/gpt-6-astra-looped-transformers-and" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">magazine.sebastianraschka.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=GPT-6%20Astra%E3%81%AE%E6%AD%A3%E4%BD%93%E3%81%AF%E3%80%8C%E3%83%AB%E3%83%BC%E3%83%97%E5%9E%8Btransformer%E3%80%8D%E3%81%8B%E3%80%80%E9%9A%A0%E3%82%8C%E3%81%9F%E6%8E%A8%E8%AB%96%E7%96%91%E6%83%91%E3%82%92%E6%A4%9C%E8%A8%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F1930536dc1682248%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=GPT-6%20Astra%E3%81%AE%E6%AD%A3%E4%BD%93%E3%81%AF%E3%80%8C%E3%83%AB%E3%83%BC%E3%83%97%E5%9E%8Btransformer%E3%80%8D%E3%81%8B%E3%80%80%E9%9A%A0%E3%82%8C%E3%81%9F%E6%8E%A8%E8%AB%96%E7%96%91%E6%83%91%E3%82%92%E6%A4%9C%E8%A8%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-11/1930536dc1682248/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F1930536dc1682248%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../7356378f27a3d2b8/"><span>前の記事</span>コーディングモデル「SWE-2」、Cognitionが発表</a><a class="next" href="../b178e4a4819e3e71/"><span>次の記事</span>OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-11/">← 2026.09.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../f0861b358f90f763/">DeepSeek-V4.1-Flash発表、値上げ撤回し低コストで上位モデル超えを主張</a></h3>
+<p class="excerpt">中国DeepSeek社は2026年9月10日（現地時間）、新モデル「DeepSeek-V4.1-Flash」を発表しました。MoE（Mixture of Experts、入力内容に応じて一部のパラメータだけを動かし処理効率を高める仕組み…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../441da789b12c6475/">GPT-6 Astra、仕事向け次世代モデルとして正式発表</a></h3>
+<p class="excerpt">OpenAIは仕事向けの次世代モデル「GPT-6 Astra」を発表し、ChatGPT Work、Codex、APIで利用可能になりました。開発者向け動画は公開から4日間で55万回以上再生されています。ターンレイテンシ（応答が返ってくる…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../7356378f27a3d2b8/">コーディングモデル「SWE-2」、Cognitionが発表</a></h3>
+<p class="excerpt">開発元Cognition自身の発表によれば、新型コーディングモデル「SWE-2」はベンチマーク「FrontierCode 1.1 Main」で50.0%のスコアを記録し、同等性能とされるFable 5.1と比べてコストは64%安いとして…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>cognition.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

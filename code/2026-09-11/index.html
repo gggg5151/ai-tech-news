@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AlexsJones/llmfit の llmfit-core/src/fit.rs を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="llmfitは「手元のGPU/CPUでどのLLMが動くか」を一発で診断するCLIツールです（k8sgptの作者による小粒プロジェクト）。実体はGoではなくRustで書かれており、中核のfit.rsには「モデルの速度・メモリ適合度をどう見積もるか」の計算ロジックが詰まっています。今回は、実行モード（GPU実行かCPUオフ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AlexsJones/llmfit の llmfit-core/src/fit.rs を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="llmfitは「手元のGPU/CPUでどのLLMが動くか」を一発で診断するCLIツールです（k8sgptの作者による小粒プロジェクト）。実体はGoではなくRustで書かれており、中核のfit.rsには「モデルの速度・メモリ適合度をどう見積もるか」の計算ロジックが詰まっています。今回は、実行モード（GPU実行かCPUオフ…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-11/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-11/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.11</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・rust</span>
+<h1>AlexsJones/llmfit の <code>llmfit-core/src/fit.rs</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/AlexsJones/llmfit/blob/HEAD/llmfit-core/src/fit.rs" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>llmfitは「手元のGPU/CPUでどのLLMが動くか」を一発で診断するCLIツールです（k8sgptの作者による小粒プロジェクト）。実体はGoではなくRustで書かれており、中核のfit.rsには「モデルの速度・メモリ適合度をどう見積もるか」の計算ロジックが詰まっています。今回は、実行モード（GPU実行かCPUオフロードか等）や用途別の重み付けスコアを「設定可能だがデフォルト値も持つ」形で表現している部分を読みます。Rustの構造体とDefaultトレイトの組み合わせという、実務でとてもよく出るパターンです。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize)]
+pub struct RunModeFactors {
+    pub gpu: f64,
+    pub tensor_parallel: f64,
+    pub moe_offload: f64,
+    pub cpu_offload: f64,
+    pub cpu_only: f64,
+}
+
+impl Default for RunModeFactors {
+    fn default() -&gt; Self {
+        Self {
+            gpu: 1.0,
+            tensor_parallel: 0.9,
+            moe_offload: 0.8,
+            cpu_offload: 0.5,
+            cpu_only: 0.3,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize)]
+pub struct ScoringWeights {
+    /// (quality_weight, speed_weight, fit_weight, context_weight) per use case,
+    /// stored in the same order as `UseCase` variants.
+    /// Order: General, Coding, Reasoning, Chat, Multimodal, Embedding
+    pub weights: [[f64; 4]; 6],
+}
+
+impl Default for ScoringWeights {
+    fn default() -&gt; Self {
+        Self {
+            weights: [
+                [0.45, 0.30, 0.15, 0.10], // General
+                [0.50, 0.20, 0.15, 0.15], // Coding
+                [0.55, 0.15, 0.15, 0.15], // Reasoning
+                [0.40, 0.35, 0.15, 0.10], // Chat
+                [0.50, 0.20, 0.15, 0.15], // Multimodal
+                [0.30, 0.40, 0.20, 0.10], // Embedding
+            ],
+        }
+    }
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize)]</code></pre><p>`#[...]` はRustの「属性(attribute)」という構文で、この直下の要素（ここでは次の構造体）にコンパイラへの追加指示を与えます。`derive(...)`は「このトレイト(振る舞いの契約)の実装を自動生成してね」という意味です。Debugは`{:?}`で中身を出力できるようにする、Cloneは複製メソッド`.clone()`を生やす、Copyは代入時に所有権を奪わずビット単位でコピーする軽量な型にする、serde::Serialize/Deserializeは外部crate(サードパーティライブラリ)のserdeが提供するJSON等への変換機能です。1行書くだけでこれら5つの機能が手書きなしで手に入ります。</p></div><div class="walk-step"><pre class="walk-quote"><code>pub struct RunModeFactors {
+    pub gpu: f64,
+    pub tensor_parallel: f64,
+    pub moe_offload: f64,
+    pub cpu_offload: f64,
+    pub cpu_only: f64,
+}</code></pre><p>`struct` は複数のデータをひとまとめにする型定義（Goのstructと同じ発想）です。`pub` はpublicの略で、このモジュールの外からも見える/使えることを示します。フィールドはすべて`f64`（64ビット浮動小数点数）型で、GPUで実行する場合・テンソル並列で実行する場合・MoEオフロード・CPUオフロード・CPUのみ、という5つの実行モードそれぞれに対する「速度の掛け目（倍率）」を保持しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>impl Default for RunModeFactors {
+    fn default() -&gt; Self {</code></pre><p>`impl Trait for Type` はRustで「この型にこのトレイトを実装する」ための構文です。`Default`は標準ライブラリのトレイトで、「引数なしで妥当な初期値を作れる型」という契約を表します。`fn default() -&gt; Self` はそのトレイトが要求するメソッドの実装で、`Self`は「今implしている型自身（ここではRunModeFactors）」を指すエイリアスです。この実装があると、他のコードから`RunModeFactors::default()`や`Default::default()`で初期値を取得できるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>Self {
+            gpu: 1.0,
+            tensor_parallel: 0.9,
+            moe_offload: 0.8,
+            cpu_offload: 0.5,
+            cpu_only: 0.3,
+        }</code></pre><p>`Self { field: value, ... }` は構造体リテラルで、各フィールドに値を詰めてインスタンスを作る構文です（Rustではこれが関数の最後の式ならセミコロンなしでそのまま戻り値になります）。数値の意味を見ると、GPUで動かす場合は基準の1.0倍速、テンソル並列は0.9倍、MoEオフロードは0.8倍…とCPUのみの0.3倍まで段階的に下がっています。つまりこの構造体は「実行方式が理想から離れるほど遅くなる」というドメイン知識を、コード上は単なる5つの数値として表現しているわけです。</p></div><div class="walk-step"><pre class="walk-quote"><code>pub struct ScoringWeights {
+    /// (quality_weight, speed_weight, fit_weight, context_weight) per use case,</code></pre><p>`///` はドキュメントコメントで、`//`の普通のコメントと違いこの構文で書くと`cargo doc`が拾ってAPIドキュメントとして表示してくれます。ここでは「weightsフィールドの各要素は(品質, 速度, 適合度, コンテキスト長)の重みの並びだよ」という意味をコードのすぐ上に書き残しています。コメントも含めてコードの一部として大切に扱うRustらしい書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>/// Order: General, Coding, Reasoning, Chat, Multimodal, Embedding
+    pub weights: [[f64; 4]; 6],</code></pre><p>型`[[f64; 4]; 6]`は「固定長配列の配列」です。`[f64; 4]`が「f64が4個入った配列」で、それをさらに6個並べたものが全体の型になります。直前のコメント行`Order: General, Coding, ...`が、6個並ぶ配列の何番目がどの用途（一般・コーディング・推論など）に対応するかを示しており、コードだけでは読み取れない「順序の意味」をコメントで補っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>[0.45, 0.30, 0.15, 0.10], // General
+                [0.50, 0.20, 0.15, 0.15], // Coding</code></pre><p>配列リテラルは`[要素, 要素, ...]`と書きます。ここでは内側の`[0.45, 0.30, 0.15, 0.10]`のような配列が外側の`[`の中に6個並んでいます。行末の`// General`のようなコメントは、上のドキュメントコメントで書かれた「Order: General, Coding, ...」という順番と対応させて、読み手がその場で「これが何番目の用途の重みか」を迷わず分かるようにする工夫です。各行を合計するとだいたい1.0（0.45+0.30+0.15+0.10）になっており、4つの評価軸への配分になっていることも読み取れます。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「設定値」は関数の中にハードコードせず、構造体＋`impl Default`という形にすると、デフォルト値を持ちつつ後から一部だけ上書き可能な「調整可能な設定オブジェクト」になる——この型のDefault実装パターンは覚えて帰ろう。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-09/"><span>前の日</span>ollama/ollama</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-11/">← 2026.09.11 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

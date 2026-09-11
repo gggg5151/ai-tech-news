@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>小規模言語モデルでパラメータを計算量に変換する「ループ型」手法 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="訓練データが限られる小規模言語モデルにおいて、パラメータ数を増やす代わりに少数のパラメータ層を繰り返し適用して計算量を増やす手法を提案する論文です。著者はTingshuo Fan氏ら5名。マスク付き次トークン予測と因果言語モデリングの目的を組み合わせた深さ方向のパラメータ共有を用い、748万語規模の英語コーパスで学習さ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="小規模言語モデルでパラメータを計算量に変換する「ループ型」手法 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="訓練データが限られる小規模言語モデルにおいて、パラメータ数を増やす代わりに少数のパラメータ層を繰り返し適用して計算量を増やす手法を提案する論文です。著者はTingshuo Fan氏ら5名。マスク付き次トークン予測と因果言語モデリングの目的を組み合わせた深さ方向のパラメータ共有を用い、748万語規模の英語コーパスで学習さ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/5e468519950e877e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/5e468519950e877e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "小規模言語モデルでパラメータを計算量に変換する「ループ型」手法", "datePublished": "2026-09-11", "description": "訓練データが限られる小規模言語モデルにおいて、パラメータ数を増やす代わりに少数のパラメータ層を繰り返し適用して計算量を増やす手法を提案する論文です。著者はTingshuo Fan氏ら5名。マスク付き次トークン予測と因果言語モデリングの目的を組み合わせた深さ方向のパラメータ共有を用い、748万語規模の英語コーパスで学習させています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/5e468519950e877e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.09691", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-11/">2026.09.11 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>小規模言語モデルでパラメータを計算量に変換する「ループ型」手法</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>訓練データが限られる小規模言語モデルにおいて、パラメータ数を増やす代わりに少数のパラメータ層を繰り返し適用して計算量を増やす手法を提案する論文です。著者はTingshuo Fan氏ら5名。マスク付き次トークン予測と因果言語モデリングの目的を組み合わせた深さ方向のパラメータ共有を用い、748万語規模の英語コーパスで学習させています。</p>
+<p>4層を12回反復する「4×12モデル」（パラメータ数12.18M）を開発し、公開されているGPT-2/GPT-BERTのベースラインと比較したところ、BLiMPやGLUEなどのタスクでより少ないパラメータ数で同等の性能を達成したと主張しています。BabyLM 2026リーダーボードでは全体平均35.42、NLP平均48.48のスコアを報告していますが、物理的な層数が少ないことによる表現空間の制限という限界にも言及しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「Looped GPT-BERT: Trading Parameters for Computation in Small Language Modeling」</li><li>著者はTingshuo Fan、Hongtao Mu、Tianyu Zhou、Hansen Liu、Tao Jiの5名</li><li>研究では訓練データが限定される状況を対象としている</li><li>マスク付き次トークン予測と因果言語モデリングの目的を組み合わせた深さ方向のパラメータ共有を用いている</li><li>748万語の英語コーパスで訓練を行った</li><li>4×12モデル（4層を12回反復、パラメータ数12.18M）を開発した</li><li>公開されているGPT-2/GPT-BERTのベースラインと比較評価を行った</li><li>BLiMPおよびGLUEを含む選定された言語・下流タスクにおいて、より少ないパラメータ数で同等の性能を達成したと主張している</li><li>BabyLM 2026リーダーボードで全体平均35.42、NLP平均48.48のスコアを報告している</li><li>物理的な層数が少ないことにより表現空間が制限されるという限界を指摘している</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.09691" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E5%B0%8F%E8%A6%8F%E6%A8%A1%E8%A8%80%E8%AA%9E%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A7%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E8%A8%88%E7%AE%97%E9%87%8F%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B%E3%80%8C%E3%83%AB%E3%83%BC%E3%83%97%E5%9E%8B%E3%80%8D%E6%89%8B%E6%B3%95%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F5e468519950e877e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E5%B0%8F%E8%A6%8F%E6%A8%A1%E8%A8%80%E8%AA%9E%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A7%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E8%A8%88%E7%AE%97%E9%87%8F%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B%E3%80%8C%E3%83%AB%E3%83%BC%E3%83%97%E5%9E%8B%E3%80%8D%E6%89%8B%E6%B3%95%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-11/5e468519950e877e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F5e468519950e877e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../44c4270931410c25/"><span>前の記事</span>長期タスクのスキル実行、サブエージェント方式が優位に</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-11/">← 2026.09.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../1d6984b305b1bce2/">コード生成時の自己コメント、効くのは『内容』であって『形式』ではない</a></h3>
+<p class="excerpt">LLMがコード生成時に自ら書く自然言語コメントが、後続のコード生成にどう影響するかを調べた研究です。著者はDangfeng Pan氏ら5名。観察分析と制御実験を組み合わせ、弱いモデルに強いモデルが生成したコメントを事前提供することで、コ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../44c4270931410c25/">長期タスクのスキル実行、サブエージェント方式が優位に</a></h3>
+<p class="excerpt">長期タスクをこなすLLMエージェントが、再利用可能な知識（スキル）をどう実行すべきかを検証した論文です。著者はWasu Top Piriyakulkij氏ら5名で、2026年9月7日にarXivへ投稿されました。従来、スキル指示をエージ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-10/0ab300cfd358b688/">AIエージェントはツールを信じすぎる、過信を実測</a></h3>
+<p class="excerpt">Hoyeol Yang氏ら6名による論文は、14種類のLLMを対象に、ウェブ検索、LLMサブエージェントへの委譲、コード実行という3種類のツールから返される情報を意図的に破損させ、エージェントがその不正確な情報をどれだけ最終回答に採用し…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

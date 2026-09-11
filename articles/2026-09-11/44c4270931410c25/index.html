@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>長期タスクのスキル実行、サブエージェント方式が優位に — 1年目向けエンジニア新聞</title>
+<meta name="description" content="長期タスクをこなすLLMエージェントが、再利用可能な知識（スキル）をどう実行すべきかを検証した論文です。著者はWasu Top Piriyakulkij氏ら5名で、2026年9月7日にarXivへ投稿されました。従来、スキル指示をエージェントのメインコンテキストウィンドウに読み込む手法は、情報蓄積により推論品質が低下す…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="長期タスクのスキル実行、サブエージェント方式が優位に — 1年目向けエンジニア新聞">
+<meta property="og:description" content="長期タスクをこなすLLMエージェントが、再利用可能な知識（スキル）をどう実行すべきかを検証した論文です。著者はWasu Top Piriyakulkij氏ら5名で、2026年9月7日にarXivへ投稿されました。従来、スキル指示をエージェントのメインコンテキストウィンドウに読み込む手法は、情報蓄積により推論品質が低下す…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/44c4270931410c25/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/44c4270931410c25/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "長期タスクのスキル実行、サブエージェント方式が優位に", "datePublished": "2026-09-11", "description": "長期タスクをこなすLLMエージェントが、再利用可能な知識（スキル）をどう実行すべきかを検証した論文です。著者はWasu Top Piriyakulkij氏ら5名で、2026年9月7日にarXivへ投稿されました。従来、スキル指示をエージェントのメインコンテキストウィンドウに読み込む手法は、情報蓄積により推論品質が低下する問題があるとしています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/44c4270931410c25/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.09233", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-11/">2026.09.11 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>長期タスクのスキル実行、サブエージェント方式が優位に</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>長期タスクをこなすLLMエージェントが、再利用可能な知識（スキル）をどう実行すべきかを検証した論文です。著者はWasu Top Piriyakulkij氏ら5名で、2026年9月7日にarXivへ投稿されました。従来、スキル指示をエージェントのメインコンテキストウィンドウに読み込む手法は、情報蓄積により推論品質が低下する問題があるとしています。</p>
+<p>代替として、スキルパッケージを独立したコンテキストウィンドウを持つ「サブエージェント」として実行する方式を提案・検証しました。入出力の契約が明確なスキルパッケージでは、サブエージェント実行が従来手法を上回る一方、通信のオーバーヘッドというトレードオフが生じるとしています。論文は、再利用可能な知識の効果は内容だけでなく、組織方法や呼び出し方法にも依存すると主張しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『Subagents vs Agent Skills: Executing Reusable Knowledge for Long-Horizon Agentic Tasks』</li><li>著者はWasu Top Piriyakulkij、Rachel Lawrence、Alicia Curth、Sushrut Karmalkar、Niranjani Prasadの5名</li><li>arXiv投稿日は2026年9月7日</li><li>従来のスキル実行手法はスキル指示をエージェントのメインコンテキストウィンドウに読み込む方式である</li><li>この従来手法は情報が蓄積されると推論品質が低下するという問題があるとされている</li><li>代替手法として、スキルパッケージを独立したコンテキストウィンドウを持つ『サブエージェント』として実行する方式が提案されている</li><li>入出力の契約(input-output contract)が明確なスキルパッケージにおいて、サブエージェント実行は従来手法より性能が高いという実験結果が示されている</li><li>サブエージェント実行には追加の通信オーバーヘッドというトレードオフがあるとされている</li><li>再利用可能な知識の効果は、知識の内容だけでなく組織方法(how it&#x27;s organized)と呼び出し方法(how it&#x27;s invoked)にも依存すると論文は主張している</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.09233" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E9%95%B7%E6%9C%9F%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E3%82%B9%E3%82%AD%E3%83%AB%E5%AE%9F%E8%A1%8C%E3%80%81%E3%82%B5%E3%83%96%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E6%96%B9%E5%BC%8F%E3%81%8C%E5%84%AA%E4%BD%8D%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F44c4270931410c25%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E9%95%B7%E6%9C%9F%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E3%82%B9%E3%82%AD%E3%83%AB%E5%AE%9F%E8%A1%8C%E3%80%81%E3%82%B5%E3%83%96%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E6%96%B9%E5%BC%8F%E3%81%8C%E5%84%AA%E4%BD%8D%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-11/44c4270931410c25/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F44c4270931410c25%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1d6984b305b1bce2/"><span>前の記事</span>コード生成時の自己コメント、効くのは『内容』であって『形式』ではない</a><a class="next" href="../5e468519950e877e/"><span>次の記事</span>小規模言語モデルでパラメータを計算量に変換する「ループ型」手法</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-11/">← 2026.09.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../1d6984b305b1bce2/">コード生成時の自己コメント、効くのは『内容』であって『形式』ではない</a></h3>
+<p class="excerpt">LLMがコード生成時に自ら書く自然言語コメントが、後続のコード生成にどう影響するかを調べた研究です。著者はDangfeng Pan氏ら5名。観察分析と制御実験を組み合わせ、弱いモデルに強いモデルが生成したコメントを事前提供することで、コ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../5e468519950e877e/">小規模言語モデルでパラメータを計算量に変換する「ループ型」手法</a></h3>
+<p class="excerpt">訓練データが限られる小規模言語モデルにおいて、パラメータ数を増やす代わりに少数のパラメータ層を繰り返し適用して計算量を増やす手法を提案する論文です。著者はTingshuo Fan氏ら5名。マスク付き次トークン予測と因果言語モデリングの目…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-10/0ab300cfd358b688/">AIエージェントはツールを信じすぎる、過信を実測</a></h3>
+<p class="excerpt">Hoyeol Yang氏ら6名による論文は、14種類のLLMを対象に、ウェブ検索、LLMサブエージェントへの委譲、コード実行という3種類のツールから返される情報を意図的に破損させ、エージェントがその不正確な情報をどれだけ最終回答に採用し…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

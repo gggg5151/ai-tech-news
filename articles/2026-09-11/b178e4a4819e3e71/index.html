@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenAIは新しい「Agents API」をパブリックベータとして公開しました。全開発者が利用可能で、追加費用はなく使用したトークンとツールの費用のみがかかります。単一のAPI呼び出しでタスク・モデル・ツール・実行環境を指定してエージェントを作成できるのが特徴です。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenAIは新しい「Agents API」をパブリックベータとして公開しました。全開発者が利用可能で、追加費用はなく使用したトークンとツールの費用のみがかかります。単一のAPI呼び出しでタスク・モデル・ツール・実行環境を指定してエージェントを作成できるのが特徴です。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/b178e4a4819e3e71/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/b178e4a4819e3e71/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築", "datePublished": "2026-09-11", "description": "OpenAIは新しい「Agents API」をパブリックベータとして公開しました。全開発者が利用可能で、追加費用はなく使用したトークンとツールの費用のみがかかります。単一のAPI呼び出しでタスク・モデル・ツール・実行環境を指定してエージェントを作成できるのが特徴です。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/b178e4a4819e3e71/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://openai.com/index/introducing-the-agents-api", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-11/">2026.09.11 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>OpenAIは新しい「Agents API」をパブリックベータとして公開しました。全開発者が利用可能で、追加費用はなく使用したトークンとツールの費用のみがかかります。単一のAPI呼び出しでタスク・モデル・ツール・実行環境を指定してエージェントを作成できるのが特徴です。</p>
+<p>計算環境は、OpenAI管理のサンドボックス、開発者自身のインフラ、またはBlaxel、Cloudflare、Daytona、DigitalOceanなど9社のエコシステムパートナーとの統合から選べます。長時間セッションに対応するため、以前のコンテキストを自動的に圧縮する機能や、トークン使用量を削減するツール検索機能を備えています。</p>
+<p>そのほか、並列実行可能なプログラマティックツール呼び出しや、サブエージェントによるマルチエージェント対応も可能です。<strong>MCP</strong>（Model Context Protocol、AIモデルと外部ツール・データソースをつなぐ標準規格）やカスタム関数、組み込みツールにも対応しており、Codexと同様のオープンソースハーネスがベースになっています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>OpenAIは「Agents API」をパブリックベータとして本日開始した</li><li>Agents APIは全開発者が利用可能である</li><li>Agents APIの利用に追加費用はなく、使用したトークンとツールの費用のみがかかる</li><li>Agents APIでは単一のAPI呼び出しでタスク・モデル・ツール・環境を指定してエージェントを作成できる</li><li>計算環境としてOpenAI管理のサンドボックス、開発者自身のインフラストラクチャ、またはBlaxel、Cloudflare、Daytona、DigitalOceanなど9社のエコシステムパートナーとの統合から選択できる</li><li>Agents APIは長時間セッションに対応するため、以前のコンテキストを自動的に圧縮する機能を持つ</li><li>Agents APIはトークン使用量を削減するツール検索機能を持つ</li><li>Agents APIは並列実行可能なプログラマティックツール呼び出しに対応する</li><li>Agents APIはサブエージェントによる並列作業のマルチエージェント対応をしている</li><li>Agents APIはCodexと同様のオープンソースハーネスをベースにしている</li><li>Agents APIはMCP、カスタム関数、組み込みツールに対応する</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>automatically compacts earlier context</blockquote><p class="quotes-source">出典: <a href="https://openai.com/index/introducing-the-agents-api" target="_blank" rel="noopener noreferrer">openai.com</a></p></section>
+<aside class="source-box"><a href="https://openai.com/index/introducing-the-agents-api" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">openai.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=OpenAI%E3%80%8CAgents%20API%E3%80%8D%E3%82%92%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF%E3%83%99%E3%83%BC%E3%82%BF%E5%85%AC%E9%96%8B%E3%80%81%E5%8D%98%E4%B8%80%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97%E3%81%A7%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E6%A7%8B%E7%AF%89%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2Fb178e4a4819e3e71%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=OpenAI%E3%80%8CAgents%20API%E3%80%8D%E3%82%92%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF%E3%83%99%E3%83%BC%E3%82%BF%E5%85%AC%E9%96%8B%E3%80%81%E5%8D%98%E4%B8%80%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97%E3%81%A7%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E6%A7%8B%E7%AF%89%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-11/b178e4a4819e3e71/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2Fb178e4a4819e3e71%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1930536dc1682248/"><span>前の記事</span>GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証</a><a class="next" href="../38b04fc07de96e93/"><span>次の記事</span>動的ルートが/dashboardを飲み込む　Next.jsで見つけた予約語バグ</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-11/">← 2026.09.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../f0861b358f90f763/">DeepSeek-V4.1-Flash発表、値上げ撤回し低コストで上位モデル超えを主張</a></h3>
+<p class="excerpt">中国DeepSeek社は2026年9月10日（現地時間）、新モデル「DeepSeek-V4.1-Flash」を発表しました。MoE（Mixture of Experts、入力内容に応じて一部のパラメータだけを動かし処理効率を高める仕組み…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../441da789b12c6475/">GPT-6 Astra、仕事向け次世代モデルとして正式発表</a></h3>
+<p class="excerpt">OpenAIは仕事向けの次世代モデル「GPT-6 Astra」を発表し、ChatGPT Work、Codex、APIで利用可能になりました。開発者向け動画は公開から4日間で55万回以上再生されています。ターンレイテンシ（応答が返ってくる…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../7356378f27a3d2b8/">コーディングモデル「SWE-2」、Cognitionが発表</a></h3>
+<p class="excerpt">開発元Cognition自身の発表によれば、新型コーディングモデル「SWE-2」はベンチマーク「FrontierCode 1.1 Main」で50.0%のスコアを記録し、同等性能とされるFable 5.1と比べてコストは64%安いとして…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>cognition.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

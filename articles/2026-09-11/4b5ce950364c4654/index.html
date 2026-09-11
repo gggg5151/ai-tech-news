@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>手元のPCに合うLLMを推薦するRust製ツール「llmfit」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="「llmfit」は、AlexsJones氏が開発したRust製のターミナルツールです。手元のCPU・RAM・GPU・VRAMなどのハードウェア構成を解析し、快適に動作するオープンソースLLMを量子化形式ごとに推薦してくれます。NVIDIA CUDA、Apple Silicon、AMD ROCm、Intel OneAPI…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="手元のPCに合うLLMを推薦するRust製ツール「llmfit」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="「llmfit」は、AlexsJones氏が開発したRust製のターミナルツールです。手元のCPU・RAM・GPU・VRAMなどのハードウェア構成を解析し、快適に動作するオープンソースLLMを量子化形式ごとに推薦してくれます。NVIDIA CUDA、Apple Silicon、AMD ROCm、Intel OneAPI…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/4b5ce950364c4654/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/4b5ce950364c4654/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "手元のPCに合うLLMを推薦するRust製ツール「llmfit」", "datePublished": "2026-09-11", "description": "「llmfit」は、AlexsJones氏が開発したRust製のターミナルツールです。手元のCPU・RAM・GPU・VRAMなどのハードウェア構成を解析し、快適に動作するオープンソースLLMを量子化形式ごとに推薦してくれます。NVIDIA CUDA、Apple Silicon、AMD ROCm、Intel OneAPIの自動検出に対応し、GGUF、AWQ、G…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-11/4b5ce950364c4654/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/AlexsJones/llmfit", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-11/">2026.09.11 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>手元のPCに合うLLMを推薦するRust製ツール「llmfit」</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</header>
+<div class="article-body">
+<p>「llmfit」は、AlexsJones氏が開発したRust製のターミナルツールです。手元のCPU・RAM・GPU・VRAMなどのハードウェア構成を解析し、快適に動作するオープンソースLLMを量子化形式ごとに推薦してくれます。NVIDIA CUDA、Apple Silicon、AMD ROCm、Intel OneAPIの自動検出に対応し、GGUF、AWQ、GPTQ、EXL2といった量子化形式のモデル互換性分析も行います。</p>
+<p>インタラクティブなTUI（ターミナル上で動く対話的な画面）、Webダッシュボード、REST APIから利用でき、コミュニティによるベンチマーク結果をローカルに保存する機能もあります。マルチGPU構成やMoEアーキテクチャにも対応しており、<code>llmfit recommend</code>や<code>llmfit bench</code>といったサブコマンドが用意されています。macOS・Linux・Windowsに対応し、MITライセンスで公開されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>ツール名は「llmfit」である</li><li>作者はAlexsJonesである</li><li>CPU・RAM・GPU・VRAMなどのハードウェア構成を解析し、実行可能なオープンソースLLMを推薦する機能を持つ</li><li>NVIDIA CUDA、Apple Silicon、AMD ROCm、Intel OneAPIのハードウェア自動検出に対応する</li><li>GGUF、AWQ、GPTQ、EXL2の量子化形式のモデル互換性分析に対応する</li><li>インタラクティブなTUIとWebダッシュボードを提供する</li><li>REST APIエンドポイントを提供する</li><li>コミュニティによるベンチマーク結果をローカルに保存する機能がある</li><li>マルチGPU構成とMoEアーキテクチャに対応する</li><li><code>llmfit</code>コマンドでデフォルトのTUIが起動し、<code>llmfit recommend</code>、<code>llmfit fit</code>、<code>llmfit bench</code>、<code>llmfit serve</code>などのサブコマンドがある</li><li>Rust(Cargo)で実装されており、Pythonバインディングも存在し、macOS・Linux・Windowsに対応する</li><li>ライセンスはMITである</li></ul></section>
+
+<aside class="source-box"><a href="https://github.com/AlexsJones/llmfit" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E6%89%8B%E5%85%83%E3%81%AEPC%E3%81%AB%E5%90%88%E3%81%86LLM%E3%82%92%E6%8E%A8%E8%96%A6%E3%81%99%E3%82%8BRust%E8%A3%BD%E3%83%84%E3%83%BC%E3%83%AB%E3%80%8Cllmfit%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F4b5ce950364c4654%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E6%89%8B%E5%85%83%E3%81%AEPC%E3%81%AB%E5%90%88%E3%81%86LLM%E3%82%92%E6%8E%A8%E8%96%A6%E3%81%99%E3%82%8BRust%E8%A3%BD%E3%83%84%E3%83%BC%E3%83%AB%E3%80%8Cllmfit%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-11/4b5ce950364c4654/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-11%2F4b5ce950364c4654%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../9454646839f2f96e/"><span>前の記事</span>コーディングエージェント向け方法論フレームワーク「Superpowers」</a><a class="next" href="../0ae384b15578d6da/"><span>次の記事</span>Google公式Goクライアントライブラリ、「完成・メンテナンスモード」を明言</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-11/">← 2026.09.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../9454646839f2f96e/">コーディングエージェント向け方法論フレームワーク「Superpowers」</a></h3>
+<p class="excerpt">「Superpowers」は、コーディングエージェント向けに設計された「composable skills framework」（組み合わせ可能なスキルフレームワーク）です。いきなりコードを書かせるのではなく、ブレインストーミング、Gi…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../0ae384b15578d6da/">Google公式Goクライアントライブラリ、「完成・メンテナンスモード」を明言</a></h3>
+<p class="excerpt">Googleが公式に提供する、Google Discovery Serviceの記述から自動生成されたGo言語向けクライアントライブラリ集です。多数のGoogle APIにGoからアクセスするためのパッケージ群を提供しますが、「完成して…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-11">2026.09.11</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-09-10/639edcb5ca55e5fb/">複数LLMを一元管理するGo製ゲートウェイ「New API」</a></h3>
+<p class="excerpt">QuantumNousが開発するOSS「New API」は、次世代LLMゲートウェイ兼AIアセット管理システムです。OpenAI、Claude、Gemini互換形式への相互フォーマット変換に対応し、複数のAIモデルプロバイダーを一元管理…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-10">2026.09.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

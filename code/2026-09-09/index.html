@@ -111,7 +111,7 @@ func HumanBytes(b int64) string {
 	}
 }</code></pre><p>10未満かつ小数部分もない（つまりvalueがちょうど3.0のようなきりのいい数）場合はここに落ちてきて、整数表示（3 GB）で返します。2つの条件どちらにも当てはまらなかった残りのケースをdefaultで拾うことで、switch全体が必ずどれか1つのcaseかdefaultを通り、関数が必ずstringを返すことが保証されています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>整数同士の割り算では小数点以下が切り捨てられるため、小数を扱いたい場合は先にfloat64(x)のように型変換してから演算する、という基本パターンを覚えて帰ってください。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-08/"><span>前の日</span>colinhacks/zod</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-08/"><span>前の日</span>colinhacks/zod</a><a class="next" href="../2026-09-11/"><span>次の日</span>AlexsJones/llmfit</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-09/">← 2026.09.09 の号を読む</a>
 </div>
 </article>
