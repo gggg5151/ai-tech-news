@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>単体テスト実行時間、6割削減の内訳 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を16分14秒から5分59秒（約63%削減）に短縮した事例です。CI環境はEC2 r8gd.2xlargeのセルフホストランナーを使用しています…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="単体テスト実行時間、6割削減の内訳 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を16分14秒から5分59秒（約63%削減）に短縮した事例です。CI環境はEC2 r8gd.2xlargeのセルフホストランナーを使用しています…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/525eb01e8cb4d5b1/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/525eb01e8cb4d5b1/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "単体テスト実行時間、6割削減の内訳", "datePublished": "2026-09-12", "description": "Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を16分14秒から5分59秒（約63%削減）に短縮した事例です。CI環境はEC2 r8gd.2xlargeのセルフホストランナーを使用しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/525eb01e8cb4d5b1/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/dress_code/articles/5dd5de5020d9ef", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-12/">2026.09.12 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>単体テスト実行時間、6割削減の内訳</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</header>
+<div class="article-body">
+<p>Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を<strong>16分14秒から5分59秒（約63%削減）</strong>に短縮した事例です。CI環境はEC2 r8gd.2xlargeのセルフホストランナーを使用しています。</p>
+<p>対策は4つです。未使用のカバレッジレポート収集機能をCI環境から除外して約7分短縮、Prismaのenum専用の入口を作りClientクラスとruntimeへの依存を切り離して平均16.52秒から14.41秒に短縮（約13%）、Vitestの実行方式をプロセス独立型（forks）からスレッド型（threads）に変更して16.00秒から14.29秒に短縮（約8.7%）、そして統合テストと重複する単体テストの整理を継続中とのことです。</p>
+<p>著者は改善作業の大部分をAIに委任し、自身は目標設定と方針の助言に留めたとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Dress Code株式会社のプロダクトエンジニアチームが単体テストの実行時間削減に取り組んだ</li><li>対象はモノリシックアーキテクチャで約2,900ファイル、3万テストケースを持つプロダクト</li><li>テスト実行時間を16分14秒から5分59秒に短縮した（約63%削減）</li><li>使用技術はNode.js v24、NestJS v11、PrismaJS v7、Vitest v4</li><li>CI環境はEC2 r8gd.2xlargeのセルフホストランナー</li><li>対策1：使用していないカバレッジレポート収集機能をCI環境から除外し、約7分短縮した</li><li>対策2：Prismaのenum専用の入口を作成しClientクラスとruntimeへの依存を切り離すことで、平均実行時間を16.52秒から14.41秒に短縮した（約13%）</li><li>対策3：Vitestの実行方式をプロセス独立型（forks）からスレッド型（threads）に変更し、16.00秒から14.29秒に短縮した（約8.7%）</li><li>対策4として、統合テストで既に検証済みの振る舞いと重複する単体テストの整理を行っており、継続中である</li><li>著者はAIに改善作業をほぼ委任し、自身は目標設定と方針の助言に留めたとしている</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/dress_code/articles/5dd5de5020d9ef" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%E5%AE%9F%E8%A1%8C%E6%99%82%E9%96%93%E3%80%816%E5%89%B2%E5%89%8A%E6%B8%9B%E3%81%AE%E5%86%85%E8%A8%B3%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2F525eb01e8cb4d5b1%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%E5%AE%9F%E8%A1%8C%E6%99%82%E9%96%93%E3%80%816%E5%89%B2%E5%89%8A%E6%B8%9B%E3%81%AE%E5%86%85%E8%A8%B3%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-12/525eb01e8cb4d5b1/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2F525eb01e8cb4d5b1%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../41eddf386daa3979/"><span>前の記事</span>9年もののCLIで見たGo標準ライブラリの進化</a><a class="next" href="../3d2f114f4ab619ce/"><span>次の記事</span>Next.jsのDockerビルド、19分短縮の顛末</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-12/">← 2026.09.12 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../41eddf386daa3979/">9年もののCLIで見たGo標準ライブラリの進化</a></h3>
+<p class="excerpt">PR TIMES CTOでPodcast「八百万のOSS」ホストの金子達哉（catatsuy）氏が、Go Conference 2026での発表を基に執筆した記事です。2017年9月から約9年保守しているCLIツール「notify_sl…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../3d2f114f4ab619ce/">Next.jsのDockerビルド、19分短縮の顛末</a></h3>
+<p class="excerpt">株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、next build自体に…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../af20b951b9723edb/">TypeScript 7は10倍速い、でも乗り換えは保留</a></h3>
+<p class="excerpt">TypeScript 7ではコンパイラ実装がJavaScriptからGoへ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約11.9倍）に短縮されたと報告されています。他のプロジェクトでも7…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

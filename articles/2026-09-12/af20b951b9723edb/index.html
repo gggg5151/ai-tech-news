@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TypeScript 7は10倍速い、でも乗り換えは保留 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="TypeScript 7ではコンパイラ実装がJavaScriptからGoへ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約11.9倍）に短縮されたと報告されています。他のプロジェクトでも7.7〜8.9倍の高速化が確認され、型チェックの並列化（既定のワーカー数は4）も実装さ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="TypeScript 7は10倍速い、でも乗り換えは保留 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="TypeScript 7ではコンパイラ実装がJavaScriptからGoへ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約11.9倍）に短縮されたと報告されています。他のプロジェクトでも7.7〜8.9倍の高速化が確認され、型チェックの並列化（既定のワーカー数は4）も実装さ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/af20b951b9723edb/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/af20b951b9723edb/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "TypeScript 7は10倍速い、でも乗り換えは保留", "datePublished": "2026-09-12", "description": "TypeScript 7ではコンパイラ実装がJavaScriptからGoへ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約11.9倍）に短縮されたと報告されています。他のプロジェクトでも7.7〜8.9倍の高速化が確認され、型チェックの並列化（既定のワーカー数は4）も実装されました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/af20b951b9723edb/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/bitou_engineer/articles/0968af9e32c906", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-12/">2026.09.12 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>TypeScript 7は10倍速い、でも乗り換えは保留</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</header>
+<div class="article-body">
+<p>TypeScript 7ではコンパイラ実装がJavaScriptから<strong>Go</strong>へ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約<strong>11.9倍</strong>）に短縮されたと報告されています。他のプロジェクトでも7.7〜8.9倍の高速化が確認され、型チェックの並列化（既定のワーカー数は4）も実装されました。</p>
+<p>一方で著者は、Vue・Astro・Svelte・AngularといったツールがまだTypeScript 7の安定したプログラマブルAPIに対応しておらずTypeScript 6.0への依存が続くこと、TypeScript 6.0自体が既定値変更を伴う破壊的変更を含み6.0未移行のプロジェクトは6.0と7.0への二段階移行が必要になることを理由に、乗り換えをまだ決めきれないとしています。「速さを手に入れる代わりに、周辺のツール群にしばらく追いついてもらう時間が要る」と評されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>TypeScript 7ではコンパイラ実装がJavaScriptからGoへ移植された</li><li>公式ベンチマークによるとVS Code本体のフルビルド時間は125.7秒から10.6秒に短縮された</li><li>上記の短縮は約11.9倍の高速化に相当する</li><li>その他のプロジェクトでは7.7〜8.9倍の高速化が報告されている</li><li>TypeScript 7では型チェックの並列化が実装された</li><li>型チェック並列化の既定のワーカー数は4に設定されている</li><li>Vue、Astro、Svelte、Angularなどの周辺ツールは、TypeScript 7.0の安定したプログラマブルAPIをまだ公開・対応していない</li><li>上記周辺ツールは現状TypeScript 6.0に依存し続ける必要がある</li><li>TypeScript 6.0では既定値の変更を伴う破壊的変更が行われている</li><li>TypeScript 6.0へまだ移行していないプロジェクトは、6.0と7.0への二段階の移行が必要になる</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>速さを手に入れる代わりに、周辺のツール群にしばらく追いついてもらう時間が要る</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/bitou_engineer/articles/0968af9e32c906" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/bitou_engineer/articles/0968af9e32c906" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=TypeScript%207%E3%81%AF10%E5%80%8D%E9%80%9F%E3%81%84%E3%80%81%E3%81%A7%E3%82%82%E4%B9%97%E3%82%8A%E6%8F%9B%E3%81%88%E3%81%AF%E4%BF%9D%E7%95%99%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2Faf20b951b9723edb%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=TypeScript%207%E3%81%AF10%E5%80%8D%E9%80%9F%E3%81%84%E3%80%81%E3%81%A7%E3%82%82%E4%B9%97%E3%82%8A%E6%8F%9B%E3%81%88%E3%81%AF%E4%BF%9D%E7%95%99%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-12/af20b951b9723edb/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2Faf20b951b9723edb%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../3d2f114f4ab619ce/"><span>前の記事</span>Next.jsのDockerビルド、19分短縮の顛末</a><a class="next" href="../e58bfbb124a05c38/"><span>次の記事</span>GoバイナリへのeBPF計装、なぜ難しいのか</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-12/">← 2026.09.12 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../41eddf386daa3979/">9年もののCLIで見たGo標準ライブラリの進化</a></h3>
+<p class="excerpt">PR TIMES CTOでPodcast「八百万のOSS」ホストの金子達哉（catatsuy）氏が、Go Conference 2026での発表を基に執筆した記事です。2017年9月から約9年保守しているCLIツール「notify_sl…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../525eb01e8cb4d5b1/">単体テスト実行時間、6割削減の内訳</a></h3>
+<p class="excerpt">Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を16分14秒から5分59秒（約63%削減）に短縮した事例で…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../3d2f114f4ab619ce/">Next.jsのDockerビルド、19分短縮の顛末</a></h3>
+<p class="excerpt">株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、next build自体に…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

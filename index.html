@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.09.11の号: OpenAIが仕事向け新モデル「GPT-6 Astra」とAgents APIを発表 / DeepSeekが値上げから一転、新モデルV4.1-Flashで値下げ / GPT-6 Astraの「ループ型transformer」疑惑をめぐる考察記事が話題 / Next.js動的ルートのハマりどころ、Go×sqlc/OpenAPIの実践Tips / DuckDBのメモリ外GR…">
+<meta name="description" content="2026.09.12の号: Anthropicが年齢確認を導入、Claudeは18歳以上限定の方針に / 中国AI「Kimi」がClaudeへ裏で転送していた疑惑、Anthropicが脅威レポート公開 / DeepSeek新モデルがClaude Opus 5・GPT-5.6 Sol超えを主張 / Next.jsビルド19分短縮、単体テスト6割削減など現場発の実践ネタが充実 / フィールズ賞受賞者2…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.09.11の号: OpenAIが仕事向け新モデル「GPT-6 Astra」とAgents APIを発表 / DeepSeekが値上げから一転、新モデルV4.1-Flashで値下げ / GPT-6 Astraの「ループ型transformer」疑惑をめぐる考察記事が話題 / Next.js動的ルートのハマりどころ、Go×sqlc/OpenAPIの実践Tips / DuckDBのメモリ外GR…">
+<meta property="og:description" content="2026.09.12の号: Anthropicが年齢確認を導入、Claudeは18歳以上限定の方針に / 中国AI「Kimi」がClaudeへ裏で転送していた疑惑、Anthropicが脅威レポート公開 / DeepSeek新モデルがClaude Opus 5・GPT-5.6 Sol超えを主張 / Next.jsビルド19分短縮、単体テスト6割削減など現場発の実践ネタが充実 / フィールズ賞受賞者2…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,127 +30,125 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-11">2026年9月11日（金）</time><span class="edition-count">16記事・読了まで約14分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>OpenAIが仕事向け新モデル「GPT-6 Astra」とAgents APIを発表</li><li>DeepSeekが値上げから一転、新モデルV4.1-Flashで値下げ</li><li>GPT-6 Astraの「ループ型transformer」疑惑をめぐる考察記事が話題</li><li>Next.js動的ルートのハマりどころ、Go×sqlc/OpenAPIの実践Tips</li><li>DuckDBのメモリ外GROUP BY処理を深掘りする技術記事</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-f0861b358f90f763">DeepSeek-V4.1-Flash発表、値上げ撤回し低コストで上位モデル超えを主張</a></li><li><a href="#a-441da789b12c6475">GPT-6 Astra、仕事向け次世代モデルとして正式発表</a></li><li><a href="#a-7356378f27a3d2b8">コーディングモデル「SWE-2」、Cognitionが発表</a></li><li><a href="#a-1930536dc1682248">GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証</a></li><li><a href="#a-b178e4a4819e3e71">OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-38b04fc07de96e93">動的ルートが/dashboardを飲み込む　Next.jsで見つけた予約語バグ</a></li><li><a href="#a-fe5d6723cd5bbf96">Anthropic公式Go SDKでtool use・streamingを検証</a></li><li><a href="#a-e46ed6a558d0a1ca">Go×sqlcでDBアクセスの定型コードを消す</a></li><li><a href="#a-209bc3312152b7df">OpenAPI定義を単一情報源に、Go×Next.jsの型を自動生成</a></li><li><a href="#a-dfb65e76dc279a8b">メモリに載らないGROUP BYをDuckDBはどう処理するか</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-9454646839f2f96e">コーディングエージェント向け方法論フレームワーク「Superpowers」</a></li><li><a href="#a-4b5ce950364c4654">手元のPCに合うLLMを推薦するRust製ツール「llmfit」</a></li><li><a href="#a-0ae384b15578d6da">Google公式Goクライアントライブラリ、「完成・メンテナンスモード」を明言</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-1d6984b305b1bce2">コード生成時の自己コメント、効くのは『内容』であって『形式』ではない</a></li><li><a href="#a-44c4270931410c25">長期タスクのスキル実行、サブエージェント方式が優位に</a></li><li><a href="#a-5e468519950e877e">小規模言語モデルでパラメータを計算量に変換する「ループ型」手法</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-f0861b358f90f763">
-<h3><a href="articles/2026-09-11/f0861b358f90f763/">DeepSeek-V4.1-Flash発表、値上げ撤回し低コストで上位モデル超えを主張</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
-<div class="paper-body"><p>中国DeepSeek社は2026年9月10日（現地時間）、新モデル「DeepSeek-V4.1-Flash」を発表しました。<strong>MoE</strong>（Mixture of Experts、入力内容に応じて一部のパラメータだけを動かし処理効率を高める仕組み）アーキテクチャを採用し、パラメータ数は5520億（552B）です。同社は、自社のフラッグシップモデル「DeepSeek-V4-Pro」に加え、OpenAIの「GPT-5.6 Sol」やAnthropicの「Claude Opus 5」も一部性能で上回ると主張しています。</p>
-<p>注目すべきは料金です。DeepSeekは2026年8月13日に利用料金を値上げしたばかりでしたが、今回の発表と同日に一転して値下げしました。新しいオフピーク時料金は、入力がキャッシュヒット時0.003ドル・キャッシュミス時0.15ドル、出力0.6ドルで、値下げ前の入力0.007ドル／0.22ドル、出力0.66ドルから引き下げられています。背景には、KVキャッシュ（過去の計算結果を再利用する仕組み）の量を削減する新アーキテクチャがあり、特に入力時の料金効率を高めたとされています。</p></div>
-<p class="paper-source"><a href="https://www.itmedia.co.jp/aiplus/article/2609/10/2000001374/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/f0861b358f90f763/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-441da789b12c6475">
-<h3><a href="articles/2026-09-11/441da789b12c6475/">GPT-6 Astra、仕事向け次世代モデルとして正式発表</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
-<div class="paper-body"><p>OpenAIは仕事向けの次世代モデル「GPT-6 Astra」を発表し、ChatGPT Work、Codex、APIで利用可能になりました。開発者向け動画は公開から4日間で55万回以上再生されています。<strong>ターンレイテンシ</strong>（応答が返ってくるまでの時間）は25倍削減された一方、メモリ使用量は30%増加したとしています。</p>
-<p>安全性評価では、GPT-5.6 Solと比較して不具合が89%、Claude Fable 5.1と比較して74.7%それぞれ削減されたと報告されています。料金は入力が100万トークンあたり10ドル、出力が同50ドルです。新機能としてコンピュータ操作、ブラウジング、エンタープライズ管理者コントロールを備え、確認ポリシーや自動レビュー、Zero Data Retention（データを保持しない設定）といった安全機能も提供されます。新規のエンタープライズプラグインとしてOracle Analytics、Power BI、Navan、Avalaraが追加されました。OpenAIはGPT-6 Astraを「世界で最も知的で配置されたモデル」と位置づけています。</p></div>
-<p class="paper-source"><a href="https://openai.com/index/gpt-6-astra-next-generation-work" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/441da789b12c6475/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-7356378f27a3d2b8">
-<h3><a href="articles/2026-09-11/7356378f27a3d2b8/">コーディングモデル「SWE-2」、Cognitionが発表</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>cognition.com</span></div>
-<div class="paper-body"><p>開発元Cognition自身の発表によれば、新型コーディングモデル「SWE-2」はベンチマーク「FrontierCode 1.1 Main」で50.0%のスコアを記録し、同等性能とされるFable 5.1と比べてコストは64%安いとしています。ベースモデルにはKimi K3（2.8兆パラメータ）を採用しています。</p>
-<p>作業効率の面では、FrontierCode 1.1 Mainでの平均ステップ数を127から53に削減、最初の編集に至るまでのステップ数も中央値で前モデルSWE-1.7の48から18へと減らしたとしています。政治的に敏感なトピックに関するトラストワーズネス（信頼性）評価では98.0%の合格率を記録したとのことです。これらの数値はCognition自身の発表によるもので、外部による検証は行われていません。</p></div>
-<p class="paper-source"><a href="https://cognition.com/blog/swe-2" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/7356378f27a3d2b8/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-1930536dc1682248">
-<h3><a href="articles/2026-09-11/1930536dc1682248/">GPT-6 Astraの正体は「ループ型transformer」か　隠れた推論疑惑を検証</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>magazine.sebastianraschka.com</span></div>
-<div class="paper-body"><p>LLMアーキテクチャの研究者・解説者であるSebastian Raschka氏は2026年9月9日、GPT-6 Astraをめぐる噂とその背景にあるとされるアーキテクチャについて解説する記事を公開しました。The InformationはOpenAIの公式発表の2日前、Astraが「recurrent depth」または「<strong>looped transformers</strong>」（同じtransformerブロックに中間表現を複数回通す設計）を使っているという未確認の内部情報をスクープ報道していました。</p>
-<p>Astraはベンチマーク「ARC-AGI-3」で99.9%を達成したと報告されており、同じベンチマークで7.8%だったGPT-5.6 Solを大きく上回ります。3Dレンダリング・アニメーションタスクや数学・コーディングでも前身モデルを大幅に上回るとされ、PaintやBlenderなどのGUIを操作できるコンピュータ使用機能も備えます。OpenAIは強化学習用に「数万台のMac MiniとMac Studio」を購入したと報じられており、NVIDIAのCEOはAstraが約10万個のGrace Blackwell GPUで学習されたと述べています。</p>
-<p>一方でOpenAIは公式に、Astraを含む現行フロンティアモデルの「計算グラフの深さはGPT-4の2倍以内」だと説明しています。Chief ScientistのJakub Pachocki氏は「混乱した報道によって引き起こされる、監視不能性への競争を防ぎたい」という趣旨の発言をしています。Raschka氏はこの記事で、Astraが短い推論トレースを使う傾向はモデルの能力向上による自然な結果であり、looped transformersが意図的に推論を隠しているという証拠はないとの立場を示しています。</p></div>
-<p class="paper-source"><a href="https://magazine.sebastianraschka.com/p/gpt-6-astra-looped-transformers-and" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/1930536dc1682248/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-b178e4a4819e3e71">
-<h3><a href="articles/2026-09-11/b178e4a4819e3e71/">OpenAI「Agents API」をパブリックベータ公開、単一呼び出しでエージェント構築</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
-<div class="paper-body"><p>OpenAIは新しい「Agents API」をパブリックベータとして公開しました。全開発者が利用可能で、追加費用はなく使用したトークンとツールの費用のみがかかります。単一のAPI呼び出しでタスク・モデル・ツール・実行環境を指定してエージェントを作成できるのが特徴です。</p>
-<p>計算環境は、OpenAI管理のサンドボックス、開発者自身のインフラ、またはBlaxel、Cloudflare、Daytona、DigitalOceanなど9社のエコシステムパートナーとの統合から選べます。長時間セッションに対応するため、以前のコンテキストを自動的に圧縮する機能や、トークン使用量を削減するツール検索機能を備えています。</p>
-<p>そのほか、並列実行可能なプログラマティックツール呼び出しや、サブエージェントによるマルチエージェント対応も可能です。<strong>MCP</strong>（Model Context Protocol、AIモデルと外部ツール・データソースをつなぐ標準規格）やカスタム関数、組み込みツールにも対応しており、Codexと同様のオープンソースハーネスがベースになっています。</p></div>
-<p class="paper-source"><a href="https://openai.com/index/introducing-the-agents-api" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/b178e4a4819e3e71/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-38b04fc07de96e93">
-<h3><a href="articles/2026-09-11/38b04fc07de96e93/">動的ルートが/dashboardを飲み込む　Next.jsで見つけた予約語バグ</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-12">2026年9月12日（土）</time><span class="edition-count">16記事・読了まで約12分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Anthropicが年齢確認を導入、Claudeは18歳以上限定の方針に</li><li>中国AI「Kimi」がClaudeへ裏で転送していた疑惑、Anthropicが脅威レポート公開</li><li>DeepSeek新モデルがClaude Opus 5・GPT-5.6 Sol超えを主張</li><li>Next.jsビルド19分短縮、単体テスト6割削減など現場発の実践ネタが充実</li><li>フィールズ賞受賞者25名がAIと数学の関係に「深刻な不整合」を警告</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-5ecdf160e906bdb7">中国AI「Kimi」、裏でClaudeに転送か</a></li><li><a href="#a-0382cd16512c6eb7">Claude、18歳未満の利用不可に</a></li><li><a href="#a-75965d6eb3fdc003">DeepSeek新モデル、Claude・GPT超えを主張</a></li><li><a href="#a-e02faa1fe91267ad">ChatGPT Workに企業データ分析AI「Data agent」</a></li><li><a href="#a-4f8ca6f5fd720973">フィールズ賞受賞者25名、AIと数学の「深刻な不整合」を警告</a></li><li><a href="#a-8ef53272e8ed733e">折りたたみ「iPhone Duo」対応ガイド</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-41eddf386daa3979">9年もののCLIで見たGo標準ライブラリの進化</a></li><li><a href="#a-525eb01e8cb4d5b1">単体テスト実行時間、6割削減の内訳</a></li><li><a href="#a-3d2f114f4ab619ce">Next.jsのDockerビルド、19分短縮の顛末</a></li><li><a href="#a-af20b951b9723edb">TypeScript 7は10倍速い、でも乗り換えは保留</a></li><li><a href="#a-e58bfbb124a05c38">GoバイナリへのeBPF計装、なぜ難しいのか</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-7d2b998871064786">Claude Code v2.1.269リリース</a></li><li><a href="#a-c7a74d245b911364">GitHub公式、仕様駆動開発ツール「Spec Kit」</a></li><li><a href="#a-ae65d05369603692">Ollama、v0.34.0-rc5をプレリリース</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-adf7e09cc64990ba">統計力学でAIエージェント群の集団行動を予測</a></li><li><a href="#a-ea4779aa96a9188b">エージェントAIを外部から自動レッドチーミング</a></li></ol></li></ul></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-5ecdf160e906bdb7">
+<h3><a href="articles/2026-09-12/5ecdf160e906bdb7/">中国AI「Kimi」、裏でClaudeに転送か</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>japan.cnet.com</span></div>
+<div class="paper-body"><p>Anthropicが2026年9月11日に公開した脅威レポートによると、中国Moonshot AIのチャットボット「Kimi」が、利用者の入力内容をAnthropicのClaudeに転送し、Claudeが生成した回答をあたかも自社モデルの回答であるかのように表示していた可能性があるとしています。Moonshotはやり取りの少なくとも一部を保存していたともされています。</p>
+<p>10日間で約<strong>30万件</strong>のリクエストがAnthropicに転送され、大半がClaude Opusで処理されていたとのことです。転送された内容には企業の内部文書やデータベースアクセス用の認証情報が含まれていた可能性があると報告されています。</p>
+<p>「利用者が自分の選んだAIとやり取りしているつもりでも、入力した企業情報や認証情報が別のAI事業者に渡っていた可能性がある」と評されています。レポートにはDeepSeekやXiaomi（MiMo）を含む中国の<strong>7つのAI研究組織</strong>が、Claudeの出力を大量収集してモデルの能力を真似る「蒸留」を試みていたとの記載もあります。</p></div>
+<p class="paper-source"><a href="https://japan.cnet.com/article/35252543/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/5ecdf160e906bdb7/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-0382cd16512c6eb7">
+<h3><a href="articles/2026-09-12/0382cd16512c6eb7/">Claude、18歳未満の利用不可に</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>support.claude.com</span></div>
+<div class="paper-body"><p>Anthropicはサポート記事で、Claudeが<strong>18歳以上</strong>のユーザーのみを対象とすることを明確化しました。未成年者の利用を示す信号を検出する安全システムを備えており、検出されたアカウントは無効化されますが、年齢確認（age assurance）を行うことで復旧の機会があります。</p>
+<p>年齢確認は独立監査済みでSOC2（情報管理体制の第三者監査基準）準拠のプロバイダーYotiを通じて行われ、3つの方法から選べます。自撮り写真からAIが年齢を推定し身分証不要な顔認証、パスポートや運転免許証をアップロードする身分証確認、そしてYotiアプリで既存アプリの「18歳以上」属性を共有する方法です。</p>
+<p>自撮り写真や身分証画像はYotiによって確認後すぐに削除され、Anthropicは合否結果のみを受け取り、個人情報自体の処理・保管は行わないとされています。</p></div>
+<p class="paper-source"><a href="https://support.claude.com/en/articles/15171100-age-assurance-on-claude" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/0382cd16512c6eb7/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-75965d6eb3fdc003">
+<h3><a href="articles/2026-09-12/75965d6eb3fdc003/">DeepSeek新モデル、Claude・GPT超えを主張</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
+<div class="paper-body"><p>DeepSeekが2026年9月10日、オープンモデル「DeepSeek-V4.1-Flash」を公開しました。MoE（複数の専門家モデルを切り替えて使う構成）で総パラメータ数5520億、入力時80億・出力時160億のアクティブパラメータを持ち、テキストと画像入力に対応します。</p>
+<p>複数のベンチマークテストで<strong>Claude Opus 5</strong>や<strong>GPT-5.6 Sol</strong>を上回ったとされています。第三者機関Artificial AnalysisのテストではIntelligence Index v4.3スコアが<strong>40</strong>を記録し、GPT-5.6 Lunaを上回りました。AutomationBenchではGPT-6 Astraを上回ったとも報告されています。</p>
+<p>前モデル比でKVキャッシュを3.9分の1に削減し、メモリを4分の1、ストレージを8分の1に縮小するなど効率化も図られています。Hugging FaceやModelScopeでMITライセンスの下、無償公開されています。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20260911-deepseek-v4-1-flash/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/75965d6eb3fdc003/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e02faa1fe91267ad">
+<h3><a href="articles/2026-09-12/e02faa1fe91267ad/">ChatGPT Workに企業データ分析AI「Data agent」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
+<div class="paper-body"><p>OpenAIがChatGPT Work向けに、企業データを読み込んで質問への回答やインタラクティブなダッシュボード作成を行える新機能「Data agent」を追加しました。組織固有のビジネス用語や指標定義、カスタム計算を理解した上で分析結果を生成します。</p>
+<p>Amazon RedshiftやSnowflake、BigQueryなどのデータウェアハウス、TableauなどのBI（ビジネスインテリジェンス）ツール、GoogleドライブやSharePointのファイルと連携できます。OpenAI社内では製品チーム全員、マーケティング・営業・カスタマーサクセス部門の2/3以上が活用しているとされ、NTTデータもアルファプログラムに参加しています。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20260911-chatgpt-work-data-agent/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/e02faa1fe91267ad/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4f8ca6f5fd720973">
+<h3><a href="articles/2026-09-12/4f8ca6f5fd720973/">フィールズ賞受賞者25名、AIと数学の「深刻な不整合」を警告</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>mathandai.org</span></div>
+<div class="paper-body"><p>2026年9月11日付で公開された宣言文に、フィールズ賞受賞者<strong>25名</strong>が連名で署名しました。最年少は2026年受賞のYu Deng、最も歴史の古い受賞者は1978年受賞のPierre Deligneです。AI企業が数学的問題の解決をベンチマークとして追求することが、数学という学問分野に悪影響を及ぼしていると警告しています。</p>
+<p>「解答の大量生産が、新しいアイデアの成長の土壌を破壊する可能性がある」とし、論文発表の急速化により適切な文献化や先行研究への引用が欠落し、帰属と剽窃の問題が生じていると主張しています。</p>
+<p>宣言は数学の教育・訓練の本来の目的にも触れ、「年間の訓練は最終的な答えだけでなく、理解と新たな問いを定式化する能力を育成する」とし、AIによる数学研究がこの本来の訓練目標を損なう懸念があると述べ、社会全体への警告として位置付けています。</p></div>
+<p class="paper-source"><a href="https://mathandai.org/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/4f8ca6f5fd720973/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-8ef53272e8ed733e">
+<h3><a href="articles/2026-09-12/8ef53272e8ed733e/">折りたたみ「iPhone Duo」対応ガイド</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Appleの折りたたみ型iPhone「iPhone Duo」への対応方法をまとめたZenn記事です。著者はApple DeveloperのTech Talksで公開された6本のセッション動画を一次情報として整理しています。iPhone Duoは外側（閉じた状態）と内側（開いた状態）の2つのディスプレイを持ち、それぞれ異なるサイズクラス（compact widthとregular width）に対応する必要があります。</p>
+<p>従来の<code>UIScreen.main</code>への参照は廃止が推奨され、代わりにサイズクラスベースの判定を使うようAppleは案内しています。折り目やカメラ領域は「reserved regions」という仕組みで回避でき、横長表示で操作バーが側面に移動する際は<code>toolbarVerticalEdge</code>で位置を判定、<code>onHingeChange</code>でヒンジの開閉状態を監視できます。iPhone DuoにはSplit Viewのマルチタスキング対応に加え、外側・内側・仮想の3種の前面カメラが存在します。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/d_date/articles/d874e248ac7851" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/8ef53272e8ed733e/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-41eddf386daa3979">
+<h3><a href="articles/2026-09-12/41eddf386daa3979/">9年もののCLIで見たGo標準ライブラリの進化</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>個人プロジェクト「Hubpin」を開発する筆者が、Next.js App Routerで遭遇した不具合をZennで綴っています。/dashboardにアクセスしても404エラーにならず、公開ユーザーページの表示に「@dashboard」と出てしまうという現象に遭遇したとのことです。「[username] は文字列なら何でも受け取るので、404 になるほうがおかしい。」と振り返っています。</p>
-<p>原因は、動的ルート[username]がファイルシステムに存在しない任意の文字列パスにもマッチしてしまうことでした。静的ルートは動的ルートより先に解決される性質を利用し、src/app/dashboard/page.tsxを作成することで解決したそうです。</p>
-<p>さらにこの現象から、ユーザーがdashboardやloginなどアプリの予約語をユーザー名として登録できてしまうと、該当ページが永久に表示されなくなるという設計上の問題も判明しました。対策として、PostgreSQLの<strong>CHECK制約</strong>（テーブルに登録できる値の条件を指定するデータベースの機能）に予約語リストを設定し、登録経路によらず無効化するようにしたとのことです。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/matsutake_prgrm/articles/dynamic-route-swallowed-dashboard" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/38b04fc07de96e93/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-fe5d6723cd5bbf96">
-<h3><a href="articles/2026-09-11/fe5d6723cd5bbf96/">Anthropic公式Go SDKでtool use・streamingを検証</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Finatextのエンジニア、Reo Uehara氏がAnthropic公式のGo SDK「anthropic-sdk-go」を実際に試した検証記事を公開しました。SDKの利用にはGo 1.24以上が必要で、Goアプリケーションから直接Claude APIを呼び出せます。「Goで書かれた既存のサービスに、別言語のランタイムを増やさずそのままClaudeを組み込める」としています。</p>
-<p>記事では基本的なメッセージ送信（Messages.New()による同期的な応答取得）に加え、外部関数・APIをClaudeに呼び出させる<strong>Tool Use</strong>機能、ストリーミングでの応答受信の3つの使い方をコード例とともに解説しています。認証は環境変数ANTHROPIC_API_KEYの設定が最もシンプルとしつつ、antというCLIでのOAuth認証も紹介しています。天気予報を題材にした検証では、ツールなしでは「予報不可」という回答だったのに対し、ツールありの場合はダミーデータから具体的なアドバイスを返す回答になったと報告されています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/finatext/articles/anthropic-go-sdk-tool-use-streaming" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/fe5d6723cd5bbf96/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-e46ed6a558d0a1ca">
-<h3><a href="articles/2026-09-11/e46ed6a558d0a1ca/">Go×sqlcでDBアクセスの定型コードを消す</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Go言語のDBアクセスにおいて、SQLから型安全なGoコードを自動生成するツール「sqlc」を紹介する記事です。ORMを使わずSQLは自分で書きつつ、rows.Scan()など、SQLとGoコードをつなぐ定型的な<strong>ボイラープレート</strong>（毎回同じように書く定型コード）を自動生成で排除する手法を、PostgreSQL+pgx/v5構成の導入手順とともに解説しています。</p>
-<p>Go 1.24以降ではsqlcを <code>go get -tool github.com/sqlc-dev/sqlc/cmd/sqlc</code> でtool dependencyとして管理でき、<code>sqlc.yaml</code>でスキーマパス・クエリパス・出力先を指定します。SQLファイルには<code>-- name: ListExhibitionsByMuseumID :many</code>のようなコメントで生成メソッド名と戻り値の型を指定する仕組みです。著者はORMではなくsqlcを選んだ理由として、SQLは自分で設計しつつ、SQLとGoをつなぐ部分だけをコード生成できる点を挙げています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/honi_chan/articles/1d4eae77edda38" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/e46ed6a558d0a1ca/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-209bc3312152b7df">
-<h3><a href="articles/2026-09-11/209bc3312152b7df/">OpenAPI定義を単一情報源に、Go×Next.jsの型を自動生成</a></h3>
+<div class="paper-body"><p>PR TIMES CTOでPodcast「八百万のOSS」ホストの金子達哉（catatsuy）氏が、Go Conference 2026での発表を基に執筆した記事です。2017年9月から約9年保守しているCLIツール「notify_slack」は、標準入力の出力をターミナルへは即座に、Slackへはデフォルト1秒ごとにまとめて投稿するツールで、入力を読む reader goroutine とバッファをflushする処理が並行動作するためテストが難しいという課題を抱えていました。</p>
+<p>2017年時点のテストは<code>runtime.GOMAXPROCS(1)</code>と<code>time.Sleep</code>を使った時間ベースの脆弱な同期に依存していましたが、Go 1.25で導入された<strong>testing/synctest</strong>により「時間を待つ」から「状態を待つ」方式への転換が起きました。<code>synctest.Wait()</code>は他のgoroutineが「durably blocked」状態になるまで待機する仕組みで、これを使ったテストにより<code>io.PipeReader.ReadLine()</code>のblocking readがcontextのキャンセルでは中断されないという問題も発見されたそうです。</p>
+<p>さらに<code>T.Setenv</code>や<code>T.Context</code>、Go 1.27で導入された<code>httptest.NewTestServer(t, handler)</code>（productionと同じURLでリクエストを作成しつつ通信だけをテストサーバーへ転送する仕組み）など、標準ライブラリの進化が手作りのworkaroundを不要にしていった過程が具体的に紹介されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/catatsuy/articles/254b155f8d5992" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/41eddf386daa3979/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-525eb01e8cb4d5b1">
+<h3><a href="articles/2026-09-12/525eb01e8cb4d5b1/">単体テスト実行時間、6割削減の内訳</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Go（バックエンド）とNext.js（フロントエンド）構成で個人開発を行う著者が、「同じAPIの型をBackendとFrontendで2回書いている」という課題を解消した手法を紹介しています。従来は両者で同じAPIの型情報を別々に手書きしており、同期漏れが発生していたとのことです。</p>
-<p>対策として、OpenAPI定義ファイル（backend/api/openapi.yaml）を単一の情報源とし、oapi-codegen（v2.8.0）でGo型を、openapi-typescriptでTypeScript型をそれぞれ自動生成する仕組みを構築しました。生成されたGoの型はbackend/api/generated/models.gen.goに、TypeScriptの型はfrontend/lib/api/generated/schema.d.tsに出力されます。「BackendとFrontendの型を手作業で同期する必要がなくなりました」と成果を述べています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/honi_chan/articles/d04813e6f218a4" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/209bc3312152b7df/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-dfb65e76dc279a8b">
-<h3><a href="articles/2026-09-11/dfb65e76dc279a8b/">メモリに載らないGROUP BYをDuckDBはどう処理するか</a></h3>
+<div class="paper-body"><p>Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を<strong>16分14秒から5分59秒（約63%削減）</strong>に短縮した事例です。CI環境はEC2 r8gd.2xlargeのセルフホストランナーを使用しています。</p>
+<p>対策は4つです。未使用のカバレッジレポート収集機能をCI環境から除外して約7分短縮、Prismaのenum専用の入口を作りClientクラスとruntimeへの依存を切り離して平均16.52秒から14.41秒に短縮（約13%）、Vitestの実行方式をプロセス独立型（forks）からスレッド型（threads）に変更して16.00秒から14.29秒に短縮（約8.7%）、そして統合テストと重複する単体テストの整理を継続中とのことです。</p>
+<p>著者は改善作業の大部分をAIに委任し、自身は目標設定と方針の助言に留めたとしています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/dress_code/articles/5dd5de5020d9ef" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/525eb01e8cb4d5b1/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-3d2f114f4ab619ce">
+<h3><a href="articles/2026-09-12/3d2f114f4ab619ce/">Next.jsのDockerビルド、19分短縮の顛末</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、<code>next build</code>自体には1106秒かかっていたことを突き止めました。</p>
+<p>原因はGitHub Actionsのワークフローで<strong>QEMU</strong>（ARM命令をx86命令へ逐次変換するエミュレータ）を使ったARMエミュレーションをしていたことでした。GitHub Actionsは2026年1月29日にプライベートリポジトリ向けにARM64ネイティブランナーの提供を始めていましたが、この設定更新がされていなかったとのことです。</p>
+<p>ランナーを<code>ubuntu-latest</code>から<code>ubuntu-24.04-arm</code>に切り替え、<code>docker/setup-qemu-action</code>の記述を削除した結果、デプロイ全体は<strong>25分26秒から6分3秒</strong>、ビルド＆プッシュ工程は24分43秒から5分35秒に短縮されました。ステージングと本番を合わせて約50分かかっていたデプロイが約12分になったとのことです。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/rb_engineering/articles/b642bdb5206cb9" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/3d2f114f4ab619ce/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-af20b951b9723edb">
+<h3><a href="articles/2026-09-12/af20b951b9723edb/">TypeScript 7は10倍速い、でも乗り換えは保留</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>株式会社ログラスのソフトウェアエンジニア、龍島浩人氏がOSSデータベース<strong>DuckDB</strong>の内部実装を解説する記事を公開しました。DuckDBは「larger-than-memoryワークロード」、つまりシステムメモリより大きなデータセットを処理できることを強みとしています。5,000万行・1.7GBのParquetファイル（キーはすべてユニーク）を使い、メモリ上限を変えて処理時間や挙動を検証しています。</p>
-<p>既定のmemory_limit（38.3GiB）では処理時間3.0秒、hash tableサイズ1,960MiBでディスクへの書き出しは発生しませんでした。memory_limitを300MBに制限すると処理時間は約8.5秒に伸び、hash tableは200MiB前後に抑えられ、一時ファイルへ1,770MiBが書き出されました。memory_limit=250MBでは4回の実行中2回がOut of Memoryとなり、200MB以下では処理が完全に失敗したとのことです。</p>
-<p>DuckDBはメモリ上限に達すると、buffer managerによってページを一時ファイルへ退避する「<strong>外部ハッシュ集約</strong>」という分割統治の仕組みを実装しています。同じキーは必ず同一partitionに格納されるため、partition単位で独立して計算を進められる点がポイントです。「一部の演算子は入力の最後の行を見るまで1行も出力できない」ため、こうしたブロッキング処理をどう扱うかがメモリ制御の鍵になっているとしています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/loglass/articles/7c140c6689d8c2" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/dfb65e76dc279a8b/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-9454646839f2f96e">
-<h3><a href="articles/2026-09-11/9454646839f2f96e/">コーディングエージェント向け方法論フレームワーク「Superpowers」</a></h3>
+<div class="paper-body"><p>TypeScript 7ではコンパイラ実装がJavaScriptから<strong>Go</strong>へ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約<strong>11.9倍</strong>）に短縮されたと報告されています。他のプロジェクトでも7.7〜8.9倍の高速化が確認され、型チェックの並列化（既定のワーカー数は4）も実装されました。</p>
+<p>一方で著者は、Vue・Astro・Svelte・AngularといったツールがまだTypeScript 7の安定したプログラマブルAPIに対応しておらずTypeScript 6.0への依存が続くこと、TypeScript 6.0自体が既定値変更を伴う破壊的変更を含み6.0未移行のプロジェクトは6.0と7.0への二段階移行が必要になることを理由に、乗り換えをまだ決めきれないとしています。「速さを手に入れる代わりに、周辺のツール群にしばらく追いついてもらう時間が要る」と評されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/bitou_engineer/articles/0968af9e32c906" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/af20b951b9723edb/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e58bfbb124a05c38">
+<h3><a href="articles/2026-09-12/e58bfbb124a05c38/">GoバイナリへのeBPF計装、なぜ難しいのか</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Grafana Labsのデベロッパーアドボケイト山口能迪氏が、Go Conference 2026での登壇内容を基にまとめたZenn本です。<strong>eBPF</strong>（カーネル内で安全にプログラムを実行できる技術）を使ってGoバイナリを「ゼロコード計装」（コード変更なしでのオブザーバビリティ計装）する際の技術的難所を、CPU・メモリの基礎から段階的に解説しています。</p>
+<p>関数レベル計装には4つの難所があると指摘されています。関数終了時に実行される<code>uretprobe</code>が使えないこと、レジスタベースの呼び出し規約、バージョン依存のフィールドオフセット、プロセス間のコンテキスト伝搬です。全16章・約12万字が無料で公開されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/ymotongpoo/books/go-ebpf-primer" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/e58bfbb124a05c38/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-7d2b998871064786">
+<h3><a href="articles/2026-09-12/7d2b998871064786/">Claude Code v2.1.269リリース</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>「Superpowers」は、コーディングエージェント向けに設計された「<strong>composable skills framework</strong>」（組み合わせ可能なスキルフレームワーク）です。いきなりコードを書かせるのではなく、ブレインストーミング、Gitワークツリーでの独立作業スペース作成、作業を2〜5分程度の細かいタスクに分割する計画、サブエージェント連携と二段階レビューによる開発、RED-GREEN-REFACTORを強制するテスト、事前レビューチェックリストによるコードレビュー、マージ判断を含むブランチ完了という7段階のワークフローでエージェントを導きます。</p>
-<p>Claude Codeの公式プラグインマーケットプレイスのほか、Cursor、Devin、GitHub Copilot CLI、Geminiなど複数のコーディングエージェントに対応したインストール方法が用意されています。作者はJesse Vincent氏およびPrime Radiantチームで、MITライセンスで公開されています。</p></div>
-<p class="paper-source"><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/9454646839f2f96e/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-4b5ce950364c4654">
-<h3><a href="articles/2026-09-11/4b5ce950364c4654/">手元のPCに合うLLMを推薦するRust製ツール「llmfit」</a></h3>
+<div class="paper-body"><p>2025年9月11日に公開されたリリースです。新機能として、プラグインの評価スイートをJSON+HTML形式で出力する<code>claude plugin eval</code>コマンドと、出力スタイルの一覧表示・切り替えを行う<code>/output-style</code>コマンドが追加されました。Bashツールがコマンドで変更したファイルのdiffを結果に追加する機能（<code>bashEditDiffEnabled</code>設定）も入っています。</p>
+<p>環境変数まわりでは、OpenTelemetryメトリクスにリポジトリ属性を付与する<code>OTEL_METRICS_INCLUDE_REPOSITORY</code>や、Workflowツールの並行エージェント数（1〜256）を制御する<code>CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS</code>が追加されました。VSCode版には、フッターの「N agents」ピルから開けるエージェントマップや、Hookの表示・編集・削除ダイアログが加わっています。</p>
+<p>バグ修正では、CMYK JPEG画像が「cannot decode」エラーで失敗する問題や、WezTermでShift+記号キーが未シフトキーとして入力される回帰バグなどが直っています。</p></div>
+<p class="paper-source"><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.269" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/7d2b998871064786/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c7a74d245b911364">
+<h3><a href="articles/2026-09-12/c7a74d245b911364/">GitHub公式、仕様駆動開発ツール「Spec Kit」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>「llmfit」は、AlexsJones氏が開発したRust製のターミナルツールです。手元のCPU・RAM・GPU・VRAMなどのハードウェア構成を解析し、快適に動作するオープンソースLLMを量子化形式ごとに推薦してくれます。NVIDIA CUDA、Apple Silicon、AMD ROCm、Intel OneAPIの自動検出に対応し、GGUF、AWQ、GPTQ、EXL2といった量子化形式のモデル互換性分析も行います。</p>
-<p>インタラクティブなTUI（ターミナル上で動く対話的な画面）、Webダッシュボード、REST APIから利用でき、コミュニティによるベンチマーク結果をローカルに保存する機能もあります。マルチGPU構成やMoEアーキテクチャにも対応しており、<code>llmfit recommend</code>や<code>llmfit bench</code>といったサブコマンドが用意されています。macOS・Linux・Windowsに対応し、MITライセンスで公開されています。</p></div>
-<p class="paper-source"><a href="https://github.com/AlexsJones/llmfit" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/4b5ce950364c4654/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-0ae384b15578d6da">
-<h3><a href="articles/2026-09-11/0ae384b15578d6da/">Google公式Goクライアントライブラリ、「完成・メンテナンスモード」を明言</a></h3>
+<div class="paper-body"><p>GitHubが公開するオープンソースのツールキットで、コードではなく仕様を起点にAIコーディングエージェントで実装を生成する「仕様駆動開発（Spec-Driven Development）」を実践します。Constitution→Specify→Plan→Tasks→Implement→Convergeという開発フローに沿って、<code>/speckit.*</code>コマンドを呼び出しながら進めます。</p>
+<p>GitHub Copilot、Claude、Codex CLIなど<strong>30以上</strong>のAIコーディングエージェントに対応し、プロジェクト固有のオーバーライド・プリセット・エクステンションという3層のカスタマイズ構造や、役割別の完全なセットアップを一度に導入できる「バンドル」機能も備えています。<code>uv</code>ツールでインストールでき、MITライセンスで公開されています。</p></div>
+<p class="paper-source"><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/c7a74d245b911364/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-ae65d05369603692">
+<h3><a href="articles/2026-09-12/ae65d05369603692/">Ollama、v0.34.0-rc5をプレリリース</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Googleが公式に提供する、Google Discovery Serviceの記述から自動生成されたGo言語向けクライアントライブラリ集です。多数のGoogle APIにGoからアクセスするためのパッケージ群を提供しますが、「完成しており<strong>メンテナンスモード</strong>（重大な不具合やセキュリティ脆弱性への対応は行うが新機能追加はしない状態）にある」と説明されています。</p>
-<p>DatastoreやPub/SubなどのGoogle Cloud Platform APIについては、このライブラリではなく別の「Cloud Client Libraries for Go」の利用が推奨されています。認証はGoogleのApplication Default Credentialsをデフォルトとしつつ、サービスアカウントキーやOAuth2トークンなど複数の方式に対応しています。スター数4.5k、フォーク数1.4k、コミット数3,680を数え、BSD-3-Clauseライセンスで公開されています。</p></div>
-<p class="paper-source"><a href="https://github.com/googleapis/google-api-go-client" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/0ae384b15578d6da/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-1d6984b305b1bce2">
-<h3><a href="articles/2026-09-11/1d6984b305b1bce2/">コード生成時の自己コメント、効くのは『内容』であって『形式』ではない</a></h3>
+<div class="paper-body"><p>ParthSareen氏が2025年9月9日に作成したプレリリースです。含まれるPRの一つ「openai: support standalone named function outputs（#18348）」により、OpenAI互換APIでの名前付き関数出力への対応が進められている模様です。</p></div>
+<p class="paper-source"><a href="https://github.com/ollama/ollama/releases/tag/v0.34.0-rc5" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/ae65d05369603692/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-adf7e09cc64990ba">
+<h3><a href="articles/2026-09-12/adf7e09cc64990ba/">統計力学でAIエージェント群の集団行動を予測</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>LLMがコード生成時に自ら書く自然言語コメントが、後続のコード生成にどう影響するかを調べた研究です。著者はDangfeng Pan氏ら5名。観察分析と制御実験を組み合わせ、弱いモデルに強いモデルが生成したコメントを事前提供することで、コメントの「見た目の形式」と「実際の解法内容」を切り分けて検証しました。</p>
-<p>結果、成功した解法から得たコメントを与えた場合はpass@1（1回の生成で正解コードが得られる割合）が平均17.2%向上した一方、失敗した解法からのコメントでは目立った改善が見られませんでした。さらに問題と無関係なコメントを与えた場合はpass@1が20.8%低下したとのことです。論文は「コメントがコード生成を助けるのは、コメントであること自体ではなく、正しい解法内容を提供できるためだ」と結論づけています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.09242" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/1d6984b305b1bce2/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-44c4270931410c25">
-<h3><a href="articles/2026-09-11/44c4270931410c25/">長期タスクのスキル実行、サブエージェント方式が優位に</a></h3>
+<div class="paper-body"><p>Batu El氏ら10名による論文「Physics of Agents」です。<strong>1万以上</strong>のコミュニティに属するLLMエージェントを観察し、数学問題や政治的声明について意見を交換・修正させる実験を行い、統計力学の枠組みを適用した動的モデルを構築しました。</p>
+<p>エージェントの行動は3つの特徴的な状態で表現できるとしており、無関心から確信の構築への移行が見られるとしています。客観的な問題では通信によって精度が向上する一方、主観的な問題では意見が政治的に右寄りへ偏る傾向が見られたとのことです。提案モデルは個々のエージェントの軌跡を予測でき、既存の標準的手法よりも優れた性能を示したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2608.16578" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/adf7e09cc64990ba/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-ea4779aa96a9188b">
+<h3><a href="articles/2026-09-12/ea4779aa96a9188b/">エージェントAIを外部から自動レッドチーミング</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>長期タスクをこなすLLMエージェントが、再利用可能な知識（スキル）をどう実行すべきかを検証した論文です。著者はWasu Top Piriyakulkij氏ら5名で、2026年9月7日にarXivへ投稿されました。従来、スキル指示をエージェントのメインコンテキストウィンドウに読み込む手法は、情報蓄積により推論品質が低下する問題があるとしています。</p>
-<p>代替として、スキルパッケージを独立したコンテキストウィンドウを持つ「サブエージェント」として実行する方式を提案・検証しました。入出力の契約が明確なスキルパッケージでは、サブエージェント実行が従来手法を上回る一方、通信のオーバーヘッドというトレードオフが生じるとしています。論文は、再利用可能な知識の効果は内容だけでなく、組織方法や呼び出し方法にも依存すると主張しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.09233" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/44c4270931410c25/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-5e468519950e877e">
-<h3><a href="articles/2026-09-11/5e468519950e877e/">小規模言語モデルでパラメータを計算量に変換する「ループ型」手法</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>訓練データが限られる小規模言語モデルにおいて、パラメータ数を増やす代わりに少数のパラメータ層を繰り返し適用して計算量を増やす手法を提案する論文です。著者はTingshuo Fan氏ら5名。マスク付き次トークン予測と因果言語モデリングの目的を組み合わせた深さ方向のパラメータ共有を用い、748万語規模の英語コーパスで学習させています。</p>
-<p>4層を12回反復する「4×12モデル」（パラメータ数12.18M）を開発し、公開されているGPT-2/GPT-BERTのベースラインと比較したところ、BLiMPやGLUEなどのタスクでより少ないパラメータ数で同等の性能を達成したと主張しています。BabyLM 2026リーダーボードでは全体平均35.42、NLP平均48.48のスコアを報告していますが、物理的な層数が少ないことによる表現空間の制限という限界にも言及しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.09691" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-11/5e468519950e877e/">要点と引用を見る</a></p>
+<div class="paper-body"><p>Divyanshu Kumar氏ら5名による論文です。内部構造にアクセスせず、基本的なシステム説明のみを入力としてリスクを洗い出す「ブラックボックス型レッドチーミング」を提案しています。観察可能な行動をリスク分類にマッピングする<strong>7領域の分類体系</strong>と、領域ごとに120個の敵対的シナリオを自動生成する「SAGE-RT」を組み合わせ、LLMによる判定と人間による検証で評価します。</p>
+<p>CrewAIとAutoGenという2つのマルチエージェントアーキテクチャに適用したところ、ガバナンスリスクは平均56.25%、マルチエージェント構成でのプライバシーリスクは65%、エージェント動作の脆弱性は最大85%に達したと報告されています。著者らは、特権的なアクセス権がなくてもこの手法で重大なアーキテクチャ上の脆弱性を発見できると主張しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.09647" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-12/ea4779aa96a9188b/">要点と引用を見る</a></p>
 </article></section>
-<section class="code-teaser" id="code">
-<h2><span class="category-dot"></span>今日のコード</h2>
-<p class="code-teaser-repo"><span class="mono">AlexsJones/llmfit</span> / <code>llmfit-core/src/fit.rs</code></p>
-<p>llmfitは「手元のGPU/CPUでどのLLMが動くか」を一発で診断するCLIツールです（k8sgptの作者による小粒プロジェクト）。実体はGoではなくRustで書かれており、中核のfit.rsには「モデルの速度・メモリ適合度をどう見積もるか」の計算ロジックが詰まっています。今回は、実行モード（GPU実行かCPUオフロードか等）や用途別の重み付けスコアを「設定可能だがデフォルト値も持つ」形で表現している部分を読みます。Rustの構造体…</p>
-<a class="button-link" href="code/2026-09-11/">コードを読む</a>
-</section>
+
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-09-10/">
+<a class="issue-row" href="issues/2026-09-11/">
+<div class="issue-date"><span class="mono">2026.09</span><strong>11</strong></div>
+<div><h3>DeepSeek-V4.1-Flash発表、値上げ撤回し低コストで上位モデル超えを主張</h3><span class="issue-row-meta">16記事・約14分</span></div>
+</a><a class="issue-row" href="issues/2026-09-10/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>10</strong></div>
 <div><h3>Mistral AI、30億ユーロ調達で評価額210億ユーロ超に</h3><span class="issue-row-meta">18記事・約15分</span></div>
 </a><a class="issue-row" href="issues/2026-09-09/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>09</strong></div>
 <div><h3>ヒトゲノム全変異マップ「AlphaGenome Atlas」</h3><span class="issue-row-meta">13記事・約11分</span></div>
-</a><a class="issue-row" href="issues/2026-09-08/">
-<div class="issue-date"><span class="mono">2026.09</span><strong>08</strong></div>
-<div><h3>Claudeがフェルマーの最終定理を完全形式化、11日間で1300万行のLeanコード</h3><span class="issue-row-meta">15記事・約13分</span></div>
 </a>
 </section>
 </main>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.jsのDockerビルド、19分短縮の顛末 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、next build自体には1106秒かかっていたことを突き止めました。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.jsのDockerビルド、19分短縮の顛末 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、next build自体には1106秒かかっていたことを突き止めました。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/3d2f114f4ab619ce/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/3d2f114f4ab619ce/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.jsのDockerビルド、19分短縮の顛末", "datePublished": "2026-09-12", "description": "株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、next build自体には1106秒かかっていたことを突き止めました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/3d2f114f4ab619ce/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/rb_engineering/articles/b642bdb5206cb9", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-12/">2026.09.12 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.jsのDockerビルド、19分短縮の顛末</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</header>
+<div class="article-body">
+<p>株式会社Rebaseのエンジニアリングチームが、自社Next.jsプロジェクトのデプロイ遅延を調査した記事です。同じリポジトリのPR検証時のビルドは5分で完了するのに、デプロイ時は約25分かかるという謎を追い、<code>next build</code>自体には1106秒かかっていたことを突き止めました。</p>
+<p>原因はGitHub Actionsのワークフローで<strong>QEMU</strong>（ARM命令をx86命令へ逐次変換するエミュレータ）を使ったARMエミュレーションをしていたことでした。GitHub Actionsは2026年1月29日にプライベートリポジトリ向けにARM64ネイティブランナーの提供を始めていましたが、この設定更新がされていなかったとのことです。</p>
+<p>ランナーを<code>ubuntu-latest</code>から<code>ubuntu-24.04-arm</code>に切り替え、<code>docker/setup-qemu-action</code>の記述を削除した結果、デプロイ全体は<strong>25分26秒から6分3秒</strong>、ビルド＆プッシュ工程は24分43秒から5分35秒に短縮されました。ステージングと本番を合わせて約50分かかっていたデプロイが約12分になったとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者は株式会社Rebaseのエンジニアリングチーム所属のokai氏である</li><li>この改善は自社プロジェクトのデプロイフローに対して実施された</li><li>改善前のデプロイ全体の所要時間は約25分26秒だった</li><li>改善前のビルド＆プッシュ工程の所要時間は24分43秒だった</li><li>改善後のデプロイ全体の所要時間は6分3秒だった</li><li>改善後のビルド＆プッシュ工程の所要時間は5分35秒だった</li><li>この改善によりステージングと本番を合わせて約50分かかっていたデプロイが約12分に短縮された</li><li>調査の結果、next buildの実行に1106秒かかっていたことが判明した</li><li>同じリポジトリのPR検証時のビルドは5分で完了していたが、デプロイ時は25分かかっていた</li><li>原因はGitHub Actionsのワークフローでqemu(ARM命令をx86命令に逐次変換するエミュレータ)を使用していたことだった</li><li>対策として、GitHub Actionsのランナーをubuntu-latestからubuntu-24.04-armに変更し、docker/setup-qemu-actionの記述を削除した</li><li>GitHub Actionsは2026年1月29日にプライベートリポジトリ向けにARM64ランナーのサポートを開始していたが、この記事の対象プロジェクトではその設定更新がされていなかった</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/rb_engineering/articles/b642bdb5206cb9" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%E3%81%AEDocker%E3%83%93%E3%83%AB%E3%83%89%E3%80%8119%E5%88%86%E7%9F%AD%E7%B8%AE%E3%81%AE%E9%A1%9B%E6%9C%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2F3d2f114f4ab619ce%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%E3%81%AEDocker%E3%83%93%E3%83%AB%E3%83%89%E3%80%8119%E5%88%86%E7%9F%AD%E7%B8%AE%E3%81%AE%E9%A1%9B%E6%9C%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-12/3d2f114f4ab619ce/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2F3d2f114f4ab619ce%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../525eb01e8cb4d5b1/"><span>前の記事</span>単体テスト実行時間、6割削減の内訳</a><a class="next" href="../af20b951b9723edb/"><span>次の記事</span>TypeScript 7は10倍速い、でも乗り換えは保留</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-12/">← 2026.09.12 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../41eddf386daa3979/">9年もののCLIで見たGo標準ライブラリの進化</a></h3>
+<p class="excerpt">PR TIMES CTOでPodcast「八百万のOSS」ホストの金子達哉（catatsuy）氏が、Go Conference 2026での発表を基に執筆した記事です。2017年9月から約9年保守しているCLIツール「notify_sl…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../525eb01e8cb4d5b1/">単体テスト実行時間、6割削減の内訳</a></h3>
+<p class="excerpt">Dress Code株式会社のプロダクトエンジニアチームが、モノリシックなNode.js/NestJSプロダクト（約2,900ファイル・3万テストケース）のVitest実行時間を16分14秒から5分59秒（約63%削減）に短縮した事例で…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../af20b951b9723edb/">TypeScript 7は10倍速い、でも乗り換えは保留</a></h3>
+<p class="excerpt">TypeScript 7ではコンパイラ実装がJavaScriptからGoへ移植され、公式ベンチマークではVS Code本体のフルビルド時間が125.7秒から10.6秒（約11.9倍）に短縮されたと報告されています。他のプロジェクトでも7…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

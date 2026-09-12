@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>折りたたみ「iPhone Duo」対応ガイド — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Appleの折りたたみ型iPhone「iPhone Duo」への対応方法をまとめたZenn記事です。著者はApple DeveloperのTech Talksで公開された6本のセッション動画を一次情報として整理しています。iPhone Duoは外側（閉じた状態）と内側（開いた状態）の2つのディスプレイを持ち、それぞれ異…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="折りたたみ「iPhone Duo」対応ガイド — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Appleの折りたたみ型iPhone「iPhone Duo」への対応方法をまとめたZenn記事です。著者はApple DeveloperのTech Talksで公開された6本のセッション動画を一次情報として整理しています。iPhone Duoは外側（閉じた状態）と内側（開いた状態）の2つのディスプレイを持ち、それぞれ異…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/8ef53272e8ed733e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/8ef53272e8ed733e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "折りたたみ「iPhone Duo」対応ガイド", "datePublished": "2026-09-12", "description": "Appleの折りたたみ型iPhone「iPhone Duo」への対応方法をまとめたZenn記事です。著者はApple DeveloperのTech Talksで公開された6本のセッション動画を一次情報として整理しています。iPhone Duoは外側（閉じた状態）と内側（開いた状態）の2つのディスプレイを持ち、それぞれ異なるサイズクラス（compact wid…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-12/8ef53272e8ed733e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/d_date/articles/d874e248ac7851", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-12/">2026.09.12 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>折りたたみ「iPhone Duo」対応ガイド</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-12">2026.09.12</time></div>
+</header>
+<div class="article-body">
+<p>Appleの折りたたみ型iPhone「iPhone Duo」への対応方法をまとめたZenn記事です。著者はApple DeveloperのTech Talksで公開された6本のセッション動画を一次情報として整理しています。iPhone Duoは外側（閉じた状態）と内側（開いた状態）の2つのディスプレイを持ち、それぞれ異なるサイズクラス（compact widthとregular width）に対応する必要があります。</p>
+<p>従来の<code>UIScreen.main</code>への参照は廃止が推奨され、代わりにサイズクラスベースの判定を使うようAppleは案内しています。折り目やカメラ領域は「reserved regions」という仕組みで回避でき、横長表示で操作バーが側面に移動する際は<code>toolbarVerticalEdge</code>で位置を判定、<code>onHingeChange</code>でヒンジの開閉状態を監視できます。iPhone DuoにはSplit Viewのマルチタスキング対応に加え、外側・内側・仮想の3種の前面カメラが存在します。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>iPhone Duoは外側（閉じた状態）と内側（開いた状態）の2つのディスプレイを搭載する</li><li>外側と内側で異なるsize class（compact widthとregular width）に対応する</li><li>Appleはレイアウトの大小判断にsize classを使うよう案内している</li><li>UIScreen.mainへの参照を廃止することが推奨されている</li><li>reserved regionsという仕組みで折り目やカメラ領域を回避できる</li><li>横長表示では操作部（バー）が側面に移動する</li><li>toolbarVerticalEdgeという仕組みでバーの配置位置を判定できる</li><li>onHingeChangeという仕組みでヒンジの状態を監視できる</li><li>iPhone DuoはSplit Viewマルチタスキングに対応する</li><li>iPhone Duoには外側と内側の2つの前面カメラと、仮想フロントカメラが存在する</li><li>この記事はApple DeveloperのTech Talksに公開された6本のセッションを一次情報として整理したものである</li><li>著者は記事内容をClaude Codeのskillとしても公開している</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>レイアウトの大小を判断する際にsize classを使うよう案内しています</blockquote><blockquote>この記事は、その6本を一次情報として内容を整理したものです</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/d_date/articles/d874e248ac7851" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/d_date/articles/d874e248ac7851" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E6%8A%98%E3%82%8A%E3%81%9F%E3%81%9F%E3%81%BF%E3%80%8CiPhone%20Duo%E3%80%8D%E5%AF%BE%E5%BF%9C%E3%82%AC%E3%82%A4%E3%83%89%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2F8ef53272e8ed733e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E6%8A%98%E3%82%8A%E3%81%9F%E3%81%9F%E3%81%BF%E3%80%8CiPhone%20Duo%E3%80%8D%E5%AF%BE%E5%BF%9C%E3%82%AC%E3%82%A4%E3%83%89%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-12/8ef53272e8ed733e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-12%2F8ef53272e8ed733e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../4f8ca6f5fd720973/"><span>前の記事</span>フィールズ賞受賞者25名、AIと数学の「深刻な不整合」を警告</a><a class="next" href="../41eddf386daa3979/"><span>次の記事</span>9年もののCLIで見たGo標準ライブラリの進化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-12/">← 2026.09.12 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../5ecdf160e906bdb7/">中国AI「Kimi」、裏でClaudeに転送か</a></h3>
+<p class="excerpt">Anthropicが2026年9月11日に公開した脅威レポートによると、中国Moonshot AIのチャットボット「Kimi」が、利用者の入力内容をAnthropicのClaudeに転送し、Claudeが生成した回答をあたかも自社モデル…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>japan.cnet.com</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../0382cd16512c6eb7/">Claude、18歳未満の利用不可に</a></h3>
+<p class="excerpt">Anthropicはサポート記事で、Claudeが18歳以上のユーザーのみを対象とすることを明確化しました。未成年者の利用を示す信号を検出する安全システムを備えており、検出されたアカウントは無効化されますが、年齢確認（age assur…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>support.claude.com</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../75965d6eb3fdc003/">DeepSeek新モデル、Claude・GPT超えを主張</a></h3>
+<p class="excerpt">DeepSeekが2026年9月10日、オープンモデル「DeepSeek-V4.1-Flash」を公開しました。MoE（複数の専門家モデルを切り替えて使う構成）で総パラメータ数5520億、入力時80億・出力時160億のアクティブパラメー…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
