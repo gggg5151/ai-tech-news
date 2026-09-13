@@ -98,7 +98,7 @@ impl Default for ScoringWeights {
     pub weights: [[f64; 4]; 6],</code></pre><p>型`[[f64; 4]; 6]`は「固定長配列の配列」です。`[f64; 4]`が「f64が4個入った配列」で、それをさらに6個並べたものが全体の型になります。直前のコメント行`Order: General, Coding, ...`が、6個並ぶ配列の何番目がどの用途（一般・コーディング・推論など）に対応するかを示しており、コードだけでは読み取れない「順序の意味」をコメントで補っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>[0.45, 0.30, 0.15, 0.10], // General
                 [0.50, 0.20, 0.15, 0.15], // Coding</code></pre><p>配列リテラルは`[要素, 要素, ...]`と書きます。ここでは内側の`[0.45, 0.30, 0.15, 0.10]`のような配列が外側の`[`の中に6個並んでいます。行末の`// General`のようなコメントは、上のドキュメントコメントで書かれた「Order: General, Coding, ...」という順番と対応させて、読み手がその場で「これが何番目の用途の重みか」を迷わず分かるようにする工夫です。各行を合計するとだいたい1.0（0.45+0.30+0.15+0.10）になっており、4つの評価軸への配分になっていることも読み取れます。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「設定値」は関数の中にハードコードせず、構造体＋`impl Default`という形にすると、デフォルト値を持ちつつ後から一部だけ上書き可能な「調整可能な設定オブジェクト」になる——この型のDefault実装パターンは覚えて帰ろう。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-09/"><span>前の日</span>ollama/ollama</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-09/"><span>前の日</span>ollama/ollama</a><a class="next" href="../2026-09-13/"><span>次の日</span>grpc/grpc-go</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-11/">← 2026.09.11 の号を読む</a>
 </div>
 </article>

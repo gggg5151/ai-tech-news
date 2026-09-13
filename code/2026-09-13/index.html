@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>grpc/grpc-go の attributes/attributes.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="grpc-goはGoogle製gRPCのGo実装で、Go標準ライブラリ並みに読まれている「お手本コード」です。今回選んだattributes.goは、gRPC内部でコネクションやアドレスに付随情報（キー/バリュー）を持たせるための小さなパッケージ。mapを使わずポインタの連結リストで「不変（イミュータブル）な辞書」を作…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="grpc/grpc-go の attributes/attributes.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="grpc-goはGoogle製gRPCのGo実装で、Go標準ライブラリ並みに読まれている「お手本コード」です。今回選んだattributes.goは、gRPC内部でコネクションやアドレスに付随情報（キー/バリュー）を持たせるための小さなパッケージ。mapを使わずポインタの連結リストで「不変（イミュータブル）な辞書」を作…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-13/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-13/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.13</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>grpc/grpc-go の <code>attributes/attributes.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/grpc/grpc-go/blob/HEAD/attributes/attributes.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-13">2026.09.13</time></div>
+</header>
+<div class="article-body">
+<p>grpc-goはGoogle製gRPCのGo実装で、Go標準ライブラリ並みに読まれている「お手本コード」です。今回選んだattributes.goは、gRPC内部でコネクションやアドレスに付随情報（キー/バリュー）を持たせるための小さなパッケージ。mapを使わずポインタの連結リストで「不変（イミュータブル）な辞書」を作るという、実務でよく効くイディオムが詰まっているので教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>type Attributes struct {
+	parent     *Attributes
+	key, value any
+}
+
+// New returns a new Attributes containing the key/value pair.
+func New(key, value any) *Attributes {
+	return &amp;Attributes{
+		key:   key,
+		value: value,
+	}
+}
+
+// WithValue returns a new Attributes containing the previous keys and values
+// and the new key/value pair.  If the same key appears multiple times, the
+// last value overwrites all previous values for that key.  value should not be
+// modified later.
+//
+// Note that Attributes do not support deletion. Avoid using untyped nil values.
+// Since the Value method returns an untyped nil when a key is absent, it is
+// impossible to distinguish between a missing key and a key explicitly set to
+// an untyped nil. If you need to represent a value being unset, consider
+// storing a specific sentinel type or a wrapper struct with a boolean field
+// indicating presence.
+func (a *Attributes) WithValue(key, value any) *Attributes {
+	return &amp;Attributes{
+		parent: a,
+		key:    key,
+		value:  value,
+	}
+}
+
+// Value returns the value associated with these attributes for key, or nil if
+// no value is associated with key.  The returned value should not be modified.
+func (a *Attributes) Value(key any) any {
+	for cur := a; cur != nil; cur = cur.parent {
+		if cur.key == key {
+			return cur.value
+		}
+	}
+	return nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>type Attributes struct {
+	parent     *Attributes
+	key, value any
+}</code></pre><p>構造体`Attributes`の定義です。`key, value any`は「keyとvalueという2つのフィールドを両方とも`any`型で宣言する」というGoの省略記法（同じ型ならカンマ区切りでまとめて書ける）。`any`はGo 1.18以降で`interface{}`の別名として使えるようになった型で、「どんな型の値でも入れられる」という意味です。ポイントは`parent *Attributes`。`*Attributes`は「Attributes型へのポインタ」で、しかも自分自身の型を指しています。つまりこの構造体は1つのkey/valueペアしか持たず、前のペアへのポインタを`parent`として持つ「連結リスト」になっています。mapのように全部のペアを1つの箱にまとめて持つのではなく、鎖のように1個ずつ繋がっている点がこのコードの肝です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func New(key, value any) *Attributes {
+	return &amp;Attributes{
+		key:   key,
+		value: value,
+	}
+}</code></pre><p>最初の1ペアを作るコンストラクタ関数です。`&amp;Attributes{...}`は「Attributes構造体のリテラル（値）を作って、その先頭に`&amp;`を付けることでポインタにする」という書き方。Goでは`&amp;構造体名{フィールド: 値, ...}`でヒープ上に値を確保しつつポインタを得るのが定番パターンです。この時点では`parent`フィールドを指定していないので、Goのゼロ値ルールにより自動的に`nil`（何も指していない状態）になります。つまりこの`New`で作った`Attributes`は「鎖の一番最初の輪」＝親を持たない末端です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (a *Attributes) WithValue(key, value any) *Attributes {
+	return &amp;Attributes{
+		parent: a,
+		key:    key,
+		value:  value,
+	}
+}</code></pre><p>`(a *Attributes)`は「メソッドレシーバ」と呼ばれる書き方で、この関数を`*Attributes`型の値に対して`a.WithValue(...)`のように呼べるようにします。中身を見ると、既存の`a`をそのまま`parent`に入れた**新しい**`Attributes`を作って返しているだけで、`a`自身のフィールドは一切書き換えていません。つまり「値を追加する」といっても元のデータには触らず、新しい鎖の輪を先頭に付け足して返す設計です。これにより、誰かが古い`Attributes`（`a`）への参照を持っていても、後から別の場所で`WithValue`されて内容が変わることはありません。gRPCのようにコネクションやアドレス情報が複数のゴルーチン（goroutine、Goの軽量スレッド）から同時に参照されうる場面では、「作った後は絶対に変わらない」という性質（イミュータブル）がデータ競合を防ぐ強力な武器になります。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (a *Attributes) Value(key any) any {
+	for cur := a; cur != nil; cur = cur.parent {
+		if cur.key == key {
+			return cur.value
+		}
+	}
+	return nil
+}</code></pre><p>指定した`key`に対応する値を探すメソッドです。`for cur := a; cur != nil; cur = cur.parent { ... }`はGoのfor文の三点セット（初期化; 継続条件; 後処理）で、「`cur`を`a`から始めて、`nil`でない間繰り返し、毎回`cur`を`cur.parent`（1つ前の輪）に進める」という連結リストの巡回処理です。各ステップで`cur.key == key`かどうか比べ、一致したらその`cur.value`を返して終了（`return`はループも関数も即座に抜けます）。もし鎖の終わり（`parent`が`nil`）まで見つからなければ`nil`を返します。ここで大事なのは巡回が`a`（＝一番新しく追加された輪）から始まる点です。`WithValue`のコメントにある「同じキーが複数回出てきたら最後の値が勝つ」という仕様は、この「新しい方から順に探して最初に見つかったものを返す」というシンプルな探索順序だけで実現されています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「値を変更したい時は元のデータを書き換えず、変更後の新しい断片を親（parent）として繋いだ新しいオブジェクトを返す」というイミュータブルな連結リストのパターンは、並行処理下で安全にデータを共有・拡張したい場面（設定の継承、コンテキストの拡張など）に応用できる、明日から真似できる設計テクニックです。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-11/"><span>前の日</span>AlexsJones/llmfit</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-13/">← 2026.09.13 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

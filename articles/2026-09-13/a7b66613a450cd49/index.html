@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.jsをやめてHonoに乗り換えた理由 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="シニアエンジニアのy43z氏がZennに投稿した記事です。社内の稼働管理システムをCloudflare Workers上で構築する実務プロジェクトで、Next.js(OpenNext on Workers)からHono + hono/jsx SSR + Reactアイランド構成へ切り替えた経緯を解説しています。このプロ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.jsをやめてHonoに乗り換えた理由 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="シニアエンジニアのy43z氏がZennに投稿した記事です。社内の稼働管理システムをCloudflare Workers上で構築する実務プロジェクトで、Next.js(OpenNext on Workers)からHono + hono/jsx SSR + Reactアイランド構成へ切り替えた経緯を解説しています。このプロ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/a7b66613a450cd49/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/a7b66613a450cd49/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.jsをやめてHonoに乗り換えた理由", "datePublished": "2026-09-13", "description": "シニアエンジニアのy43z氏がZennに投稿した記事です。社内の稼働管理システムをCloudflare Workers上で構築する実務プロジェクトで、Next.js(OpenNext on Workers)からHono + hono/jsx SSR + Reactアイランド構成へ切り替えた経緯を解説しています。このプロジェクトの主機能はAIエージェントとの会…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/a7b66613a450cd49/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/y3chi5z/articles/hono-jsx-ssr-instead-of-nextjs-on-workers", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-13/">2026.09.13 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.jsをやめてHonoに乗り換えた理由</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-13">2026.09.13</time></div>
+</header>
+<div class="article-body">
+<p>シニアエンジニアのy43z氏がZennに投稿した記事です。社内の稼働管理システムをCloudflare Workers上で構築する実務プロジェクトで、Next.js(OpenNext on Workers)からHono + hono/jsx SSR + Reactアイランド構成へ切り替えた経緯を解説しています。このプロジェクトの主機能はAIエージェントとの会話(チャット)で、カレンダーや設定、一覧などの画面は比較的静的だといいます。</p>
+<p>プロジェクトではDurable Objects・Cron・Browser Renderingといった複数のWorkers機能を同一システムで使う必要があり、著者は画面ごとの要件リストを作って<strong>フレームワーク</strong>選定の基準にしました。その結果、Next.jsが優位なのは「リッチなUI」の1点だけで、それが必要なのはチャット画面のみだったと結論づけています。</p>
+<p>新構成では、/chat画面のみがReactアイランドとしてWebSocket接続やリッチカード表示を担い、/schedule、/projects、/invoices、/admin、/loginなどの画面はhono/jsx SSRでHTMLのみを返します。hono/jsxではJSXがサーバーサイドテンプレートとして機能しhooksを使わないため、チャット画面以外のクライアントJSはゼロになるといいます。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者はy43zというシニアエンジニアである</li><li>著者は社内稼働管理システムをCloudflare Workersで構築するプロジェクトに取り組んでいる</li><li>このプロジェクトの主機能はAIエージェントとの会話(チャット)である</li><li>チャット以外の画面(カレンダー、設定、一覧など)は比較的静的な画面である</li><li>プロジェクトではDurable Objects・Cron・Browser Renderingを同一システムで使用する必要がある</li><li>著者はNext.js(OpenNext on Workers)からHono + hono/jsx SSR + Reactアイランド構成に切り替えた</li><li>著者はNext.jsが優位な点は「リッチなUI」の1点のみだと述べている</li><li>著者はそのリッチなUIが必要なのはチャット画面のみだったと述べている</li><li>新構成では/chat画面がReactアイランドとしてWebSocket接続やリッチカード表示を行う</li><li>新構成では/schedule, /projects, /invoices, /admin, /loginなどの画面はhono/jsx SSRでHTMLのみを返す</li><li>hono/jsxではJSXがサーバーサイドテンプレートとして機能し、hooksを使わない</li><li>この構成によりチャット画面以外のクライアントJSがゼロになる</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Next.js が勝っているのは『リッチな UI』の 1 行だけです。そして、その 1 行が効くのはチャット画面だけでした。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/y3chi5z/articles/hono-jsx-ssr-instead-of-nextjs-on-workers" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/y3chi5z/articles/hono-jsx-ssr-instead-of-nextjs-on-workers" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%E3%82%92%E3%82%84%E3%82%81%E3%81%A6Hono%E3%81%AB%E4%B9%97%E3%82%8A%E6%8F%9B%E3%81%88%E3%81%9F%E7%90%86%E7%94%B1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2Fa7b66613a450cd49%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%E3%82%92%E3%82%84%E3%82%81%E3%81%A6Hono%E3%81%AB%E4%B9%97%E3%82%8A%E6%8F%9B%E3%81%88%E3%81%9F%E7%90%86%E7%94%B1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-13/a7b66613a450cd49/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2Fa7b66613a450cd49%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../27fe7b7835f28869/"><span>前の記事</span>Perplexity、本番運用をAstraに委任</a><a class="next" href="../40471d31e67104ff/"><span>次の記事</span>TypeScript 7.0、ビルド最大12倍高速化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-13/">← 2026.09.13 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../40471d31e67104ff/">TypeScript 7.0、ビルド最大12倍高速化</a></h3>
+<p class="excerpt">マイクロソフトは2026年9月11日、ネイティブGoコンパイラを採用したTypeScript 7.0をリリースしました。フルビルドは通常8倍から12倍高速化し、メモリ使用量も約18%削減されたと報じられています。開発は2025年3月の実…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../8c6b2c198d13df24/">Vercelが黙って止めていたデプロイの正体</a></h3>
+<p class="excerpt">Vercelには、コミットの作者(author)のメールアドレスがチームメンバーかどうかを確認し、非メンバーであればデプロイを黙ってブロックする仕組みがあります。ブロックされたデプロイはダッシュボード上でstatus=UNKNOWN、D…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../7ee275f00f287bc6/">SQLiteに16年潜んだバグと形式手法の教訓</a></h3>
+<p class="excerpt">Findy Mediaの連載「あの人も読んでる」第22回では、Deno Land Inc.のソフトウェアエンジニアmaguro氏(X: @yusuktan)が、SQLiteに少なくとも2010年から16年間潜んでいた並行処理関連のバグと…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>findy-code.io</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

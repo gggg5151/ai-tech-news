@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>robots.txtに代わる同意と対価のプロトコル — 1年目向けエンジニア新聞</title>
+<meta name="description" content="arXivに投稿された論文「terms.txt: A Consent and Compensation Protocol for Agentic Web Access」は、検索エンジンにクロールを許可する代わりにトラフィックを得るという従来の暗黙の合意が、AIクローラーの台頭によって崩れていると指摘し、robots.t…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="robots.txtに代わる同意と対価のプロトコル — 1年目向けエンジニア新聞">
+<meta property="og:description" content="arXivに投稿された論文「terms.txt: A Consent and Compensation Protocol for Agentic Web Access」は、検索エンジンにクロールを許可する代わりにトラフィックを得るという従来の暗黙の合意が、AIクローラーの台頭によって崩れていると指摘し、robots.t…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/bc0d82c86729146a/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/bc0d82c86729146a/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "robots.txtに代わる同意と対価のプロトコル", "datePublished": "2026-09-13", "description": "arXivに投稿された論文「terms.txt: A Consent and Compensation Protocol for Agentic Web Access」は、検索エンジンにクロールを許可する代わりにトラフィックを得るという従来の暗黙の合意が、AIクローラーの台頭によって崩れていると指摘し、robots.txtに代わる新しいプロトコル「terms…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/bc0d82c86729146a/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.11152", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-13/">2026.09.13 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>robots.txtに代わる同意と対価のプロトコル</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-13">2026.09.13</time></div>
+</header>
+<div class="article-body">
+<p>arXivに投稿された論文「terms.txt: A Consent and Compensation Protocol for Agentic Web Access」は、検索エンジンにクロールを許可する代わりにトラフィックを得るという従来の暗黙の合意が、AIクローラーの台頭によって崩れていると指摘し、robots.txtに代わる新しいプロトコル「terms.txt」を提案しています。著者はRajarshi Chowdhury氏です。</p>
+<p>terms.txtはパスや目的ごとに機械アクセスの条件を指定でき、Web Bot Auth署名による認証、<strong>HTTP 402</strong>(「支払いが必要」を示すステータスコード)を用いた交渉メカニズム、署名付き領収書の発行といった機能を備えます。実装は単一のvCPU上でリクエストあたり0.20〜0.65ミリ秒のオーバーヘッドに抑えられているとされています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「terms.txt: A Consent and Compensation Protocol for Agentic Web Access」である</li><li>著者はRajarshi Chowdhuryである</li><li>論文の提出日は2026年9月10日である</li><li>論文は、検索エンジンにクロールを許可する代わりにトラフィックを得るという従来の暗黙の合意が存在したと主張している</li><li>論文は、AIクローラーの台頭がこのバランスを破壊していると主張している</li><li>論文はrobots.txtに代わる新しいプロトコル「terms.txt」を提案している</li><li>terms.txtはパスごと・目的ごとに機械アクセスの条件を指定できる</li><li>terms.txtはWeb Bot Auth署名による認証機能を備える</li><li>terms.txtはHTTP 402ステータスコードを用いた交渉メカニズムを備える</li><li>terms.txtは署名入り領収書を発行する機能を備える</li><li>実装は単一のvCPU上でリクエストあたり0.20〜0.65ミリ秒のオーバーヘッドに抑えられているとされる</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.11152" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=robots.txt%E3%81%AB%E4%BB%A3%E3%82%8F%E3%82%8B%E5%90%8C%E6%84%8F%E3%81%A8%E5%AF%BE%E4%BE%A1%E3%81%AE%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2Fbc0d82c86729146a%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=robots.txt%E3%81%AB%E4%BB%A3%E3%82%8F%E3%82%8B%E5%90%8C%E6%84%8F%E3%81%A8%E5%AF%BE%E4%BE%A1%E3%81%AE%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-13/bc0d82c86729146a/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2Fbc0d82c86729146a%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../770793ceee7f8bcc/"><span>前の記事</span>アクセスなしでMCPサーバーの脆弱性を検出</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-13/">← 2026.09.13 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../f14fddb3acabb8eb/">LLMのsemver制約理解度を測るベンチマーク</a></h3>
+<p class="excerpt">SemVerBenchは、LLMがソフトウェアのバージョン制約(例: ^1.2.3や&gt;=2.0,&lt;3)の解決意味論をどれだけ正確に理解しているかを測定する、初のベンチマークを提案する論文です。著者はQibai Chen氏とZeming…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../770793ceee7f8bcc/">アクセスなしでMCPサーバーの脆弱性を検出</a></h3>
+<p class="excerpt">この論文は、MCP(Model Context Protocol。AIエージェントが外部ツールと連携するための規格)サーバーの間接的プロンプトインジェクション脆弱性を、実際のシステムへのアクセスや実行時の相互作用なしに、ツールの機能メタ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-12/adf7e09cc64990ba/">統計力学でAIエージェント群の集団行動を予測</a></h3>
+<p class="excerpt">Batu El氏ら10名による論文「Physics of Agents」です。1万以上のコミュニティに属するLLMエージェントを観察し、数学問題や政治的声明について意見を交換・修正させる実験を行い、統計力学の枠組みを適用した動的モデルを…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

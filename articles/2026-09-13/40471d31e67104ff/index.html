@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TypeScript 7.0、ビルド最大12倍高速化 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="マイクロソフトは2026年9月11日、ネイティブGoコンパイラを採用したTypeScript 7.0をリリースしました。フルビルドは通常8倍から12倍高速化し、メモリ使用量も約18%削減されたと報じられています。開発は2025年3月の実験的版発表から進められてきました。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="TypeScript 7.0、ビルド最大12倍高速化 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="マイクロソフトは2026年9月11日、ネイティブGoコンパイラを採用したTypeScript 7.0をリリースしました。フルビルドは通常8倍から12倍高速化し、メモリ使用量も約18%削減されたと報じられています。開発は2025年3月の実験的版発表から進められてきました。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/40471d31e67104ff/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/40471d31e67104ff/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "TypeScript 7.0、ビルド最大12倍高速化", "datePublished": "2026-09-13", "description": "マイクロソフトは2026年9月11日、ネイティブGoコンパイラを採用したTypeScript 7.0をリリースしました。フルビルドは通常8倍から12倍高速化し、メモリ使用量も約18%削減されたと報じられています。開発は2025年3月の実験的版発表から進められてきました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/40471d31e67104ff/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.infoq.com/jp/news/2026/09/typescript-7-released/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-13/">2026.09.13 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>TypeScript 7.0、ビルド最大12倍高速化</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span><time datetime="2026-09-13">2026.09.13</time></div>
+</header>
+<div class="article-body">
+<p>マイクロソフトは2026年9月11日、ネイティブGoコンパイラを採用したTypeScript 7.0をリリースしました。フルビルドは通常8倍から12倍高速化し、メモリ使用量も約18%削減されたと報じられています。開発は2025年3月の実験的版発表から進められてきました。</p>
+<p>実例として、VS Codeのソースコードでのフルビルド時間は125.7秒から10.6秒(11.9倍高速化)に短縮され、エラーを含むファイルを開く時間も17.5秒から1.3秒未満に短縮されたといいます。Slackのエンジニアリングチームでは、<strong>CI</strong>(継続的インテグレーション。コード変更を継続的に統合・検証する仕組み)環境での型チェック時間が約7.5分から1.25分に短縮されました。</p>
+<p>実験的版は@typescript/native-previewパッケージとしてコミュニティに提供され、週間ダウンロード数は850万件を超えたとのことです。ただし安定したAPIインターフェースの提供はTypeScript 7.1待ちで、Webpack、typescript-eslint、Vue、Svelteなどの開発ツールはまだ新コンパイラに対応していないという制限も報じられています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>TypeScript 7.0はネイティブGoコンパイラを採用している</li><li>フルビルドは通常8倍から12倍高速化するとされている</li><li>メモリ使用量は約18%削減された</li><li>VS Codeのソースコードでのフルビルド時間は125.7秒から10.6秒に短縮され、11.9倍高速化した</li><li>VS Codeでエラーを含むファイルを開く時間は17.5秒から1.3秒未満に短縮された</li><li>Slackのエンジニアリングチームでは、CI環境での型チェック時間が約7.5分から1.25分に短縮された</li><li>マイクロソフトは2025年3月にネイティブコンパイラの実験的版を発表した</li><li>実験的版は@typescript/native-previewパッケージとしてコミュニティに提供され、週間ダウンロード数は850万件を超えた</li><li>安定したAPIインターフェースはTypeScript 7.1で提供予定とされている</li><li>Webpack、typescript-eslint、Vue、Svelteなどの開発ツールはまだ新コンパイラに対応していない</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>通常8倍から12倍の高速化</blockquote><p class="quotes-source">出典: <a href="https://www.infoq.com/jp/news/2026/09/typescript-7-released/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="noopener noreferrer">infoq.com</a></p></section>
+<aside class="source-box"><a href="https://www.infoq.com/jp/news/2026/09/typescript-7-released/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">infoq.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=TypeScript%207.0%E3%80%81%E3%83%93%E3%83%AB%E3%83%89%E6%9C%80%E5%A4%A712%E5%80%8D%E9%AB%98%E9%80%9F%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2F40471d31e67104ff%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=TypeScript%207.0%E3%80%81%E3%83%93%E3%83%AB%E3%83%89%E6%9C%80%E5%A4%A712%E5%80%8D%E9%AB%98%E9%80%9F%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-13/40471d31e67104ff/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2F40471d31e67104ff%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../a7b66613a450cd49/"><span>前の記事</span>Next.jsをやめてHonoに乗り換えた理由</a><a class="next" href="../8c6b2c198d13df24/"><span>次の記事</span>Vercelが黙って止めていたデプロイの正体</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-13/">← 2026.09.13 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../a7b66613a450cd49/">Next.jsをやめてHonoに乗り換えた理由</a></h3>
+<p class="excerpt">シニアエンジニアのy43z氏がZennに投稿した記事です。社内の稼働管理システムをCloudflare Workers上で構築する実務プロジェクトで、Next.js(OpenNext on Workers)からHono + hono/j…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../8c6b2c198d13df24/">Vercelが黙って止めていたデプロイの正体</a></h3>
+<p class="excerpt">Vercelには、コミットの作者(author)のメールアドレスがチームメンバーかどうかを確認し、非メンバーであればデプロイを黙ってブロックする仕組みがあります。ブロックされたデプロイはダッシュボード上でstatus=UNKNOWN、D…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../7ee275f00f287bc6/">SQLiteに16年潜んだバグと形式手法の教訓</a></h3>
+<p class="excerpt">Findy Mediaの連載「あの人も読んでる」第22回では、Deno Land Inc.のソフトウェアエンジニアmaguro氏(X: @yusuktan)が、SQLiteに少なくとも2010年から16年間潜んでいた並行処理関連のバグと…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>findy-code.io</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

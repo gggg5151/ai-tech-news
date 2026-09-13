@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQLiteに16年潜んだバグと形式手法の教訓 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Findy Mediaの連載「あの人も読んでる」第22回では、Deno Land Inc.のソフトウェアエンジニアmaguro氏(X: @yusuktan)が、SQLiteに少なくとも2010年から16年間潜んでいた並行処理関連のバグと、それを発見・検証した各社の取り組みを紹介しています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="SQLiteに16年潜んだバグと形式手法の教訓 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Findy Mediaの連載「あの人も読んでる」第22回では、Deno Land Inc.のソフトウェアエンジニアmaguro氏(X: @yusuktan)が、SQLiteに少なくとも2010年から16年間潜んでいた並行処理関連のバグと、それを発見・検証した各社の取り組みを紹介しています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/7ee275f00f287bc6/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/7ee275f00f287bc6/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "SQLiteに16年潜んだバグと形式手法の教訓", "datePublished": "2026-09-13", "description": "Findy Mediaの連載「あの人も読んでる」第22回では、Deno Land Inc.のソフトウェアエンジニアmaguro氏(X: @yusuktan)が、SQLiteに少なくとも2010年から16年間潜んでいた並行処理関連のバグと、それを発見・検証した各社の取り組みを紹介しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/7ee275f00f287bc6/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://findy-code.io/media/articles/modoku-yusuktan-202609", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-13/">2026.09.13 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>SQLiteに16年潜んだバグと形式手法の教訓</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>findy-code.io</span><time datetime="2026-09-13">2026.09.13</time></div>
+</header>
+<div class="article-body">
+<p>Findy Mediaの連載「あの人も読んでる」第22回では、Deno Land Inc.のソフトウェアエンジニアmaguro氏(X: @yusuktan)が、SQLiteに少なくとも2010年から16年間潜んでいた並行処理関連のバグと、それを発見・検証した各社の取り組みを紹介しています。</p>
+<p>Tailscaleは2022年からコントロールプレーン用データベースにSQLiteを採用していましたが、採用後6カ月間で19回のデータベース破損に遭遇し、最初のインシデントでは1時間を超える停止が発生したといいます。原因は<strong>WAL</strong>(Write-Ahead Log。変更内容を先に記録してから反映する仕組み)のリセット処理とチェックポイント処理の競合で、モデル検査によって初期状態を含む20個の状態をたどる処理順序が反例として示されました。</p>
+<p>CanonicalのdqliteチームはTLA+(形式手法の仕様記述言語)を使ってこのバグを検証し、Denoチームが開発するcelldでも時計ずれに関する反例が見つかったといいます。記事は、AIが書くコードが増える時代には、人間の注意力だけに頼らない機械的な確認手段としての形式手法の価値が上がっていくと論じています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>記事の筆者はmaguro氏（X: @yusuktan）で、Deno Land Inc.のソフトウェアエンジニアである</li><li>この記事はFindy Mediaの連載「あの人も読んでる」の第22回目である</li><li>SQLiteには少なくとも2010年から16年間、あるバグが潜んでいたと記事は述べている</li><li>Tailscaleは2022年からコントロールプレーン用のデータベースとしてSQLiteを採用していた</li><li>TailscaleはSQLiteの採用後、6カ月間に19回のデータベース破損に遭遇した</li><li>Tailscaleで発生した最初のインシデントでは1時間を超える停止が発生した</li><li>このバグはWAL（Write-Ahead Log）のリセット処理とチェックポイント処理の競合が原因とされている</li><li>モデル検査によって、初期状態を含む20個の状態をたどる処理順序が反例として示された</li><li>CanonicalのdqliteチームはTLA+を使ってこのバグに関する検証を行った</li><li>Denoチームが開発するcelldにおいても、時計ずれに関する反例が見つかった</li><li>celldの時計ずれの反例では、leaseの有効期間が10秒、時計ずれが1秒、実経過時間が9秒という条件が示されている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>AIが書くコードが増えるほど、人間の注意力だけに頼らない機械的な確認手段の価値は上がっていくはずです</blockquote><p class="quotes-source">出典: <a href="https://findy-code.io/media/articles/modoku-yusuktan-202609" target="_blank" rel="noopener noreferrer">findy-code.io</a></p></section>
+<aside class="source-box"><a href="https://findy-code.io/media/articles/modoku-yusuktan-202609" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">findy-code.io</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=SQLite%E3%81%AB16%E5%B9%B4%E6%BD%9C%E3%82%93%E3%81%A0%E3%83%90%E3%82%B0%E3%81%A8%E5%BD%A2%E5%BC%8F%E6%89%8B%E6%B3%95%E3%81%AE%E6%95%99%E8%A8%93%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2F7ee275f00f287bc6%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=SQLite%E3%81%AB16%E5%B9%B4%E6%BD%9C%E3%82%93%E3%81%A0%E3%83%90%E3%82%B0%E3%81%A8%E5%BD%A2%E5%BC%8F%E6%89%8B%E6%B3%95%E3%81%AE%E6%95%99%E8%A8%93%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-13/7ee275f00f287bc6/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2F7ee275f00f287bc6%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../8c6b2c198d13df24/"><span>前の記事</span>Vercelが黙って止めていたデプロイの正体</a><a class="next" href="../cab1902093e545ce/"><span>次の記事</span>Firefox標準搭載のローカル翻訳機能</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-13/">← 2026.09.13 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../a7b66613a450cd49/">Next.jsをやめてHonoに乗り換えた理由</a></h3>
+<p class="excerpt">シニアエンジニアのy43z氏がZennに投稿した記事です。社内の稼働管理システムをCloudflare Workers上で構築する実務プロジェクトで、Next.js(OpenNext on Workers)からHono + hono/j…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../40471d31e67104ff/">TypeScript 7.0、ビルド最大12倍高速化</a></h3>
+<p class="excerpt">マイクロソフトは2026年9月11日、ネイティブGoコンパイラを採用したTypeScript 7.0をリリースしました。フルビルドは通常8倍から12倍高速化し、メモリ使用量も約18%削減されたと報じられています。開発は2025年3月の実…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../8c6b2c198d13df24/">Vercelが黙って止めていたデプロイの正体</a></h3>
+<p class="excerpt">Vercelには、コミットの作者(author)のメールアドレスがチームメンバーかどうかを確認し、非メンバーであればデプロイを黙ってブロックする仕組みがあります。ブロックされたデプロイはダッシュボード上でstatus=UNKNOWN、D…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

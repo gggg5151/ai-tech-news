@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>アクセスなしでMCPサーバーの脆弱性を検出 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="この論文は、MCP(Model Context Protocol。AIエージェントが外部ツールと連携するための規格)サーバーの間接的プロンプトインジェクション脆弱性を、実際のシステムへのアクセスや実行時の相互作用なしに、ツールの機能メタデータのみから検出する新しい分析手法「no-box分析」を提案しています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="アクセスなしでMCPサーバーの脆弱性を検出 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="この論文は、MCP(Model Context Protocol。AIエージェントが外部ツールと連携するための規格)サーバーの間接的プロンプトインジェクション脆弱性を、実際のシステムへのアクセスや実行時の相互作用なしに、ツールの機能メタデータのみから検出する新しい分析手法「no-box分析」を提案しています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/770793ceee7f8bcc/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/770793ceee7f8bcc/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "アクセスなしでMCPサーバーの脆弱性を検出", "datePublished": "2026-09-13", "description": "この論文は、MCP(Model Context Protocol。AIエージェントが外部ツールと連携するための規格)サーバーの間接的プロンプトインジェクション脆弱性を、実際のシステムへのアクセスや実行時の相互作用なしに、ツールの機能メタデータのみから検出する新しい分析手法「no-box分析」を提案しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-13/770793ceee7f8bcc/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.10854", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-13/">2026.09.13 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>アクセスなしでMCPサーバーの脆弱性を検出</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-13">2026.09.13</time></div>
+</header>
+<div class="article-body">
+<p>この論文は、<strong>MCP</strong>(Model Context Protocol。AIエージェントが外部ツールと連携するための規格)サーバーの間接的プロンプトインジェクション脆弱性を、実際のシステムへのアクセスや実行時の相互作用なしに、ツールの機能メタデータのみから検出する新しい分析手法「no-box分析」を提案しています。</p>
+<p>著者らはプロトタイプツール「MCPSEC」を実装し、広く使われている20個のMCPサーバー・177個のツールを対象に評価しました。その結果、143ツールを脆弱性ありと判定し、94件の検証済み脆弱性を検出(再現率98.9%)、比較対象としたLLMベースライン(再現率84.2%)を上回ったと報告しています。著者は16名で、筆頭著者はZehua Zhang氏です。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文は「no-box分析」という新しい脆弱性分析パラダイムを提案している</li><li>no-box分析は、システムへのアクセスや実行時の相互作用を必要とせず、機能メタデータのみを用いて脆弱性を検出する手法である</li><li>著者らはこの手法をMCPサーバーの間接的プロンプトインジェクション脆弱性検出に適用した</li><li>著者らはプロトタイプツール「MCPSEC」を実装した</li><li>MCPSECはMCPサーバーのツールメタデータを分析し、仮説的な脆弱性を生成し、脆弱なツールごとに悪用技法を提示する</li><li>評価対象は広く展開されている20個のMCPサーバー、合計177個のツールである</li><li>MCPSECは177ツールのうち143個を脆弱性ありと判定した</li><li>MCPSECは94個の検証済み脆弱性を検出し、再現率は98.9%であった</li><li>比較対象としたLLMベースラインの再現率は84.2%であった</li><li>論文の著者は16名であり、筆頭著者はZehua Zhangである</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.10854" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AA%E3%81%97%E3%81%A7MCP%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E8%84%86%E5%BC%B1%E6%80%A7%E3%82%92%E6%A4%9C%E5%87%BA%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2F770793ceee7f8bcc%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AA%E3%81%97%E3%81%A7MCP%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E8%84%86%E5%BC%B1%E6%80%A7%E3%82%92%E6%A4%9C%E5%87%BA%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-13/770793ceee7f8bcc/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-13%2F770793ceee7f8bcc%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../f14fddb3acabb8eb/"><span>前の記事</span>LLMのsemver制約理解度を測るベンチマーク</a><a class="next" href="../bc0d82c86729146a/"><span>次の記事</span>robots.txtに代わる同意と対価のプロトコル</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-13/">← 2026.09.13 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../f14fddb3acabb8eb/">LLMのsemver制約理解度を測るベンチマーク</a></h3>
+<p class="excerpt">SemVerBenchは、LLMがソフトウェアのバージョン制約(例: ^1.2.3や&gt;=2.0,&lt;3)の解決意味論をどれだけ正確に理解しているかを測定する、初のベンチマークを提案する論文です。著者はQibai Chen氏とZeming…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../bc0d82c86729146a/">robots.txtに代わる同意と対価のプロトコル</a></h3>
+<p class="excerpt">arXivに投稿された論文「terms.txt: A Consent and Compensation Protocol for Agentic Web Access」は、検索エンジンにクロールを許可する代わりにトラフィックを得るという…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-13">2026.09.13</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-12/adf7e09cc64990ba/">統計力学でAIエージェント群の集団行動を予測</a></h3>
+<p class="excerpt">Batu El氏ら10名による論文「Physics of Agents」です。1万以上のコミュニティに属するLLMエージェントを観察し、数学問題や政治的声明について意見を交換・修正させる実験を行い、統計力学の枠組みを適用した動的モデルを…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-12">2026.09.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
