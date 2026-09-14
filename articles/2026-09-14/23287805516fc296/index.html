@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TailscaleのAIゲートウェイ「Aperture」正式リリース — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Tailscaleが、AIゲートウェイサービス「Aperture」を正式リリースしました（8月26日に発表）。VPN内でAIサービスをAPIキーの配布なしに統合でき、コスト管理・ガードレール・監査ログの各機能に加え、MCP(Model Context Protocol、AIとツールをつなぐ標準規格)のプロキシ機能を備え…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="TailscaleのAIゲートウェイ「Aperture」正式リリース — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Tailscaleが、AIゲートウェイサービス「Aperture」を正式リリースしました（8月26日に発表）。VPN内でAIサービスをAPIキーの配布なしに統合でき、コスト管理・ガードレール・監査ログの各機能に加え、MCP(Model Context Protocol、AIとツールをつなぐ標準規格)のプロキシ機能を備え…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-14/23287805516fc296/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-14/23287805516fc296/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "TailscaleのAIゲートウェイ「Aperture」正式リリース", "datePublished": "2026-09-14", "description": "Tailscaleが、AIゲートウェイサービス「Aperture」を正式リリースしました（8月26日に発表）。VPN内でAIサービスをAPIキーの配布なしに統合でき、コスト管理・ガードレール・監査ログの各機能に加え、MCP(Model Context Protocol、AIとツールをつなぐ標準規格)のプロキシ機能を備え、AIモデル用のトークンを購入・管理する…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-14/23287805516fc296/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.publickey1.jp/blog/26/tailscalevpnaiapertureaitailscale.html", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-14/">2026.09.14 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>TailscaleのAIゲートウェイ「Aperture」正式リリース</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-14">2026.09.14</time></div>
+</header>
+<div class="article-body">
+<p>Tailscaleが、AIゲートウェイサービス「Aperture」を正式リリースしました（8月26日に発表）。VPN内でAIサービスをAPIキーの配布なしに統合でき、コスト管理・ガードレール・監査ログの各機能に加え、MCP(Model Context Protocol、AIとツールをつなぐ標準規格)のプロキシ機能を備え、AIモデル用のトークンを購入・管理することもできます。</p>
+<p>今回新たに「Tailscale MCP」と「Tailscale SSH MCP」が追加され、AIエージェント自身がTailscaleネットワーク上でのノード追加やSSH接続を実行できるようになりました。ただし新規マシンノードの追加には人間の承認が必須とされ、既存のアクセス制御設定は維持されるうえ、<strong>すべての操作は監査ログに記録</strong>される仕組みです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Tailscaleが「Aperture」というAIゲートウェイサービスを正式リリースした</li><li>Apertureは2026年8月26日にTwitterで発表された</li><li>ApertureはVPN内でAIサービスを統合でき、APIキーの配布が不要である</li><li>Apertureはコスト管理・ガードレール・監査ログの各機能を備える</li><li>ApertureはMCP(Model Context Protocol)のプロキシ機能を持つ</li><li>Aperture内でAIモデル用のトークンを購入・管理できる</li><li>新たに「Tailscale MCP」と「Tailscale SSH MCP」が追加された</li><li>この新機能によりAIエージェントがTailscaleネットワーク内でのノード追加やSSH接続を実行できるようになった</li><li>新規マシンノードの追加には人間による承認が必須とされている</li><li>AIエージェントによる操作はすべて監査ログに記録される</li><li>既存のアクセス制御設定はAIエージェントの操作後も維持される</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Give AI agents the models, tools, and infrastructure they need without handing over API keys or unrestricted access.</blockquote><p class="quotes-source">出典: <a href="https://www.publickey1.jp/blog/26/tailscalevpnaiapertureaitailscale.html" target="_blank" rel="noopener noreferrer">publickey1.jp</a></p></section>
+<aside class="source-box"><a href="https://www.publickey1.jp/blog/26/tailscalevpnaiapertureaitailscale.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">publickey1.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Tailscale%E3%81%AEAI%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E3%80%8CAperture%E3%80%8D%E6%AD%A3%E5%BC%8F%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-14%2F23287805516fc296%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Tailscale%E3%81%AEAI%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E3%80%8CAperture%E3%80%8D%E6%AD%A3%E5%BC%8F%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-14/23287805516fc296/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-14%2F23287805516fc296%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1a37b282bc8a4d98/"><span>前の記事</span>習氏、BRICSで「オープンソースAI」圏構想を提案</a><a class="next" href="../30bf7a0d83c3942c/"><span>次の記事</span>Claude CLIに「apply」コマンド エージェントをコードで管理</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-14/">← 2026.09.14 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../a44bd995da6be21e/">AI開発「ペース調整」提言にアルトマン氏・マスク氏も同調</a></h3>
+<p class="excerpt">Anthropic CEOのダリオ・アモデイ氏は2026年9月12日（現地時間）、「We Must Pace the Frontier」と題するエッセイを公開し、AI業界がモデルの能力向上そのもののペースを落とす必要があると訴えました。…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../46d809ccaf91224c/">オープンAI、年内上場を否定 安全性懸念を理由に挙げる</a></h3>
+<p class="excerpt">オープンAIのサム・アルトマンCEOは9月11日、フォーチュン誌のインタビューで2026年内の株式上場（IPO）を否定しました。「安全性に関してさまざまな問題が生じている現状を踏まえると、今株式を公開するのは賢明な判断とは言えない」と述…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>afpbb.com</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../1a37b282bc8a4d98/">習氏、BRICSで「オープンソースAI」圏構想を提案</a></h3>
+<p class="excerpt">習近平国家主席は9月13日、インドのニューデリーで開催されたBRICS首脳会議で、AIの「オープンソースゾーン」創設を主導すると表明しました。BRICS加盟国間での大規模言語モデル(LLM)の開発・活用における協力、AI専門の研究・研修…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>afpbb.com</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

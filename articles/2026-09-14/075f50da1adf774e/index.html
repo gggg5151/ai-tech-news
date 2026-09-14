@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chrome DevTools MCPをWindowsに導入、ログインだけ人がやる運用 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="SIOS Tech Labのブログ記事。著者「龍」氏（2022年入社のフロントエンドエンジニア）が、Chrome DevTools MCPを自社ブログを対象にWindows環境へ試験導入した体験談です。導入は「claude mcp add chrome-devtools -- npx -y chrome-devtool…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Chrome DevTools MCPをWindowsに導入、ログインだけ人がやる運用 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="SIOS Tech Labのブログ記事。著者「龍」氏（2022年入社のフロントエンドエンジニア）が、Chrome DevTools MCPを自社ブログを対象にWindows環境へ試験導入した体験談です。導入は「claude mcp add chrome-devtools -- npx -y chrome-devtool…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-14/075f50da1adf774e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-14/075f50da1adf774e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Chrome DevTools MCPをWindowsに導入、ログインだけ人がやる運用", "datePublished": "2026-09-14", "description": "SIOS Tech Labのブログ記事。著者「龍」氏（2022年入社のフロントエンドエンジニア）が、Chrome DevTools MCPを自社ブログを対象にWindows環境へ試験導入した体験談です。導入は「claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest」という単一コマ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-14/075f50da1adf774e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://tech-lab.sios.jp/archives/54515", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-14/">2026.09.14 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Chrome DevTools MCPをWindowsに導入、ログインだけ人がやる運用</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech-lab.sios.jp</span><time datetime="2026-09-14">2026.09.14</time></div>
+</header>
+<div class="article-body">
+<p>SIOS Tech Labのブログ記事。著者「龍」氏（2022年入社のフロントエンドエンジニア）が、Chrome DevTools MCPを自社ブログを対象にWindows環境へ試験導入した体験談です。導入は「claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest」という単一コマンドで完了し、前提条件はNode.jsのインストールのみだったとしています。</p>
+<p>著者の方針は、<strong>IDとパスワードをエージェントに渡さない</strong>ことです。認証情報を保存すると漏洩リスクが増すうえ、人間による最終チェックが消滅してしまうためだと説明しています。代わりに「動かしているあいだはブラウザを見ておいて、挙動に違和感があったらパスワードを変える」という運用を提案し、ログイン前後の画面をスクリーンショットで比較して管理バーの出現を確認する形で検証結果を示しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Chrome DevTools MCPは「claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest」という単一コマンドでセットアップできる。</li><li>前提条件はNode.jsがインストールされていることのみである。</li><li>著者の方針は、IDとパスワードをエージェントに渡さないことである。</li><li>著者は、認証情報を保存すると漏洩リスクが増加すると述べている。</li><li>著者は、認証情報を保存すると人間による最終チェックが消滅すると述べている。</li><li>著者は、エージェントを動かしている間はブラウザを見ておき、挙動に違和感があったらパスワードを変える運用を推奨している。</li><li>著者の龍(Ryu)氏は2022年入社のフロントエンドエンジニアである。</li><li>著者は自社ブログでChrome DevTools MCPを試験的に実装した。</li><li>著者はログイン前後の画面をスクリーンショットで比較し、管理バーの出現を確認する形で検証結果を提示した。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>動かしているあいだはブラウザを見ておいて、挙動に違和感があったらパスワードを変える</blockquote><p class="quotes-source">出典: <a href="https://tech-lab.sios.jp/archives/54515" target="_blank" rel="noopener noreferrer">tech-lab.sios.jp</a></p></section>
+<aside class="source-box"><a href="https://tech-lab.sios.jp/archives/54515" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">tech-lab.sios.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Chrome%20DevTools%20MCP%E3%82%92Windows%E3%81%AB%E5%B0%8E%E5%85%A5%E3%80%81%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%A0%E3%81%91%E4%BA%BA%E3%81%8C%E3%82%84%E3%82%8B%E9%81%8B%E7%94%A8%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-14%2F075f50da1adf774e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Chrome%20DevTools%20MCP%E3%82%92Windows%E3%81%AB%E5%B0%8E%E5%85%A5%E3%80%81%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%A0%E3%81%91%E4%BA%BA%E3%81%8C%E3%82%84%E3%82%8B%E9%81%8B%E7%94%A8%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-14/075f50da1adf774e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-14%2F075f50da1adf774e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../e0ed8f92bfa4ab8d/"><span>前の記事</span>「なんでもNext.js」への違和感、必要性を問い直す</a><a class="next" href="../5220d971159d1582/"><span>次の記事</span>Microsoft製「MarkItDown」あらゆるファイルをMarkdownに変換</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-14/">← 2026.09.14 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../7e14bc9cb917d8f3/">Next.js 16の新API、updateTagとrevalidateTagの使い分け</a></h3>
+<p class="excerpt">Next.js 16で導入されたキャッシュ無効化APIの新顔「updateTag」と、既存の「revalidateTag」の使い分けを解説する記事です。両者の最大の違いは「古いキャッシュを一時的に返してよいか」という点だと説明しています…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../efb5f148bf5f6811/">マイクロソフト、Rustを社内Tier1言語に格上げ</a></h3>
+<p class="excerpt">マイクロソフトの開発部門でRustツールチームのプリンシパルエンジニアであるVictor Ciura氏が、Rust Foundation公式サイトへのゲスト投稿で、Rust言語が社内でC++、C#、TypeScriptと並ぶTier 1…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e0ed8f92bfa4ab8d/">「なんでもNext.js」への違和感、必要性を問い直す</a></h3>
+<p class="excerpt">筆者は、AIが学習データの豊富さゆえに何でもNext.jsを勧めがちな傾向を批判し、プロジェクトの実際の要件に基づいてフレームワークを選ぶべきだと主張しています。Next.jsが適するのは、不特定多数向けのSEOが重要なページを大量に持…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>ashunar0.dev</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

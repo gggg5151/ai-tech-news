@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>google/go-github の github/activity_star.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="go-githubはGoogle公式のGitHub REST APIクライアントで、GitHub Actionsやgh CLIなど多くのツールが内部で使っています。星(Star)機能を扱うこのファイルを選んだ理由は、「HTTPリクエストを組み立てて投げて、レスポンスをGoの構造体に詰め替える」という、APIクライアント…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="google/go-github の github/activity_star.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="go-githubはGoogle公式のGitHub REST APIクライアントで、GitHub Actionsやgh CLIなど多くのツールが内部で使っています。星(Star)機能を扱うこのファイルを選んだ理由は、「HTTPリクエストを組み立てて投げて、レスポンスをGoの構造体に詰め替える」という、APIクライアント…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-14/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-14/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.14</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>google/go-github の <code>github/activity_star.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/google/go-github/blob/HEAD/github/activity_star.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-14">2026.09.14</time></div>
+</header>
+<div class="article-body">
+<p>go-githubはGoogle公式のGitHub REST APIクライアントで、GitHub Actionsやgh CLIなど多くのツールが内部で使っています。星(Star)機能を扱うこのファイルを選んだ理由は、「HTTPリクエストを組み立てて投げて、レスポンスをGoの構造体に詰め替える」という、APIクライアントを書くときに何百回も繰り返すことになる定型パターンが、無駄なく1関数に収まっているからです。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// ListStargazers lists people who have starred the specified repo.
+//
+// GitHub API docs: https://docs.github.com/rest/activity/starring?apiVersion=2022-11-28#list-stargazers
+//
+//meta:operation GET /repos/{owner}/{repo}/stargazers
+func (s *ActivityService) ListStargazers(ctx context.Context, owner, repo string, opts *ListOptions) ([]*Stargazer, *Response, error) {
+	u := fmt.Sprintf(&quot;repos/%v/%v/stargazers&quot;, owner, repo)
+	u, err := addOptions(u, opts)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := s.client.NewRequest(ctx, &quot;GET&quot;, u, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req.Header.Set(&quot;Accept&quot;, mediaTypeStarring)
+
+	var stargazers []*Stargazer
+	resp, err := s.client.Do(req, &amp;stargazers)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return stargazers, resp, nil
+}
+
+// …略…
+
+// IsStarred checks if a repository is starred by authenticated user.
+//
+// GitHub API docs: https://docs.github.com/rest/activity/starring?apiVersion=2022-11-28#check-if-a-repository-is-starred-by-the-authenticated-user
+//
+//meta:operation GET /user/starred/{owner}/{repo}
+func (s *ActivityService) IsStarred(ctx context.Context, owner, repo string) (bool, *Response, error) {
+	u := fmt.Sprintf(&quot;user/starred/%v/%v&quot;, owner, repo)
+	req, err := s.client.NewRequest(ctx, &quot;GET&quot;, u, nil)
+	if err != nil {
+		return false, nil, err
+	}
+
+	resp, err := s.client.Do(req, nil)
+	starred, err := parseBoolResponse(err)
+	return starred, resp, err
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func (s *ActivityService) ListStargazers(ctx context.Context, owner, repo string, opts *ListOptions) ([]*Stargazer, *Response, error) {</code></pre><p>まず構文から。`(s *ActivityService)` は「レシーバ」と呼ばれる部分で、この関数を `ActivityService` 型のポインタに紐づくメソッドとして定義しています。つまり `client.Activity.ListStargazers(...)` のように呼び出せるということです。引数の `ctx context.Context` はGoのAPIクライアントで慣例的に第一引数に置かれるもので、タイムアウトやキャンセルを外から伝えるための箱です。`owner, repo string` のようにカンマで型を共有できるのもGoの書き方です。`opts *ListOptions` の `*` はポインタ型で、「nilも渡せる（＝オプション未指定でもよい）任意引数」を表現する定番パターンです。戻り値は `([]*Stargazer, *Response, error)` の3つ組で、「結果」「HTTP応答のメタ情報」「エラー」を必ずセットで返すのがこのライブラリの設計方針です。</p></div><div class="walk-step"><pre class="walk-quote"><code>u := fmt.Sprintf(&quot;repos/%v/%v/stargazers&quot;, owner, repo)</code></pre><p>`:=` は「短縮変数宣言」で、型を書かずに右辺の値から型を推論して新しい変数 `u` を作ります。`fmt.Sprintf` はC言語のprintf系に似た文字列整形関数で、`%v` はどんな型の値でもとりあえず標準的な見た目で埋め込める万能フォーマット指定子です。ここでは owner と repo を埋め込んでAPIのパス文字列（例: `repos/google/go-github/stargazers`）を組み立てています。</p></div><div class="walk-step"><pre class="walk-quote"><code>u, err := addOptions(u, opts)
+	if err != nil {
+		return nil, nil, err
+	}</code></pre><p>`addOptions` はこのファイルの外にあるヘルパー関数で、`opts` 構造体の中身（ページ番号など）を `?page=2` のようなクエリ文字列に変換してURLに付け加えます。ここで注目してほしいのは `if err != nil { return ... }` という形です。Goには例外機構がなく、エラーは戻り値の一部として返ってきます。呼び出し側は毎回「エラーが返ってきていないか」を自分でチェックする必要があり、これがGoで一番よく見る書き方です。エラーが出た場合は残りの戻り値（ここでは結果とResponse）に `nil` を詰めて即座に関数を抜けます。</p></div><div class="walk-step"><pre class="walk-quote"><code>req, err := s.client.NewRequest(ctx, &quot;GET&quot;, u, nil)
+	if err != nil {
+		return nil, nil, err
+	}</code></pre><p>`s.client.NewRequest` は「HTTPメソッド・URL・リクエストボディ」からGoの `*http.Request` をラップしたオブジェクトを作る内部ヘルパーです。第一引数に `ctx` を渡すことで、あとでこのリクエストがキャンセルされたときに途中で処理を打ち切れるようになります。最後の引数が `nil` なのは、GETリクエストには送信するボディがないためです。ここでも同じ「作る→エラーチェック→ダメなら抜ける」というパターンが繰り返されているのがわかると思います。</p></div><div class="walk-step"><pre class="walk-quote"><code>req.Header.Set(&quot;Accept&quot;, mediaTypeStarring)</code></pre><p>`req.Header` はHTTPリクエストのヘッダーを保持するマップのようなもので、`.Set(キー, 値)` で値を設定（既存があれば上書き）します。GitHub APIでは、機能によっては特別な `Accept` ヘッダー（メディアタイプ）を送らないとレスポンスの形式が変わったり404になったりすることがあり、`mediaTypeStarring` はそのための専用の文字列定数です。「このAPI呼び出しには特別な作法が必要」ということをコードの中で明示している一行です。</p></div><div class="walk-step"><pre class="walk-quote"><code>var stargazers []*Stargazer
+	resp, err := s.client.Do(req, &amp;stargazers)
+	if err != nil {
+		return nil, resp, err
+	}</code></pre><p>ここだけ `:=` ではなく `var stargazers []*Stargazer` を使っています。理由は、この後の行でこの変数の「アドレス」が必要になるからです。`&amp;stargazers` の `&amp;` は「このスライスが実際に格納されているメモリ番地」を意味し、`s.client.Do` はレスポンスのJSONボディを、渡されたアドレス先の変数へ直接デコードして書き込みます。つまり `stargazers` は最初は空（nilスライス）ですが、`Do` の呼び出しが成功すると中身が書き換わっているわけです。またエラー時の `return nil, resp, err` に注目してください。ここでは `resp` を `nil` にせずそのまま返しています。エラーが発生してもHTTPレスポンス自体（レート制限の残数など）は呼び出し側が見たいことがあるためです。</p></div><div class="walk-step"><pre class="walk-quote"><code>return stargazers, resp, nil</code></pre><p>すべて成功したときの最終的な戻り値です。エラーがないことを明示するために第三戻り値に `nil` を入れています。Goでは「成功したらnilを返す」がエラー値の基本ルールで、呼び出し側はまず `err != nil` かどうかだけを見れば処理を分岐できます。</p></div><div class="walk-step"><pre class="walk-quote"><code>// …略…</code></pre><p>実際のファイルでは、このあとに `ActivityListStarredOptions` という設定用の構造体と `ListStarred`（ユーザーがスターしたリポジトリ一覧を取る関数）が挟まっていますが、今回は解説の主題である「2つのエラーハンドリングパターンの対比」に絞るため中略しています。省略した部分もほぼ同じ構造（URL組み立て→リクエスト作成→送信）の繰り返しです。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (s *ActivityService) IsStarred(ctx context.Context, owner, repo string) (bool, *Response, error) {</code></pre><p>こちらは戻り値の形が `(bool, *Response, error)` になっている点に注目してください。「一覧を返す」関数は先頭の戻り値がスライスでしたが、「はい/いいえを判定する」関数では `bool` になります。同じサービスの中でも「何を返す関数か」によって戻り値の型を素直に変える、というシンプルな設計方針が見えます。</p></div><div class="walk-step"><pre class="walk-quote"><code>resp, err := s.client.Do(req, nil)
+	starred, err := parseBoolResponse(err)
+	return starred, resp, err</code></pre><p>`s.client.Do(req, nil)` の第二引数が `nil` なのは、このAPIがJSONボディを返さないからです（GitHubの「スター済みか確認する」APIは、スター済みなら204 No Content、そうでなければ404 Not Foundという、ステータスコードだけで答えを表現する設計になっています）。面白いのは次の行 `starred, err := parseBoolResponse(err)` です。ここでは新しい変数 `starred` と、直前で使ったのと同じ名前の `err` を左辺に置いていますが、Goでは `:=` の左辺に「少なくとも1つ新しい変数」が含まれていれば、既存の変数（ここでは `err`）への再代入も一緒に書けるというルールがあります。`parseBoolResponse` は「404ならfalseでエラーなし、それ以外のエラーはそのまま返す」といった変換をする別ファイルのヘルパーで、HTTPのステータスコードという情報を `bool` という素直な型に変換する橋渡し役を担っています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは例外を使わず、関数呼び出しのたびに「変数, err := 処理()」→「if err != nil { return ... }」を素直に繰り返すのが基本形。この“退屈な繰り返し”を怖がらず、むしろその中でどのフィールドをnilのまま返し、どのフィールド（この例ではrespやerr）を再利用するかにこそ設計判断が表れる、という読み方を覚えて帰ってください。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-13/"><span>前の日</span>grpc/grpc-go</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-14/">← 2026.09.14 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

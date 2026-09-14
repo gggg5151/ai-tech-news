@@ -102,7 +102,7 @@ func (a *Attributes) Value(key any) any {
 	return nil
 }</code></pre><p>指定した`key`に対応する値を探すメソッドです。`for cur := a; cur != nil; cur = cur.parent { ... }`はGoのfor文の三点セット（初期化; 継続条件; 後処理）で、「`cur`を`a`から始めて、`nil`でない間繰り返し、毎回`cur`を`cur.parent`（1つ前の輪）に進める」という連結リストの巡回処理です。各ステップで`cur.key == key`かどうか比べ、一致したらその`cur.value`を返して終了（`return`はループも関数も即座に抜けます）。もし鎖の終わり（`parent`が`nil`）まで見つからなければ`nil`を返します。ここで大事なのは巡回が`a`（＝一番新しく追加された輪）から始まる点です。`WithValue`のコメントにある「同じキーが複数回出てきたら最後の値が勝つ」という仕様は、この「新しい方から順に探して最初に見つかったものを返す」というシンプルな探索順序だけで実現されています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「値を変更したい時は元のデータを書き換えず、変更後の新しい断片を親（parent）として繋いだ新しいオブジェクトを返す」というイミュータブルな連結リストのパターンは、並行処理下で安全にデータを共有・拡張したい場面（設定の継承、コンテキストの拡張など）に応用できる、明日から真似できる設計テクニックです。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-11/"><span>前の日</span>AlexsJones/llmfit</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-11/"><span>前の日</span>AlexsJones/llmfit</a><a class="next" href="../2026-09-14/"><span>次の日</span>google/go-github</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-13/">← 2026.09.13 の号を読む</a>
 </div>
 </article>
