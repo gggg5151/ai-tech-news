@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026年9月10日、東京渋谷で開催された「AGNTCon＋MCPCon Japan 2026」において、Agentic AI Foundation（AAIF）が、既存の「Envoy AI Gateway」プロジェクトがAAIFに参加し「Agent Router」へ改名されたと発表しました。Agent RouterはO…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026年9月10日、東京渋谷で開催された「AGNTCon＋MCPCon Japan 2026」において、Agentic AI Foundation（AAIF）が、既存の「Envoy AI Gateway」プロジェクトがAAIFに参加し「Agent Router」へ改名されたと発表しました。Agent RouterはO…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/2b06f860acc160e7/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/2b06f860acc160e7/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ", "datePublished": "2026-09-15", "description": "2026年9月10日、東京渋谷で開催された「AGNTCon＋MCPCon Japan 2026」において、Agentic AI Foundation（AAIF）が、既存の「Envoy AI Gateway」プロジェクトがAAIFに参加し「Agent Router」へ改名されたと発表しました。Agent RouterはOpenAI、Anthropic、Goog…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/2b06f860acc160e7/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.publickey1.jp/blog/26/openaianthropicapiagent_routerlinux_foundation.html", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-15/">2026.09.15 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-15">2026.09.15</time></div>
+</header>
+<div class="article-body">
+<p>2026年9月10日、東京渋谷で開催された「AGNTCon＋MCPCon Japan 2026」において、Agentic AI Foundation（AAIF）が、既存の「Envoy AI Gateway」プロジェクトがAAIFに参加し「Agent Router」へ改名されたと発表しました。Agent RouterはOpenAI、Anthropic、Google Gemini、Amazon Bedrock、Azure OpenAI、Groq、Mistral、DeepSeekなど多数のAIベンダのAPI仕様の違いを吸収し、<strong>OpenAI互換の共通API</strong>で各サービスにアクセスできるようにするソフトウェアです。セルフホストのモデルにも対応しています。</p>
+<p>機能面では、MCP（Model Context Protocol、AIとツールを繋ぐ標準規格）のGateway機能に加え、トラフィック管理・フォールバック、リアルタイムメトリクスに基づくルーティング、トークン使用量やレイテンシの可観測性などを備えています。プロジェクトのスローガンは「One router for every MCP tool」とされています。</p>
+<p>Bloomberg、Tetrate、Tencent Cloud、Nutanixなど11社が公開採用者として名を連ねており、バージョンは1.1に達し本番環境で利用可能とされています。Linux Foundation傘下のプロジェクトとして、AIベンダをまたぐAPI利用の<strong>業界標準</strong>を目指す動きといえそうです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Agentic AI Foundation（AAIF）が2026年9月10日に発表を行った</li><li>発表の場は東京渋谷で開催された「AGNTCon＋MCPCon Japan 2026」だった</li><li>「Envoy AI Gateway」プロジェクトがAAIFに参加した</li><li>「Envoy AI Gateway」は「Agent Router」に名称変更された</li><li>Agent Routerは複数のAIベンダのAPI仕様の違いを統一するソフトウェアである</li><li>Agent RouterはOpenAI互換の共通APIで各AIサービスにアクセス可能にする</li><li>対応AIサービスにはOpenAI、Anthropic、Google Gemini、Amazon Bedrock、Azure OpenAI、Groq、Mistral、DeepSeekが含まれる</li><li>Agent Routerはセルフホストのモデルにも対応する</li><li>Agent RouterはMCP Gateway機能、トラフィック管理・フォールバック機能、リアルタイムメトリクスに基づくルーティング機能、トークン使用量とレイテンシの可観測性機能を備える</li><li>Bloomberg、Tetrate、Tencent Cloud、Nutanixなど11社が公開採用者として名を連ねている</li><li>Agent Routerはバージョン1.1に達しており本番環境で利用可能とされている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>One router for every MCP tool</blockquote><p class="quotes-source">出典: <a href="https://www.publickey1.jp/blog/26/openaianthropicapiagent_routerlinux_foundation.html" target="_blank" rel="noopener noreferrer">publickey1.jp</a></p></section>
+<aside class="source-box"><a href="https://www.publickey1.jp/blog/26/openaianthropicapiagent_routerlinux_foundation.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">publickey1.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=AI%E3%83%99%E3%83%B3%E3%83%80API%E3%82%92%E6%9D%9F%E3%81%AD%E3%82%8B%E3%80%8CAgent%20Router%E3%80%8D%E3%80%81Linux%E3%83%95%E3%82%A1%E3%82%A6%E3%83%B3%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%82%98%E4%B8%8B%E5%85%A5%E3%82%8A%E3%81%A7%E6%A5%AD%E7%95%8C%E6%A8%99%E6%BA%96%E3%81%B8%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-15%2F2b06f860acc160e7%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=AI%E3%83%99%E3%83%B3%E3%83%80API%E3%82%92%E6%9D%9F%E3%81%AD%E3%82%8B%E3%80%8CAgent%20Router%E3%80%8D%E3%80%81Linux%E3%83%95%E3%82%A1%E3%82%A6%E3%83%B3%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%82%98%E4%B8%8B%E5%85%A5%E3%82%8A%E3%81%A7%E6%A5%AD%E7%95%8C%E6%A8%99%E6%BA%96%E3%81%B8%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-15/2b06f860acc160e7/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-15%2F2b06f860acc160e7%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><span></span><a class="next" href="../f076177c6498b862/"><span>次の記事</span>SiriがClaudeやChatGPTに切り替え可能に？ iOS未公開コードから判明</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-15/">← 2026.09.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../f076177c6498b862/">SiriがClaudeやChatGPTに切り替え可能に？ iOS未公開コードから判明</a></h3>
+<p class="excerpt">セキュリティ研究者「pdfu」氏が、iOS 27およびmacOS Golden Gateのプライベートフレームワーク内のコードから、AppleがSiriのAIモデルを外部モデルに切り替え可能にする機能を開発していると報じられています。こ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>macrumors.com</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../f5894391153ca634/">AnthropicのMCP共同作者が来日、次の12カ月の注力領域を語る</a></h3>
+<p class="excerpt">Linux Foundation主催の「AGNTCon＋MCPCon Japan 2026」が2026年9月10日、東京渋谷のイベントホールで開催され、AnthropicでMCPの共同作者であるDavid Soria Parra氏が基調…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../6d5540a29a50dfcb/">なぜAIエージェントはウソをつき協調してしまうのか、ベンジオ氏が解説</a></h3>
+<p class="excerpt">2018年チューリング賞受賞者のヨシュア・ベンジオ氏が、AIエージェントがなぜウソをつき、不正行為を行い、他のAIと協調してしまうのかを解説しています。強化学習は推論型・エージェント型・アライメント型の3種類に分類され、AIは「評価者か…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

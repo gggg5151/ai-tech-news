@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SiriがClaudeやChatGPTに切り替え可能に？ iOS未公開コードから判明 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="セキュリティ研究者「pdfu」氏が、iOS 27およびmacOS Golden Gateのプライベートフレームワーク内のコードから、AppleがSiriのAIモデルを外部モデルに切り替え可能にする機能を開発していると報じられています。この「Model Delegation」という機能により、ユーザーは「Search o…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="SiriがClaudeやChatGPTに切り替え可能に？ iOS未公開コードから判明 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="セキュリティ研究者「pdfu」氏が、iOS 27およびmacOS Golden Gateのプライベートフレームワーク内のコードから、AppleがSiriのAIモデルを外部モデルに切り替え可能にする機能を開発していると報じられています。この「Model Delegation」という機能により、ユーザーは「Search o…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/f076177c6498b862/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/f076177c6498b862/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "SiriがClaudeやChatGPTに切り替え可能に？ iOS未公開コードから判明", "datePublished": "2026-09-15", "description": "セキュリティ研究者「pdfu」氏が、iOS 27およびmacOS Golden Gateのプライベートフレームワーク内のコードから、AppleがSiriのAIモデルを外部モデルに切り替え可能にする機能を開発していると報じられています。この「Model Delegation」という機能により、ユーザーは「Search or Ask」バーから使用するAIモデルを…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/f076177c6498b862/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-15/">2026.09.15 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>SiriがClaudeやChatGPTに切り替え可能に？ iOS未公開コードから判明</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>macrumors.com</span><time datetime="2026-09-15">2026.09.15</time></div>
+</header>
+<div class="article-body">
+<p>セキュリティ研究者「pdfu」氏が、iOS 27およびmacOS Golden Gateのプライベートフレームワーク内のコードから、AppleがSiriのAIモデルを外部モデルに切り替え可能にする機能を開発していると報じられています。この「Model Delegation」という機能により、ユーザーは「Search or Ask」バーから使用するAIモデルを選択でき、既存のChatGPT拡張と同様に<strong>Claude</strong>もSiri拡張として利用できるようになる可能性があるとのことです。</p>
+<p>さらに広範な「Model Manager Services」の推論プロバイダー機能では、Apple独自のサーバー側SiriモデルをGPT-5.6のような他モデルに丸ごと置き換えることができ、その場合は外部モデル側がAppleのSiriプランナープロンプトやツール定義を受け取ってシステム操作を実行するとされています。研究者はClaudeによるリマインダー作成やCSVファイル生成、ChatGPTによるメール検索・要約・メッセージ送信のデモを行ったと報じられています。</p>
+<p>ただし現時点でmacOS 27 Golden Gate Release Candidateの「Ask...」機能はChatGPT拡張のみに限定されており、Claudeはまだ利用できません。モデル委譲のエンタイトルメントも第三者にはまだ開放されておらず、EUのデジタル市場法がこの動きに影響した可能性も指摘されています。Appleからの公式発表はありません。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>セキュリティ研究者「pdfu」が、iOS 27およびmacOS Golden Gateのプライベートフレームワーク内のコードから、SiriのAIモデルを外部モデルに切り替え可能にする機能の痕跡を発見した</li><li>この機能は「Model Delegation」と呼ばれ、ユーザーが「Search or Ask」バーから使用するAIモデルを選択できる</li><li>既存のChatGPT拡張と同様に、ClaudeもSiri拡張として表示・利用できる可能性がある</li><li>「Model Manager Services」という推論プロバイダー機能では、Apple独自のサーバー側SiriモデルをGPT-5.6のような他のモデルに完全に置き換えることが可能</li><li>その場合、ChatGPT（外部モデル）はAppleのSiriプランナープロンプトとツール定義を受け取り、システム操作を実行できる</li><li>研究者はClaudeでリマインダーを作成するデモを行った</li><li>研究者はCSVファイルを生成するデモを行った</li><li>研究者はChatGPTを使ってメールの検索・要約・メッセージ送信を行うデモを行った</li><li>macOS 27 Golden Gate Release Candidateにおいて「Ask...」機能は現時点でChatGPT拡張のみに限定されている</li><li>現時点でClaudeはこの機能でまだ利用できない</li><li>モデル委譲のエンタイトルメントはまだ第三者に対して開放されていない</li><li>EUのDigital Markets Act（デジタル市場法）がこの機能の開発に影響を与えた可能性がある</li></ul></section>
+
+<aside class="source-box"><a href="https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">macrumors.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Siri%E3%81%8CClaude%E3%82%84ChatGPT%E3%81%AB%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E5%8F%AF%E8%83%BD%E3%81%AB%EF%BC%9F%20iOS%E6%9C%AA%E5%85%AC%E9%96%8B%E3%82%B3%E3%83%BC%E3%83%89%E3%81%8B%E3%82%89%E5%88%A4%E6%98%8E%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-15%2Ff076177c6498b862%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Siri%E3%81%8CClaude%E3%82%84ChatGPT%E3%81%AB%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E5%8F%AF%E8%83%BD%E3%81%AB%EF%BC%9F%20iOS%E6%9C%AA%E5%85%AC%E9%96%8B%E3%82%B3%E3%83%BC%E3%83%89%E3%81%8B%E3%82%89%E5%88%A4%E6%98%8E%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-15/f076177c6498b862/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-15%2Ff076177c6498b862%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2b06f860acc160e7/"><span>前の記事</span>AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ</a><a class="next" href="../f5894391153ca634/"><span>次の記事</span>AnthropicのMCP共同作者が来日、次の12カ月の注力領域を語る</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-15/">← 2026.09.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2b06f860acc160e7/">AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ</a></h3>
+<p class="excerpt">2026年9月10日、東京渋谷で開催された「AGNTCon＋MCPCon Japan 2026」において、Agentic AI Foundation（AAIF）が、既存の「Envoy AI Gateway」プロジェクトがAAIFに参加し…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../f5894391153ca634/">AnthropicのMCP共同作者が来日、次の12カ月の注力領域を語る</a></h3>
+<p class="excerpt">Linux Foundation主催の「AGNTCon＋MCPCon Japan 2026」が2026年9月10日、東京渋谷のイベントホールで開催され、AnthropicでMCPの共同作者であるDavid Soria Parra氏が基調…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../6d5540a29a50dfcb/">なぜAIエージェントはウソをつき協調してしまうのか、ベンジオ氏が解説</a></h3>
+<p class="excerpt">2018年チューリング賞受賞者のヨシュア・ベンジオ氏が、AIエージェントがなぜウソをつき、不正行為を行い、他のAIと協調してしまうのかを解説しています。強化学習は推論型・エージェント型・アライメント型の3種類に分類され、AIは「評価者か…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

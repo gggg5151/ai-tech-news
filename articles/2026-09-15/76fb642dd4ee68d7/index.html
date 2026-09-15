@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>主要LLMアーキテクチャをPyTorchでゼロから実装する教育リポジトリ — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenArchは、最新のオープンソースLLMアーキテクチャをPyTorchでゼロから実装しているGitHubリポジトリです。本番用途ではなく、読みやすさと学習を重視した教育的リソースとして作られています。GPT-2 XLからLlama 2/3/4、DeepSeek R1、Gemma 3、Qwen 3など多数のテキスト…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="主要LLMアーキテクチャをPyTorchでゼロから実装する教育リポジトリ — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenArchは、最新のオープンソースLLMアーキテクチャをPyTorchでゼロから実装しているGitHubリポジトリです。本番用途ではなく、読みやすさと学習を重視した教育的リソースとして作られています。GPT-2 XLからLlama 2/3/4、DeepSeek R1、Gemma 3、Qwen 3など多数のテキスト…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/76fb642dd4ee68d7/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/76fb642dd4ee68d7/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "主要LLMアーキテクチャをPyTorchでゼロから実装する教育リポジトリ", "datePublished": "2026-09-15", "description": "OpenArchは、最新のオープンソースLLMアーキテクチャをPyTorchでゼロから実装しているGitHubリポジトリです。本番用途ではなく、読みやすさと学習を重視した教育的リソースとして作られています。GPT-2 XLからLlama 2/3/4、DeepSeek R1、Gemma 3、Qwen 3など多数のテキストモデル、PaliGemmaなどのマルチモ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-15/76fb642dd4ee68d7/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/anuj0456/OpenArch", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-15/">2026.09.15 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>主要LLMアーキテクチャをPyTorchでゼロから実装する教育リポジトリ</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>github.com</span><time datetime="2026-09-15">2026.09.15</time></div>
+</header>
+<div class="article-body">
+<p>OpenArchは、最新のオープンソースLLMアーキテクチャをPyTorchでゼロから実装しているGitHubリポジトリです。本番用途ではなく、読みやすさと学習を重視した教育的リソースとして作られています。GPT-2 XLからLlama 2/3/4、DeepSeek R1、Gemma 3、Qwen 3など多数のテキストモデル、PaliGemmaなどのマルチモーダルモデルが実装対象です。</p>
+<p>注意機構（MHA、GQA、MLAなど）や正規化方式、位置エンコーディング、Mixture of Experts機構など、各モデルのアーキテクチャ選択の違いを比較しやすくすることを狙いとしています。スター数233、ライセンスはApache License 2.0で、モデル実装の追加やドキュメント・テストの貢献が歓迎されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>リポジトリ名はOpenArchで、コンセプトは「Python implementations of modern open-source LLM architectures — written from scratch, one model at a time」</li><li>本番環境向けではなく、読みやすさと学習を優先したリソースとされている</li><li>実装対象のテキストモデルにはGPT-2 XL、Llama 2/3/4、OLMo 2、DeepSeek R1、Gemma 3、Mistral 3、Qwen 3、Kimi K2、GLM 4.5、GPT-OSS、Grok-2.5が含まれる</li><li>Grok-2.5は開発中（🚧）とされている</li><li>マルチモーダルモデルとしてPaliGemma（完成）、Qwen3（開発中）、DALL-E（開発中）が挙げられている</li><li>実装では注意機構（MHA、GQA、MLA等）、正規化方式（RMSNorm、QK-Norm等）、位置エンコーディング（RoPE等）、Mixture of Experts機構の違いを比較できるようにしている</li><li>リポジトリのスター数は233、フォーク数は13、コミット数は102</li><li>ライセンスはApache License 2.0で、個別のモデル実装は元モデルのライセンスに従うとされている</li><li>モデル実装の追加、ドキュメント作成、テスト実装の貢献が歓迎されている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Python implementations of modern open-source LLM architectures — written from scratch, one model at a time</blockquote><p class="quotes-source">出典: <a href="https://github.com/anuj0456/OpenArch" target="_blank" rel="noopener noreferrer">github.com</a></p></section>
+<aside class="source-box"><a href="https://github.com/anuj0456/OpenArch" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E4%B8%BB%E8%A6%81LLM%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3%E3%82%92PyTorch%E3%81%A7%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B%E6%95%99%E8%82%B2%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-15%2F76fb642dd4ee68d7%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E4%B8%BB%E8%A6%81LLM%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3%E3%82%92PyTorch%E3%81%A7%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B%E6%95%99%E8%82%B2%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-15/76fb642dd4ee68d7/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-15%2F76fb642dd4ee68d7%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../03fdecfd745e95fd/"><span>前の記事</span>自己ホスト型パスワード管理サーバー「Vaultwarden」</a><a class="next" href="../469f3b83579be476/"><span>次の記事</span>コーディングエージェント向けSKILL文書、最適化手法を比較検証</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-15/">← 2026.09.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../8d0c6b2ebf0a7b2d/">App Store Connect操作をCLIから、Go製ツール「asc」</a></h3>
+<p class="excerpt">rorkai/App-Store-Connect-CLI（コマンド名asc）は、Apple App Store Connect APIをターミナルやCI/CDから操作するためのGo製CLIツールです。TestFlight管理、ビルドのア…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../03fdecfd745e95fd/">自己ホスト型パスワード管理サーバー「Vaultwarden」</a></h3>
+<p class="excerpt">VaultwardenはBitwarden Client APIの代替サーバー実装で、Rustで書かれた自己ホスト向けの軽量なパスワード管理サーバーです。Rocketフレームワークを使用し、個人用ボルト、Send機能、添付ファイル、Au…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-15">2026.09.15</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-09-14/5220d971159d1582/">Microsoft製「MarkItDown」あらゆるファイルをMarkdownに変換</a></h3>
+<p class="excerpt">Microsoftが公開しているMITライセンスのPythonツール「MarkItDown」は、様々なファイルをMarkdownに変換するユーティリティで、LLMやテキスト分析パイプラインでの利用を想定しています。PDF、PowerPo…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-14">2026.09.14</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
