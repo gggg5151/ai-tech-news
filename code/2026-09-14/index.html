@@ -97,7 +97,7 @@ func (s *ActivityService) IsStarred(ctx context.Context, owner, repo string) (bo
 	starred, err := parseBoolResponse(err)
 	return starred, resp, err</code></pre><p>`s.client.Do(req, nil)` の第二引数が `nil` なのは、このAPIがJSONボディを返さないからです（GitHubの「スター済みか確認する」APIは、スター済みなら204 No Content、そうでなければ404 Not Foundという、ステータスコードだけで答えを表現する設計になっています）。面白いのは次の行 `starred, err := parseBoolResponse(err)` です。ここでは新しい変数 `starred` と、直前で使ったのと同じ名前の `err` を左辺に置いていますが、Goでは `:=` の左辺に「少なくとも1つ新しい変数」が含まれていれば、既存の変数（ここでは `err`）への再代入も一緒に書けるというルールがあります。`parseBoolResponse` は「404ならfalseでエラーなし、それ以外のエラーはそのまま返す」といった変換をする別ファイルのヘルパーで、HTTPのステータスコードという情報を `bool` という素直な型に変換する橋渡し役を担っています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは例外を使わず、関数呼び出しのたびに「変数, err := 処理()」→「if err != nil { return ... }」を素直に繰り返すのが基本形。この“退屈な繰り返し”を怖がらず、むしろその中でどのフィールドをnilのまま返し、どのフィールド（この例ではrespやerr）を再利用するかにこそ設計判断が表れる、という読み方を覚えて帰ってください。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-13/"><span>前の日</span>grpc/grpc-go</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-13/"><span>前の日</span>grpc/grpc-go</a><a class="next" href="../2026-09-16/"><span>次の日</span>danny-avila/LibreChat</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-14/">← 2026.09.14 の号を読む</a>
 </div>
 </article>

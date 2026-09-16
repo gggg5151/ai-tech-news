@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>danny-avila/LibreChat の client/src/components/Chat/Input/submit.ts を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="LibreChatはChatGPT互換のOSSチャットUIで、実際に多くのユーザーが使っています。今回のsubmit.tsは「チャット入力欄からの送信」を1箇所に集約する小さなファイルです。UIの状態（回答待ち中か、AIが応答を生成中か等）によって「送信」の意味が変わるという、実務でよくある分岐処理を、型とearly…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="danny-avila/LibreChat の client/src/components/Chat/Input/submit.ts を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="LibreChatはChatGPT互換のOSSチャットUIで、実際に多くのユーザーが使っています。今回のsubmit.tsは「チャット入力欄からの送信」を1箇所に集約する小さなファイルです。UIの状態（回答待ち中か、AIが応答を生成中か等）によって「送信」の意味が変わるという、実務でよくある分岐処理を、型とearly…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-16/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-16/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.16</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>danny-avila/LibreChat の <code>client/src/components/Chat/Input/submit.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/danny-avila/LibreChat/blob/HEAD/client/src/components/Chat/Input/submit.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-16">2026.09.16</time></div>
+</header>
+<div class="article-body">
+<p>LibreChatはChatGPT互換のOSSチャットUIで、実際に多くのユーザーが使っています。今回のsubmit.tsは「チャット入力欄からの送信」を1箇所に集約する小さなファイルです。UIの状態（回答待ち中か、AIが応答を生成中か等）によって「送信」の意味が変わるという、実務でよくある分岐処理を、型とearly returnだけで綺麗に書いている点が学びになると思い選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>export type ComposerSubmitRoute = {
+  answerMode: { active: boolean; submitText: (text: string) =&gt; boolean };
+  steering: { duringRunActive: boolean; submitDuringRun: (text: string) =&gt; boolean };
+  submitMessage: (data: { text: string }) =&gt; false | void;
+  reset: () =&gt; void;
+};
+
+/**
+ * One route for every submission that originates in the composer, whether
+ * typed, dictated, or bound to a shortcut. Answer mode takes the text for the
+ * paused run; during a run, or while a queued follow-up is about to start, the
+ * text steers or queues per the effective action instead of starting a turn
+ * that would race the one already owed. `false` means the composer keeps the
+ * text, exactly as a refused send does.
+ */
+export function submitFromComposer(
+  route: ComposerSubmitRoute,
+  data: { text: string },
+): false | void {
+  if (route.answerMode.active &amp;&amp; route.answerMode.submitText(data.text)) {
+    return;
+  }
+  if (route.steering.duringRunActive) {
+    if (!route.steering.submitDuringRun(data.text)) {
+      return false;
+    }
+    route.reset();
+    return;
+  }
+  return route.submitMessage(data);
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>export type ComposerSubmitRoute = {</code></pre><p>`type 名前 = { ... }` はTypeScript独自の構文で「型エイリアス」と呼びます。オブジェクトの形（どんなプロパティを持つか）に名前を付けているだけで、実行時には何も残らない、コンパイル時だけの約束事です。`export`が付いているので他のファイルからもこの型を使えます。ここでは「送信という操作に必要な材料一式」を先に型として定義しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>answerMode: { active: boolean; submitText: (text: string) =&gt; boolean };</code></pre><p>オブジェクト型の中にさらにオブジェクト型を書けます（ネスト）。`active: boolean`は「true/falseの値を持つプロパティ」。`submitText: (text: string) =&gt; boolean`は関数の型で、「文字列を1つ受け取ってbooleanを返す関数」という意味です。つまりanswerModeというプロパティの中には、状態を表す`active`と、実際に処理を行う関数`submitText`がセットで入っている、ということをこの1行だけで読み取れます。</p></div><div class="walk-step"><pre class="walk-quote"><code>submitMessage: (data: { text: string }) =&gt; false | void;</code></pre><p>`false | void`は「ユニオン型」で、`|`は「またはどちらか」を意味します。`void`は「戻り値が実質ない（undefinedが返る）関数」を表す型で、Goに慣れているなら「何も返さない関数」のイメージに近いです。ここでは`false`という特定の値か、何も返さないかのどちらかがあり得る、という戻り値の仕様を型で明示しています。後で出てくる`return false`と`return;`（何も値を書かないreturn）がこの型に対応します。</p></div><div class="walk-step"><pre class="walk-quote"><code>export function submitFromComposer(
+  route: ComposerSubmitRoute,
+  data: { text: string },
+): false | void {</code></pre><p>関数定義です。引数`route`には先ほど定義した`ComposerSubmitRoute`型を指定しているので、`route.answerMode.submitText`のように呼び出しても、必要なプロパティが揃っていることをTypeScriptがコンパイル時にチェックしてくれます。関数全体の戻り値も`false | void`で、呼び出し側は「falseが返ってきたら特別な意味がある」と読み取れる契約になっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (route.answerMode.active &amp;&amp; route.answerMode.submitText(data.text)) {
+    return;
+  }</code></pre><p>`&amp;&amp;`は論理AND演算子で、左側が`false`なら右側は評価されません（短絡評価）。つまり`route.answerMode.active`が`false`のときは`submitText`は一切呼ばれず、次のif文に進みます。`active`が`true`のときだけ実際に送信を試み、その結果（true/false）が全体の条件になります。両方成立したら`return;`（値を書かないreturn＝void）で関数を抜け、以降の処理は実行されません。これは「早期リターン（early return）」と呼ばれるパターンで、ネストの深いif-elseを避けるためによく使われます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (route.steering.duringRunActive) {</code></pre><p>1つ目のif文を通過した（＝回答待ち中ではなかった）場合にここへ来ます。AIが応答を生成している最中（`duringRunActive`がtrue）かどうかで、送信の扱いを変える分岐です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (!route.steering.submitDuringRun(data.text)) {
+      return false;
+    }</code></pre><p>`!`は論理否定（NOT）演算子で、boolean値を反転させます。`submitDuringRun(data.text)`を呼び出し、その戻り値が`false`だった場合（`!false`で条件が`true`になる）に、この関数自体も`false`を返して終了します。JSDocコメントにある通り、`false`は「入力欄のテキストを消さずに残す」という合図として使われており、送信操作が実は失敗（拒否）したことを呼び出し元に伝えています。</p></div><div class="walk-step"><pre class="walk-quote"><code>route.reset();
+    return;</code></pre><p>内側のif文を通過した（＝ステアリング処理が成功した）場合、`route.reset()`という関数を呼んでから、値を書かない`return;`で関数を終えます。文が上から順に実行されるだけのシンプルな流れですが、「成功したら後片付けをしてから抜ける」という意図がコードの並び順そのものから読み取れます。</p></div><div class="walk-step"><pre class="walk-quote"><code>return route.submitMessage(data);</code></pre><p>ここまでのどのifにも当てはまらなかった場合（通常時の送信）に実行される最後の行です。`route.submitMessage(data)`を呼び出し、その戻り値（`false | void`型）をそのまま`return`しています。呼び出した関数の戻り値をそのまま返すこのような書き方は、この関数自身の戻り値の型を素直に満たすための自然な終わり方です。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>状態によって処理を分岐させたいとき、if-elseを深くネストする代わりに「早期リターン（各条件で用件が済んだらすぐreturnする）」を使うと、上から順に読むだけで全パターンを追える読みやすいコードになります。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-14/"><span>前の日</span>google/go-github</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-16/">← 2026.09.16 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
