@@ -78,7 +78,7 @@ export function submitFromComposer(
     }</code></pre><p>`!`は論理否定（NOT）演算子で、boolean値を反転させます。`submitDuringRun(data.text)`を呼び出し、その戻り値が`false`だった場合（`!false`で条件が`true`になる）に、この関数自体も`false`を返して終了します。JSDocコメントにある通り、`false`は「入力欄のテキストを消さずに残す」という合図として使われており、送信操作が実は失敗（拒否）したことを呼び出し元に伝えています。</p></div><div class="walk-step"><pre class="walk-quote"><code>route.reset();
     return;</code></pre><p>内側のif文を通過した（＝ステアリング処理が成功した）場合、`route.reset()`という関数を呼んでから、値を書かない`return;`で関数を終えます。文が上から順に実行されるだけのシンプルな流れですが、「成功したら後片付けをしてから抜ける」という意図がコードの並び順そのものから読み取れます。</p></div><div class="walk-step"><pre class="walk-quote"><code>return route.submitMessage(data);</code></pre><p>ここまでのどのifにも当てはまらなかった場合（通常時の送信）に実行される最後の行です。`route.submitMessage(data)`を呼び出し、その戻り値（`false | void`型）をそのまま`return`しています。呼び出した関数の戻り値をそのまま返すこのような書き方は、この関数自身の戻り値の型を素直に満たすための自然な終わり方です。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>状態によって処理を分岐させたいとき、if-elseを深くネストする代わりに「早期リターン（各条件で用件が済んだらすぐreturnする）」を使うと、上から順に読むだけで全パターンを追える読みやすいコードになります。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-14/"><span>前の日</span>google/go-github</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-14/"><span>前の日</span>google/go-github</a><a class="next" href="../2026-09-17/"><span>次の日</span>cline/cline</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-16/">← 2026.09.16 の号を読む</a>
 </div>
 </article>

@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.09.16の号: Google、リアルタイム音声AI「Gemini 3.8 Live」を発表 / Anthropic CEOの開発減速提言にトランプ大統領が真っ向から反発 / OpenAI現役研究者が「監視なきAIの評価は困難」と個人声明 / 生成AIドキュメントの読みにくさと、Claude Code運用の実践Tips / Kubernetes公式のAIエージェント向けサンドボックス基盤…">
+<meta name="description" content="2026.09.17の号: Claude CoworkとChatが統合、単一の「Claude」へ / Gemini 3.8 Live登場、音声ベンチマークで首位 / SmartHRのClaude Code活用「ハーネス」で開発期間を半分以下に / Goのファイル単位privateを実現するLinter「declscope」 / LLMと異なる方式で並列出力する新モデル「Jev」が話題">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.09.16の号: Google、リアルタイム音声AI「Gemini 3.8 Live」を発表 / Anthropic CEOの開発減速提言にトランプ大統領が真っ向から反発 / OpenAI現役研究者が「監視なきAIの評価は困難」と個人声明 / 生成AIドキュメントの読みにくさと、Claude Code運用の実践Tips / Kubernetes公式のAIエージェント向けサンドボックス基盤…">
+<meta property="og:description" content="2026.09.17の号: Claude CoworkとChatが統合、単一の「Claude」へ / Gemini 3.8 Live登場、音声ベンチマークで首位 / SmartHRのClaude Code活用「ハーネス」で開発期間を半分以下に / Goのファイル単位privateを実現するLinter「declscope」 / LLMと異なる方式で並列出力する新モデル「Jev」が話題">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,135 +30,126 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-16">2026年9月16日（水）</time><span class="edition-count">16記事・読了まで約15分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Google、リアルタイム音声AI「Gemini 3.8 Live」を発表</li><li>Anthropic CEOの開発減速提言にトランプ大統領が真っ向から反発</li><li>OpenAI現役研究者が「監視なきAIの評価は困難」と個人声明</li><li>生成AIドキュメントの読みにくさと、Claude Code運用の実践Tips</li><li>Kubernetes公式のAIエージェント向けサンドボックス基盤が登場</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-c82a46e38af0e49a">Googleが新音声モデル「Gemini 3.8 Live」を発表</a></li><li><a href="#a-b307aa01dc0d8b97">PerplexityのローカルAIエージェント「Portable Computer」がWindows対応</a></li><li><a href="#a-82f40e395e3a2568">トランプ大統領、AnthropicのAI減速提言を批判</a></li><li><a href="#a-2be08c23714189c9">会社運営を丸ごと任せるAIエージェント「Pion」</a></li><li><a href="#a-0db5d20d91f063c1">OpenAI現役研究者、AI監視の限界を個人声明で警告</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-6a685addc5da2621">React互換の軽量ランタイム「TanStack Redact」</a></li><li><a href="#a-b588a40257759abe">GoコードでたどるFIDO2の仕組み</a></li><li><a href="#a-bccd97a671ea4a3b">生成AIが書くドキュメントはなぜ読みにくいのか</a></li><li><a href="#a-730d40cee6ea5fce">Claude Codeの禁止コマンドには代替手段を添える</a></li><li><a href="#a-5eecf7ffbf4acedd">NEXT_PUBLIC_*はビルド時に焼き込まれる罠</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-2be0eac3844d3d98">自律型ペネトレーションテストAI「PentAGI」</a></li><li><a href="#a-cb38c9330aadfe37">ChatGPT代替のセルフホスト型チャット「LibreChat」</a></li><li><a href="#a-1de316dbd7c0b223">隔離ワークロード管理のKubernetesプロジェクト「Agent Sandbox」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-5a84c4fd8019d817">AIエージェントのタスク単位アクセス制御を実証評価</a></li><li><a href="#a-a99972d7125e8834">難問を解けないLLM強化学習に「Never Give Up」</a></li><li><a href="#a-1c64e20dfa2b099b">長時間稼働エージェントの失敗原因特定を探索問題として定式化</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-c82a46e38af0e49a">
-<h3><a href="articles/2026-09-16/c82a46e38af0e49a/">Googleが新音声モデル「Gemini 3.8 Live」を発表</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>deepmind.google</span></div>
-<div class="paper-body"><p>Googleは2026年9月15日、音声対話向けの新モデル「Gemini 3.8 Live」と、より複雑なマルチステップタスク向けの「Gemini 3.8 Live Extended Thinking」を発表しました。前者はスケールとコスト効率を最適化したモデル、後者は複雑な作業に対応するために構築されたモデルと位置づけられています。</p>
-<p>両モデルとも視覚入力をほぼリアルタイムで処理でき、97言語に対応します。言語は自動検出されるほか、会話の途中で切り替えることも可能です。また、対話を中断することなくバックグラウンドでツールやAPIの呼び出しを実行できる点も特徴です。Extended Thinking版はさらに、<strong>推論(reasoning)と発話を同時に行える</strong>仕組みを備えています。</p>
-<p>性能面では、Artificial AnalysisのSpeech to Speech Quality Indexで総合1位（スコア82.6）を獲得したとされるほか、Big Bench Audioで97.7%、エージェント的タスク完了の指標であるτ-Voiceで68.6%を記録したと報告されています。</p>
-<p>生成される音声には、悪用防止のためSynthIDによる電子透かしが付与されます。両モデルは開発者・エンタープライズ・一般ユーザー向けに順次提供される予定です。</p></div>
-<p class="paper-source"><a href="https://deepmind.google/blog/introducing-gemini-3-8-live-and-3-8-live-extended-thinking/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/c82a46e38af0e49a/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-b307aa01dc0d8b97">
-<h3><a href="articles/2026-09-16/b307aa01dc0d8b97/">PerplexityのローカルAIエージェント「Portable Computer」がWindows対応</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>forest.watch.impress.co.jp</span></div>
-<div class="paper-body"><p>Perplexityのローカル完結型AIエージェント「Portable Computer」が、Windows PCでも利用可能になりました。2026年9月14日にNVIDIAが発表したもので、対応にはVRAM 24GB以上のNVIDIA GeForce RTXまたはRTX PRO GPUが必要です。ローカルで処理することで、機密情報をクラウドに送信せずに済みます。</p>
-<p>現時点で使えるローカルモデルは「PPLX 27B」のみですが、今後「NVIDIA Nemotron 3.5 Lightning」やNVIDIA DGX Stationへの対応も予定されています。クラウド側では15種類以上のモデルに処理を振り分けられ、<strong>ローカルで完結した処理はクレジットを消費しません</strong>。</p>
-<p>Microsoft Outlook、OneDrive、Word、Google Drive、Gmail、Slack、GitHubなど各種サービスとの連携にも対応しています。利用にはPerplexityの「Pro」または「Max」プランへの加入が必須です。</p></div>
-<p class="paper-source"><a href="https://forest.watch.impress.co.jp/docs/news/2140871.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/b307aa01dc0d8b97/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-82f40e395e3a2568">
-<h3><a href="articles/2026-09-16/82f40e395e3a2568/">トランプ大統領、AnthropicのAI減速提言を批判</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-17">2026年9月17日（木）</time><span class="edition-count">15記事・読了まで約14分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Claude CoworkとChatが統合、単一の「Claude」へ</li><li>Gemini 3.8 Live登場、音声ベンチマークで首位</li><li>SmartHRのClaude Code活用「ハーネス」で開発期間を半分以下に</li><li>Goのファイル単位privateを実現するLinter「declscope」</li><li>LLMと異なる方式で並列出力する新モデル「Jev」が話題</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-0d7e0018672504b7">「Claude Cowork」とチャット統合、単一の「Claude」へ</a></li><li><a href="#a-24a45c62629af673">Gemini 3.8 Live、リアルタイム音声AIを強化</a></li><li><a href="#a-42e4848d9ba66827">MistralとMozilla提携、FirefoxにAIを組み込み</a></li><li><a href="#a-da7d4c8b977c8b6d">LLMと異なる方式のAIモデル「Jev」、高速・低コストで登場</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-5923299c5acd529c">『APIキーは.envに』はもう限界か　AIエージェント時代の秘密情報管理</a></li><li><a href="#a-cd3306a56ffdf07f">Next.js 16 Cache Components、使いどころを整理</a></li><li><a href="#a-0ab6cb0b25a73b5d">Goにファイル単位privateを持ち込むLinter「declscope」</a></li><li><a href="#a-c656226dac6c2e6c">encoding/json/v2を最速にするツール「odjson」</a></li><li><a href="#a-a6712506fbdc1545">Claude Codeの「ハーネス」設計で開発期間を半分以下に</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-699301a5bbc70c76">OSSコーディングエージェント「Cline」</a></li><li><a href="#a-59a78ca5c6e93f4a">本番品質のワークフロー集「agent-skills」</a></li><li><a href="#a-b1f5e72cf6843bc5">Claude Code公式リポジトリ</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-72093e6115a13762">進化する『世界』で自己改善するAIエージェント「Dream-RSI」</a></li><li><a href="#a-0668d52ca652a32c">AIエージェントが獲得したリソースの実行時認可「AcquireBound」</a></li><li><a href="#a-df3caca906bdc84a">特許ドラフティングでLLM判定官は信頼できるか「Vibe Patenting」</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-0d7e0018672504b7">
+<h3><a href="articles/2026-09-17/0d7e0018672504b7/">「Claude Cowork」とチャット統合、単一の「Claude」へ</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>claude.com</span></div>
+<div class="paper-body"><p>Anthropicは、これまで分かれていた「Claude Cowork」と通常のチャットインターフェースを統合し、単一の「Claude」に一本化すると発表しました。これまではタスクの内容に応じてCoworkかチャットかをユーザー自身が選ぶ必要がありましたが、統合後はClaudeが内容に応じて処理方法を自動で判断・振り分けるようになります。</p>
+<p>同日には、文書作成ツール「Claude Docs」とスライド作成ツール「Claude Slides」もベータ版として有料プラン向けに公開されました。あわせて「Claude Design」も会話内に直接統合され、ドキュメント・スライド・デザインは1つの共有リンクを介してやり取りできるようになります。</p>
+<p>展開は<strong>Pro・Maxプラン</strong>から数週間かけて始まり、その後Team・Freeプランへ広がる予定です。既存のCoworkで使っていたチャットやプロジェクト、アーティファクト、コネクタ、スキルといったデータはそのまま統合後のインターフェースに引き継がれます。この機能はWeb・デスクトップ・モバイルのClaudeアプリ全体で利用できるようになる予定で、エンタープライズの管理者には変更の30日前に通知されるとしています。</p>
+<p>なお、ユーザーはClaudeとのやり取りの頻度を制御でき、デフォルトでは重要な操作の前にClaudeが確認を求める仕様になっています。利用者の声として、シニアエコノミストのAndrew Keller氏は、法律関連のデータベースをClaudeに参照させ、必要な判例を読み込んで関連する他の判例を洗い出し、ダウンロードして保存させるといった使い方を挙げています。</p></div>
+<p class="paper-source"><a href="https://claude.com/blog/cowork-is-now-claude" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/0d7e0018672504b7/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-24a45c62629af673">
+<h3><a href="articles/2026-09-17/24a45c62629af673/">Gemini 3.8 Live、リアルタイム音声AIを強化</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>blog.google</span></div>
+<div class="paper-body"><p>Googleは新しい音声対話AIモデル「Gemini 3.8 Live」と、推論能力を強化した「Gemini 3.8 Live Extended Thinking」の2つを発表しました。前者はコスト効率とスケールを重視して構築され、会話的知性と流暢な対話、視覚的グラウンディングを組み合わせています。後者は複雑度の高いタスク向けに、知性の向上と多段階推論を実現するよう設計されたモデルです。両モデルとも視覚入力をほぼリアルタイムで処理でき、会話途中の自動言語検出を含め97言語に対応し、会話を中断せずバックグラウンドでツール実行やAPI呼び出しを行えます。</p>
+<p>ベンチマークでは、Artificial Analysisの<strong>Speech to Speech Quality Index</strong>(音声品質の指標)でスコア82.6を記録して首位となったほか、音声エージェントタスクの完了率(τ-Voice)で68.6%、Big Bench Audio推論ベンチマークで97.7%を記録したとしています。</p>
+<p>提供先は、開発者向けにGemini APIとGoogle AI Studio、企業向けにGemini Enterpriseでのプライベートプレビュー、一般ユーザー向けにはSearch Live、Gemini Live、Google Workspace(Docs、Gmail、Keep)と幅広く展開されます。なお、生成される音声にはSynthIDによる電子透かしが付与されます。</p></div>
+<p class="paper-source"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/24a45c62629af673/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-42e4848d9ba66827">
+<h3><a href="articles/2026-09-17/42e4848d9ba66827/">MistralとMozilla提携、FirefoxにAIを組み込み</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>mistral.ai</span></div>
+<div class="paper-body"><p>MistralとMozillaが提携を発表しました。Firefoxの新機能「Firefox Smart Window」(現在ベータ版)をMistralのAIモデルで駆動させるもので、複雑な検索の理解、重要情報の保存、ブラウザタブに基づく情報ソーシングといった機能を持ちます。ベータ提供はまずフランスと北米で始まり、英国とドイツでは2026年後半の展開が予定されています。</p>
+<p>ユーザーの会話はデフォルトではMozillaのサーバーに保存されず、Mistralはこのサービスにおいて<strong>ゼロデータ保持</strong>に同意しているとのことです。モデルは地域言語と文化的文脈に基づいてファインチューニングされます。Mozillaは20年以上にわたりオープンなウェブのために活動してきたとし、Mistralも創業以来オープンウェイトの最先端モデルをリリースし続けてきたと両社は述べています。</p>
+<p>Mozilla CEOのAnthony Enzor-DeMeo氏は「ブラウザは一方通行の漏斗であってはいけません」と述べ、Mistral CEOのArthur Mensch氏は「プライバシー、制御、選択肢をAI駆動ウェブブラウジングにもたらしている」とコメントしています。両社は、ブラウザが複数のAIプロバイダーが競争できる場であるべきだとしています。</p></div>
+<p class="paper-source"><a href="https://mistral.ai/news/mistral-x-mozilla/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/42e4848d9ba66827/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-da7d4c8b977c8b6d">
+<h3><a href="articles/2026-09-17/da7d4c8b977c8b6d/">LLMと異なる方式のAIモデル「Jev」、高速・低コストで登場</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>Anthropicのダリオ・アモデイCEOが、AIの開発ペースを減速させ、監査を強化し、政府による規制を導入すべきだと主張したのに対し、トランプ大統領が強く反発しました。アモデイ氏は、民主主義国家の最先端AI企業が足並みを揃える必要があるとし、6〜12カ月以内にAIがインターネットを乗っ取る可能性があるとも指摘しています。この声明にはOpenAIのサム・アルトマンCEOやGoogle DeepMindのデミス・ハサビス会長も賛同しました。</p>
-<p>これに対しトランプ大統領は、「AIが人類を滅ぼす」という考えを「ただのデマ」であり、過激左派民主党による工作だと切り捨てました。<strong>AIに必要な唯一の規制は「強力で賢明な大統領」</strong>だと主張し、アメリカは既にAI企業に対する絶対的な規制権限を保有していると述べています。</p>
-<p>トランプ氏は中国の無規制なAI開発と対比させ、規制強化がアメリカのAI優位性を損なうとの立場を強調しました。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20260915-trump-reject-ai-guardrail/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/82f40e395e3a2568/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-2be08c23714189c9">
-<h3><a href="articles/2026-09-16/2be08c23714189c9/">会社運営を丸ごと任せるAIエージェント「Pion」</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>andonlabs.com</span></div>
-<div class="paper-body"><p>Andon Labsは、企業を自律的に運営させることを目指したエージェントプラットフォーム「Pion」を開発しました。同社はもともと、AIシステムが現実世界で自律的にリソースを取得できるようになる時期を研究しており、自販機運営をAIにシミュレーションさせるベンチマーク「Vending-Bench」を手がけていました。</p>
-<p>しかし、こうしたシミュレーションではAIエージェントの実世界での挙動を正確に予測できないことが判明したため、実際のビジネスを運営させる実験に踏み切ったといいます。Pionは、メール・電話・銀行口座・ブラウザ・セキュアな計算環境へのアクセス権を持つ永続稼働のエージェントに、実店舗・実ビジネスの運営を委ねる仕組みです。</p>
-<p>2026年4月には、サンフランシスコで「Andon Market」、ストックホルムで「Andon Cafe」をオープンし、実験を続けています。記事ではClaude Sonnet 3.5やClaude Opus 4など複数のClaudeモデルへの言及もあり、2026年9月14日に公開されたブログでこの状況を<strong>「skräckblandad förtjusning（恐怖と魅力が混ざった状態）」</strong>という言葉で表現しています。</p></div>
-<p class="paper-source"><a href="https://andonlabs.com/blog/why-we-built-pion" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/2be08c23714189c9/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-0db5d20d91f063c1">
-<h3><a href="articles/2026-09-16/0db5d20d91f063c1/">OpenAI現役研究者、AI監視の限界を個人声明で警告</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
-<div class="paper-body"><p>OpenAIに2022年から在籍する現役研究者ダニエル・セルサム氏が、AIの安全性に関する個人声明を公開しました。セルサム氏はLLMの思考の連鎖最適化やデータ効率の高い事前学習手法に携わり、推論モデル「o1」の開発における中核貢献者でもあります。</p>
-<p>声明では、AIモデルの状況認識能力が高まるにつれ、<strong>監視されていない状況でのAIの振る舞いを人間が評価することが困難になりつつある</strong>と主張。モデルが実際にはアライメントされていなくても、アライメントされているように見え続ける可能性があると懸念を示しています。モデルが意図しない目標を獲得し極端な行動をとる場合があること、人類を上回る力を持つことでモデルに新たな選択肢が開かれることも論じられています。</p>
-<p>声明では最近の自律エージェント群による攻撃事案が例に挙げられているほか、研究者自身がAIモデルに過度に依存することへの警告も含まれています。セルサム氏は、開発ペースの調整だけでは長期的なリスク抑制に不十分だとも指摘しています。</p></div>
-<p class="paper-source"><a href="https://www.itmedia.co.jp/news/article/2609/15/2000001500/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/0db5d20d91f063c1/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-6a685addc5da2621">
-<h3><a href="articles/2026-09-16/6a685addc5da2621/">React互換の軽量ランタイム「TanStack Redact」</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>azukiazusa.dev</span></div>
-<div class="paper-body"><p>Tanner Linsley氏が、Reactのコンポーネントやフックの書き方をそのまま引き継げる軽量ランタイム「TanStack Redact」を開発しました。Preactのように互換レイヤーを重ねる方式とは異なり、Reactの公開APIを起点に<strong>必要な機能だけに絞って再実装している</strong>点が特徴です。</p>
-<p>Redactは、優先順位に応じて描画を中断・再開する仕組み（Reactのlaneシステム）を省き、同期描画を採用しています。その結果、startTransitionやuseDeferredValueの挙動がReactとは異なり、useDeferredValueは受け取った値をそのまま返す簡易実装になっています。</p>
-<p>Viteとの統合は容易で、アプリ側のコードは通常のReactインポートのままで、プラグインが自動的にRedact実装に解決してくれます。ある商品一覧アプリでの実測比較では、gzip後のバンドルサイズがReactの69,714バイトに対し、Redactは20,112バイトと大幅に小さかったと報告されています。</p></div>
-<p class="paper-source"><a href="https://azukiazusa.dev/blog/what-is-tanstack-redact/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/6a685addc5da2621/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-b588a40257759abe">
-<h3><a href="articles/2026-09-16/b588a40257759abe/">GoコードでたどるFIDO2の仕組み</a></h3>
+<div class="paper-body"><p>TypeSafe AI社CEOでChatGPT共同開発者とされるディオゴ・アルメイダ氏が、従来のLLM(大規模言語モデル)とは異なる仕組みで動作する新モデル「Jev」の開発を主導しました。LLMがテキストを左から右へ逐次生成するのに対し、Jevは事前に定義された構造に従って成果物を一度に並列出力する方式を採っています。</p>
+<p>性能面では<strong>GPT-5.6 Terra</strong>級の品質を保ちながら、ツール呼び出し時のエラー発生率は0%、すべての出力に信頼度スコアが付属するとしています。コストは入力が100万トークンあたり0.042ドル(約6.5円)、出力は実質無料で、従来比100分の1程度に削減されているとのことです。</p>
+<p>一方でJevはテキスト生成機能を持たないという明確なトレードオフがある点には注意が必要です。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20260916-system-one-jev/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/da7d4c8b977c8b6d/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-5923299c5acd529c">
+<h3><a href="articles/2026-09-17/5923299c5acd529c/">『APIキーは.envに』はもう限界か　AIエージェント時代の秘密情報管理</a></h3>
+<div class="article-meta"><span class="badge rumor">噂</span><span>atmarkit.itmedia.co.jp</span></div>
+<div class="paper-body"><p>AIエージェントの普及に伴い、APIキーを.envファイルに保存するといった従来の秘密情報管理方法ではセキュリティ上不十分になっているという指摘が出ています。Gartnerは2028年までに人間の承認とAIエージェントの連携の重要性が増すと予測し、90%以上の組織がAIエージェント運用でセキュリティ・コンプライアンス上の課題を抱えると見ています。同社は、AIエージェントに責任を持つ人間のID登録を必須にすべきだとも提言しています。</p>
+<p>脅威としては、エージェントを騙して悪意あるツールを実行させる<strong>Tool Poisoning(ツール中毒)</strong>や<strong>プロンプトインジェクション</strong>が挙げられており、APIキーが露出した場合は認証トークンが一時的に乱用されるリスクも指摘されています。</p>
+<p>対策としては、Infisical・HashiCorp Vault・AWS Secrets Manager・1PasswordといったSecrets Manager系ツール、OAuth管理のNango、アクセス管理のArcade・WorkOS・Aembitなどが紹介されています。</p></div>
+<p class="paper-source"><a href="https://atmarkit.itmedia.co.jp/ait/articles/2609/17/news006.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/5923299c5acd529c/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-cd3306a56ffdf07f">
+<h3><a href="articles/2026-09-17/cd3306a56ffdf07f/">Next.js 16 Cache Components、使いどころを整理</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>FIDO2は、共有秘密（パスワード）ではなく公開鍵暗号を用いる現代的な認証標準です。記事はRP（サーバー）・クライアント（ブラウザ）・認証器（セキュリティキーなど）の3者構成と、登録時の鍵ペア生成、ログイン時の署名検証という2つの「セレモニー」（一連の処理フロー）を軸に、Go言語での実装例を交えながら仕組みを解説しています。</p>
-<p>フィッシング耐性は、生成される秘密鍵が<strong>RPの起源（オリジン）に紐づけられ</strong>、別の起源からの署名が無効化されることで実現されます。記事は「パスワードなし、共有秘密なし、データベース侵害で盗まれる価値のあるサーバー側秘密なし」という点を強調しています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/giuliano/articles/12008f37101d63" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/b588a40257759abe/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-bccd97a671ea4a3b">
-<h3><a href="articles/2026-09-16/bccd97a671ea4a3b/">生成AIが書くドキュメントはなぜ読みにくいのか</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span></div>
-<div class="paper-body"><p>ブレインパッドでRtoaster GenAIを開発する依田健人氏が、Claude CodeにDesign docやPRの説明文を書かせた際に生じる「読みにくさ」の原因を分析しました。生成AIが書く文書は、重要度による取捨選択をせず全観点を並列に書き、結論を最後に置き、テンプレートの見出しを律儀に埋め、自明な項目にも両論併記をしてしまうため冗長になると指摘しています。</p>
-<p><strong>「採用したのはどれで、なぜか」という一番知りたい情報が、不採用の選択肢の説明や自明なメリット・デメリットの列挙に埋もれてしまいます</strong>、と著者は述べています。</p>
-<p>対策として著者は、Skill（プロンプト指示）に、冒頭に結論を3行以内で書く、代替案は表で比較する、「やらないこと（Non-goals）」を明記する、定型セクションは必要な場合のみ書く、削除可能なセクションは削るという指定を加えることを提案しています。同一要件（ECサイトのカート割引クーポン機能）で試したところ、改善前は284行・8521文字・見出し32個だった文書が、改善後は41行・1239文字・見出し6個まで削減できたと報告しています。</p></div>
-<p class="paper-source"><a href="https://qiita.com/take-yoda/items/e5d9ce6618523af1ffc5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/bccd97a671ea4a3b/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-730d40cee6ea5fce">
-<h3><a href="articles/2026-09-16/730d40cee6ea5fce/">Claude Codeの禁止コマンドには代替手段を添える</a></h3>
+<div class="paper-body"><p>Next.js 16で導入された<strong>Cache Components</strong>について、従来のApp Router(Next.jsのファイルベースのルーティング機構)が抱えていた制約とその解決策を整理した記事です。従来はcookies()やheaders()といった動的APIをページ内で1箇所でも使うと、ルート全体が毎リクエストのサーバーレンダリングに切り替わる仕様でした。Cache Componentsでは、コンポーネント先頭に&quot;use cache&quot;という指示を書き、PPR(Partial Prerendering、静的部分と動的部分を組み合わせた事前レンダリング)を土台にすることで、静的な部分と動的な部分を単一レスポンス内でストリーミング配信できるようになりました。</p>
+<p>具体的には、cacheLife(&quot;hours&quot;)でキャッシュの有効期間を、cacheTag(&quot;featured-posts&quot;)のようなタグで制御を指定でき、動的な部分は&lt;Suspense&gt;で明示的に囲みます。</p>
+<p>著者はSWR(データ取得を行うためのReactライブラリ)を使ったCSR(クライアントサイドレンダリング)、Astro Server Islands、Cache Componentsの3手法を比較しています。SWR(CSR)方式はUIの組み立てをブラウザ側で行うため往復が発生し、クライアントJSはコンポーネント一式が必要です。Astro Server Islands方式はサーバー側(別リクエスト)で組み立てるため往復は残りますが、クライアントJSは差し替え用スクリプトのみで済みます。Next.js Cache Components方式はサーバー側(同一レスポンス)で組み立てるため往復がなく、クライアントJSも差し替え用スクリプトのみで足ります。動的要素が数個程度ならCSR+SWRで十分ですが、パーソナライズされた価格や在庫、レコメンドなど動的要素が多いページではCache Componentsが有益になり得ると述べています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/tamat_llc/articles/nextjs-cache-components" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/cd3306a56ffdf07f/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-0ab6cb0b25a73b5d">
+<h3><a href="articles/2026-09-17/0ab6cb0b25a73b5d/">Goにファイル単位privateを持ち込むLinter「declscope」</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>ラビー合同会社のK@zuki氏は、Claude Codeに特定のコマンド実行を禁止する際、単にブロックするだけだとClaudeが「ユーザーに拒否された」と誤解し、作業が止まってしまう問題を紹介しています。</p>
-<p>対策として、PreToolUseフック（ツール実行前に介入する仕組み）を使い、コマンドをブロックした際に<strong>「これは設定ルールによるブロックであり対話的なユーザー拒否ではない」ことと、代替手段を明示してモデルに返す</strong>方法を紹介しています。記事の例では、ファイルを直接上書きする「sed -i」コマンドを禁止し、代わりにEditツールの利用を提案するメッセージを返しています。実装は「~/.claude/hooks/suggest-edit.py」というPythonスクリプトで、コマンドをshlex.split()で解析し、終了コード2でブロックする仕組みです。この実装はGitHubのdotfilesリポジトリで公開されています。</p>
-<p>著者は、この仕組みはあくまで作業継続のための工夫であり<strong>セキュリティ対策ではない</strong>と注意を促し、本番運用ではSandbox環境の利用が別途重要だと述べています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/labee/articles/7c97be78c6afa7" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/730d40cee6ea5fce/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-5eecf7ffbf4acedd">
-<h3><a href="articles/2026-09-16/5eecf7ffbf4acedd/">NEXT_PUBLIC_*はビルド時に焼き込まれる罠</a></h3>
+<div class="paper-body"><p>ゆめみのmpyw氏が、Goのフラットなパッケージ構造にファイル単位のprivateスコープを持ち込むLinter「declscope」を開発し、解説しています。Goの可視性はExported(全パッケージから可視)とUnexported(パッケージ内の全ファイルから可視)の2段階しかなく、「このヘルパーはこのファイル専用」といった暗黙の規約は人間の頭の中にしか存在しません。著者は、AIエージェントがコードを生成する際、こうした自然言語の規約は確率的にしか守られないため、機械的に検査できる仕組みが必要だと考えたと述べています。</p>
+<p>declscopeはboundary・qualify・surplus・directiveという4つのルールで、private宣言への越境アクセスや不要な共有宣言を検出し、-fixフラグで自動修正もできます。ファイル名をlowerCamelCase化した名前がnamespaceとして自動付与されるほか、baselineコマンドで既存コードベースに段階的に導入することも可能です。</p>
+<p>実証としてOSSのcobra(14ファイル対象)とurfave/cli(39ファイル対象)に適用したところ、違反件数はそれぞれ35/119件、112/114件から最終的に0/0件まで削減できたとしています。著者は「自然言語の規約は、守られたかどうかを決定論的に判定できない以上、どうしても確率的にしか効きません」と述べています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/yumemi_inc/articles/go-declscope-file-scoped-private" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/0ab6cb0b25a73b5d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c656226dac6c2e6c">
+<h3><a href="articles/2026-09-17/c656226dac6c2e6c/">encoding/json/v2を最速にするツール「odjson」</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Next.jsを運用するある筆者が、環境変数の落とし穴について実体験をもとに解説しています。NEXT_PUBLIC_*で始まる環境変数は<strong>ビルド時にソースコードへ直接インライン化(焼き込み)される</strong>ため、Vercelのダッシュボード上で値を更新しても、再ビルドしない限り古い値が本番環境で使われ続けます。筆者はこの問題でライセンスキーが古いまま動き続けるトラブルを経験しました。</p>
-<p>対処法として、同じコミットのまま再ビルドする<code>vercel redeploy &lt;デプロイURL&gt;</code>コマンドが紹介されており、本番とPreview環境の両方を再デプロイする必要があるとしています。またVercelの「Sensitive」環境変数機能は値を後から読み出せず、<code>vercel env pull</code>実行時には空文字として取得される、Production/Previewのみに適用可能でDevelopment環境には対応しないといった特有の仕様にも触れています。Sensitive指定した環境変数を更新する際は、既存の値を一度削除してから新たに追加し直す必要がある点にも注意を促しています。</p>
-<p>環境変数が正しく反映されているかは、ダッシュボードの表示ではなく実際に配信されているJavaScriptバンドルの中身で確認すべきだと述べています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/y3chi5z/articles/next-public-env-baked-at-build" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/5eecf7ffbf4acedd/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-2be0eac3844d3d98">
-<h3><a href="articles/2026-09-16/2be0eac3844d3d98/">自律型ペネトレーションテストAI「PentAGI」</a></h3>
+<div class="paper-body"><p>Go言語の<strong>encoding/json/v2</strong>を高速化するツール「odjson」を、作者本人であるmazrean氏が紹介しています。encoding/json/v2の安定性を保ちながら、サードパーティ製JSONライブラリ並みの速度を実現することを目指したツールで、内部バッファへの直接読み書き、SWAR(SIMD within a Register)技術、16Byte単位の定数書き込み、フィールド名の決定木判定といった最適化技術を用いています。</p>
+<p>Go 1.27.1・AMD Ryzen 9 7950X・Ubuntu 24.04の環境でのベンチマークでは、bytedance/sonicやgoccy/go-json、json-iterator/go、mailru/easyjson、sapphi-red/json-constantiaterと比較し、エンコードで4倍以上、デコードで2.69〜3.39倍の高速化を達成したとしています。著者は「自分もISUCONなどで重宝しています」と述べています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/mazrean/articles/27314fad0e5c73" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/c656226dac6c2e6c/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a6712506fbdc1545">
+<h3><a href="articles/2026-09-17/a6712506fbdc1545/">Claude Codeの「ハーネス」設計で開発期間を半分以下に</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.smarthr.jp</span></div>
+<div class="paper-body"><p>SmartHRのプロダクトエンジニア・ani氏(入社3か月時点)が、Claude Codeを活用した独自の開発フレームワーク「ハーネス」の設計・実践を報告しています。オーケストレータ・実装エージェント・レビュアー・機械検査という4種類の役割分担と、スキルファイル・JSON状態管理・シェルスクリプト検証を組み合わせた仕組みにより、新機能開発の実質工数を<strong>2.5か月からほぼ1か月に短縮した</strong>といいます。</p>
+<p>状態管理にはprogress.json(全体進捗)とstages.json(タスク別進捗)の2つのJSONファイルを使い、タスクが10個に達した時点でstages.jsonは118KBのサイズになったとのことです。レビュアーは4体を並列で動かし、「仕様突合」「並行性」「認可」「機能完結性」の4つの観点でチェックします。シェルスクリプトによる検査項目は12項目、開発手法はテスト駆動開発(TDD)に固定しています。</p>
+<p>著者は「AIエージェントに大きな機能を任せるときは、モデルの良し悪しよりも周囲の環境を設計して成果を最大化することが大事」と述べ、細かくセッションを切っても「引き継ぎが壊れません」とも語っています。モデル性能そのものよりも、周辺環境の設計に力点を置く姿勢が印象的な体験談です。</p></div>
+<p class="paper-source"><a href="https://tech.smarthr.jp/entry/2026/09/16/110205" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/a6712506fbdc1545/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-699301a5bbc70c76">
+<h3><a href="articles/2026-09-17/699301a5bbc70c76/">OSSコーディングエージェント「Cline」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>vxcontrolが公開する「PentAGI」(Penetration testing Artificial General Intelligence)は、AIエージェントが自動でセキュリティテスト手順を決定・実行するオープンソースツールです。すべての操作はDocker内の隔離環境（サンドボックス）で行われ、nmap、metasploit、sqlmapを含む20以上の専門ツールを標準装備しています。</p>
-<p>研究・開発・インフラ用に専門化された<strong>マルチエージェント構成</strong>を採用し、REST/GraphQL APIによるプログラマティックアクセスや、脆弱性と利用手法を記載した詳細レポートの自動生成にも対応します。OpenAI、Anthropic Claude、Google Gemini、AWS Bedrock、Ollamaなど10以上のLLMプロバイダーに対応し、フロントエンドはReact+TypeScript、バックエンドAPIはGo製、ベクトルストアにはpgvector拡張のPostgreSQLを使用しています。オプションでNeo4jベースのナレッジグラフ、Grafana/Prometheusによる監視、Langfuseによる分析基盤も統合できます。</p></div>
-<p class="paper-source"><a href="https://github.com/vxcontrol/pentagi" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/2be0eac3844d3d98/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-cb38c9330aadfe37">
-<h3><a href="articles/2026-09-16/cb38c9330aadfe37/">ChatGPT代替のセルフホスト型チャット「LibreChat」</a></h3>
+<div class="paper-body"><p>IDEやターミナル、デスクトップに統合できるオープンソースのAIコーディングエージェント「Cline」です。CLI(npm i -g cline)、VS Code拡張機能、JetBrainsプラグイン、デスクトップアプリ、Node.js SDKなど複数の形態で配布されており、プロジェクト全体を理解した複数ファイルにわたるコード編集、ターミナルコマンドの実行、探索してから実装する計画・実行の二段階モードを備えます。<code>.clinerules</code>ファイルでプロジェクト固有の標準や手順を定義することもできます。</p>
+<p>Anthropic Claude、OpenAI GPT、Google Gemini、Ollamaなど複数のAIモデルに対応し、MCP(Model Context Protocol)サーバーによる拡張、マルチエージェント協調、cronによる定期実行、Slack/Discord/Telegram連携も可能です。GitHub上でスター6.83万、フォーク7,400件を集めており、Apache 2.0ライセンスで公開されています。</p></div>
+<p class="paper-source"><a href="https://github.com/cline/cline" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/699301a5bbc70c76/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-59a78ca5c6e93f4a">
+<h3><a href="articles/2026-09-17/59a78ca5c6e93f4a/">本番品質のワークフロー集「agent-skills」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>danny-avila氏が開発する「LibreChat」は、「Enhanced ChatGPT Clone」を謳うオープンソースの自ホスト型AIチャットプラットフォームです。ChatGPT風のUIで、Anthropic、OpenAI、Azure、AWS Bedrock、Google Vertex AI、Groq、DeepSeekなど複数のAIプロバイダーを単一のプライバシー重視インターフェースに統合しています。</p>
-<p>Python、Node.js、Goなどをサンドボックスで実行できるCode Interpreter API、Agents/MCP(Model Context Protocol)サポート、DALL-E・Stable Diffusion・Fluxに対応した画像生成機能などを備え、30言語以上の多言語UIにも対応しています。Dockerに対応しておりセルフホストでの運用が可能です。MITライセンスで公開され、GitHub上のスター数は43.8k、フォーク数は9.0kに達しています。</p></div>
-<p class="paper-source"><a href="https://github.com/danny-avila/LibreChat" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/cb38c9330aadfe37/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-1de316dbd7c0b223">
-<h3><a href="articles/2026-09-16/1de316dbd7c0b223/">隔離ワークロード管理のKubernetesプロジェクト「Agent Sandbox」</a></h3>
+<div class="paper-body"><p>Addy Osmani氏が公開するリポジトリ「agent-skills」です。AIコーディングエージェント向けに、シニアエンジニアの品質基準を組み込んだ「本番環境対応のエンジニアリングワークフロー」を提供します。/spec、/plan、/build、/test、/constraints、/review、/webperf、/code-simplify、/shipという9つのスラッシュコマンドと25のスキルで、要件定義からデプロイまでの開発ライフサイクル全体をカバーします。/build autoコマンドを使うと、計画承認後に各タスクが自動的に実行されます。</p>
+<p>npx skills add addyosmani/agent-skillsで導入でき、Claude Code、Cursor、GitHub Copilot、Codex/Gemini CLIなど複数のAIコーディングツールに対応しています。ライセンスはMITです。</p></div>
+<p class="paper-source"><a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/59a78ca5c6e93f4a/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b1f5e72cf6843bc5">
+<h3><a href="articles/2026-09-17/b1f5e72cf6843bc5/">Claude Code公式リポジトリ</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>kubernetes-sigs/agent-sandboxは、AIエージェントランタイムや強化学習など、隔離された単一状態のワークロードを管理しやすくするKubernetesプロジェクトです。中核となる<strong>Sandbox CRD（Kubernetesの独自リソース定義）</strong>は、安定したホスト名とネットワーク識別情報を持つ単一状態のPodを提供し、永続ストレージのサポートや作成・削除・一時停止・再開といったライフサイクル管理を行います。</p>
-<p>開発環境、AIエージェント実行環境、強化学習タスク、Jupyterノートブックなどでの利用を想定し、gVisorやKata Containersといった安全なサンドボックスランタイムとの統合も目指しています。メモリ共有や効率的なストレージのプロビジョニングにも対応し、テンプレート再利用、事前ウォームアップ済みポッドプール、ユーザーリクエストに基づくサンドボックス割り当てなどの拡張モジュールも用意されています。Apache 2.0ライセンスでKubernetes SIG Apps傘下のプロジェクトとして開発され、スター数は3.9k以上、フォーク数は512です。</p></div>
-<p class="paper-source"><a href="https://github.com/kubernetes-sigs/agent-sandbox" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/1de316dbd7c0b223/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-5a84c4fd8019d817">
-<h3><a href="articles/2026-09-16/5a84c4fd8019d817/">AIエージェントのタスク単位アクセス制御を実証評価</a></h3>
+<div class="paper-body"><p>Anthropic公式のGitHubリポジトリ「claude-code」です。ターミナルに統合されたエージェント型のコーディングツールで、コードベースの理解、自然言語コマンドによる日常的なコーディングタスクの実行、Gitワークフローの処理などを行えます。プロジェクトディレクトリで<code>claude</code>コマンドを実行して使用し、インストールはcurlスクリプト、Homebrew、WinGet、npm(非推奨)など複数の方法があります。Node.js 18以上が動作要件です。</p>
+<p>使用データや会話データ、フィードバックは収集されますが、モデルの訓練には使用されないとされています。</p></div>
+<p class="paper-source"><a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/b1f5e72cf6843bc5/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-72093e6115a13762">
+<h3><a href="articles/2026-09-17/72093e6115a13762/">進化する『世界』で自己改善するAIエージェント「Dream-RSI」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>2026年9月14日にarXivへ投稿された論文で、著者のHalil Burak Noyan氏は、多くの企業環境でAIエージェントが人間の従業員と同様、デプロイ時に固定された静的な認証情報セット（役割が将来必要とする可能性のある全権限を含む）を付与されている問題を扱っています。これは現在のタスクで使うか否かに関わらず全ての権限が露出したままになることを意味し、侵害された、または不整合を起こしたエージェントに後で悪用される恐れがあります。著者は先行研究でこれを「タスク・コンテキストの不一致」と定義し、役割ベースの権限上限・タスク権限分類器・ポリシーベースの禁止事項の3要素からなる権限アーキテクチャを提案していました。</p>
-<p>本論文は、そのセキュリティゲート実装（ファインチューニングされたRoBERTa-largeエンコーダ）を、先行研究が公開した600件のラベル付きプロンプトのデータセットで評価しました。RoBERTa-largeは、few-shot訓練されたClaude Haiku 4.5と同等の分類品質を示し、macro-F1は0.881対0.886、precisionは0.897対0.842、重大度加重残余リスクは0.63対1.12という結果でした。また、役割上限のみでは重大度加重攻撃面の27.9%しか削減できないのに対し、<strong>タスク分類器を加えると84.4%を削減できる</strong>ことが示されています。</p>
-<p>著者は、AIエージェントはタスクが機械可読テキストとして到着するため、タスク粒度のアクセス制御が実施可能な初の主体タイプであると主張しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.15422" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/5a84c4fd8019d817/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a99972d7125e8834">
-<h3><a href="articles/2026-09-16/a99972d7125e8834/">難問を解けないLLM強化学習に「Never Give Up」</a></h3>
+<div class="paper-body"><p>17名の共著による論文「Dream-RSI: Recursive Self-Improvement through Evolving Worlds」です(2026年9月14日投稿)。自律AIエージェントの再帰的自己改善(RSI)のための探索フレームワークを提案しています。エージェントがこれまでに発見してきた履歴(発見ツリー)を使ってリプレイ用のシミュレータ(「世界」)を構築し、その上で仮想的に試行錯誤する(「夢を見る」)ことで、コストの高いオンライン評価を繰り返さずに低コストなオフポリシーのフィードバックを得て探索方策を改善する手法です。</p>
+<p>アルゴリズム工学、数学的最適化、GPUカーネル工学の3領域で実験を行い、発見コストを大きく削減しつつ、発見の質は既存手法と競争力がある、あるいは向上したと報告しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.14858" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/72093e6115a13762/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-0668d52ca652a32c">
+<h3><a href="articles/2026-09-17/0668d52ca652a32c/">AIエージェントが獲得したリソースの実行時認可「AcquireBound」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>LLMの強化学習(RL)では、簡単な問題では大きな性能向上が得られる一方、難しい問題には効果が限定的だという「Matthew Effect in RL」という現象が指摘されています。これに対処するため、著者らは<strong>正解が得られるまでサンプル生成を続ける適応的サンプリング手法「Never Give Up (NGU)」</strong>を提案しています。NGUは簡単な問題のフィルタリングに要する計算量を減らし、より難しい問題に計算資源を配分できます。</p>
-<p>NGUは非同期RLを用いて実装され、Deepscalerベンチマークでは特に難問において計算効率あたりの性能が向上したと報告されています。また自作のManufactoriaコーディングタスクでは、標準的なGRPO（LLMの強化学習で用いられる最適化手法の一つ）では解けない複雑な問題を段階的に解けるようになり、最終的に完全解を実現したとされています。著者らは設計上の選択肢やベストプラクティスについても調査しており、ブログとコードも公開しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.13443" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/a99972d7125e8834/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-1c64e20dfa2b099b">
-<h3><a href="articles/2026-09-16/1c64e20dfa2b099b/">長時間稼働エージェントの失敗原因特定を探索問題として定式化</a></h3>
+<div class="paper-body"><p>単著論文「AcquireBound: Runtime Authorization for Resources Acquired by AI Agents」です(著者Genliang Zhu、2026年9月13日投稿)。支払い・予算・OAuth・委任・履行といった既存のチェックだけでは、自律的なAIエージェントが外部から取得したリソース(APIトークン、ファイル、接続など)が実際に使用可能な権限を持つかどうかを検証できないという課題を指摘しています。</p>
+<p>著者は、取得したリソースを隔離し、プロバイダ側の認証済みエビデンスから実際の機能(capability)を解決したうえで、プロバナンス(来歴)・エポック・型付きのリソース-ケーパビリティ・ハイパーグラフによる検証を経て初めて有効化する実行時認可アーキテクチャ「AcquireBound」を提案しています。評価では正常なトレース20件すべてを受理し、登録された安全でないトレース40件すべてを拒否したほか、MCP-Docker環境での18ケースの実験でも安全でない16パスすべてで不正なDocker起動リクエストの追加を防いだと報告しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.14744" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/0668d52ca652a32c/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-df3caca906bdc84a">
+<h3><a href="articles/2026-09-17/df3caca906bdc84a/">特許ドラフティングでLLM判定官は信頼できるか「Vibe Patenting」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>AIエージェントが長時間タスクを実行した際に生じる大量の実行ログから失敗の根本原因を診断する「Root-Cause Attribution (RCA)」について、既存のLLMベース手法は実行トレースが長くなるほど診断精度が低下するという課題があります。関連情報がトレース全体に疎に分散しているため、根本原因の特定が大規模な<strong>探索問題</strong>になっている、と10名の著者らは分析しています。既存手法は一発勝負(one-shot)のLLM判断に依存しており、長いトレースでは判定者が早期に「もっともらしい診断」に落ち着き、重要な証拠を見逃してしまいます。</p>
-<p>著者らはこれに対し、複数ターンにわたり判定者に未解決の診断証拠を探し続けるよう促す反復的フレームワーク「Continual Search」を提案。既存の4つのRCAベンチマークに加え、大規模実行トレースの評価が不足している現状を踏まえて50件の人手注釈付き失敗事例からなる新ベンチマーク「MegaRCA-Mix」を構築しました。</p>
-<p>評価の結果、Continual SearchはMegaRCA-MixにおいてGPT-5.5のF1スコアを0.349から0.498へと40%以上改善しました。同一モデルファミリー内で、下位ティアのモデルがContinual Search適用時に上位ティアモデルを上回るケースもあり、<strong>効果的な探索がモデルの規模を上回る効果を持つ</strong>ことを示しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.13463" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-16/1c64e20dfa2b099b/">要点と引用を見る</a></p>
+<div class="paper-body"><p>5名による論文「Vibe Patenting: Evaluating LLM Judges for Professional Patent-Drafting Agents」です。特許草案作成という専門業務において、LLMを「判定官」として品質評価や改訂フィードバックに使う手法の信頼性を検証しています。著者らは特許起案のテストベッド「Vibe Patenting」を構築し、複数の発明・エージェント構成でテストしました。</p>
+<p>その結果、判定官によるガイダンス付きの改訂は草案品質を一貫して向上させ、ガイダンスのない改訂は品質向上が頭打ちになる傾向があったこと、反復的なフィードバックにより低推論エージェントが高コストな高推論エージェントの性能に近づいたことが報告されています。一方、プロの特許弁護士による独立評価と比較すると、評価指標によって一致度が強く異なり、系統的な調整の違いも見られたとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.13422" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-17/df3caca906bdc84a/">要点と引用を見る</a></p>
 </article></section>
 <section class="code-teaser" id="code">
 <h2><span class="category-dot"></span>今日のコード</h2>
-<p class="code-teaser-repo"><span class="mono">danny-avila/LibreChat</span> / <code>client/src/components/Chat/Input/submit.ts</code></p>
-<p>LibreChatはChatGPT互換のOSSチャットUIで、実際に多くのユーザーが使っています。今回のsubmit.tsは「チャット入力欄からの送信」を1箇所に集約する小さなファイルです。UIの状態（回答待ち中か、AIが応答を生成中か等）によって「送信」の意味が変わるという、実務でよくある分岐処理を、型とearly returnだけで綺麗に書いている点が学びになると思い選びました。</p>
-<a class="button-link" href="code/2026-09-16/">コードを読む</a>
+<p class="code-teaser-repo"><span class="mono">cline/cline</span> / <code>apps/cli/src/tui/utils/pasted-snippets.ts</code></p>
+<p>clineはVS Code拡張／CLIとして動く自律コーディングAIエージェントです。今日読むのは、CLIのターミナルUI(TUI)で「長いテキストを貼り付けたときに入力欄がぐちゃぐちゃにならないよう、[Pasted +12 lines]のようなプレースホルダーに圧縮する」ためのユーティリティ群です。文字列処理・正規表現・Setによる重複回避など、業務コードで頻出する小技がぎゅっと詰まっているので教材に選びました。</p>
+<a class="button-link" href="code/2026-09-17/">コードを読む</a>
 </section>
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-09-15/">
+<a class="issue-row" href="issues/2026-09-16/">
+<div class="issue-date"><span class="mono">2026.09</span><strong>16</strong></div>
+<div><h3>Googleが新音声モデル「Gemini 3.8 Live」を発表</h3><span class="issue-row-meta">16記事・約15分</span></div>
+</a><a class="issue-row" href="issues/2026-09-15/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>15</strong></div>
 <div><h3>AIベンダAPIを束ねる「Agent Router」、Linuxファウンデーション傘下入りで業界標準へ</h3><span class="issue-row-meta">16記事・約14分</span></div>
 </a><a class="issue-row" href="issues/2026-09-14/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>14</strong></div>
 <div><h3>AI開発「ペース調整」提言にアルトマン氏・マスク氏も同調</h3><span class="issue-row-meta">15記事・約13分</span></div>
-</a><a class="issue-row" href="issues/2026-09-13/">
-<div class="issue-date"><span class="mono">2026.09</span><strong>13</strong></div>
-<div><h3>RubyGemsへの大量攻撃、OpenAIエージェント関与説</h3><span class="issue-row-meta">16記事・約13分</span></div>
 </a>
 </section>
 </main>

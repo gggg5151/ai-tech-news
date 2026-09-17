@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIエージェントが獲得したリソースの実行時認可「AcquireBound」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="単著論文「AcquireBound: Runtime Authorization for Resources Acquired by AI Agents」です(著者Genliang Zhu、2026年9月13日投稿)。支払い・予算・OAuth・委任・履行といった既存のチェックだけでは、自律的なAIエージェントが外部から…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AIエージェントが獲得したリソースの実行時認可「AcquireBound」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="単著論文「AcquireBound: Runtime Authorization for Resources Acquired by AI Agents」です(著者Genliang Zhu、2026年9月13日投稿)。支払い・予算・OAuth・委任・履行といった既存のチェックだけでは、自律的なAIエージェントが外部から…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-17/0668d52ca652a32c/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-17/0668d52ca652a32c/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "AIエージェントが獲得したリソースの実行時認可「AcquireBound」", "datePublished": "2026-09-17", "description": "単著論文「AcquireBound: Runtime Authorization for Resources Acquired by AI Agents」です(著者Genliang Zhu、2026年9月13日投稿)。支払い・予算・OAuth・委任・履行といった既存のチェックだけでは、自律的なAIエージェントが外部から取得したリソース(APIトークン、ファイ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-17/0668d52ca652a32c/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.14744", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-17/">2026.09.17 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>AIエージェントが獲得したリソースの実行時認可「AcquireBound」</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-17">2026.09.17</time></div>
+</header>
+<div class="article-body">
+<p>単著論文「AcquireBound: Runtime Authorization for Resources Acquired by AI Agents」です(著者Genliang Zhu、2026年9月13日投稿)。支払い・予算・OAuth・委任・履行といった既存のチェックだけでは、自律的なAIエージェントが外部から取得したリソース(APIトークン、ファイル、接続など)が実際に使用可能な権限を持つかどうかを検証できないという課題を指摘しています。</p>
+<p>著者は、取得したリソースを隔離し、プロバイダ側の認証済みエビデンスから実際の機能(capability)を解決したうえで、プロバナンス(来歴)・エポック・型付きのリソース-ケーパビリティ・ハイパーグラフによる検証を経て初めて有効化する実行時認可アーキテクチャ「AcquireBound」を提案しています。評価では正常なトレース20件すべてを受理し、登録された安全でないトレース40件すべてを拒否したほか、MCP-Docker環境での18ケースの実験でも安全でない16パスすべてで不正なDocker起動リクエストの追加を防いだと報告しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「AcquireBound: Runtime Authorization for Resources Acquired by AI Agents」である</li><li>著者はGenliang Zhu</li><li>投稿日は2026年9月13日</li><li>対象分野はArtificial Intelligence (cs.AI)およびCryptography and Security (cs.CR)</li><li>既存の支払い・予算・OAuth・委任(mandate)・履行(fulfillment)チェックでは、返されたリソースが実際に使用可能な権限を持つかは検証されないと論文は指摘している</li><li>AcquireBoundは取得されたリソースを隔離する</li><li>AcquireBoundはプロバイダの認証済みエビデンスから実際の機能(capability)を解決する</li><li>AcquireBoundはプロバナンス・エポック・型付きリソース-ケーパビリティ・ハイパーグラフによる検証を経て初めてリソースを有効化する</li><li>評価では正常なトレース20件すべてを受理した(20/20)</li><li>評価では登録された安全でないトレース40件すべてを拒否した(40/40)</li><li>MCP-Docker環境における18ケースの段階的合成実験で、安全でない16パスすべてにおいて不正なDocker起動リクエストが追加されなかった</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Payment, budget, OAuth, mandate, and fulfillment checks</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2609.14744" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.14744" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%8C%E7%8D%B2%E5%BE%97%E3%81%97%E3%81%9F%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E5%AE%9F%E8%A1%8C%E6%99%82%E8%AA%8D%E5%8F%AF%E3%80%8CAcquireBound%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-17%2F0668d52ca652a32c%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%8C%E7%8D%B2%E5%BE%97%E3%81%97%E3%81%9F%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E5%AE%9F%E8%A1%8C%E6%99%82%E8%AA%8D%E5%8F%AF%E3%80%8CAcquireBound%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-17/0668d52ca652a32c/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-17%2F0668d52ca652a32c%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../72093e6115a13762/"><span>前の記事</span>進化する『世界』で自己改善するAIエージェント「Dream-RSI」</a><a class="next" href="../df3caca906bdc84a/"><span>次の記事</span>特許ドラフティングでLLM判定官は信頼できるか「Vibe Patenting」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-17/">← 2026.09.17 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../72093e6115a13762/">進化する『世界』で自己改善するAIエージェント「Dream-RSI」</a></h3>
+<p class="excerpt">17名の共著による論文「Dream-RSI: Recursive Self-Improvement through Evolving Worlds」です(2026年9月14日投稿)。自律AIエージェントの再帰的自己改善(RSI)のための…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-17">2026.09.17</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../df3caca906bdc84a/">特許ドラフティングでLLM判定官は信頼できるか「Vibe Patenting」</a></h3>
+<p class="excerpt">5名による論文「Vibe Patenting: Evaluating LLM Judges for Professional Patent-Drafting Agents」です。特許草案作成という専門業務において、LLMを「判定官」とし…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-17">2026.09.17</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-16/5a84c4fd8019d817/">AIエージェントのタスク単位アクセス制御を実証評価</a></h3>
+<p class="excerpt">2026年9月14日にarXivへ投稿された論文で、著者のHalil Burak Noyan氏は、多くの企業環境でAIエージェントが人間の従業員と同様、デプロイ時に固定された静的な認証情報セット（役割が将来必要とする可能性のある全権限を…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-16">2026.09.16</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

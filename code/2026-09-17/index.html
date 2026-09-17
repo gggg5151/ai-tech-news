@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cline/cline の apps/cli/src/tui/utils/pasted-snippets.ts を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="clineはVS Code拡張／CLIとして動く自律コーディングAIエージェントです。今日読むのは、CLIのターミナルUI(TUI)で「長いテキストを貼り付けたときに入力欄がぐちゃぐちゃにならないよう、[Pasted +12 lines]のようなプレースホルダーに圧縮する」ためのユーティリティ群です。文字列処理・正規表…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="cline/cline の apps/cli/src/tui/utils/pasted-snippets.ts を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="clineはVS Code拡張／CLIとして動く自律コーディングAIエージェントです。今日読むのは、CLIのターミナルUI(TUI)で「長いテキストを貼り付けたときに入力欄がぐちゃぐちゃにならないよう、[Pasted +12 lines]のようなプレースホルダーに圧縮する」ためのユーティリティ群です。文字列処理・正規表…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-17/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-17/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.17</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>cline/cline の <code>apps/cli/src/tui/utils/pasted-snippets.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/cline/cline/blob/HEAD/apps/cli/src/tui/utils/pasted-snippets.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-17">2026.09.17</time></div>
+</header>
+<div class="article-body">
+<p>clineはVS Code拡張／CLIとして動く自律コーディングAIエージェントです。今日読むのは、CLIのターミナルUI(TUI)で「長いテキストを貼り付けたときに入力欄がぐちゃぐちゃにならないよう、[Pasted +12 lines]のようなプレースホルダーに圧縮する」ためのユーティリティ群です。文字列処理・正規表現・Setによる重複回避など、業務コードで頻出する小技がぎゅっと詰まっているので教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>export const LARGE_PASTE_LINE_THRESHOLD = 5;
+
+const PREVIEW_MAX_CHARS = 48;
+
+export function countPastedTextLines(text: string): number {
+	if (text.length === 0) return 0;
+	const lines = text.split(/\r\n|\r|\n/);
+	return lines.at(-1) === &quot;&quot; ? lines.length - 1 : lines.length;
+}
+
+export function shouldCompactPastedText(text: string): boolean {
+	return countPastedTextLines(text) &gt;= LARGE_PASTE_LINE_THRESHOLD;
+}
+
+function previewText(text: string): string {
+	const normalized = text.trim().replace(/\s+/g, &quot; &quot;);
+	if (!normalized) return &quot;&quot;;
+	return normalized.length &gt; PREVIEW_MAX_CHARS
+		? normalized.slice(0, PREVIEW_MAX_CHARS).trimEnd()
+		: normalized;
+}
+
+export function formatPastedTextSnippetMarker(text: string): string {
+	const lineCount = countPastedTextLines(text);
+	const preview = previewText(text);
+	const lineLabel = lineCount === 1 ? &quot;line&quot; : &quot;lines&quot;;
+	const prefix = preview ? `${preview}... ` : &quot;&quot;;
+	return `[${prefix}Pasted +${lineCount} ${lineLabel}]`;
+}
+
+export function createUniquePastedTextSnippetMarker(
+	text: string,
+	existingMarkers: Iterable&lt;string&gt;,
+): string {
+	const base = formatPastedTextSnippetMarker(text);
+	const existing = new Set(existingMarkers);
+	if (!existing.has(base)) return base;
+
+	for (let suffix = 2; ; suffix += 1) {
+		const candidate = base.replace(/\]$/, ` #${suffix}]`);
+		if (!existing.has(candidate)) return candidate;
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>export const LARGE_PASTE_LINE_THRESHOLD = 5;
+
+const PREVIEW_MAX_CHARS = 48;</code></pre><p>ファイルの先頭でマジックナンバーを定数化しています。`export`が付いた`LARGE_PASTE_LINE_THRESHOLD`は他のファイルから`import`して使える定数、`export`のない`PREVIEW_MAX_CHARS`はこのファイル内だけで使う定数です。「5行以上なら圧縮する」「プレビューは48文字まで」という閾値をコード中に直接埋め込まず名前を付けておくことで、後で値を変える時に一箇所直せば済みますし、`if (lines &gt;= 5)`とだけ書くよりも意図が読みやすくなります。</p></div><div class="walk-step"><pre class="walk-quote"><code>export function countPastedTextLines(text: string): number {
+	if (text.length === 0) return 0;
+	const lines = text.split(/\r\n|\r|\n/);
+	return lines.at(-1) === &quot;&quot; ? lines.length - 1 : lines.length;
+}</code></pre><p>引数`text: string`は「textという名前でstring型の値を受け取る」という意味で、戻り値の型`: number`は「この関数はnumber型を返す」という宣言です。`text.split(正規表現)`は文字列を正規表現にマッチした箇所で分割し配列にするメソッドで、`/\r\n|\r|\n/`は「CRLF改行、またはCR単体、またはLF単体」のどれかにマッチする正規表現です（`|`はOR、`\n`は改行、`\r`は復帰）。OSによって改行コードが違う（Windowsは\r\n、Unix系は\n）ので、この3パターンを網羅しています。`lines.at(-1)`は配列の「後ろから1番目」つまり最後の要素を取り出すメソッドで、最後が空文字列なら「末尾に改行が1つあった」とみなして行数を1減らしています（`条件 ? A : B`は条件がtrueならA、falseならBを返す三項演算子です）。</p></div><div class="walk-step"><pre class="walk-quote"><code>export function shouldCompactPastedText(text: string): boolean {
+	return countPastedTextLines(text) &gt;= LARGE_PASTE_LINE_THRESHOLD;
+}</code></pre><p>上で定義した関数を呼び出して、行数が閾値以上かどうかをtrue/falseで返すだけの小さな関数です。こうして「行数を数える処理」と「圧縮すべきか判定する処理」を別関数に分けておくと、それぞれ単体でテストしやすくなり、呼び出し側も`shouldCompactPastedText(text)`と書くだけで意図が伝わります。</p></div><div class="walk-step"><pre class="walk-quote"><code>function previewText(text: string): string {
+	const normalized = text.trim().replace(/\s+/g, &quot; &quot;);
+	if (!normalized) return &quot;&quot;;</code></pre><p>この関数には`export`が付いていないので、このファイルの外からは呼べない「内部専用のヘルパー関数」です。`text.trim()`は文字列の前後の空白（スペースや改行）を取り除くメソッド、続けて`.replace(/\s+/g, &quot; &quot;)`は「1文字以上連続する空白文字（`\s+`、改行やタブも含む）」を1つの半角スペースに置き換えています。`/g`は正規表現のフラグで「最初の1箇所だけでなく全部置換する」という意味です。`!normalized`は`normalized`が空文字列（falsy）なら真になるので、空だったら早期に`&quot;&quot;`を返しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return normalized.length &gt; PREVIEW_MAX_CHARS
+		? normalized.slice(0, PREVIEW_MAX_CHARS).trimEnd()
+		: normalized;
+}</code></pre><p>三項演算子が長いので改行して書かれていますが、意味は「文字数がPREVIEW_MAX_CHARS(48)を超えていたら、先頭から48文字だけ`slice(0, 48)`で切り出して末尾の空白を`trimEnd()`で削る。超えていなければそのまま返す」です。長文をプレビュー表示するときに「途中で単語が切れて末尾に半端なスペースが残る」のを`trimEnd()`で防いでいる点が実務的な配慮です。</p></div><div class="walk-step"><pre class="walk-quote"><code>const lineLabel = lineCount === 1 ? &quot;line&quot; : &quot;lines&quot;;
+	const prefix = preview ? `${preview}... ` : &quot;&quot;;</code></pre><p>`lineCount === 1 ? &quot;line&quot; : &quot;lines&quot;`は英語の単数形/複数形を切り替える三項演算子です。`preview ? \`${preview}... \` : &quot;&quot;`はバッククォートで囲むテンプレートリテラルという書き方で、`${式}`の中にJavaScriptの式を埋め込んで文字列に変換してくれます。previewが空文字列（falsy）ならプレフィックスも空にしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return `[${prefix}Pasted +${lineCount} ${lineLabel}]`;
+}</code></pre><p>ここまで作った小さな変数を組み合わせて、実際にユーザーへ見せる文字列（例: `[Hello world... Pasted +12 lines]`）を組み立てています。`+`で文字列連結するより、テンプレートリテラルで一気に組むほうが読みやすいので実務でもよく使われる書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>export function createUniquePastedTextSnippetMarker(
+	text: string,
+	existingMarkers: Iterable&lt;string&gt;,
+): string {</code></pre><p>2つ目の引数の型`Iterable&lt;string&gt;`に注目してください。`&lt;string&gt;`の部分はジェネリクスと呼ばれ、「string型の要素を持つ」という意味です。`Iterable`は「`for...of`で1つずつ取り出せるもの」を表す型で、配列(`string[]`)だけでなく`Set&lt;string&gt;`なども当てはまります。つまりこの関数は「呼び出し側が配列を渡してもSetを渡しても受け取れる」ように、あえて具体的な配列型ではなく抽象的なIterable型を使っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const base = formatPastedTextSnippetMarker(text);
+	const existing = new Set(existingMarkers);
+	if (!existing.has(base)) return base;</code></pre><p>`new Set(existingMarkers)`は、渡された既存マーカー一覧から重複のないSet（集合）オブジェクトを新しく作っています。Setは`.has(値)`メソッドで「その値が含まれているか」を高速に判定できるのが利点で、配列に対して毎回`.includes()`で探すより効率的です。ここでは「まだ誰も使っていない基本形のマーカーなら、そのまま採用して即returnする」という早期リターンをしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>for (let suffix = 2; ; suffix += 1) {
+		const candidate = base.replace(/\]$/, ` #${suffix}]`);
+		if (!existing.has(candidate)) return candidate;
+	}
+}</code></pre><p>forループの構文は`for (初期化; 継続条件; 更新)`の3つですが、真ん中の継続条件が空になっています。これは「条件を書かない＝ずっとtrue＝無限ループ」という意味で、代わりにループの内側にある`if (...) return candidate;`が抜け出す唯一の出口になっています。中身では`base.replace(/\]$/, ...)`で、文字列末尾の`]`（`\]$`の`$`は「文字列の末尾」を表すアンカー）を` #2]`のような文字列に置き換えて、`[... #2]`のような別名の候補を作り、既存になければそれを返します。見つからない限り`suffix`を3, 4, 5...と増やし続けるので、必ずどこかで未使用の名前が見つかります。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「同じ表示名が既にあるかもしれない」問題は、Setで既存集合を作って`.has()`で確認し、衝突したら連番サフィックスを付けて再チェックするループで解決できる——これは今日から自分のコードでも使えるパターンです。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-16/"><span>前の日</span>danny-avila/LibreChat</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-17/">← 2026.09.17 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

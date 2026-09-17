@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>encoding/json/v2を最速にするツール「odjson」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Go言語のencoding/json/v2を高速化するツール「odjson」を、作者本人であるmazrean氏が紹介しています。encoding/json/v2の安定性を保ちながら、サードパーティ製JSONライブラリ並みの速度を実現することを目指したツールで、内部バッファへの直接読み書き、SWAR(SIMD withi…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="encoding/json/v2を最速にするツール「odjson」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Go言語のencoding/json/v2を高速化するツール「odjson」を、作者本人であるmazrean氏が紹介しています。encoding/json/v2の安定性を保ちながら、サードパーティ製JSONライブラリ並みの速度を実現することを目指したツールで、内部バッファへの直接読み書き、SWAR(SIMD withi…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-17/c656226dac6c2e6c/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-17/c656226dac6c2e6c/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "encoding/json/v2を最速にするツール「odjson」", "datePublished": "2026-09-17", "description": "Go言語のencoding/json/v2を高速化するツール「odjson」を、作者本人であるmazrean氏が紹介しています。encoding/json/v2の安定性を保ちながら、サードパーティ製JSONライブラリ並みの速度を実現することを目指したツールで、内部バッファへの直接読み書き、SWAR(SIMD within a Register)技術、16By…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-17/c656226dac6c2e6c/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/mazrean/articles/27314fad0e5c73", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-17/">2026.09.17 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>encoding/json/v2を最速にするツール「odjson」</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-17">2026.09.17</time></div>
+</header>
+<div class="article-body">
+<p>Go言語の<strong>encoding/json/v2</strong>を高速化するツール「odjson」を、作者本人であるmazrean氏が紹介しています。encoding/json/v2の安定性を保ちながら、サードパーティ製JSONライブラリ並みの速度を実現することを目指したツールで、内部バッファへの直接読み書き、SWAR(SIMD within a Register)技術、16Byte単位の定数書き込み、フィールド名の決定木判定といった最適化技術を用いています。</p>
+<p>Go 1.27.1・AMD Ryzen 9 7950X・Ubuntu 24.04の環境でのベンチマークでは、bytedance/sonicやgoccy/go-json、json-iterator/go、mailru/easyjson、sapphi-red/json-constantiaterと比較し、エンコードで4倍以上、デコードで2.69〜3.39倍の高速化を達成したとしています。著者は「自分もISUCONなどで重宝しています」と述べています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>記事はGo言語のencoding/json/v2を高速化するツール「odjson」を紹介している</li><li>著者mazrean氏がodjsonの作者本人である</li><li>odjsonはエンコード処理で4倍以上の高速化を実現したとされる</li><li>odjsonはデコード処理で2.69〜3.39倍の高速化を実現したとされる</li><li>ベンチマークのテスト環境はGo 1.27.1である</li><li>ベンチマークのテスト環境はAMD Ryzen 9 7950Xである</li><li>ベンチマークのテスト環境はUbuntu 24.04である</li><li>記事は2026年9月16日に公開された</li><li>比較対象としてbytedance/sonic、goccy/go-json、json-iterator/go、mailru/easyjson、sapphi-red/json-constantiaterが挙げられている</li><li>odjsonの最適化にはencoding/json/v2の内部バッファへの直接読み書きが用いられている</li><li>odjsonの最適化にはSWAR(SIMD within a Register)技術が用いられている</li><li>odjsonの最適化にはフィールド名の決定木判定が用いられている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>自分も ISUCON などで重宝しています</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/mazrean/articles/27314fad0e5c73" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/mazrean/articles/27314fad0e5c73" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=encoding/json/v2%E3%82%92%E6%9C%80%E9%80%9F%E3%81%AB%E3%81%99%E3%82%8B%E3%83%84%E3%83%BC%E3%83%AB%E3%80%8Codjson%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-17%2Fc656226dac6c2e6c%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=encoding/json/v2%E3%82%92%E6%9C%80%E9%80%9F%E3%81%AB%E3%81%99%E3%82%8B%E3%83%84%E3%83%BC%E3%83%AB%E3%80%8Codjson%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-17/c656226dac6c2e6c/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-17%2Fc656226dac6c2e6c%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../0ab6cb0b25a73b5d/"><span>前の記事</span>Goにファイル単位privateを持ち込むLinter「declscope」</a><a class="next" href="../a6712506fbdc1545/"><span>次の記事</span>Claude Codeの「ハーネス」設計で開発期間を半分以下に</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-17/">← 2026.09.17 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../5923299c5acd529c/">『APIキーは.envに』はもう限界か　AIエージェント時代の秘密情報管理</a></h3>
+<p class="excerpt">AIエージェントの普及に伴い、APIキーを.envファイルに保存するといった従来の秘密情報管理方法ではセキュリティ上不十分になっているという指摘が出ています。Gartnerは2028年までに人間の承認とAIエージェントの連携の重要性が増…</p>
+<div class="article-meta"><span class="badge rumor">噂</span><span>atmarkit.itmedia.co.jp</span><time datetime="2026-09-17">2026.09.17</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../cd3306a56ffdf07f/">Next.js 16 Cache Components、使いどころを整理</a></h3>
+<p class="excerpt">Next.js 16で導入されたCache Componentsについて、従来のApp Router(Next.jsのファイルベースのルーティング機構)が抱えていた制約とその解決策を整理した記事です。従来はcookies()やheade…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-17">2026.09.17</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../0ab6cb0b25a73b5d/">Goにファイル単位privateを持ち込むLinter「declscope」</a></h3>
+<p class="excerpt">ゆめみのmpyw氏が、Goのフラットなパッケージ構造にファイル単位のprivateスコープを持ち込むLinter「declscope」を開発し、解説しています。Goの可視性はExported(全パッケージから可視)とUnexported…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-17">2026.09.17</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
