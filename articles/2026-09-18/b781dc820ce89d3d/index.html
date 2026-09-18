@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>パスキーは無傷なのに突破される、デバイスコードフロー攻撃 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="パスキーは暗号学的には破られていないのに、認証セッションを乗っ取られてしまう攻撃手法が紹介されています。パスキーには複数デバイス間で同期される「同期パスキー」と、特定デバイスに紐づく「デバイスバインドパスキー」の2種類があります。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="パスキーは無傷なのに突破される、デバイスコードフロー攻撃 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="パスキーは暗号学的には破られていないのに、認証セッションを乗っ取られてしまう攻撃手法が紹介されています。パスキーには複数デバイス間で同期される「同期パスキー」と、特定デバイスに紐づく「デバイスバインドパスキー」の2種類があります。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/b781dc820ce89d3d/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/b781dc820ce89d3d/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "パスキーは無傷なのに突破される、デバイスコードフロー攻撃", "datePublished": "2026-09-18", "description": "パスキーは暗号学的には破られていないのに、認証セッションを乗っ取られてしまう攻撃手法が紹介されています。パスキーには複数デバイス間で同期される「同期パスキー」と、特定デバイスに紐づく「デバイスバインドパスキー」の2種類があります。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/b781dc820ce89d3d/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://techblog.ap-com.co.jp/entry/2026/09/17/103525", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-18/">2026.09.18 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>パスキーは無傷なのに突破される、デバイスコードフロー攻撃</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>techblog.ap-com.co.jp</span><time datetime="2026-09-18">2026.09.18</time></div>
+</header>
+<div class="article-body">
+<p>パスキーは暗号学的には破られていないのに、認証セッションを乗っ取られてしまう攻撃手法が紹介されています。パスキーには複数デバイス間で同期される「同期パスキー」と、特定デバイスに紐づく「デバイスバインドパスキー」の2種類があります。</p>
+<p>悪用されるのは、入力機器のないデバイス向けのOAuth 2.0認証方式である<strong>デバイスコードフロー</strong>です。攻撃者は被害者に本物のMicrosoftサインイン画面を提示して認証を開始させ、被害者がそこでパスキーによる正規の認証を完了すると、裏で攻撃者側のセッションが認証されてしまいます。記事は「”本物の画面だから安全”という直感が、そのまま裏切られてしまう点が、この攻撃の巧妙なところ」と指摘しています。</p>
+<p>Microsoft Entra IDでの対策としては、条件付きアクセスの「認証フロー」設定でデバイスコードフローをブロックする方法が紹介されています。適用時はまずレポート専用モードで影響を確認してから本適用することが推奨されており、緊急アクセスアカウントやTeams Rooms、Azure CLI/PowerShell、Device Registration Serviceは除外が必要です。Entra ID P2ライセンスがあれば、ID Protectionによるリスクベースの条件付きアクセスも設定できます。なお2026年9月1日にSMS・音声認証がパスキーに置き換わり、2027年2月1日にMicrosoft提供のSMS/音声配信が廃止される予定とのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>パスキーには「同期パスキー」(iCloudキーチェーンやGoogleパスワードマネージャー等で複数デバイス間に同期される)と「デバイスバインドパスキー」(Microsoft AuthenticatorやWindows Entra Passkey等、特定デバイスに紐づく)の2種類がある。</li><li>記事が説明する攻撃は、入力機器のないデバイス向けのOAuth 2.0「デバイスコードフロー」を悪用するものである。</li><li>攻撃者は被害者に本物のMicrosoftサインイン画面を提示してデバイスコードフローの認証を開始させる。</li><li>被害者がその画面でパスキーによる正規の認証を行うと、認証トークンは攻撃者側のセッションに渡ってしまう。</li><li>この攻撃への対策として、条件付きアクセスの「認証フロー」設定で「デバイスコードフロー」をブロックする方法が挙げられている。</li><li>条件付きアクセスの適用にあたっては、まずレポート専用モードで影響を確認してから本適用することが推奨されている。</li><li>デバイスコードフローのブロックからは、緊急アクセスアカウント、Teams Rooms、Azure CLI/PowerShell、Device Registration Serviceを除外する必要がある。</li><li>Microsoft Entra ID P2ライセンスを用いることで、ID Protectionによるリスクベースの条件付きアクセスを設定できる。</li><li>2026年9月1日にSMSと音声認証がパスキーに置き換わるとされている。</li><li>2027年2月1日にMicrosoft提供のSMS/音声配信が廃止されるとされている。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>「”本物の画面だから安全”という直感が、そのまま裏切られてしまう点が、この攻撃の巧妙なところ」</blockquote><p class="quotes-source">出典: <a href="https://techblog.ap-com.co.jp/entry/2026/09/17/103525" target="_blank" rel="noopener noreferrer">techblog.ap-com.co.jp</a></p></section>
+<aside class="source-box"><a href="https://techblog.ap-com.co.jp/entry/2026/09/17/103525" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">techblog.ap-com.co.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%83%91%E3%82%B9%E3%82%AD%E3%83%BC%E3%81%AF%E7%84%A1%E5%82%B7%E3%81%AA%E3%81%AE%E3%81%AB%E7%AA%81%E7%A0%B4%E3%81%95%E3%82%8C%E3%82%8B%E3%80%81%E3%83%87%E3%83%90%E3%82%A4%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%83%95%E3%83%AD%E3%83%BC%E6%94%BB%E6%92%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-18%2Fb781dc820ce89d3d%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%83%91%E3%82%B9%E3%82%AD%E3%83%BC%E3%81%AF%E7%84%A1%E5%82%B7%E3%81%AA%E3%81%AE%E3%81%AB%E7%AA%81%E7%A0%B4%E3%81%95%E3%82%8C%E3%82%8B%E3%80%81%E3%83%87%E3%83%90%E3%82%A4%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%83%95%E3%83%AD%E3%83%BC%E6%94%BB%E6%92%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-18/b781dc820ce89d3d/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-18%2Fb781dc820ce89d3d%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../aac74e6ba9a918d4/"><span>前の記事</span>&#x27;use client&#x27;は葉だけに、Next.js App Router設計術</a><a class="next" href="../65dfbc94f477e10b/"><span>次の記事</span>訪問履歴を全文検索、プライベート検索エンジンhister</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-18/">← 2026.09.18 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../552613029e67eb46/">Go言語で書く、外部依存ゼロのP2Pマルチノードサービス</a></h3>
+<p class="excerpt">著者Giuliano氏が、Go言語でLAN内のP2Pマルチノードサービスを実装した自作コードをZennで紹介しています。単一ファイル・外部依存なしという構成で、ノードの自動発見にUDPマルチキャスト、ノード間の実データ転送にTCPを組み…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../8fd117ad3c911371/">SKILL.md一枚で卒業する「毎回同じ指示コピペ」</a></h3>
+<p class="excerpt">Claude Codeの新機能「スキル(Agent Skills)」の入門記事です。毎回同じ指示を貼り付ける手間を、SKILL.mdという1ファイルにまとめることで解消できる仕組みを、公式ドキュメントと実機検証をもとに解説しています。</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../85a2287666a82e32/">WebMCPはフロントエンド必須技術になるか、試した感想</a></h3>
+<p class="excerpt">chot株式会社のエンジニアhirayama氏が、WebMCPを実際に試した感想をZennに投稿しています。WebMCPは、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供する仕組みで、従来のMCP(AIとツールをつなぐ標…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

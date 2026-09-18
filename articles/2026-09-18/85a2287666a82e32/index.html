@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebMCPはフロントエンド必須技術になるか、試した感想 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="chot株式会社のエンジニアhirayama氏が、WebMCPを実際に試した感想をZennに投稿しています。WebMCPは、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供する仕組みで、従来のMCP(AIとツールをつなぐ標準プロトコル)と異なりフロントエンドにツールを登録するため、ブラウザのログイン状態を…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="WebMCPはフロントエンド必須技術になるか、試した感想 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="chot株式会社のエンジニアhirayama氏が、WebMCPを実際に試した感想をZennに投稿しています。WebMCPは、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供する仕組みで、従来のMCP(AIとツールをつなぐ標準プロトコル)と異なりフロントエンドにツールを登録するため、ブラウザのログイン状態を…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/85a2287666a82e32/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/85a2287666a82e32/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "WebMCPはフロントエンド必須技術になるか、試した感想", "datePublished": "2026-09-18", "description": "chot株式会社のエンジニアhirayama氏が、WebMCPを実際に試した感想をZennに投稿しています。WebMCPは、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供する仕組みで、従来のMCP(AIとツールをつなぐ標準プロトコル)と異なりフロントエンドにツールを登録するため、ブラウザのログイン状態を活かせ、未保存データもJavaScrip…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/85a2287666a82e32/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/chot/articles/268804cd6694ab", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-18/">2026.09.18 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>WebMCPはフロントエンド必須技術になるか、試した感想</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</header>
+<div class="article-body">
+<p>chot株式会社のエンジニアhirayama氏が、WebMCPを実際に試した感想をZennに投稿しています。<strong>WebMCP</strong>は、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供する仕組みで、従来のMCP(AIとツールをつなぐ標準プロトコル)と異なりフロントエンドにツールを登録するため、ブラウザのログイン状態を活かせ、未保存データもJavaScript経由で操作できる点が特徴です。</p>
+<p>著者はデザインエディターのページで、AIに同じデザインを再現させる検証をWebMCPなし・ありで比較しました。なしの場合はAIが人間用のGUIを自力で操作し完了まで5分52秒。ありの場合はlist_blocksやget_block_catalogなどのツールを経由して直接状態変更を行い、3分9秒で完了しました。著者は「複雑なUI操作が発生する画面においては強力な効果を発揮」と評価し、「フロントエンドの実装として必須になりそうな予感」と結んでいます。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>WebMCPは、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供するための仕組みである。</li><li>従来のMCPと異なり、WebMCPはフロントエンドにツールを登録する方式である。</li><li>WebMCPを使うとブラウザのログイン状態をそのまま活用できる。</li><li>WebMCPを使うと未保存データもJavaScript経由で操作できる。</li><li>著者は参考ページの設計を確認し、デザインエディターで同じデザインのページを再現するテストを実施した。</li><li>WebMCPなしの検証では、AIが人間用のGUIを自力で操作し、完了時間は5分52秒だった。</li><li>WebMCPなしの検証では、AIがドロワーメニューを開き各ブロック設定を確認してから編集画面で操作した。</li><li>WebMCPありの検証では、完了時間は3分9秒だった。</li><li>WebMCPありの検証では、AIはlist_blocksやget_block_catalogなどのツールを経由して操作し、GUIを動かさず直接状態変更を行った。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>複雑なUI操作が発生する画面においては強力な効果を発揮</blockquote><blockquote>フロントエンドの実装として必須になりそうな予感</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/chot/articles/268804cd6694ab" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/chot/articles/268804cd6694ab" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=WebMCP%E3%81%AF%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89%E5%BF%85%E9%A0%88%E6%8A%80%E8%A1%93%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%8B%E3%80%81%E8%A9%A6%E3%81%97%E3%81%9F%E6%84%9F%E6%83%B3%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-18%2F85a2287666a82e32%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=WebMCP%E3%81%AF%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89%E5%BF%85%E9%A0%88%E6%8A%80%E8%A1%93%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%8B%E3%80%81%E8%A9%A6%E3%81%97%E3%81%9F%E6%84%9F%E6%83%B3%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-18/85a2287666a82e32/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-18%2F85a2287666a82e32%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../8fd117ad3c911371/"><span>前の記事</span>SKILL.md一枚で卒業する「毎回同じ指示コピペ」</a><a class="next" href="../aac74e6ba9a918d4/"><span>次の記事</span>&#x27;use client&#x27;は葉だけに、Next.js App Router設計術</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-18/">← 2026.09.18 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../552613029e67eb46/">Go言語で書く、外部依存ゼロのP2Pマルチノードサービス</a></h3>
+<p class="excerpt">著者Giuliano氏が、Go言語でLAN内のP2Pマルチノードサービスを実装した自作コードをZennで紹介しています。単一ファイル・外部依存なしという構成で、ノードの自動発見にUDPマルチキャスト、ノード間の実データ転送にTCPを組み…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../8fd117ad3c911371/">SKILL.md一枚で卒業する「毎回同じ指示コピペ」</a></h3>
+<p class="excerpt">Claude Codeの新機能「スキル(Agent Skills)」の入門記事です。毎回同じ指示を貼り付ける手間を、SKILL.mdという1ファイルにまとめることで解消できる仕組みを、公式ドキュメントと実機検証をもとに解説しています。</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../aac74e6ba9a918d4/">&#x27;use client&#x27;は葉だけに、Next.js App Router設計術</a></h3>
+<p class="excerpt">Next.js App RouterにおけるServer Components/Client Componentsの設計術を解説する記事です。App RouterのコンポーネントはデフォルトではServer Componentとして扱わ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

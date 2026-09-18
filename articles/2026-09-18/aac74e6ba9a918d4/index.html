@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>&#x27;use client&#x27;は葉だけに、Next.js App Router設計術 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Next.js App RouterにおけるServer Components/Client Componentsの設計術を解説する記事です。App RouterのコンポーネントはデフォルトではServer Componentとして扱われる仕組みを踏まえ、&#x27;use client&#x27;は必要最小限、つまりインタラクティブ性が…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="&#x27;use client&#x27;は葉だけに、Next.js App Router設計術 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Next.js App RouterにおけるServer Components/Client Componentsの設計術を解説する記事です。App RouterのコンポーネントはデフォルトではServer Componentとして扱われる仕組みを踏まえ、&#x27;use client&#x27;は必要最小限、つまりインタラクティブ性が…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/aac74e6ba9a918d4/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/aac74e6ba9a918d4/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "'use client'は葉だけに、Next.js App Router設計術", "datePublished": "2026-09-18", "description": "Next.js App RouterにおけるServer Components/Client Componentsの設計術を解説する記事です。App RouterのコンポーネントはデフォルトではServer Componentとして扱われる仕組みを踏まえ、'use client'は必要最小限、つまりインタラクティブ性が必要な「葉(リーフ)」の部分だけに留める…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-18/aac74e6ba9a918d4/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/fd_ai_teacher/articles/tech-20260916150306-1", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-18/">2026.09.18 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>&#x27;use client&#x27;は葉だけに、Next.js App Router設計術</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</header>
+<div class="article-body">
+<p>Next.js App RouterにおけるServer Components/Client Componentsの設計術を解説する記事です。App Routerのコンポーネントはデフォルトでは<strong>Server Component</strong>として扱われる仕組みを踏まえ、&#x27;use client&#x27;は必要最小限、つまりインタラクティブ性が必要な「葉(リーフ)」の部分だけに留めるべきだと主張しています。</p>
+<p>最上位のコンポーネントで&#x27;use client&#x27;を記述すると、配下のすべてのコンポーネントがクライアントバンドルに含まれてしまい、バンドルサイズが膨らむ問題が指摘されています。対策として、可能な限りServer Components側でデータフェッチを行うこと、フォーム処理には<strong>Server Actions</strong>を活用してAPI Routesの作成を減らすことが推奨されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Next.js App Routerのコンポーネントはデフォルトでは Server Component として扱われる</li><li>&#x27;use client&#x27; は必要最小限にとどめ、インタラクティブ性が必要な「葉（リーフ）」の部分だけを Client Component 化すべきとされている</li><li>最上位のコンポーネントで &#x27;use client&#x27; を記述すると、配下のすべてのコンポーネントがクライアントバンドルに含まれる</li><li>上記の結果としてバンドルサイズが膨らむと述べられている</li><li>可能な限り Server Components 側でデータフェッチを行うことが推奨されている</li><li>フォーム処理に Server Actions を活用することで API Routes の作成を減らせるとされている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>デフォルトはServer Component、インタラクティブ性が必要な部分だけをClient Componentにする</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/fd_ai_teacher/articles/tech-20260916150306-1" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/fd_ai_teacher/articles/tech-20260916150306-1" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%27use%20client%27%E3%81%AF%E8%91%89%E3%81%A0%E3%81%91%E3%81%AB%E3%80%81Next.js%20App%20Router%E8%A8%AD%E8%A8%88%E8%A1%93%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-18%2Faac74e6ba9a918d4%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%27use%20client%27%E3%81%AF%E8%91%89%E3%81%A0%E3%81%91%E3%81%AB%E3%80%81Next.js%20App%20Router%E8%A8%AD%E8%A8%88%E8%A1%93%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-18/aac74e6ba9a918d4/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-18%2Faac74e6ba9a918d4%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../85a2287666a82e32/"><span>前の記事</span>WebMCPはフロントエンド必須技術になるか、試した感想</a><a class="next" href="../b781dc820ce89d3d/"><span>次の記事</span>パスキーは無傷なのに突破される、デバイスコードフロー攻撃</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-18/">← 2026.09.18 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../552613029e67eb46/">Go言語で書く、外部依存ゼロのP2Pマルチノードサービス</a></h3>
+<p class="excerpt">著者Giuliano氏が、Go言語でLAN内のP2Pマルチノードサービスを実装した自作コードをZennで紹介しています。単一ファイル・外部依存なしという構成で、ノードの自動発見にUDPマルチキャスト、ノード間の実データ転送にTCPを組み…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../8fd117ad3c911371/">SKILL.md一枚で卒業する「毎回同じ指示コピペ」</a></h3>
+<p class="excerpt">Claude Codeの新機能「スキル(Agent Skills)」の入門記事です。毎回同じ指示を貼り付ける手間を、SKILL.mdという1ファイルにまとめることで解消できる仕組みを、公式ドキュメントと実機検証をもとに解説しています。</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../85a2287666a82e32/">WebMCPはフロントエンド必須技術になるか、試した感想</a></h3>
+<p class="excerpt">chot株式会社のエンジニアhirayama氏が、WebMCPを実際に試した感想をZennに投稿しています。WebMCPは、Webページ側がAI向けの操作(ツール)を直接ブラウザ上に提供する仕組みで、従来のMCP(AIとツールをつなぐ標…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
