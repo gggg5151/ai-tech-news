@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>junegunn/fzf の src/cache.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="fzfはコマンドラインのあいまい検索ツールで、大量の候補行から高速に絞り込む必要があります。同じ検索クエリを何度も打つと同じ計算を繰り返すのは無駄なので、このファイルでは「どのChunk（データの塊）に対してどのクエリ文字列を検索したか」をキャッシュしておく仕組みを作っています。複数のゴルーチン（Go言語の軽量スレッド…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="junegunn/fzf の src/cache.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="fzfはコマンドラインのあいまい検索ツールで、大量の候補行から高速に絞り込む必要があります。同じ検索クエリを何度も打つと同じ計算を繰り返すのは無駄なので、このファイルでは「どのChunk（データの塊）に対してどのクエリ文字列を検索したか」をキャッシュしておく仕組みを作っています。複数のゴルーチン（Go言語の軽量スレッド…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-19/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-19/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.19</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>junegunn/fzf の <code>src/cache.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/junegunn/fzf/blob/HEAD/src/cache.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-19">2026.09.19</time></div>
+</header>
+<div class="article-body">
+<p>fzfはコマンドラインのあいまい検索ツールで、大量の候補行から高速に絞り込む必要があります。同じ検索クエリを何度も打つと同じ計算を繰り返すのは無駄なので、このファイルでは「どのChunk（データの塊）に対してどのクエリ文字列を検索したか」をキャッシュしておく仕組みを作っています。複数のゴルーチン（Go言語の軽量スレッド）から同時に読み書きされるため、排他制御（ミューテックス）の使い方を学ぶ好例です。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// ChunkBitmap is a bitmap with one bit per item in a chunk.
+type ChunkBitmap [chunkBitWords]uint64
+
+// queryCache associates query strings to bitmaps of matching items
+type queryCache map[string]ChunkBitmap
+
+// ChunkCache associates Chunk and query string to bitmaps
+type ChunkCache struct {
+	mutex sync.Mutex
+	cache map[*Chunk]*queryCache
+}
+
+// NewChunkCache returns a new ChunkCache
+func NewChunkCache() *ChunkCache {
+	return &amp;ChunkCache{sync.Mutex{}, make(map[*Chunk]*queryCache)}
+}
+
+// …略…
+
+// Add stores the bitmap for the given chunk and key
+func (cc *ChunkCache) Add(chunk *Chunk, key string, bitmap ChunkBitmap, matchCount int) {
+	if len(key) == 0 || !chunk.IsFull() || matchCount &gt; queryCacheMax {
+		return
+	}
+
+	cc.mutex.Lock()
+	defer cc.mutex.Unlock()
+
+	qc, ok := cc.cache[chunk]
+	if !ok {
+		cc.cache[chunk] = &amp;queryCache{}
+		qc = cc.cache[chunk]
+	}
+	(*qc)[key] = bitmap
+}
+
+// Lookup returns the bitmap for the exact key
+func (cc *ChunkCache) Lookup(chunk *Chunk, key string) *ChunkBitmap {
+	if len(key) == 0 || !chunk.IsFull() {
+		return nil
+	}
+
+	cc.mutex.Lock()
+	defer cc.mutex.Unlock()
+
+	qc, ok := cc.cache[chunk]
+	if ok {
+		if bm, ok := (*qc)[key]; ok {
+			return &amp;bm
+		}
+	}
+	return nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>type ChunkBitmap [chunkBitWords]uint64</code></pre><p>`type 名前 元の型` は「新しい型を定義する」構文です。ここでは `[chunkBitWords]uint64` という「要素数chunkBitWords個のuint64配列」に `ChunkBitmap` という名前を付けています。`[N]T` はGoの固定長配列で、Nは配列の長さ、Tは要素の型です（スライス`[]T`とは違い、長さが型の一部として固定されます）。uint64は64ビットの符号なし整数で、ここでは1つのuint64の各ビットを「候補行がマッチしたか」のフラグとして使うビットマップになっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>type queryCache map[string]ChunkBitmap</code></pre><p>`map[K]V` はキーの型がK、値の型がVの辞書（連想配列）です。ここではキーが検索クエリ文字列（string）、値が先ほど定義したChunkBitmapで、「このクエリで検索したらこのビットマップになった」という対応を保存する型に`queryCache`という名前を付けています。</p></div><div class="walk-step"><pre class="walk-quote"><code>type ChunkCache struct {
+	mutex sync.Mutex
+	cache map[*Chunk]*queryCache
+}</code></pre><p>`struct { ... }` は複数のフィールドをまとめた構造体です。1つ目のフィールド`mutex`は`sync.Mutex`という型で、複数のゴルーチン（Goの軽量スレッド）が同時にデータを触らないようにロックをかけるための道具です。2つ目の`cache`は`map[*Chunk]*queryCache`、つまりキーが`*Chunk`（Chunk構造体へのポインタ）、値が`*queryCache`（queryCacheマップへのポインタ）の辞書です。`*`が型名の前につくと「その型の値が格納されているメモリ上の場所を指すポインタ」を意味します。Chunk自体をキーではなく「Chunkへのポインタ」をキーにすることで、同じ内容でも別のChunkインスタンスは別物として区別できます。</p></div><div class="walk-step"><pre class="walk-quote"><code>func NewChunkCache() *ChunkCache {
+	return &amp;ChunkCache{sync.Mutex{}, make(map[*Chunk]*queryCache)}
+}</code></pre><p>これは`ChunkCache`を新しく作るためのコンストラクタ関数です。`&amp;ChunkCache{...}`の`&amp;`は「この構造体の値を作ってそのアドレス（ポインタ）を返す」という意味で、`{sync.Mutex{}, make(...)}`は構造体の各フィールドをフィールド定義の順番通りに初期化する書き方（複合リテラル）です。`sync.Mutex{}`はロック済みでない初期状態のミューテックス、`make(map[*Chunk]*queryCache)`は空のmapを作る組み込み関数`make`の呼び出しです。mapはnilのままだと書き込めないので、`make`で必ず初期化してから使います。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (cc *ChunkCache) Add(chunk *Chunk, key string, bitmap ChunkBitmap, matchCount int) {</code></pre><p>`func (cc *ChunkCache) Add(...)`の`(cc *ChunkCache)`部分は「レシーバ」と呼ばれ、この関数が`ChunkCache`型のメソッドであることを示します。`cc`はこのメソッドの中で使う「自分自身」を指す変数名（他言語のthis/selfに相当）です。ポインタ型`*ChunkCache`をレシーバにしているのは、メソッドの中でccのフィールド（mutexやcache）を実際に書き換えたいからです。値型（`ChunkCache`）をレシーバにすると呼び出し時にコピーが作られてしまい、元の構造体は変更されません。</p></div><div class="walk-step"><pre class="walk-quote"><code>if len(key) == 0 || !chunk.IsFull() || matchCount &gt; queryCacheMax {
+		return
+	}</code></pre><p>`||`は論理OR演算子で、「いずれか1つでも真ならこのif全体が真になる」という意味です。`len(key) == 0`はキー文字列が空かどうか、`!chunk.IsFull()`の`!`は否定演算子で「chunk.IsFull()の結果を反転させる」ので「chunkがまだ満杯になっていない」という条件です。3つのどれかに当てはまったら、キャッシュする価値がない（クエリが空、Chunkが未完成、マッチ数が多すぎる）と判断して`return`で関数を早期終了します。こうして本処理の前に無効なケースを弾く書き方は「ガード節」と呼ばれ、Goでは頻出のイディオムです。</p></div><div class="walk-step"><pre class="walk-quote"><code>cc.mutex.Lock()
+	defer cc.mutex.Unlock()</code></pre><p>`Lock()`はミューテックスに鍵をかけ、他のゴルーチンが同時にこの後の処理へ入れないようにします。`defer`は「この関数がreturnする直前（正常終了でもpanicでも）に、指定した処理を実行する」という予約です。ここでは`Lock()`した直後に`defer cc.mutex.Unlock()`と書くことで、「関数のどこでreturnしても必ず鍵を開け忘れない」ことを保証しています。ロックしたら次の行に必ずdeferでUnlockを書く、というのはGoでミューテックスを使うときの定番パターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>qc, ok := cc.cache[chunk]
+	if !ok {
+		cc.cache[chunk] = &amp;queryCache{}
+		qc = cc.cache[chunk]
+	}</code></pre><p>Goのmapから値を取り出すとき`v, ok := m[key]`のように2つの値を受け取れます。1つ目`v`（ここでは`qc`）はその値（キーが無い場合は型のゼロ値）、2つ目`ok`は「そのキーが実際にmapに存在したか」を示す真偽値です。`if !ok`は「そのchunk用のqueryCacheがまだ存在しなかったら」という意味で、その場合は`&amp;queryCache{}`で空のqueryCacheを作ってそのポインタをmapに登録し、`qc`をその新しいポインタで更新しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>(*qc)[key] = bitmap</code></pre><p>`qc`は`*queryCache`型、つまりqueryCache（mapの一種）へのポインタです。ポインタが指す先の値そのものを扱いたいときは`*qc`のように`*`を前置してデリファレンス（参照先の取り出し）します。`(*qc)[key] = bitmap`は「qcが指しているqueryCacheマップに対して、keyというキーでbitmapを保存する」という代入文です。丸括弧`()`で囲っているのは、`*`と`[key]`の優先順位を明示して「まずデリファレンスしてから添字アクセスする」ことを示すためです。</p></div><div class="walk-step"><pre class="walk-quote"><code>if bm, ok := (*qc)[key]; ok {
+			return &amp;bm
+		}</code></pre><p>`if 初期化文; 条件 { ... }`はGoのif文の特殊な形で、セミコロン`;`の前に変数を宣言してから、その変数を使った条件判定ができます。ここでは`(*qc)[key]`でmapから値を取り出しつつ`ok`（存在したかどうか）も受け取り、そのokが真のときだけ`return &amp;bm`しています。`bm`はこのif文のスコープ内だけで有効なローカル変数ですが、`&amp;bm`でそのアドレスを返しても問題ありません。Goのコンパイラは「関数を抜けた後も使われる変数」を自動的にヒープに確保してくれる（エスケープ解析）ため、C言語のように「ローカル変数のアドレスを返すと危険」という心配は不要です。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>sync.Mutexで複数のゴルーチンから共有データを守るときは、Lock()を呼んだ直後の行に必ずdefer Unlock()を書く。これで関数のどの経路でreturnしても鍵を開け忘れない、というGoの鉄則パターンを覚えて帰ってください。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-17/"><span>前の日</span>cline/cline</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-19/">← 2026.09.19 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

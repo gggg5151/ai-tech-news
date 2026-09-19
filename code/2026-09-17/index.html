@@ -106,7 +106,7 @@ const PREVIEW_MAX_CHARS = 48;</code></pre><p>ファイルの先頭でマジッ�
 	}
 }</code></pre><p>forループの構文は`for (初期化; 継続条件; 更新)`の3つですが、真ん中の継続条件が空になっています。これは「条件を書かない＝ずっとtrue＝無限ループ」という意味で、代わりにループの内側にある`if (...) return candidate;`が抜け出す唯一の出口になっています。中身では`base.replace(/\]$/, ...)`で、文字列末尾の`]`（`\]$`の`$`は「文字列の末尾」を表すアンカー）を` #2]`のような文字列に置き換えて、`[... #2]`のような別名の候補を作り、既存になければそれを返します。見つからない限り`suffix`を3, 4, 5...と増やし続けるので、必ずどこかで未使用の名前が見つかります。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「同じ表示名が既にあるかもしれない」問題は、Setで既存集合を作って`.has()`で確認し、衝突したら連番サフィックスを付けて再チェックするループで解決できる——これは今日から自分のコードでも使えるパターンです。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-16/"><span>前の日</span>danny-avila/LibreChat</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-16/"><span>前の日</span>danny-avila/LibreChat</a><a class="next" href="../2026-09-19/"><span>次の日</span>junegunn/fzf</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-17/">← 2026.09.17 の号を読む</a>
 </div>
 </article>

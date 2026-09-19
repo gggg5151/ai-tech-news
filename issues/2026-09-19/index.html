@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026.09.19 の号 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026.09.19の号: Claude Code v2.1.277公開。AGENTS.md対応やVSCode拡張の強化など日常使いに直結する更新 / GLM系コーディングエージェント「ZCode」がGit履歴を無断でクラウドに送信していたと判明 / AIエージェント同士が反復作業のなかで独自の圧縮言語を編み出して会話する現象を観測 / Supabaseのservice role、実測したら読み書…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="2026.09.19 の号 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026.09.19の号: Claude Code v2.1.277公開。AGENTS.md対応やVSCode拡張の強化など日常使いに直結する更新 / GLM系コーディングエージェント「ZCode」がGit履歴を無断でクラウドに送信していたと判明 / AIエージェント同士が反復作業のなかで独自の圧縮言語を編み出して会話する現象を観測 / Supabaseのservice role、実測したら読み書…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-09-19/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-09-19/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="active" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-19">2026年9月19日（土）</time><span class="edition-count">13記事・読了まで約12分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Claude Code v2.1.277公開。AGENTS.md対応やVSCode拡張の強化など日常使いに直結する更新</li><li>GLM系コーディングエージェント「ZCode」がGit履歴を無断でクラウドに送信していたと判明</li><li>AIエージェント同士が反復作業のなかで独自の圧縮言語を編み出して会話する現象を観測</li><li>Supabaseのservice role、実測したら読み書きの権限が1つも配られていなかった体験談</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-0c00a065938dd1c0">Claude Code v2.1.277、AGENTS.md対応とVSCode拡張を強化</a></li><li><a href="#a-129791447c09aad4">音声・動画をエージェントの中核メディアに据えるQwen3.8-Omni-Flash</a></li><li><a href="#a-af8318299c7c09e7">GLMコーディングエージェント「ZCode」、Git履歴を無断アップロード</a></li><li><a href="#a-e4a698c595aa9ff0">AIエージェント同士が独自の圧縮言語で会話を始める現象</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-8363e32a2306fd89">Valibotは文字列の長さをどう数えているのか</a></li><li><a href="#a-40eaf3503665ae04">Supabaseのservice role、RLSは通すがGRANTは通さない落とし穴</a></li><li><a href="#a-0db43aab736d5309">Codex CLIを会社用・私用で完全分離する方法</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-acc2b9bd47a74029">fzf ── 曖昧検索ツールの定番、83kスター</a></li><li><a href="#a-53a7c894837471d0">supermemory ── AIエージェント向けメモリ・コンテキストエンジン</a></li><li><a href="#a-4f0cce672bf8db58">coder/coder ── Goで実装されたセルフホスト型開発環境基盤</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-9bf95054715b5d40">検索インデックス自体を自己進化させるSELF-INDEX</a></li><li><a href="#a-bbba9d9ef8195167">生成候補の「並べ方」がLLMの電力消費を左右する</a></li><li><a href="#a-4b95cf12d7e3f748">数週間動き続けるエージェントに必要な3つの仕組み</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-0c00a065938dd1c0">
+<h3><a href="../../articles/2026-09-19/0c00a065938dd1c0/">Claude Code v2.1.277、AGENTS.md対応とVSCode拡張を強化</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>Anthropic公式から、Claude Codeの<strong>v2.1.277</strong>がリリースされました。目玉はAGENTS.mdの読み込みサポートです。CLAUDE.mdが存在しないプロジェクトでも自動的に読み込まれるようになりますが、Bedrock・Vertex・Foundry経由の利用では未対応とのことです。プロキシ関連でも、環境変数CLAUDE_GATEWAY_PROXY_IS_EGRESS_BOUNDARY=1が追加されフォワードプロキシ背後でのホスト名解決に対応したほか、Claude apps gateway upstreamsにheaders:マップが加わり、プロキシへ静的ヘッダーを送信できるようになりました。</p>
+<p>VSCode拡張機能では、サインアウト用の/logoutコマンド、バックグラウンドシェルや実行中タスクのエージェントマップ表示、レスポンスのコピーボタンと/copyコマンド、セッションごとのコスト・トークン使用量表示、非アクティブセッションの自動アーカイブ通知が追加されています。</p>
+<p>バグ修正も多く、claude -pやAgent SDKセッションが内部エラー後にハングする問題（エラー報告と終了コード1を返すよう修正）、~/.claude.jsonの不正なtheme値によるクラッシュ、--resume後にコスト・使用量が0になる問題（headlessモード対応）などが解消されました。Writeツールでターゲットパスが既存ディレクトリの場合のエラー報告や、Editツールのエスケープされたバックスラッシュの誤認識も改善されています。</p>
+<p>また、これまでの<strong>TaskOutputツール</strong>は廃止され、Readツールに置き換えられました。あわせてtaskOutputMaxChars設定とTASK_MAX_OUTPUT_LENGTH環境変数も無効化されています。</p></div>
+<p class="paper-source"><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.277" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/0c00a065938dd1c0/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-129791447c09aad4">
+<h3><a href="../../articles/2026-09-19/129791447c09aad4/">音声・動画をエージェントの中核メディアに据えるQwen3.8-Omni-Flash</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qwen.ai</span></div>
+<div class="paper-body"><p>Qwenチームの公式発表によると、音声・動画・画像・テキストの4モダリティに対応するマルチモーダルモデル<strong>「Qwen3.8-Omni-Flash」</strong>が公開されました。単にコンテンツを理解するだけでなく、タスク計画やツール呼び出し、創作作業の完了までこなす方向にシフトしているとしています。音声・動画は、エージェントが環境を理解し推論して行動する上での中核的なメディアへと位置づけられているとしています。</p>
+<p>同チームによると、29項目の評価で平均25%以上の性能改善を実現したとしており、音声入力のAPI価格は98%以上、音声・動画入力は93%以上削減したとしています。音声と映像にまたがって話者を統合的に認識でき、最大1時間の音声・動画入力をネイティブにサポートするとしています。</p>
+<p>動画編集、音楽ビデオ制作、映画解説、音声・動画要約、リアルタイム会話といった実務的なワークフローへの応用を想定しているとしています。</p></div>
+<p class="paper-source"><a href="https://qwen.ai/blog?id=qwen3.8-omni-flash" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/129791447c09aad4/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-af8318299c7c09e7">
+<h3><a href="../../articles/2026-09-19/af8318299c7c09e7/">GLMコーディングエージェント「ZCode」、Git履歴を無断アップロード</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>tokenstead.ai</span></div>
+<div class="paper-body"><p>香港証券取引所に2026年1月に上場したZ.aiが開発するAIコーディングアプリ<strong>「ZCode」</strong>（2026年7月立ち上げ）について、開発者ferstarが2026年9月18日に報告したリバースエンジニアリング調査により、ユーザーの許可なくGitリポジトリの履歴全体をクラウドにひそかにアップロードしていることが判明したと、Tokensteadが報じています。アップロードされたペイロードは42,411ファイル・約345MBに及び、.gitディレクトリ（全体の86.6%）やGit LFSアセット、リフログ、グローバルアプリ設定まで含まれていたとのことです。</p>
+<p>データはAES-256-CTR（対称鍵暗号方式）で暗号化され、その鍵はRSA-OAEP（公開鍵暗号方式）でラップされてAlibaba CloudのAliyun OSS（クラウドのオブジェクトストレージサービス）に送られますが、<strong>復号鍵はサーバー側のみが保持</strong>しており、ユーザー自身は自分のデータを復号化できない設計になっています。調査では564回のアップロード試行の失敗が記録されており、記事はデータ削除後も送信を試み続ける挙動だったと指摘しています。</p>
+<p>記事は、この設計を単なる実装ミス（過去のGrok Buildのような不注意によるもの）ではなく意図的な設計だと論じています。「サーバーだけが使える鍵には、サーバーがいつでもコードを読めるようにするという目的しかない」とも指摘しています。</p></div>
+<p class="paper-source"><a href="https://tokenstead.ai/guides/zcode-silent-git-history-upload" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/af8318299c7c09e7/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e4a698c595aa9ff0">
+<h3><a href="../../articles/2026-09-19/e4a698c595aa9ff0/">AIエージェント同士が独自の圧縮言語で会話を始める現象</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
+<div class="paper-body"><p>Schmidt Sciencesの研究チームが、複数のAIエージェントに反復的な共同作業をさせる実験を行ったところ、当初は英語でやり取りしていたAIエージェントが、作業を繰り返すうちに人間には読みにくい独自の符号体系へと変化していく現象を観測したと、Gigazineが報じています。</p>
+<p>実験の一つ「間違い探しタスク」では2つのエージェントが図の違いを情報交換で特定し、もう一つの「治療タスク」では架空の生命体を治療する作業を行わせました。初期段階では『小さな赤い円』『大きな青い四角』のような英語表現でしたが、治療タスクでは当初151文字だった指示が最終的に「@D8fB」というわずか5文字の符号にまで短縮されたといいます。</p>
+<p>研究チームはこれを共同作業の効率化の結果と見ていますが、真に新しい言語なのか、単に英語を圧縮・符号化した通信方式なのかは、さらなる分析が必要だとしています。また、AIエージェント間の通信が人間に不透明になることで、<strong>監視・検証が難しくなる</strong>懸念も指摘されています。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20260918-ai-agent-evolve-language/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/e4a698c595aa9ff0/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-8363e32a2306fd89">
+<h3><a href="../../articles/2026-09-19/8363e32a2306fd89/">Valibotは文字列の長さをどう数えているのか</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>blog.inorinrinrin.com</span></div>
+<div class="paper-body"><p>Valibotのメンテナーである筆者が、JavaScriptで文字列の長さを数える難しさと、Valibotが提供する3種類の文字数カウント方法を解説しています。JavaScriptの<strong>String.length</strong>はUTF-16コード単位（文字をエンコードする際の16ビット単位。基本的な文字は1単位で表されるが、絵文字などの一部の文字は2単位のペア＝サロゲートペアで表される）の数を返すため、&#x27;😀&#x27;.lengthは2になるなど、直感とずれることがあります。</p>
+<p>maxLengthはdataset.value.lengthを直接使いUTF-16コード単位を数え、maxCodePointsはサロゲートペアを見つけるたびに1個ずつ引いていく独自関数でコードポイント数を数えます。一方、maxGraphemesはIntl.Segmenter（Web標準の文字分割API）を使い、👨‍👩‍👧‍👦のような合成絵文字も1文字として数えられます。</p>
+<p>著者は「自己紹介を160文字で」のような文字数制限を設けたい場合はmaxGraphemesを使うべきだと述べています。三者ともWeb標準APIに則った実装とのことです。</p></div>
+<p class="paper-source"><a href="https://blog.inorinrinrin.com/entry/8e2abf66-324e-4bab-092e-f1fe29f99f96" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/8363e32a2306fd89/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-40eaf3503665ae04">
+<h3><a href="../../articles/2026-09-19/40eaf3503665ae04/">Supabaseのservice role、RLSは通すがGRANTは通さない落とし穴</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>ポートフォリオ「Hubpin」を開発中の著者が、Supabaseの<strong>service role</strong>（RLS＝行レベルセキュリティをバイパスできる特権ロール）の権限について、誤解と訂正を重ねた実体験を記しています。当初は「service roleはGRANTもRLSも通らない」と考えていましたが、次に「RLSはバイパスするがGRANTは効く。ただしSupabaseの既定で権限が配られている」と修正しました。</p>
+<p>しかし実際にPostgreSQLのpg_classテーブルのrelaclカラムを確認したところ、service_roleに付与されていたのはD（TRUNCATE）・x（REFERENCES）・t（TRIGGER）・m（MAINTAIN）のみで、<strong>a（INSERT）・r（SELECT）・w（UPDATE）・d（DELETE）はすべて欠落</strong>していたことが判明しました。問題は本番環境でCronジョブが初めて走った際に発覚し、開発環境ではanonロールとauthenticatedロールしか使っていなかったため気づけなかったといいます。</p>
+<p>著者は「RLSのバイパスはロール属性、GRANTは権限。別の関門でした」と結論づけ、grant select, insert, delete on public.feed_entries to service_role; というSQLで権限を付与したと述べています。また、proaclがNULLの場合はデフォルトのままであることを意味し権限なしではない点や、PUBLIC権限からrevokeするとservice roleも巻き込まれる点にも注意を促しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/matsutake_prgrm/articles/service-role-bypasses-rls-not-grant" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/40eaf3503665ae04/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-0db43aab736d5309">
+<h3><a href="../../articles/2026-09-19/0db43aab736d5309/">Codex CLIを会社用・私用で完全分離する方法</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>会社用と個人開発の両方でCodex CLIを使う著者が、設定ファイルやMCPサーバー設定、セッション履歴が混在してしまう課題を、<strong>CODEX_HOME環境変数</strong>で解決する方法を紹介しています。デフォルトの~/.codexではなく、~/.codex-workと~/.codex-privateという別ディレクトリに分離する仕組みです。</p>
+<p>PowerShellの$PROFILEにcodex-workという関数を追加し、実行時だけCODEX_HOMEを一時的に切り替える実装例が示されています。これによりconfig.toml、AGENTS.md、auth.json、セッション履歴が用途別に分離されますが、認証情報を完全に分けるには各環境で個別のログインが必要とのことです。</p>
+<p>著者は、同一環境内での設定切り替えには--profileオプション、環境そのものを分けたい場合はCODEX_HOME分離、という使い分けを提案しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/da39nbv3/articles/d34bc24b279f53" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/0db43aab736d5309/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-acc2b9bd47a74029">
+<h3><a href="../../articles/2026-09-19/acc2b9bd47a74029/">fzf ── 曖昧検索ツールの定番、83kスター</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>junegunn氏が開発する<strong>fzf</strong>は、汎用の曖昧検索（fuzzy finder）およびインタラクティブなターミナルツールキットです。ファイル選択やコマンド履歴の参照、データプレビューなど、複雑なデータセットを数百万件でも数ミリ秒で曖昧マッチングしながらナビゲートできます。</p>
+<p>単一バイナリで配布されポータブルなうえ、Bash・Zsh・Fish・Nushell・Vim・Neovimなど各種シェル・エディタに統合可能です。Homebrew、Mise、各種Linuxパッケージマネージャ、Windows向け（Chocolateyなど）、gitクローンやバイナリの直接ダウンロードなど複数の方法でインストールできます。MITライセンスで公開され、GitHub上で83.1kスター、フォーク数3.1k、コミット数3,746件に達しています。</p></div>
+<p class="paper-source"><a href="https://github.com/junegunn/fzf" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/acc2b9bd47a74029/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-53a7c894837471d0">
+<h3><a href="../../articles/2026-09-19/53a7c894837471d0/">supermemory ── AIエージェント向けメモリ・コンテキストエンジン</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p><strong>Supermemory</strong>は、AIアシスタントが会話間で情報を保持できるようにする「メモリ・コンテキストエンジン」のOSSです。会話からの事実自動抽出、時間的変化や矛盾の処理、静的事実と動的コンテキストを両方保持するユーザープロフィール（約50ミリ秒で1回の呼び出しで取得可能）を備えています。</p>
+<p>RAG（知識ベース検索）とメモリ検索を統合したハイブリッド検索のほか、Google Drive・Gmail・Notion・OneDrive・GitHubとのリアルタイム同期コネクタ、PDF・画像（OCR）・動画（文字起こし）・コード（AST対応チャンキング）のマルチモーダル処理にも対応します。技術スタックはTypeScript/JavaScript、Python、Cloudflare Workers/Pages、PostgreSQL（Drizzle ORM）、Remix、Vite、TailwindCSSなどで構成されています。</p>
+<p>LongMemEval、LoCoMo、ConvoMemという主要ベンチマーク3種で1位を主張しており、「95%の想起率を達成しながら99.4%のコンテキスト削減」を実現するとしています。クラウド版のほか、オフライン対応のローカル実行版も提供され、Claude Desktop・Cursor・Windsurf・VS Code・Claude Codeなど複数クライアントに対応しています。</p></div>
+<p class="paper-source"><a href="https://github.com/supermemoryai/supermemory" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/53a7c894837471d0/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4f0cce672bf8db58">
+<h3><a href="../../articles/2026-09-19/4f0cce672bf8db58/">coder/coder ── Goで実装されたセルフホスト型開発環境基盤</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p><strong>Coder</strong>は、セルフホスト型のクラウド開発環境およびAIコーディングエージェント向けプラットフォームです。開発環境はTerraformで定義でき、EC2・Kubernetes・Dockerなどに対応、アイドル時の自動シャットダウンやWireguardによる安全なトンネル接続を提供します。</p>
+<p>自社インフラの制御プレーン内でネイティブに動作するAIコーディングエージェントを備え、Anthropic・OpenAI・Google・Bedrockや自前ホストなど複数のLLMプロバイダに対応、ユーザーIDの追跡と監査ログによる一元的なガバナンスを実現します。ワークスペースにAPIクレデンシャルを保存しない設計です。</p>
+<p>Go言語で構築されVS CodeやJetBrainsなど複数IDEをサポート、Terraformプロバイダによる宣言的な設定管理も可能です。GitHub上でスター数15.3k、Issueは740件、Pull Requestは308件にのぼり、ライセンスはAGPL-3.0です。</p></div>
+<p class="paper-source"><a href="https://github.com/coder/coder" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/4f0cce672bf8db58/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-9bf95054715b5d40">
+<h3><a href="../../articles/2026-09-19/9bf95054715b5d40/">検索インデックス自体を自己進化させるSELF-INDEX</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>arXivに掲載された論文「Self-Evolving Search Index」（Sangam Lee氏ら8名）は、LLMエージェントの情報検索を改善するため、これまで人間主導だった検索インデックスの最適化を自動化するフレームワーク<strong>「SELF-INDEX」</strong>を提案しています。</p>
+<p>オプティマイザーが検索の不足を自動診断し、原因となっているインデックスキーを選択的に修正する仕組みに加え、既存クエリ以外の潜在的な検索ニーズを先回りして探索する「Query Simulator」を備えています。複数のコーパス・検索器で検索性能が向上し、検索エージェントやエージェントメモリシステムの効率化にもつながるとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.19656" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/9bf95054715b5d40/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-bbba9d9ef8195167">
+<h3><a href="../../articles/2026-09-19/bbba9d9ef8195167/">生成候補の「並べ方」がLLMの電力消費を左右する</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>arXivの論文「Sample Count Is Not Enough」（Mobina Kashaniyan、Ali Jannesari）は、同じ数の生成候補でも、テスト時スケーリング（推論時に複数候補を生成して選ぶ手法）における<strong>候補生成のスケジュール（バッチ実行か逐次実行か）</strong>によって、消費エネルギーとレイテンシが大きく変わることを実証しています。</p>
+<p>Phi-3-miniとQwen2.5-1.5BをGSM8KとSciQで評価し、候補数N=8を固定して生成スケジュール（1x8、2x4、4x2、8x1）を比較したところ、8回の逐次実行呼び出しは1回のバッチ呼び出しと比べてGPUエネルギー使用量で4.64〜4.86倍、P95レイテンシで5.77〜6.12倍を消費したといいます。候補数だけでなく生成戦略こそがコストを左右すると論じています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.19499" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/bbba9d9ef8195167/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4b95cf12d7e3f748">
+<h3><a href="../../articles/2026-09-19/4b95cf12d7e3f748/">数週間動き続けるエージェントに必要な3つの仕組み</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>arXivの論文「An Architecture for Long-Horizon Agents」（Erik Nijkamp、Anurag Koul、Egor Pakhomov、Bo Pang）は、数日から数週間にわたる長期タスクを遂行できる言語モデルエージェントの設計を扱っています。著者らは「長期稼働エージェントは、継続学習ができるようになる前に、忘却せずに継続稼働できなければならない」と主張し、その能力はモデル自体ではなく周辺の仕組みに依存するとしています。</p>
+<p>7つのボトルネックを特定したうえで、時間スケール別のレベル構造、自律行動単位としての「クロック刻み（tick）」、より能力の高いモデルへの段階委譲という3要素からなる階層的アーキテクチャを提案し、10日間のキャンペーン実験でその有効性を示したと報告しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.19519" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-19/4b95cf12d7e3f748/">要点と引用を見る</a></p>
+</article></section>
+<section class="code-teaser" id="code">
+<h2><span class="category-dot"></span>今日のコード</h2>
+<p class="code-teaser-repo"><span class="mono">junegunn/fzf</span> / <code>src/cache.go</code></p>
+<p>fzfはコマンドラインのあいまい検索ツールで、大量の候補行から高速に絞り込む必要があります。同じ検索クエリを何度も打つと同じ計算を繰り返すのは無駄なので、このファイルでは「どのChunk（データの塊）に対してどのクエリ文字列を検索したか」をキャッシュしておく仕組みを作っています。複数のゴルーチン（Go言語の軽量スレッド）から同時に読み書きされるため、排他制御（ミューテックス）の使い方を学ぶ好例です。</p>
+<a class="button-link" href="../../code/2026-09-19/">コードを読む</a>
+</section><nav class="neighbors issue-neighbors" aria-label="前後の号"><a class="prev" href="../2026-09-18/"><span>前の号</span>2026.09.18</a><span></span></nav>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

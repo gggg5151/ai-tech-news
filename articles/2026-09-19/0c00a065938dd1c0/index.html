@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code v2.1.277、AGENTS.md対応とVSCode拡張を強化 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropic公式から、Claude Codeのv2.1.277がリリースされました。目玉はAGENTS.mdの読み込みサポートです。CLAUDE.mdが存在しないプロジェクトでも自動的に読み込まれるようになりますが、Bedrock・Vertex・Foundry経由の利用では未対応とのことです。プロキシ関連でも、環…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Code v2.1.277、AGENTS.md対応とVSCode拡張を強化 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropic公式から、Claude Codeのv2.1.277がリリースされました。目玉はAGENTS.mdの読み込みサポートです。CLAUDE.mdが存在しないプロジェクトでも自動的に読み込まれるようになりますが、Bedrock・Vertex・Foundry経由の利用では未対応とのことです。プロキシ関連でも、環…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-19/0c00a065938dd1c0/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-19/0c00a065938dd1c0/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Code v2.1.277、AGENTS.md対応とVSCode拡張を強化", "datePublished": "2026-09-19", "description": "Anthropic公式から、Claude Codeのv2.1.277がリリースされました。目玉はAGENTS.mdの読み込みサポートです。CLAUDE.mdが存在しないプロジェクトでも自動的に読み込まれるようになりますが、Bedrock・Vertex・Foundry経由の利用では未対応とのことです。プロキシ関連でも、環境変数CLAUDE_GATEWAY_PR…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-19/0c00a065938dd1c0/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/anthropics/claude-code/releases/tag/v2.1.277", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-19/">2026.09.19 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Claude Code v2.1.277、AGENTS.md対応とVSCode拡張を強化</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-19">2026.09.19</time></div>
+</header>
+<div class="article-body">
+<p>Anthropic公式から、Claude Codeの<strong>v2.1.277</strong>がリリースされました。目玉はAGENTS.mdの読み込みサポートです。CLAUDE.mdが存在しないプロジェクトでも自動的に読み込まれるようになりますが、Bedrock・Vertex・Foundry経由の利用では未対応とのことです。プロキシ関連でも、環境変数CLAUDE_GATEWAY_PROXY_IS_EGRESS_BOUNDARY=1が追加されフォワードプロキシ背後でのホスト名解決に対応したほか、Claude apps gateway upstreamsにheaders:マップが加わり、プロキシへ静的ヘッダーを送信できるようになりました。</p>
+<p>VSCode拡張機能では、サインアウト用の/logoutコマンド、バックグラウンドシェルや実行中タスクのエージェントマップ表示、レスポンスのコピーボタンと/copyコマンド、セッションごとのコスト・トークン使用量表示、非アクティブセッションの自動アーカイブ通知が追加されています。</p>
+<p>バグ修正も多く、claude -pやAgent SDKセッションが内部エラー後にハングする問題（エラー報告と終了コード1を返すよう修正）、~/.claude.jsonの不正なtheme値によるクラッシュ、--resume後にコスト・使用量が0になる問題（headlessモード対応）などが解消されました。Writeツールでターゲットパスが既存ディレクトリの場合のエラー報告や、Editツールのエスケープされたバックスラッシュの誤認識も改善されています。</p>
+<p>また、これまでの<strong>TaskOutputツール</strong>は廃止され、Readツールに置き換えられました。あわせてtaskOutputMaxChars設定とTASK_MAX_OUTPUT_LENGTH環境変数も無効化されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>CLAUDE.mdがないプロジェクトでAGENTS.mdを読み込む機能が追加された（Bedrock/Vertex/Foundryは未対応）</li><li>環境変数CLAUDE_GATEWAY_PROXY_IS_EGRESS_BOUNDARY=1が追加され、フォワードプロキシ背後でのホスト名解決に対応した</li><li>Claude apps gateway upstreamsにオプショナルなheaders:マップが追加され、プロキシへ静的ヘッダーを送信できるようになった</li><li>VSCode拡張機能にサインアウト用の/logoutコマンド、バックグラウンドシェル・実行中タスクのエージェントマップ表示、レスポンスのコピーボタンと/copyコマンド、セッションのコスト・トークン使用量表示、非アクティブセッションの自動アーカイブ通知が追加された</li><li>claude -pおよびAgent SDKセッションが内部エラー後にハングする問題が修正された（エラー報告と終了コード1を返すよう修正）</li><li>~/.claude.jsonの不正なtheme値によるクラッシュが修正された</li><li>Writeツールでターゲットパスが既存ディレクトリの場合のエラー報告が改善された</li><li>Editツールでエスケープされたバックスラッシュの\uXXXX誤認識が修正された</li><li>--resume後のコスト・使用量がゼロになる問題が修正された（headlessモード対応）</li><li>TaskOutputツールが廃止され、Readツールに置き換えられた</li><li>taskOutputMaxChars設定とTASK_MAX_OUTPUT_LENGTH環境変数が無効化された</li><li>マーケットプレイスポリシー（strictKnownMarketplaces、blockedMarketplaces）の不正エントリによる無効化が修正された</li></ul></section>
+
+<aside class="source-box"><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.277" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%20v2.1.277%E3%80%81AGENTS.md%E5%AF%BE%E5%BF%9C%E3%81%A8VSCode%E6%8B%A1%E5%BC%B5%E3%82%92%E5%BC%B7%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-19%2F0c00a065938dd1c0%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%20v2.1.277%E3%80%81AGENTS.md%E5%AF%BE%E5%BF%9C%E3%81%A8VSCode%E6%8B%A1%E5%BC%B5%E3%82%92%E5%BC%B7%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-19/0c00a065938dd1c0/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-19%2F0c00a065938dd1c0%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><span></span><a class="next" href="../129791447c09aad4/"><span>次の記事</span>音声・動画をエージェントの中核メディアに据えるQwen3.8-Omni-Flash</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-19/">← 2026.09.19 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../129791447c09aad4/">音声・動画をエージェントの中核メディアに据えるQwen3.8-Omni-Flash</a></h3>
+<p class="excerpt">Qwenチームの公式発表によると、音声・動画・画像・テキストの4モダリティに対応するマルチモーダルモデル「Qwen3.8-Omni-Flash」が公開されました。単にコンテンツを理解するだけでなく、タスク計画やツール呼び出し、創作作業の…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qwen.ai</span><time datetime="2026-09-19">2026.09.19</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../af8318299c7c09e7/">GLMコーディングエージェント「ZCode」、Git履歴を無断アップロード</a></h3>
+<p class="excerpt">香港証券取引所に2026年1月に上場したZ.aiが開発するAIコーディングアプリ「ZCode」（2026年7月立ち上げ）について、開発者ferstarが2026年9月18日に報告したリバースエンジニアリング調査により、ユーザーの許可なく…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>tokenstead.ai</span><time datetime="2026-09-19">2026.09.19</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../e4a698c595aa9ff0/">AIエージェント同士が独自の圧縮言語で会話を始める現象</a></h3>
+<p class="excerpt">Schmidt Sciencesの研究チームが、複数のAIエージェントに反復的な共同作業をさせる実験を行ったところ、当初は英語でやり取りしていたAIエージェントが、作業を繰り返すうちに人間には読みにくい独自の符号体系へと変化していく現象…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-09-19">2026.09.19</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

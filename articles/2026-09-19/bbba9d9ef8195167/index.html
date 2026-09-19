@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>生成候補の「並べ方」がLLMの電力消費を左右する — 1年目向けエンジニア新聞</title>
+<meta name="description" content="arXivの論文「Sample Count Is Not Enough」（Mobina Kashaniyan、Ali Jannesari）は、同じ数の生成候補でも、テスト時スケーリング（推論時に複数候補を生成して選ぶ手法）における候補生成のスケジュール（バッチ実行か逐次実行か）によって、消費エネルギーとレイテンシが大き…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="生成候補の「並べ方」がLLMの電力消費を左右する — 1年目向けエンジニア新聞">
+<meta property="og:description" content="arXivの論文「Sample Count Is Not Enough」（Mobina Kashaniyan、Ali Jannesari）は、同じ数の生成候補でも、テスト時スケーリング（推論時に複数候補を生成して選ぶ手法）における候補生成のスケジュール（バッチ実行か逐次実行か）によって、消費エネルギーとレイテンシが大き…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-19/bbba9d9ef8195167/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-19/bbba9d9ef8195167/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "生成候補の「並べ方」がLLMの電力消費を左右する", "datePublished": "2026-09-19", "description": "arXivの論文「Sample Count Is Not Enough」（Mobina Kashaniyan、Ali Jannesari）は、同じ数の生成候補でも、テスト時スケーリング（推論時に複数候補を生成して選ぶ手法）における候補生成のスケジュール（バッチ実行か逐次実行か）によって、消費エネルギーとレイテンシが大きく変わることを実証しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-19/bbba9d9ef8195167/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.19499", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-19/">2026.09.19 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>生成候補の「並べ方」がLLMの電力消費を左右する</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-19">2026.09.19</time></div>
+</header>
+<div class="article-body">
+<p>arXivの論文「Sample Count Is Not Enough」（Mobina Kashaniyan、Ali Jannesari）は、同じ数の生成候補でも、テスト時スケーリング（推論時に複数候補を生成して選ぶ手法）における<strong>候補生成のスケジュール（バッチ実行か逐次実行か）</strong>によって、消費エネルギーとレイテンシが大きく変わることを実証しています。</p>
+<p>Phi-3-miniとQwen2.5-1.5BをGSM8KとSciQで評価し、候補数N=8を固定して生成スケジュール（1x8、2x4、4x2、8x1）を比較したところ、8回の逐次実行呼び出しは1回のバッチ呼び出しと比べてGPUエネルギー使用量で4.64〜4.86倍、P95レイテンシで5.77〜6.12倍を消費したといいます。候補数だけでなく生成戦略こそがコストを左右すると論じています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『Sample Count Is Not Enough: Candidate-Generation Strategy Shapes the Energy and Performance of LLM Test-Time Scaling』である</li><li>著者はMobina KashaniyanとAli Jannesariである</li><li>実験対象モデルはPhi-3-miniとQwen2.5-1.5Bである</li><li>評価タスクはGSM8K(500問)とSciQである</li><li>使用GPUはNVIDIA A100およびV100である</li><li>候補数N=8に固定し、生成スケジュール(1x8、2x4、4x2、8x1)を比較する実験を行った</li><li>8回の順序実行(逐次)呼び出しは、1回のバッチ呼び出しと比べてGPUエネルギー使用量で4.64〜4.86倍を消費するという結果が得られた</li><li>8回の順序実行(逐次)呼び出しは、1回のバッチ呼び出しと比べてP95レイテンシで5.77〜6.12倍を消費するという結果が得られた</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>8つの順序実行呼び出しは、1つのバッチ呼び出しと比べて、GPUエネルギー使用量で4.64-4.86倍、P95レイテンシで5.77-6.12倍を消費する</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2609.19499" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.19499" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E7%94%9F%E6%88%90%E5%80%99%E8%A3%9C%E3%81%AE%E3%80%8C%E4%B8%A6%E3%81%B9%E6%96%B9%E3%80%8D%E3%81%8CLLM%E3%81%AE%E9%9B%BB%E5%8A%9B%E6%B6%88%E8%B2%BB%E3%82%92%E5%B7%A6%E5%8F%B3%E3%81%99%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-19%2Fbbba9d9ef8195167%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E7%94%9F%E6%88%90%E5%80%99%E8%A3%9C%E3%81%AE%E3%80%8C%E4%B8%A6%E3%81%B9%E6%96%B9%E3%80%8D%E3%81%8CLLM%E3%81%AE%E9%9B%BB%E5%8A%9B%E6%B6%88%E8%B2%BB%E3%82%92%E5%B7%A6%E5%8F%B3%E3%81%99%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-19/bbba9d9ef8195167/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-19%2Fbbba9d9ef8195167%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../9bf95054715b5d40/"><span>前の記事</span>検索インデックス自体を自己進化させるSELF-INDEX</a><a class="next" href="../4b95cf12d7e3f748/"><span>次の記事</span>数週間動き続けるエージェントに必要な3つの仕組み</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-19/">← 2026.09.19 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../9bf95054715b5d40/">検索インデックス自体を自己進化させるSELF-INDEX</a></h3>
+<p class="excerpt">arXivに掲載された論文「Self-Evolving Search Index」（Sangam Lee氏ら8名）は、LLMエージェントの情報検索を改善するため、これまで人間主導だった検索インデックスの最適化を自動化するフレームワーク「…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-19">2026.09.19</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../4b95cf12d7e3f748/">数週間動き続けるエージェントに必要な3つの仕組み</a></h3>
+<p class="excerpt">arXivの論文「An Architecture for Long-Horizon Agents」（Erik Nijkamp、Anurag Koul、Egor Pakhomov、Bo Pang）は、数日から数週間にわたる長期タスクを遂行…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-19">2026.09.19</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-18/a68136a8b47df4f4/">「信頼を信頼することについて」再訪、AIエージェントを汚染する</a></h3>
+<p class="excerpt">ワシントン大学のFranziska RoesnerとTadayoshi Kohno両氏による論文が、Ken Thompsonの古典的な「Trusting Trust」攻撃の概念を、自己修正・自己改善するAIコーディングエージェントに適用…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-18">2026.09.18</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
