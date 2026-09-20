@@ -106,7 +106,7 @@ func (cc *ChunkCache) Lookup(chunk *Chunk, key string) *ChunkBitmap {
 			return &amp;bm
 		}</code></pre><p>`if 初期化文; 条件 { ... }`はGoのif文の特殊な形で、セミコロン`;`の前に変数を宣言してから、その変数を使った条件判定ができます。ここでは`(*qc)[key]`でmapから値を取り出しつつ`ok`（存在したかどうか）も受け取り、そのokが真のときだけ`return &amp;bm`しています。`bm`はこのif文のスコープ内だけで有効なローカル変数ですが、`&amp;bm`でそのアドレスを返しても問題ありません。Goのコンパイラは「関数を抜けた後も使われる変数」を自動的にヒープに確保してくれる（エスケープ解析）ため、C言語のように「ローカル変数のアドレスを返すと危険」という心配は不要です。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>sync.Mutexで複数のゴルーチンから共有データを守るときは、Lock()を呼んだ直後の行に必ずdefer Unlock()を書く。これで関数のどの経路でreturnしても鍵を開け忘れない、というGoの鉄則パターンを覚えて帰ってください。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-17/"><span>前の日</span>cline/cline</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-17/"><span>前の日</span>cline/cline</a><a class="next" href="../2026-09-20/"><span>次の日</span>supabase/supabase</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-19/">← 2026.09.19 の号を読む</a>
 </div>
 </article>

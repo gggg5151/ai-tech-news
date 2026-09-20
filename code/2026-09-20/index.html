@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>supabase/supabase の apps/design-system/hooks/use-config.ts を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="SupabaseはPostgresを中核にしたBaaS基盤で、このファイルは公式デザインシステム(shadcn/ui系サイト)の設定管理フックです。「ユーザーが選んだテーマやレイアウト設定をページ遷移してもブラウザ再訪問しても覚えている」という、Next.jsアプリでよくある要件を、わずか30行で実装しています。Typ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="supabase/supabase の apps/design-system/hooks/use-config.ts を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="SupabaseはPostgresを中核にしたBaaS基盤で、このファイルは公式デザインシステム(shadcn/ui系サイト)の設定管理フックです。「ユーザーが選んだテーマやレイアウト設定をページ遷移してもブラウザ再訪問しても覚えている」という、Next.jsアプリでよくある要件を、わずか30行で実装しています。Typ…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-20/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-20/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.20</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>supabase/supabase の <code>apps/design-system/hooks/use-config.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/supabase/supabase/blob/HEAD/apps/design-system/hooks/use-config.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-20">2026.09.20</time></div>
+</header>
+<div class="article-body">
+<p>SupabaseはPostgresを中核にしたBaaS基盤で、このファイルは公式デザインシステム(shadcn/ui系サイト)の設定管理フックです。「ユーザーが選んだテーマやレイアウト設定をページ遷移してもブラウザ再訪問しても覚えている」という、Next.jsアプリでよくある要件を、わずか30行で実装しています。TypeScriptの型テクニックと、状態管理ライブラリjotaiの実用パターンが両方詰まっているため教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>import { useAtom } from &#x27;jotai&#x27;
+import { atomWithStorage } from &#x27;jotai/utils&#x27;
+import { ComponentProps } from &#x27;react&#x27;
+import { SonnerToaster } from &#x27;ui&#x27;
+
+import { Style } from &#x27;@/registry/styles&#x27;
+import { Theme } from &#x27;@/registry/themes&#x27;
+
+// import { BackendProvider } from &#x27;@/registry/backend-provider&#x27;
+
+type Config = {
+  style: Style[&#x27;name&#x27;]
+  theme: Theme[&#x27;name&#x27;]
+  radius: number
+  sonnerPosition: ComponentProps&lt;typeof SonnerToaster&gt;[&#x27;position&#x27;]
+  sonnerExpand: boolean
+  // backendProvider: BackendProvider[&#x27;name&#x27;] | undefined
+}
+
+const configAtom = atomWithStorage&lt;Config&gt;(&#x27;config&#x27;, {
+  style: &#x27;default&#x27;,
+  theme: &#x27;zinc&#x27;,
+  radius: 0.5,
+  sonnerPosition: &#x27;bottom-right&#x27;,
+  sonnerExpand: false,
+  // backendProvider: &#x27;nextjs-auth&#x27;,
+})
+
+export function useConfig() {
+  return useAtom(configAtom)
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>import { useAtom } from &#x27;jotai&#x27;
+import { atomWithStorage } from &#x27;jotai/utils&#x27;</code></pre><p>jotaiはReactの「グローバル状態管理」ライブラリです。ReactのuseStateはそのコンポーネント内でしか使えませんが、jotaiの`atom`（ここでは`atomWithStorage`）はコンポーネントの外で状態の入れ物を1つ作り、それをどのコンポーネントからでも`useAtom`で読み書きできます。Reduxの軽量版のようなものだと考えてください。`atomWithStorage`は普通のatomと違い、値をブラウザのlocalStorageにも自動保存してくれる特別バージョンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>import { ComponentProps } from &#x27;react&#x27;</code></pre><p>`ComponentProps`はReactが用意している「型を作るための道具（ユーティリティ型）」です。あるコンポーネントが受け取れるprops（属性）の型一覧を、そのコンポーネントの実装を見に行かなくても取り出せます。例えば`ComponentProps&lt;typeof Button&gt;`と書けば、Buttonコンポーネントが受け付ける全propsの型が手に入ります。後の行で実際に使われています。</p></div><div class="walk-step"><pre class="walk-quote"><code>import { Style } from &#x27;@/registry/styles&#x27;
+import { Theme } from &#x27;@/registry/themes&#x27;</code></pre><p>`@/`から始まるパスはこのプロジェクト独自の「エイリアス（別名）」で、プロジェクトルートからの絶対パスを意味します（`../../`のような相対パスの書き換えを避けるためNext.jsでよく設定されます）。ここでは他のファイルに定義された`Style`型と`Theme`型を読み込んでいます。中身を見なくても、「スタイルの種類」「テーマの種類」を表す型が別ファイルにある、という前提で読み進めれば大丈夫です。</p></div><div class="walk-step"><pre class="walk-quote"><code>type Config = {
+  style: Style[&#x27;name&#x27;]
+  theme: Theme[&#x27;name&#x27;]
+  radius: number
+  sonnerPosition: ComponentProps&lt;typeof SonnerToaster&gt;[&#x27;position&#x27;]
+  sonnerExpand: boolean
+}</code></pre><p>`type Config = { ... }`は「Configという名前の型（オブジェクトの形の設計図）を定義する」という宣言です。この設定オブジェクトが持つべきプロパティと、それぞれの型を列挙しています。1行1プロパティで、`プロパティ名: 型`という書き方はTypeScriptの基本形です。</p></div><div class="walk-step"><pre class="walk-quote"><code>// backendProvider: BackendProvider[&#x27;name&#x27;] | undefined</code></pre><p>行頭の`//`はコメントで、実行には一切影響しません。このコードは「将来backendProviderという設定項目を足すかもしれない」というメモとして残されたコメントアウト済みの行です。もし生きていたら`型A | 型B`という「ユニオン型（AまたはBのどちらか）」の書き方になっていて、「BackendProviderのname、または値が無いことを表すundefined」を意味します。実務のコードには、こうした未使用の下書きがそのまま残っていることがよくあります。</p></div><div class="walk-step"><pre class="walk-quote"><code>style: Style[&#x27;name&#x27;]</code></pre><p>`Style[&#x27;name&#x27;]`は「インデックスアクセス型」と呼ばれる書き方です。`Style`という型（おそらくオブジェクトの型）の中から、`name`というプロパティだけの型を取り出しています。JavaScriptで`style.name`と書けば値を取り出せるのと似た感覚で、TypeScriptでは`Style[&#x27;name&#x27;]`と書くとその値の「型」だけを取り出せます。こうすることで、Style型の定義が変わっても、Config側は自動的に追従します。</p></div><div class="walk-step"><pre class="walk-quote"><code>sonnerPosition: ComponentProps&lt;typeof SonnerToaster&gt;[&#x27;position&#x27;]</code></pre><p>1行に3つのテクニックが重なっています。まず`typeof SonnerToaster`で「SonnerToasterというコンポーネントの型そのもの」を取得します（`typeof`は値から型を逆算するTypeScriptの演算子です）。次に`ComponentProps&lt;...&gt;`でそのコンポーネントが受け取れるprops全体の型を取り出します。最後に`[&#x27;position&#x27;]`のインデックスアクセスで、その中の`position`というprop（トースト通知を画面のどこに出すか）の型だけに絞り込んでいます。他のライブラリの型定義を直接コピーせず「借りてくる」ことで、ライブラリ側の仕様変更にも追従できる、実務でよく使うテクニックです。</p></div><div class="walk-step"><pre class="walk-quote"><code>const configAtom = atomWithStorage&lt;Config&gt;(&#x27;config&#x27;, {</code></pre><p>`atomWithStorage&lt;Config&gt;`の`&lt;Config&gt;`は「この関数が扱う状態の型はConfigですよ」とジェネリクス（山括弧で型を指定する仕組み）で明示しています。第1引数の`&#x27;config&#x27;`はlocalStorageに保存するときのキー名です（ブラウザの開発者ツールでlocalStorageを覗くと`config`というキーで値が入っているのが見えます）。このあとに続く第2引数がその状態の初期値で、Config型の形に沿ったオブジェクトになっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>export function useConfig() {
+  return useAtom(configAtom)
+}</code></pre><p>最後に、これまで作った`configAtom`を直接コンポーネントに公開せず、`useConfig`という自作フックで包んでいます。`useAtom(configAtom)`は`[現在の値, 更新用の関数]`という配列を返すので、呼び出し側は`const [config, setConfig] = useConfig()`のように使えます。なぜ`useAtom(configAtom)`をそのまま使わせないのか？　こうしておけば、将来jotaiから別の状態管理ライブラリに乗り換えたくなっても、このファイルの中身だけ書き換えれば良く、アプリ全体で`useConfig()`を呼んでいる箇所は一切変更せずに済みます。「外部ライブラリを直接あちこちで使わず、自分のフックで一枚ラップする」というのは実務で非常によく使われる設計判断です。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>外部ライブラリ（jotaiなど）の機能をそのままコンポーネントに使わせず、`useXxx`という自作フックで一枚ラップしておくと、将来ライブラリを差し替えたくなったときにこのフックの中身だけ直せばよくなる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-19/"><span>前の日</span>junegunn/fzf</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-20/">← 2026.09.20 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
