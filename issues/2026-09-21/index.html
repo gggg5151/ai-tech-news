@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026.09.21 の号 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026.09.21の号: 元OpenAI研究者による「意思決定特化型AI」Jevが今週最大の話題に / OpenAI内部モデルが数学者超えと報道、学界に衝撃広がる / Tailscaleが16年物のSQLiteバグを執念の調査で特定 / NYT訴訟の内部文書でMicrosoft・OpenAI幹部の本音が判明 / Claude Code周りのAGENTS.md仕様やJev連携プラグインなど実務Ti…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="2026.09.21 の号 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026.09.21の号: 元OpenAI研究者による「意思決定特化型AI」Jevが今週最大の話題に / OpenAI内部モデルが数学者超えと報道、学界に衝撃広がる / Tailscaleが16年物のSQLiteバグを執念の調査で特定 / NYT訴訟の内部文書でMicrosoft・OpenAI幹部の本音が判明 / Claude Code周りのAGENTS.md仕様やJev連携プラグインなど実務Ti…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-09-21/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-09-21/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="active" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-21">2026年9月21日（月）</time><span class="edition-count">16記事・読了まで約14分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>元OpenAI研究者による「意思決定特化型AI」Jevが今週最大の話題に</li><li>OpenAI内部モデルが数学者超えと報道、学界に衝撃広がる</li><li>Tailscaleが16年物のSQLiteバグを執念の調査で特定</li><li>NYT訴訟の内部文書でMicrosoft・OpenAI幹部の本音が判明</li><li>Claude Code周りのAGENTS.md仕様やJev連携プラグインなど実務Tips多数</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-336d898df2e8d32f">AIバブル終焉論、金利高と収穫逓減の「死の交差」</a></li><li><a href="#a-48cf090595eec13f">「Jev」始動、文章を書かないAI</a></li><li><a href="#a-939c213346f012cf">Qwen-Image-2.1公開、7Bで画像生成と編集を統合</a></li><li><a href="#a-d67a3b8f59c83295">NYT訴訟、Microsoft幹部『史上最大の労働窃盗』</a></li><li><a href="#a-7308889bd6477e1e">OpenAI内部モデル、数学者超えの衝撃</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-bf9aeb1d08459641">App RouterとRSCで築く高パフォーマンス設計</a></li><li><a href="#a-fc89a89ff12df389">16年物のSQLiteバグ、Tailscaleが特定</a></li><li><a href="#a-c3aa4fdd38b65643">Claude CodeのAGENTS.md、初回セッションは未読み込み</a></li><li><a href="#a-7901d8edda427f6d">自作CLI「jsonize」、JSONをUnixパイプラインの共通言語化</a></li><li><a href="#a-274ed1617ce3e9c6">Claude Code連携、JevでコードレビューするPlugin</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-7e2e98d008948655">Navidrome、個人用Spotifyを自前運用</a></li><li><a href="#a-a7239fb374418b29">GPT-Load、複数AIプロバイダを一元管理</a></li><li><a href="#a-e917c7f385846d54">Vercel Labsの「json-render」、自然言語からUI生成</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-c3a60bcfefe6eb42">AIにStarCraftをプレイさせる「Brood War Bench」</a></li><li><a href="#a-7aa6dd2eb5af9fac">「Jev」対抗、非自己回帰型モデル「Laya」を作った話</a></li><li><a href="#a-5f34d10af7578bbb">RSA-896の因数分解に成功、GPU2048基で10日間</a></li></ol></li></ul></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-336d898df2e8d32f">
+<h3><a href="../../articles/2026-09-21/336d898df2e8d32f/">AIバブル終焉論、金利高と収穫逓減の「死の交差」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>nikkei.com</span></div>
+<div class="paper-body"><p>日本経済新聞は2026年9月20日、日経QUICKニュース編集委員の永井洋一氏による「マネー底流潮流」欄で、AIバブルの終焉シナリオを取り上げました。記事は「米国のアンソロピックやオープンAIが人工知能(AI)開発の減速を呼びかけるのは暴走への歯止めだけが理由ではないはずだ」と切り出し、AI産業が抱える別の要因に注目しています。</p>
+<p>挙げられているのが<strong>「収穫逓減の法則」</strong>です。これは「追加投資に比べ追加収益はそれほど大きくならない」という考え方で、肥料を増やしても収穫量が思うほど伸びない農地に例えられています。金利高とこの収穫逓減が重なる「死の交差」がAIバブル終焉のシナリオとして提示されているようですが、具体的な数字や論拠は有料会員限定部分にあり、今回は確認できませんでした。</p></div>
+<p class="paper-source"><a href="https://www.nikkei.com/article/DGXZQOUB164ZN0W6A910C2000000/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/336d898df2e8d32f/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-48cf090595eec13f">
+<h3><a href="../../articles/2026-09-21/48cf090595eec13f/">「Jev」始動、文章を書かないAI</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
+<div class="paper-body"><p>元OpenAI研究者のディオゴ・アルメイダ氏が開発した「Jev」というAIが話題になっています。ChatGPTのような文章生成AIとは異なり、あらかじめ定義した質問や選択肢に対して<strong>構造化データ(JSON形式)で判断だけを返す「意思決定特化型AI」</strong>です。開発陣は「“スマートなif文”と考えてみて」と説明しており、発表時のX投稿がバズったことで注目を集めました。</p>
+<p>Jevが対応する入力タイプは3種類です。複数の選択肢から1つを選ぶ「Choice」、指定範囲の数値を返す「Score」、はい/いいえの確率を返す「Noul」があり、各出力には確率と確信度が付与されます。確信度がいくつ以上なら処理を進める、といった条件分岐が可能だとされ、これが「if文」という表現につながっています。</p>
+<p>速度とコストの主張も強気です。比較表ではGPT-6 Astraなどのフロンティア級の大規模言語モデルの応答時間が数秒〜数分とされる一方、Jevは70〜500ミリ秒、出力単価は実質ゼロコストとされています。開発側は自社評価として「193.6倍速く、444.6倍安い」と主張しています。なお、アルメイダ氏はChatGPTの前身「InstructGPT」論文の共著者の一人です。</p></div>
+<p class="paper-source"><a href="https://www.itmedia.co.jp/aiplus/article/2609/20/2000001664/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/48cf090595eec13f/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-939c213346f012cf">
+<h3><a href="../../articles/2026-09-21/939c213346f012cf/">Qwen-Image-2.1公開、7Bで画像生成と編集を統合</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qwen.ai</span></div>
+<div class="paper-body"><p>Alibaba(Qwenチーム)は2026年9月20日、統合型の画像生成・編集モデル「Qwen-Image-2.1」を公開しました。テキストからの画像生成と画像編集を、7Bパラメータという比較的軽量な単一モデルに統合しているのが特徴です。アーキテクチャは32層のSingle-Stream DiTを採用しています。</p>
+<p>最大10枚の参照画像を用いた合成編集に対応するほか、透明背景画像の生成・編集も可能です。これは2025年12月に発表された先行モデル「Qwen-Image-Layered」の機能を統合したもので、公式ブログは<strong>「わずか7Bパラメータでテキストから画像生成と画像編集を単一モデルに統合した」</strong>と紹介しています。</p></div>
+<p class="paper-source"><a href="https://qwen.ai/blog?id=qwen-image-2.1" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/939c213346f012cf/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-d67a3b8f59c83295">
+<h3><a href="../../articles/2026-09-21/d67a3b8f59c83295/">NYT訴訟、Microsoft幹部『史上最大の労働窃盗』</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>tomshardware.com</span></div>
+<div class="paper-body"><p>ニューヨーク・タイムズが2023年末に著作権侵害でOpenAIとMicrosoftを提訴した訴訟は、3年近く経った今も係争中です。今回、この訴訟で提出された法廷文書から、両社幹部の社内発言が明らかになりました。Microsoftの応用科学ディレクター、ブレント・ヘクト氏は2023年1月の社内メモで、AIスクレイピングを<strong>「人類史上最大の労働窃盗」</strong>と表現し、「ほぼ誰もコンテンツがこのように使われることを意図しておらず、対価も支払われていない」と警鐘を鳴らしていました。同氏はAI製品が自らのコンテンツ供給元を弱体化させる「doom loop(悪循環)」の力学も指摘しています。</p>
+<p>Microsoft自身の分析では、CopilotはBing検索と比較してニューヨーク・タイムズへのクリック率を最大93%減少させていたことも判明しました。OpenAI側でも、ChatGPT責任者のニック・ターリー氏がChatGPTを出版社にとって「実存的脅威」と呼び、サービスが性能向上とともにさらに「代替的」になっていくと認めていました。あるOpenAIのエンジニアは、目立つリンク表示をしてもユーザーのクリックにはつながらないと証言しています。</p>
+<p>Microsoftのサティア・ナデラCEOは証言録取で、OpenAIが有償契約なしに有料コンテンツをスクレイピングしていたと知っていれば、モデルの再学習を求めていただろうと述べました。両社の内部でも、自社サービスがメディア産業に与える影響についての緊張感がにじむ内容です。</p></div>
+<p class="paper-source"><a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/microsoft-director-called-ai-scraping-the-largest-theft-of-labor-in-human-history-while-openai-head-brands-chatgpt-an-existential-threat-to-publishers-revelations-come-from-legal-briefs-filed-in-nyt-lawsuit" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/d67a3b8f59c83295/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-7308889bd6477e1e">
+<h3><a href="../../articles/2026-09-21/7308889bd6477e1e/">OpenAI内部モデル、数学者超えの衝撃</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>finance.biggo.jp</span></div>
+<div class="paper-body"><p>OpenAIの内部モデル「Post-Astra」がミレニアム懸賞問題級の難題、特にナビエ・ストークス方程式に関する証明を生成したとされ、数学界に衝撃と焦燥感が広がっているとBigGoファイナンスが2026年9月18日付で報じています。サム・アルトマンCEOがこの成果に言及したとされ、生成された証明は166ページ、約1万個のエージェントが稼働して約88時間で解法を獲得、17時間の形式検証を経て約1,300億個の出力トークンが消費されたといいます。ナビエ・ストークス方程式の解決には1,500万ドル(約24億円)が投資されたとされています。</p>
+<p>これを受け、テレンス・タオ氏やティモシー・ガワーズ氏を含むフィールズ賞受賞者25名が、AIが数学を「ベンチマークの道具」として扱う風潮を批判する公開書簡を発表しました。書簡は<strong>「数学の真の目標は理解であり、問題を解くことは手段にすぎない」</strong>と主張し、証明の隠蔽や優先権(先取権)侵害、著者クレジットのあり方について学界で議論が起きているといいます。2026年7月の国際数学者会議(ICM)以降、数百件の未公開証明が存在するとも報じられています。</p>
+<p>テキサス大学オースティン校のスコット・アーロンソン教授は「シンギュラリティはすでに到達している」「残りの人生で、私はおそらく二度と定理を証明しないだろう」と述べたと伝えられています。子どもに対しては「もし数学者になりたいなら、あと2週間しか残ってない」という趣旨の発言をしたともされ、数学者の存在意義そのものが問われ始めている様子がうかがえます。</p></div>
+<p class="paper-source"><a href="https://finance.biggo.jp/news/6c25d38e-2d47-4da2-91cc-b30b32792794" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/7308889bd6477e1e/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-bf9aeb1d08459641">
+<h3><a href="../../articles/2026-09-21/bf9aeb1d08459641/">App RouterとRSCで築く高パフォーマンス設計</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Next.js 13以降で導入された「App Router」は、React Server Components(RSC、サーバー側でレンダリングされるコンポーネント)をデフォルトのコンポーネントタイプとして採用しています。RSCはクライアント側のJavaScriptバンドルサイズに影響を与えないため、<strong>「パフォーマンス最適化の最大の鍵」</strong>になると解説されています。サーバー側で直接データベースやAPIからデータを取得でき、APIキーなどの機密情報も安全に扱えます。</p>
+<p>一方でRSCにはuseStateやuseEffectといったReact Hooks、windowやlocalStorageなどのブラウザAPIが使えないという制限もあります。設計上は「クライアント境界をできるだけ下位にプッシュすることで、クライアントに送信されるJavaScriptの量を最小限に抑える」ことが重要だと紹介されています。</p>
+<p>キャッシング機構についても整理されています。同じfetchリクエストが複数回呼び出されても一度だけ実行される「Request Memoization」、指定秒数キャッシュした後に再検証する<strong>revalidate</strong>オプション、そしてrevalidatePathやrevalidateTagによるオンデマンドの再検証が組み合わさることで、高パフォーマンスな設計が実現できるとまとめられています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/fd_ai_teacher/articles/tech-20260919111326-1" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/bf9aeb1d08459641/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-fc89a89ff12df389">
+<h3><a href="../../articles/2026-09-21/fc89a89ff12df389/">16年物のSQLiteバグ、Tailscaleが特定</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
+<div class="paper-body"><p>2025年8月頃、Tailscaleは自社サービスでデータベース破損を報告し、その後半年間で19件の破損インシデントが発生しました。原因究明の手がかりとなったのは、同社が導入していた独自のトランザクションログパイプラインです。デバッグのために「tmstmpvfs shim」というVFSシムを追加してログを取った結果、SQLiteのWAL(ログ先行書き込み)のリセット処理中に発生する、稀なデータ競合バグが見つかりました。</p>
+<p>バグの正体は、チェックポイント処理中に書き込みトランザクションが発生すると、チェックポイントがWALから実際より多くのページをコピーしてしまい、<strong>コミット済みのデータが後続のトランザクションから見えなくなる</strong>というものでした。この不具合は、少なくとも16年間SQLiteに潜在していたと推定されています。</p>
+<p>Tailscaleはプロフェッショナルサポート契約のもとSQLite開発チームと共同調査を進め、修正はSQLite 3.51.3でリリースされました。最終的にSQLite 3.53.0ですべての問題が解決し、修正後4ヶ月間インシデントは発生していないといいます。地道なログ収集の積み重ねが、長年見過ごされてきた稀有な競合状態の発見につながった事例です。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20260920-sqlite-wal-reset-bug/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/fc89a89ff12df389/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c3aa4fdd38b65643">
+<h3><a href="../../articles/2026-09-21/c3aa4fdd38b65643/">Claude CodeのAGENTS.md、初回セッションは未読み込み</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span></div>
+<div class="paper-body"><p>Claude Code 2.1.277のchangelogには「CLAUDE.mdが存在しないプロジェクトでは、Claude CodeがAGENTS.mdを読む」という機能追加が記載されています。しかし既存の日本語解説記事の一部には「読まない」と書かれているものもあり、筆者(@suwa_nobu氏、株式会社JQIT所属)はこの食い違いを実測で検証しました。</p>
+<p>検証方法は、各設定ファイル(AGENTS.md、CLAUDE.md、CLAUDE.local.md)に一意の合言葉を埋め込み、ファイル読み取りツールを全て禁止した状態でAIに「指示にある合言葉を全部挙げよ」と指示するというものです。Windows 10環境にClaude Code 2.1.277を隔離導入して試した結果、AGENTS.mdのみが存在する場合はその内容が読まれる一方、<strong>CLAUDE.mdやCLAUDE.local.mdが存在するとそちらが優先され、AGENTS.mdは読まれない</strong>ことが分かりました。</p>
+<p>さらに公式情報として、AGENTS.mdサポートを含むバージョンへのインストール・アップグレード後の最初のセッションではAGENTS.mdは読まれず、次のセッションから読まれるという制約があることも判明しました。CLAUDE.local.mdを個人用の未コミット指示として置くプロジェクトでは、AGENTS.mdが警告なく無効化されてしまう「落とし穴」がある点も指摘されています。</p></div>
+<p class="paper-source"><a href="https://qiita.com/suwa_nobu/items/c795cf89d0fd4091c9cb?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/c3aa4fdd38b65643/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-7901d8edda427f6d">
+<h3><a href="../../articles/2026-09-21/7901d8edda427f6d/">自作CLI「jsonize」、JSONをUnixパイプラインの共通言語化</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>debimate.jp</span></div>
+<div class="paper-body"><p>開発者nao1215氏が、自作のCLIツール「jsonize」(コマンド名jz)を自身のブログで紹介しています。jzはコマンド出力・ファイル・引数をJSON形式に変換するツールで、<strong>270種類・737通りの出力形式に自動対応</strong>します。--extractや--excludeオプションで必要な項目を選別できるほか、CSV・TSV・YAMLなどのファイルを読み込んでJSON出力したり、newコマンドで引数からJSONを組み立てたりすることもできます。</p>
+<p>Go言語で標準ライブラリのみを使って実装されており、パーサーをYAMLレジストリで管理することで拡張性を持たせています。既存の同種ツール「jc」「jo」との違いとして、自動形式判定とYAML定義による拡張性が挙げられています。</p></div>
+<p class="paper-source"><a href="https://debimate.jp/post/ja/2026-09-16-jsonize%E3%81%A7json%E3%82%92unix%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%E3%81%AE%E5%85%B1%E9%80%9A%E8%A8%80%E8%AA%9E%E3%81%AB%E3%81%99%E3%82%8B/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/7901d8edda427f6d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-274ed1617ce3e9c6">
+<h3><a href="../../articles/2026-09-21/274ed1617ce3e9c6/">Claude Code連携、JevでコードレビューするPlugin</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者のYusuke Kikuta(muse)氏が、Claude CodeのStop hook(作業完了時に発火する仕組み)に組み込んで使うプラグイン「jev-preflight」を開発しました。作業完了のタイミングでコード差分をJev APIに送って評価させ、<strong>セキュリティリスクが検出された場合のみ再調査を促す</strong>仕組みです。評価は「behavior regression」「authorization」「input validation」など8つのリスク軸で行われますが、Jev自身がバグを断定したり自動修正したりすることはなく、やるのは「もう一度だけ調べて」と促すところまでだといいます。</p>
+<p>技術的な工夫として、EditイベントではなくStop時点で評価することで、Write操作やシェルコマンド経由の変更も含めた完全なターン差分を確認できる点、ユーザーの既存変更とClaudeの変更を分離するため実リポジトリに書き込まない別領域(プライベートGit tree)で差分を計算する点が挙げられています。Go言語採用によりmacOS/Linux/Windowsの計6環境へ単一バイナリで配布でき、API障害時も開発を止めないfail-open設計になっています。</p>
+<p>利用にはClaude Code 2.1.257以降、Git、Bash、TypeSafe APIキーが必要です。既定の閾値0.85は未キャリブレーションで誤検知もあり得るとされており、セキュリティゲートではなく「終了前の振り返り支援ツール」として位置づけられています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/yusukekikuta/articles/3738272fbecd5a" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/274ed1617ce3e9c6/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-7e2e98d008948655">
+<h3><a href="../../articles/2026-09-21/7e2e98d008948655/">Navidrome、個人用Spotifyを自前運用</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>Navidromeは、自分の音楽コレクションをブラウザやモバイル端末からストリーミング再生できるオープンソースのWeb音楽サーバーです。READMEでは<strong>「個人用Spotifyのようなもの」</strong>と説明されており、非常に大規模なライブラリでもほぼあらゆる音声フォーマットを扱えます。マルチユーザーに対応し、ユーザーごとに再生回数やプレイリスト、お気に入りを個別管理できます。</p>
+<p>macOS、Linux、Windowsで動作しDockerもサポート。ライブラリの変更を自動検知して新しいファイルを取り込むほか、Subsonic/Airsonic互換のAPIを備え既存クライアントとも連携できます。バックエンドはGo、フロントエンドはJavaScript/Reactで実装され、GPL-3.0ライセンスでスター数23.7k、フォーク数1.7kを獲得しています。</p></div>
+<p class="paper-source"><a href="https://github.com/navidrome/navidrome" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/7e2e98d008948655/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a7239fb374418b29">
+<h3><a href="../../articles/2026-09-21/a7239fb374418b29/">GPT-Load、複数AIプロバイダを一元管理</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>GPT-Loadは、開発者tbphp氏が公開しているセルフホスト型のAIゲートウェイです。OpenAI・Anthropic・Geminiなど複数のAIプロバイダーのAPIキーやサブスクリプションアカウントを一元管理し、単一のエントリーポイントから利用できるようにします。トラフィック分散やフェイルオーバー、リトライ、使用量の可視化機能を備えています。</p>
+<p>Go言語(1.27以上)で開発され、SQLite/MySQL/PostgreSQLに対応した埋め込みデータベースを使用します。認証情報をローカルで暗号化する機能もあり、Docker Composeでのデプロイに対応。初期設定はチャネル追加・グループ作成・AccessKey発行の3ステップで完了します。MITライセンスで、GitHub上で6.9kスターを獲得しています。</p></div>
+<p class="paper-source"><a href="https://github.com/tbphp/gpt-load" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/a7239fb374418b29/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e917c7f385846d54">
+<h3><a href="../../articles/2026-09-21/e917c7f385846d54/">Vercel Labsの「json-render」、自然言語からUI生成</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>Vercel Labsが公開したオープンソースの「Generative UI」フレームワーク「json-render」は、自然言語プロンプトからAIが動的なUIをJSON形式で生成する仕組みです。AIが使用できるコンポーネントは開発者が事前に定義したカタログの範囲内に限定されており、<strong>生成されるJSON出力は毎回スキーマに準拠する</strong>ため、予測可能で信頼性の高いUI生成が可能になります。</p>
+<p>使用方法は「カタログ定義」「コンポーネント実装」「AIスペック描画」の3ステップ。同一のコンポーネントカタログから、React、Vue、Svelte、React Nativeなど複数のプラットフォームに対応できるクロスプラットフォーム設計が特徴です。36個の事前構築済みshadcn/uiコンポーネントやストリーミング処理機能「SpecStream」も提供され、Apache-2.0ライセンスで公開されています。</p></div>
+<p class="paper-source"><a href="https://github.com/vercel-labs/json-render" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/e917c7f385846d54/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-c3a60bcfefe6eb42">
+<h3><a href="../../articles/2026-09-21/c3a60bcfefe6eb42/">AIにStarCraftをプレイさせる「Brood War Bench」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>bw.swerdlow.dev</span></div>
+<div class="paper-body"><p>Ben Swerdlow氏が作成した「Brood War Bench」は、AI言語モデルがRTSゲーム『StarCraft: Brood War』をプレイする能力を測定・比較するベンチマークサイトです。Codex Astra、Claude Fable/Opus 5/Sonnet/Haiku、Grok 4.6、Codex 5.6シリーズなど<strong>19のモデル・設定構成</strong>を対戦させ、勝敗数・平均APM(1分あたりの操作数)・ゲームコスト・勝率を一覧で報告しています。</p>
+<p>最高成績はCodex Astra(xhigh設定)で18勝0敗の全勝、最下位はClaude Haikuで0勝16敗の全敗でした。戦術面では、Codexはゲリラ戦術を発見したもののマクロ戦略は弱かった一方、Grokは長時間思考した後ほぼ行動しなかったと観察されています。</p></div>
+<p class="paper-source"><a href="https://bw.swerdlow.dev/report" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/c3a60bcfefe6eb42/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-7aa6dd2eb5af9fac">
+<h3><a href="../../articles/2026-09-21/7aa6dd2eb5af9fac/">「Jev」対抗、非自己回帰型モデル「Laya」を作った話</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>laya.convaiinnovations.com</span></div>
+<div class="paper-body"><p>ConvAI Innovations創業者兼CEOのNandakishor Mukkunnoth氏が、自身が開発した<strong>非自己回帰型(non-autoregressive)の決定モデル</strong>「Laya」について解説しています。2025年3月にarXiv論文として初公開されたモデルですが、2026年9月にDiogo Almeida氏が共同創業したTypeSafe AIが「Jev」を発表したことを受け、著者はLayaを完全にリビルトしたといいます。</p>
+<p>LayaはChoice・Score・Noulの3つの決定プリミティブを持ち、強化学習(RLCD)を用いています。単一GPUでの実行時間は32.8ミリ秒で、Jevより7.8倍高速と主張。AG Newsベンチマークでの精度はLayaが0.950、Jevが0.910、較正誤差(ECE)はLayaが0.081、Jevが0.246という数値も示されています。</p>
+<p>100言語以上に対応し、51言語でテストしたところ45言語でランダム比3倍以上の性能を示したとのことです。一方で著者は、選択肢が20を超えると性能が低下し、Banking77では精度が0.425まで落ち込むという制限も認めています。</p></div>
+<p class="paper-source"><a href="https://laya.convaiinnovations.com/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/7aa6dd2eb5af9fac/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5f34d10af7578bbb">
+<h3><a href="../../articles/2026-09-21/5f34d10af7578bbb/">RSA-896の因数分解に成功、GPU2048基で10日間</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>saweis.net</span></div>
+<div class="paper-body"><p>著者のStephen A. Weis氏が、2026年9月19日にRSA-896(896ビットRSA鍵)の因数分解に成功したと報告しています。Claudeを使ってCADO-NFS(一般数体篩法の実装)をGPU対応に改造し、Anthropicのデータセンターで最大2048基のGPUを10日間、総計約30GPU年相当の計算資源を投じたといいます。</p>
+<p>著者は、この結果がRSA-1024鍵はデータセンター規模のGPUリソースを持つ攻撃者に対して<strong>脆弱である可能性を示す</strong>としつつ、GNFSアルゴリズム自体の実行時間を大きく改善したわけではないと明言しています。実運用されているRSA-2048鍵のセキュリティには影響しないとも述べており、あくまで計算資源の物量で押し切った一つの実験例として位置づけています。</p></div>
+<p class="paper-source"><a href="https://saweis.net/posts/rsa-896.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-21/5f34d10af7578bbb/">要点と引用を見る</a></p>
+</article></section>
+<nav class="neighbors issue-neighbors" aria-label="前後の号"><a class="prev" href="../2026-09-20/"><span>前の号</span>2026.09.20</a><span></span></nav>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

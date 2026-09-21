@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude CodeのAGENTS.md、初回セッションは未読み込み — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Claude Code 2.1.277のchangelogには「CLAUDE.mdが存在しないプロジェクトでは、Claude CodeがAGENTS.mdを読む」という機能追加が記載されています。しかし既存の日本語解説記事の一部には「読まない」と書かれているものもあり、筆者(@suwa_nobu氏、株式会社JQIT所属…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude CodeのAGENTS.md、初回セッションは未読み込み — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Claude Code 2.1.277のchangelogには「CLAUDE.mdが存在しないプロジェクトでは、Claude CodeがAGENTS.mdを読む」という機能追加が記載されています。しかし既存の日本語解説記事の一部には「読まない」と書かれているものもあり、筆者(@suwa_nobu氏、株式会社JQIT所属…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3aa4fdd38b65643/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3aa4fdd38b65643/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude CodeのAGENTS.md、初回セッションは未読み込み", "datePublished": "2026-09-21", "description": "Claude Code 2.1.277のchangelogには「CLAUDE.mdが存在しないプロジェクトでは、Claude CodeがAGENTS.mdを読む」という機能追加が記載されています。しかし既存の日本語解説記事の一部には「読まない」と書かれているものもあり、筆者(@suwa_nobu氏、株式会社JQIT所属)はこの食い違いを実測で検証しました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3aa4fdd38b65643/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/suwa_nobu/items/c795cf89d0fd4091c9cb?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-21/">2026.09.21 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude CodeのAGENTS.md、初回セッションは未読み込み</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-21">2026.09.21</time></div>
+</header>
+<div class="article-body">
+<p>Claude Code 2.1.277のchangelogには「CLAUDE.mdが存在しないプロジェクトでは、Claude CodeがAGENTS.mdを読む」という機能追加が記載されています。しかし既存の日本語解説記事の一部には「読まない」と書かれているものもあり、筆者(@suwa_nobu氏、株式会社JQIT所属)はこの食い違いを実測で検証しました。</p>
+<p>検証方法は、各設定ファイル(AGENTS.md、CLAUDE.md、CLAUDE.local.md)に一意の合言葉を埋め込み、ファイル読み取りツールを全て禁止した状態でAIに「指示にある合言葉を全部挙げよ」と指示するというものです。Windows 10環境にClaude Code 2.1.277を隔離導入して試した結果、AGENTS.mdのみが存在する場合はその内容が読まれる一方、<strong>CLAUDE.mdやCLAUDE.local.mdが存在するとそちらが優先され、AGENTS.mdは読まれない</strong>ことが分かりました。</p>
+<p>さらに公式情報として、AGENTS.mdサポートを含むバージョンへのインストール・アップグレード後の最初のセッションではAGENTS.mdは読まれず、次のセッションから読まれるという制約があることも判明しました。CLAUDE.local.mdを個人用の未コミット指示として置くプロジェクトでは、AGENTS.mdが警告なく無効化されてしまう「落とし穴」がある点も指摘されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Claude Code 2.1.277のchangelogに「CLAUDE.mdが存在しないプロジェクトではClaude CodeがAGENTS.mdを読む」という機能追加が記載されている</li><li>既存の日本語解説記事の一部には「(Claude CodeはAGENTS.mdを)読まない」と記載されているものがある</li><li>筆者は各設定ファイル(AGENTS.md、CLAUDE.md、CLAUDE.local.md)に一意の合言葉(パスフレーズ)を埋め込む方法で検証を行った</li><li>検証ではファイル読み取りツールを全て禁止し、AIに『指示にある合言葉を全部挙げよ』と指示する手法を用いた</li><li>検証はWindows 10環境にClaude Code 2.1.277を隔離導入して行われた</li><li>AGENTS.mdのみが存在する場合、AGENTS.mdの内容は読まれる</li><li>AGENTS.mdとCLAUDE.mdが両方存在する場合、CLAUDE.mdのみが読まれる</li><li>AGENTS.mdとCLAUDE.local.mdが両方存在する場合、CLAUDE.local.mdのみが読まれる</li><li>Claude Codoの公式情報として『AGENTS.mdサポートを含むバージョンへのインストール・アップグレード後、最初のセッションではAGENTS.mdは読まれず、次のセッションから読まれる』という記述がある</li><li>Claude Codeの公式情報として『CLAUDE.local.mdもカウントされるため、AGENTS.mdに依存するプロジェクトで自分専用の未コミット指示を保持するためにCLAUDE.local.mdを追加すると、AGENTS.mdが読まれなくなる』という記述がある</li><li>記事の公開日は2026年9月19日である</li><li>筆者は株式会社JQITに所属する@suwa_nobuというアカウント名で記事を書いている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>It&#x27;s your first session after you install or upgrade to a version with `AGENTS.md` support. Claude reads `AGENTS.md` from your next session on</blockquote><blockquote>Because `CLAUDE.local.md` counts, adding one to keep your own uncommitted instructions in a project that relies on `AGENTS.md` stops Claude from reading `AGENTS.md` for you</blockquote><p class="quotes-source">出典: <a href="https://qiita.com/suwa_nobu/items/c795cf89d0fd4091c9cb?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">qiita.com</a></p></section>
+<aside class="source-box"><a href="https://qiita.com/suwa_nobu/items/c795cf89d0fd4091c9cb?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E3%81%AEAGENTS.md%E3%80%81%E5%88%9D%E5%9B%9E%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AF%E6%9C%AA%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-21%2Fc3aa4fdd38b65643%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E3%81%AEAGENTS.md%E3%80%81%E5%88%9D%E5%9B%9E%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AF%E6%9C%AA%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3aa4fdd38b65643/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-21%2Fc3aa4fdd38b65643%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../fc89a89ff12df389/"><span>前の記事</span>16年物のSQLiteバグ、Tailscaleが特定</a><a class="next" href="../7901d8edda427f6d/"><span>次の記事</span>自作CLI「jsonize」、JSONをUnixパイプラインの共通言語化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-21/">← 2026.09.21 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../bf9aeb1d08459641/">App RouterとRSCで築く高パフォーマンス設計</a></h3>
+<p class="excerpt">Next.js 13以降で導入された「App Router」は、React Server Components(RSC、サーバー側でレンダリングされるコンポーネント)をデフォルトのコンポーネントタイプとして採用しています。RSCはクライ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-21">2026.09.21</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../fc89a89ff12df389/">16年物のSQLiteバグ、Tailscaleが特定</a></h3>
+<p class="excerpt">2025年8月頃、Tailscaleは自社サービスでデータベース破損を報告し、その後半年間で19件の破損インシデントが発生しました。原因究明の手がかりとなったのは、同社が導入していた独自のトランザクションログパイプラインです。デバッグの…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-09-21">2026.09.21</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../7901d8edda427f6d/">自作CLI「jsonize」、JSONをUnixパイプラインの共通言語化</a></h3>
+<p class="excerpt">開発者nao1215氏が、自作のCLIツール「jsonize」(コマンド名jz)を自身のブログで紹介しています。jzはコマンド出力・ファイル・引数をJSON形式に変換するツールで、270種類・737通りの出力形式に自動対応します。--e…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>debimate.jp</span><time datetime="2026-09-21">2026.09.21</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

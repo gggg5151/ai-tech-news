@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIにStarCraftをプレイさせる「Brood War Bench」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Ben Swerdlow氏が作成した「Brood War Bench」は、AI言語モデルがRTSゲーム『StarCraft: Brood War』をプレイする能力を測定・比較するベンチマークサイトです。Codex Astra、Claude Fable/Opus 5/Sonnet/Haiku、Grok 4.6、Codex…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AIにStarCraftをプレイさせる「Brood War Bench」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Ben Swerdlow氏が作成した「Brood War Bench」は、AI言語モデルがRTSゲーム『StarCraft: Brood War』をプレイする能力を測定・比較するベンチマークサイトです。Codex Astra、Claude Fable/Opus 5/Sonnet/Haiku、Grok 4.6、Codex…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3a60bcfefe6eb42/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3a60bcfefe6eb42/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "AIにStarCraftをプレイさせる「Brood War Bench」", "datePublished": "2026-09-21", "description": "Ben Swerdlow氏が作成した「Brood War Bench」は、AI言語モデルがRTSゲーム『StarCraft: Brood War』をプレイする能力を測定・比較するベンチマークサイトです。Codex Astra、Claude Fable/Opus 5/Sonnet/Haiku、Grok 4.6、Codex 5.6シリーズなど19のモデル・設定構…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3a60bcfefe6eb42/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://bw.swerdlow.dev/report", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-21/">2026.09.21 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>AIにStarCraftをプレイさせる「Brood War Bench」</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>bw.swerdlow.dev</span><time datetime="2026-09-21">2026.09.21</time></div>
+</header>
+<div class="article-body">
+<p>Ben Swerdlow氏が作成した「Brood War Bench」は、AI言語モデルがRTSゲーム『StarCraft: Brood War』をプレイする能力を測定・比較するベンチマークサイトです。Codex Astra、Claude Fable/Opus 5/Sonnet/Haiku、Grok 4.6、Codex 5.6シリーズなど<strong>19のモデル・設定構成</strong>を対戦させ、勝敗数・平均APM(1分あたりの操作数)・ゲームコスト・勝率を一覧で報告しています。</p>
+<p>最高成績はCodex Astra(xhigh設定)で18勝0敗の全勝、最下位はClaude Haikuで0勝16敗の全敗でした。戦術面では、Codexはゲリラ戦術を発見したもののマクロ戦略は弱かった一方、Grokは長時間思考した後ほぼ行動しなかったと観察されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Brood War BenchはBen Swerdlowが作成したベンチマークである</li><li>Brood War Benchは、AI言語モデルがStarCraft: Brood Warをプレイする能力を測定するベンチマークである</li><li>ベンチマークには19のモデル・設定構成が参加した</li><li>参加モデルにはCodex Astra（複数難度設定）が含まれる</li><li>参加モデルにはClaude Fable、Opus 5、Sonnet、Haikuが含まれる</li><li>参加モデルにはGrok 4.6（複数難度設定）が含まれる</li><li>参加モデルにはCodex 5.6シリーズ（Sol、Luna、Terra各種）が含まれる</li><li>各モデルについて勝敗数、平均APM、ゲームコスト、勝率が一覧表示されている</li><li>最高成績はCodex Astra（xhigh設定）で18勝0敗、勝率100%であった</li><li>最下位はClaude Haikuで0勝16敗であった</li><li>Codexはゲリラ戦術を発見したがマクロ戦略は弱かったと観察されている</li><li>Grokは長時間思考した後ほぼ行動しなかったと観察されている</li></ul></section>
+
+<aside class="source-box"><a href="https://bw.swerdlow.dev/report" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">bw.swerdlow.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=AI%E3%81%ABStarCraft%E3%82%92%E3%83%97%E3%83%AC%E3%82%A4%E3%81%95%E3%81%9B%E3%82%8B%E3%80%8CBrood%20War%20Bench%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-21%2Fc3a60bcfefe6eb42%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=AI%E3%81%ABStarCraft%E3%82%92%E3%83%97%E3%83%AC%E3%82%A4%E3%81%95%E3%81%9B%E3%82%8B%E3%80%8CBrood%20War%20Bench%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-21/c3a60bcfefe6eb42/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-21%2Fc3a60bcfefe6eb42%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../e917c7f385846d54/"><span>前の記事</span>Vercel Labsの「json-render」、自然言語からUI生成</a><a class="next" href="../7aa6dd2eb5af9fac/"><span>次の記事</span>「Jev」対抗、非自己回帰型モデル「Laya」を作った話</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-21/">← 2026.09.21 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../7aa6dd2eb5af9fac/">「Jev」対抗、非自己回帰型モデル「Laya」を作った話</a></h3>
+<p class="excerpt">ConvAI Innovations創業者兼CEOのNandakishor Mukkunnoth氏が、自身が開発した非自己回帰型(non-autoregressive)の決定モデル「Laya」について解説しています。2025年3月にar…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>laya.convaiinnovations.com</span><time datetime="2026-09-21">2026.09.21</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../5f34d10af7578bbb/">RSA-896の因数分解に成功、GPU2048基で10日間</a></h3>
+<p class="excerpt">著者のStephen A. Weis氏が、2026年9月19日にRSA-896(896ビットRSA鍵)の因数分解に成功したと報告しています。Claudeを使ってCADO-NFS(一般数体篩法の実装)をGPU対応に改造し、Anthropi…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>saweis.net</span><time datetime="2026-09-21">2026.09.21</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-20/742bd474dde713df/">人間の脳は「2つの器官」、Stanford主導の研究で判明</a></h3>
+<p class="excerpt">スタンフォード大学医学部主導の研究により、人間の脳は単一の器官ではなく、進化の過程で別々に発達した2つの独立した神経系(前脳・中脳と後脳)から構成されることが判明しました。研究成果は2026年9月18日に発表され、Nature Neur…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>med.stanford.edu</span><time datetime="2026-09-20">2026.09.20</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
