@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026.09.22 の号 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026.09.22の号: 新型AI「Jev」登場、判断特化で応答はLLMの40〜200倍速く出力無料 / xAIがGrok 4.7を発表、コーディング最強モデルとして刷新 / VercelからVPSへ移行した実体験、無料枠超過の顛末を公開 / GoサーバーがVercelにゼロコンフィグでデプロイ可能に / 「MCPはもう時代遅れ」、LLM進化で仲介層不要論を唱える意見記事も">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="2026.09.22 の号 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026.09.22の号: 新型AI「Jev」登場、判断特化で応答はLLMの40〜200倍速く出力無料 / xAIがGrok 4.7を発表、コーディング最強モデルとして刷新 / VercelからVPSへ移行した実体験、無料枠超過の顛末を公開 / GoサーバーがVercelにゼロコンフィグでデプロイ可能に / 「MCPはもう時代遅れ」、LLM進化で仲介層不要論を唱える意見記事も">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-09-22/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-09-22/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="active" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-22">2026年9月22日（火）</time><span class="edition-count">16記事・読了まで約15分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>新型AI「Jev」登場、判断特化で応答はLLMの40〜200倍速く出力無料</li><li>xAIがGrok 4.7を発表、コーディング最強モデルとして刷新</li><li>VercelからVPSへ移行した実体験、無料枠超過の顛末を公開</li><li>GoサーバーがVercelにゼロコンフィグでデプロイ可能に</li><li>「MCPはもう時代遅れ」、LLM進化で仲介層不要論を唱える意見記事も</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-f867d6335bc48e42">数学×AI、OpenAIが外部諮問体制</a></li><li><a href="#a-210c7c0afdea1f26">AGIの次に必要な国際基準、OpenAIが提言</a></li><li><a href="#a-1d4826b0103a0ff2">xAI、Grok 4.7を発表 コーディング最強モデルと位置付け</a></li><li><a href="#a-7d52ec17d9f279c0">「考えない」AI「Jev」登場、応答はLLMの40〜200倍速く出力無料</a></li><li><a href="#a-13b0740d4b4ed323">「MCPはもう時代遅れ」、LLM進化で仲介層不要論</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-49c615a35f4e485b">Pages→App Router移行、3つの選択パターン</a></li><li><a href="#a-0ecb29818e54b75c">Vercel、Goサーバーのゼロコンフィグ対応で無料デプロイが簡単に</a></li><li><a href="#a-5ff1bc26886a26aa">Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り</a></li><li><a href="#a-6597906e3681d9c6">Codex使うなら権限プロファイルとRulesを分けて設計を</a></li><li><a href="#a-f6266f1a295b4a18">git diffから関連テストだけ抽出するCLI「jev-test-filter」</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-6bc5d7c8a7940c14">Claude用MCPサーバー「Desktop Commander」、9.7kスター獲得</a></li><li><a href="#a-19b1ad4add9c758a">MCP公式Go SDK、非推奨機能も12ヶ月はサポート継続</a></li><li><a href="#a-b2930f933c7a8a9a">一行で済む処理をAI呼び出しで実装、ジョークパッケージ「jev-leftpad」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-b0b05d38902310d6">グラフィックデザインAI、ユーザー経験から手続記憶を進化</a></li><li><a href="#a-a52d23018980ff29">BI自動化、最先端LLMでも精度50%未満をエージェントで底上げ</a></li><li><a href="#a-5929d7cd0d5b6b39">ロボット操作の苦手動作だけ強化学習、人手介入を最小化</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-f867d6335bc48e42">
+<h3><a href="../../articles/2026-09-22/f867d6335bc48e42/">数学×AI、OpenAIが外部諮問体制</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIは、数学分野におけるAIの進展を評価・助言する独立した諮問グループ「Advisory Group on Mathematics and AI」を設立したと発表しました。背景にあるのは、OpenAIが8月28日に訓練を開始した新しい内部モデルが、<strong>Navier-Stokesミレニアム懸賞問題を含むとされる100以上の数学の未解決問題を解いた</strong>とする成果です。</p>
+<p>諮問グループはFields賞受賞者を含む9名の数学者で構成されており、Timothy Gowers氏（ケンブリッジ大学、Collège de France）、Edward Witten氏（高等研究所）、Ravi Vakil氏（スタンフォード大学）、Martin Hairer氏（EPFL/Imperial College London）、Ulrike Tillmann氏（オックスフォード大学）のほか、François Charles氏、Camillo De Lellis氏、Nikhil Srivastava氏、Melanie Matchett Wood氏が名を連ねています。</p>
+<p>グループの役割は、新しい数学関連AI成果の重要性評価と公開方法の調整、学術・職業倫理基準への助言、数学研究・学習支援ツールの開発への助言の3点です。「その価値は、メンバーが自らの判断力を発揮し、私たちに異議を唱えられるかどうかにかかっている」とOpenAIは述べています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/advisory-group-on-mathematics-and-ai" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/f867d6335bc48e42/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-210c7c0afdea1f26">
+<h3><a href="../../articles/2026-09-22/210c7c0afdea1f26/">AGIの次に必要な国際基準、OpenAIが提言</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIは公式ブログで、AGI（汎用人工知能）開発の次の局面に向けて国際的な安全基準の策定が急務だと主張しています。特に焦点を当てているのが、AIが自らを改良する<strong>「再帰的自己改善(RSI: Recursive Self-Improvement)」</strong>についてで、完全自律的な形で行うべきではなく人間の関与を維持すべきだとしています。記事はSam Altman氏とJakub Pachocki氏の最近の発表に言及しています。</p>
+<p>「完全自律的なRSIは今日行われていないし、安全に実行できると確認されるまで追求すべきではない」とOpenAIは述べています。国ごとにAIリスクの評価基準が異なっていることが対応を難しくしているとし、既存の「AI安全研究所」のネットワークを活用して国際的な基準を開発することを提案。米国のリーダーシップがグローバルな枠組み形成に不可欠だとも主張しています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/building-standards-next-phase-ai" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/210c7c0afdea1f26/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-1d4826b0103a0ff2">
+<h3><a href="../../articles/2026-09-22/1d4826b0103a0ff2/">xAI、Grok 4.7を発表 コーディング最強モデルと位置付け</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>x.ai</span></div>
+<div class="paper-body"><p>xAIは2026年9月21日、新型AIモデル「Grok 4.7」を発表しました。<strong>「最強のコーディングおよび知識作業向けモデル」</strong>と位置づけられており、前バージョンと同じ価格・速度でありながら競争力が高いとされています。より大規模な基盤モデルを採用し、長時間の強化学習によるトレーニングを行ったとのことです。</p>
+<p>価格は入力トークン100万あたり2ドル、出力トークン100万あたり6ドルで、出力速度が2倍で価格も2倍の高速バージョンも用意されています。ベンチマークではCursorBench 4.0で46.3%、DeepSWE v1.1で71.0%のスコアを獲得。サイバーセキュリティでのリスク提示率は3.3%に低減し、バイオセーフティベンチマークでは62.4%を達成したと公表されています。Cursor、Grok Build、API、各種ハーネス（モデルを組み込んで動かす実行環境）から利用できます。</p></div>
+<p class="paper-source"><a href="https://x.ai/news/grok-4-7" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/1d4826b0103a0ff2/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-7d52ec17d9f279c0">
+<h3><a href="../../articles/2026-09-22/7d52ec17d9f279c0/">「考えない」AI「Jev」登場、応答はLLMの40〜200倍速く出力無料</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>サンフランシスコの企業TypeSafe AIが2026年9月15日、「System One モデル」と呼ぶAI「Jev」を公開しました。従来のLLMのように文章を生成するのではなく、事前に定義した選択肢の中から判断（choice/score/yes-no確率）だけを確率・確信度付きで返す仕組みです。TypeSafe AIのCEOはDiogo Almeida氏で、<strong>RLHF（人間のフィードバックを用いた強化学習）</strong>とInstructGPTの共同発明者とされています。</p>
+<p>最大の売りは応答速度と低コストです。応答時間はエンドツーエンドで70〜500ミリ秒と、従来型LLMの3〜329秒に比べ40〜200倍速いとされ、日本からの実測でも往復200〜700msが確認されています。入力トークンは100万あたり0.042ドル、出力トークンは無料で、Claude Fable 5.1比238分の1のコストとされます。入力はstateとquestionsの2要素で構成され、質問形式はChoice、Score、Noulの3種類。出力はchoice、probabilities、confidenceの数値のみで文章は含みません。</p>
+<p>一方で限界も明確です。「文章、コード、理由の説明を書くのは不可」と説明されており、計算や日付比較、複数判断が混在するタスクにも使えません。無関係な情報が多い入力では精度が低下し、学習の主言語が英語であるため日本語での確信度は英語より大幅に低下する場合があるとのことです。構造上「<strong>ハルシネーション（AIが事実に基づかない内容を生成する現象）0%</strong>」を謳いますが、選択肢の中で誤答する可能性自体は残るため、confidence値の確認が必要と説明されています。営業メールの仕分けなど、定型的な判断業務向けに位置付けられています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/masayan1126/articles/jev-system-one-decision-model-guide" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/7d52ec17d9f279c0/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-13b0740d4b4ed323">
+<h3><a href="../../articles/2026-09-22/13b0740d4b4ed323/">「MCPはもう時代遅れ」、LLM進化で仲介層不要論</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>maharship.com</span></div>
+<div class="paper-body"><p>著者Maharshi Patel氏は、LLMの能力向上により<strong>MCP（Model Context Protocol、AIモデルと外部ツールをつなぐための標準規格）</strong>はもはや時代遅れになったと主張する意見記事を公開しました。MCPは2024年11月にAnthropicが発表したプロトコルで、著者はこれを「時代遅れのプロトコル」と表現しています。</p>
+<p>LLMがAPIを直接呼び出したりCLIコマンドを実行したりスクリプトを書けるようになったことで、MCPサーバーという仲介層は不要になったというのが主張の骨子です。VercelとShopifyを具体例に挙げつつ、代わりにHTTPヘッダーなどを活用した標準化されたAPI利用・CLI利用への回帰を提唱しています。著者自身はMCPやその代替技術の開発者ではなく、第三者の立場から業界動向を論じています。</p></div>
+<p class="paper-source"><a href="https://maharship.com/blog/why-mcp-was-always-a-bad-idea/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/13b0740d4b4ed323/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-49c615a35f4e485b">
+<h3><a href="../../articles/2026-09-22/49c615a35f4e485b/">Pages→App Router移行、3つの選択パターン</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Pages RouterからApp Routerへの移行戦略について、REST API構成のプロジェクトを対象に3つの移行パターンを提示する記事です。著者は個人開発でApp Router+REST+TanStack Queryの構成を実装した経験があり、その経験から逆算してパターンを分類しています。「3か所に散った取得をどこへ寄せ直すか、という作業」が移行の本質だと述べています。</p>
+<p>パターン1はルーティングとレイアウトのみを移行し、データ取得方法は変更しない構成。パターン2は読み取り処理を<strong>RSC（React Server Components、サーバー側でレンダリングされるReactコンポーネント）</strong>へ移行しつつ、操作の多い画面ではTanStack Query（Reactのデータ取得・キャッシュ管理ライブラリ）を残す構成。パターン3はクライアントキャッシュを完全に廃止し、書き込み処理をServer Actions（サーバー側で実行される関数を直接呼び出す仕組み）で行う構成です。判断基準として、初回訪問時の表示価値、操作を継続する画面の数、書き換えが必要なコード量の3点を挙げています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/masa_dev_x/articles/app-router-migration-rest" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/49c615a35f4e485b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-0ecb29818e54b75c">
+<h3><a href="../../articles/2026-09-22/0ecb29818e54b75c/">Vercel、Goサーバーのゼロコンフィグ対応で無料デプロイが簡単に</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Vercelが「Zero-configuration Go backend support」という新機能を追加し、Goサーバーのデプロイ方法が簡単になったことを紹介する記事です。従来は&quot;/api&quot;ディレクトリ配下にindex.goを配置する必要があり、複数のAPIを用意する場合は複数のディレクトリが必要で煩雑でした。</p>
+<p>新方式ではルートディレクトリにgo.modとmain.goを置くだけで、標準的なGoサーバーをデプロイできるようになりました。必要な設定ファイルはmain.goとvercel.jsonの2つのみで、vercel.jsonには&quot;framework&quot;: &quot;go&quot;を指定します。デプロイは<code>vercel --prod</code>コマンド一つです。筆者は実際にサンプルプロジェクトを構築してデプロイを確認し、<strong>「趣味でクレカ登録不要で無料Goサーバーデプロイするなら Vercel一択になった」</strong>と結論づけています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/otakakot/articles/14d162ea65f67d" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/0ecb29818e54b75c/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5ff1bc26886a26aa">
+<h3><a href="../../articles/2026-09-22/5ff1bc26886a26aa/">Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>著者ピータン氏は、自身運営の車中泊スポット検索アプリ「車旅のしおり」（Next.js製、車中泊スポット約2,000件掲載、AdSense・Amazonアソシエイト広告あり）のホスティングをVercel Hobbyプランから移行した体験を公開しました。きっかけは、Function Invocations（関数呼び出し数）が無料枠の10万回を超過し、Fluid Active CPU（実際にCPUが稼働した時間に基づく課金指標）も月によって150%程度超過したこと、さらに広告掲載がHobbyプランの「non-commercial使用のみ」という規約に抵触する懸念があったことです。</p>
+<p>代替候補としてCloudflare Workers、Netlify、自宅ミニPCを検証しましたが、いずれも見送っています。Cloudflare Workersは<strong>グローバルスコープのDB接続プール再利用が並列リクエストで機能不全</strong>となり、12件同時アクセスで10件が500エラーになったこと、Netlifyは応答が4〜5倍遅延しリージョン選択に有料プランが必要なこと、自宅ミニPCは初期費用約7万円で損益分岐点が約4年になり停止・侵害リスクもあることが理由です。最終的にVPS（ConoHa、4GB/4vCPU、月2,189円）に移行しました。</p>
+<p>移行前には詳細ページを<strong>ISR（Incremental Static Regeneration、静的ページを定期的に再生成する仕組み）</strong>化してrevalidate=86400を設定し、トップページのクエリを1時間キャッシュするなど、アプリ側の最適化も実施しています。移行過程では、キャッシュヒット時にAPIキー検証がスキップされる問題や、環境変数変更後もビルドキャッシュが再利用される問題、VERCEL_ENVに依存したSentry設定が無効化される問題など複数の落とし穴に遭遇したとのことです。</p>
+<p>移行後、東京からの応答時間（中央値）はトップページでVercelの192msからVPSの61msに改善しました。最終構成は「利用者→Cloudflare→Cloudflare Tunnel→VPS Docker→MongoDB Atlas」で、SSH接続のみポートを許可しHTTP/HTTPSは非公開、systemdタイマーで2分ごとにヘルスチェックを行う体制にしたとしています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/pitang1965/articles/bbd6fc66e17126" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/5ff1bc26886a26aa/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-6597906e3681d9c6">
+<h3><a href="../../articles/2026-09-22/6597906e3681d9c6/">Codex使うなら権限プロファイルとRulesを分けて設計を</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>syu-m-5151.hatenablog.com</span></div>
+<div class="paper-body"><p>OpenAIのCodex（CLIツール）を使う際、確認プロンプトの多さだけで設定を判断せず、「権限プロファイル」（何を実行してよいか）と「Rules」（どの範囲なら任せるか）を分けて設計すべきだ、という実践解説記事です。筆者はClaude Codeからの移行経験を踏まえて執筆しています。</p>
+<p>Codexには組み込みの権限プロファイルとして「:read-only」「:workspace」「:danger-full-access」の3種があり、Rulesの判定値は「allow」「prompt」「forbidden」の3種類です。CLIコマンド<code>codex execpolicy check</code>を使うと、引数列がルールにどう判定されるかを事前に確認できます。設定<code>network_proxy = true</code>を有効にして初めてドメインルールが機能する点にも注意が必要です。</p>
+<p>「承認を求めなくなっても、実行できることが増えるとは限りません。approval_policy = &quot;never&quot;は、確認のために止まらない設定です。アクセスできないファイルや通信先まで、自動的に開放されるわけではありません」と筆者は指摘しています。</p></div>
+<p class="paper-source"><a href="https://syu-m-5151.hatenablog.com/entry/2026/09/20/120746" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/6597906e3681d9c6/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-f6266f1a295b4a18">
+<h3><a href="../../articles/2026-09-22/f6266f1a295b4a18/">git diffから関連テストだけ抽出するCLI「jev-test-filter」</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>mizchi氏が、今日話題のAI「Jev」を応用したCLIツール「jev-test-filter」を公開しました。git diffの変更内容から実際に影響を受ける可能性の高いテストだけを自動抽出し、vitest、jest、node:test、Playwright、cargo test、go testなど各種テストランナーが解釈できるフィルタ引数として出力します。precommit hook（コミット直前に自動実行される仕組み）での活用を想定しています。</p>
+<p>背景にあるのは、Jevが「1つのstateに対して複数の質問を1リクエストで投げられる」という特性です。これをgit diff（state）とテスト群（質問群）の組み合わせに応用しました。使用例は<code>jev-test-filter --base main --exec -- vitest run</code>という一行です。Playwrightプロジェクトでの実例では、割引計算関数の変更に対し<strong>7件中1件の関連テストを正しく選別</strong>できたとしています。110件のテストを1リクエストで処理してもコストは約0.15円、実行時間は1.3秒だったと報告されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/mizchi/articles/jev-test-filter-intro" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/f6266f1a295b4a18/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-6bc5d7c8a7940c14">
+<h3><a href="../../articles/2026-09-22/6bc5d7c8a7940c14/">Claude用MCPサーバー「Desktop Commander」、9.7kスター獲得</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>Desktop Commander MCPは、Claude AI（Claude Desktop/Cursor/Windsurf/VS Code/Cline/ChatGPT/Claude webなど）にターミナル制御・ファイルシステム操作・テキスト編集機能を提供するMCPサーバーです。作者はwonderwhy-er氏で、MITライセンスのオープンソースプロジェクトです。</p>
+<p>Markdown・画像・コードに対応したファイルプレビューUIを持ち、Excel、PDF、DOCX形式もネイティブサポート。Python、Node.js、Rでのメモリ内コード実行にも対応しています。インストール方法はnpx、bashスクリプト、Smithery、手動設定、ローカル構築、Dockerと幅広く用意されており、<strong>GitHubスター数は9.7k、フォーク数は1.2k</strong>に達しています。</p></div>
+<p class="paper-source"><a href="https://github.com/wonderwhy-er/DesktopCommanderMCP" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/6bc5d7c8a7940c14/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-19b1ad4add9c758a">
+<h3><a href="../../articles/2026-09-22/19b1ad4add9c758a/">MCP公式Go SDK、非推奨機能も12ヶ月はサポート継続</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>Model Context Protocol（MCP）の公式Go SDKが、Googleと共同でメンテナンスされています。mcp・jsonrpc・auth・oauthexという複数のパッケージで構成され、mcpパッケージがMCPクライアントとサーバーを構築するための主要APIを提供します。</p>
+<p>SDK v1.7.0以降は最新のMCP仕様（2026-07-28）を含む直近4つの仕様バージョンをサポート。この最新仕様ではroots・sampling・loggingの各機能が非推奨となりましたが、<strong>「互換性維持のため少なくとも12ヶ月間サポートを継続する」</strong>としています。GitHub上で5.1kスター、544フォークを獲得しており、新規貢献はApache 2.0、既存コードはMITというデュアルライセンスを採用しています。</p></div>
+<p class="paper-source"><a href="https://github.com/modelcontextprotocol/go-sdk" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/19b1ad4add9c758a/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b2930f933c7a8a9a">
+<h3><a href="../../articles/2026-09-22/b2930f933c7a8a9a/">一行で済む処理をAI呼び出しで実装、ジョークパッケージ「jev-leftpad」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
+<div class="paper-body"><p>GitHubユーザー「f」氏が、ジョークのnpmパッケージ「jev-leftpad」を公開しました。文字列の左側に空白を追加する、本来<code>padStart()</code>一行で済む処理を、TypeSafe AIの「Jev」への呼び出しを経由して実現するというユーモア企画です。内部ではAIモデルにspace_0からspace_10までの選択肢を提示させ、最大10スペースまでの追加に対応しています。</p>
+<p>依存関係は<code>@typesafe-ai/sdk</code>で、Node.js 20以上が必要です。テストはJevをモックして実行されるためAPIキーや費用は不要とのこと。作者自身も<strong>「本番環境や重要なシステムでの使用を避けるべき」</strong>と明記している、完全に冗談として作られたプロジェクトです。</p></div>
+<p class="paper-source"><a href="https://github.com/f/jev-leftpad" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/b2930f933c7a8a9a/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-b0b05d38902310d6">
+<h3><a href="../../articles/2026-09-22/b0b05d38902310d6/">グラフィックデザインAI、ユーザー経験から手続記憶を進化</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>論文「Designer-RSI: Evolving Procedural Memory from User Traffic for Agentic Graphic Design」は、Hongyang Du氏ら4名による研究です。グラフィックデザインは複数の相互依存アクションから編集可能な成果物を作る長期的なエージェントタスクだとし、追加学習なしのフロンティアモデルが230以上のツールを通じてプロフェッショナルデザインソフトウェアを操作しながら、自然言語による「手続記憶」を蓄積・改善するフレームワークを提案しています。</p>
+<p>未カバーの小課題には新しい手順を獲得し（拡張）、成功・失敗の実行結果に応じて既存手順を改訂します（深化）。既知の成功パターンが後退しないよう、失敗の修復のみを許可する「マッチドリプレイゲート」という仕組みも導入しています。5ラウンドの実施で手続記憶の数は76から139へ拡張し、<strong>GenEval2における実行成功率は72.7%から99.3%へ向上</strong>、複数のベンチマークで61.8%〜67.6%の勝率を達成したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.22086" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/b0b05d38902310d6/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a52d23018980ff29">
+<h3><a href="../../articles/2026-09-22/a52d23018980ff29/">BI自動化、最先端LLMでも精度50%未満をエージェントで底上げ</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>論文「BI-Agent and BI-Bench: Towards Automating End-to-End Business Intelligence」は、Chuxuan Hu氏を筆頭著者とする6名による研究です。従来の<strong>BI（ビジネスインテリジェンス、データ分析による意思決定支援）</strong>ワークフローでは、ビジネス質問に答える前に関連テーブルの特定・データ変換・結合関係の構築という準備作業が必要という課題を指摘しています。</p>
+<p>著者らは、実世界のBIプロジェクトから抽出した質問と回答のペアからなるベンチマーク「BI-Bench」と、検索・結合・変換といった部分タスクにワークフローを分解するツール拡張エージェント「BI-Agent」を提案しました。最先端のLLMでもBI-Bench上での精度は50%未満にとどまる一方、<strong>BI-Agentの導入により精度が最大40ポイント向上</strong>し、教師あり学習と強化学習による事後訓練を加えることでさらに30ポイント向上したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.20886" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/a52d23018980ff29/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5929d7cd0d5b6b39">
+<h3><a href="../../articles/2026-09-22/5929d7cd0d5b6b39/">ロボット操作の苦手動作だけ強化学習、人手介入を最小化</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>論文「From Pretraining to Proficiency: Real-World Subtask RL for Long-Horizon Manipulation with Minimal Human Intervention」は、Sichang Su氏ら7名による研究です。事前学習済みの基盤ロボット政策は長期的な操作タスクの大部分をこなせるものの、特定のボトルネックとなるサブタスクで繰り返し失敗するという課題に対処するため、<strong>「PARTS（Policy Adaptation with RL on Targeted Subtasks）」</strong>という枠組みを提案しています。</p>
+<p>ボトルネックとなるサブタスクのみに絞って強化学習を適用し、訓練中の実機ロールアウトにおける人間の介入を最小化する点が特徴です。凍結した事前学習済み政策が基本的な行動を提供し、残差補正と局所的な報酬が学習を支援します。YAM（双腕）のタスクでは成功率が32%から61%に、Franka（単腕）のタスクでは50%から95%に向上し、タスク当たり平均数十分の実世界ロールアウトでこの向上を達成したと報告されています。同じロボット予算下では既存手法より25%以上高い成功率を達成したとのことです。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.21788" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-22/5929d7cd0d5b6b39/">要点と引用を見る</a></p>
+</article></section>
+<section class="code-teaser" id="code">
+<h2><span class="category-dot"></span>今日のコード</h2>
+<p class="code-teaser-repo"><span class="mono">wonderwhy-er/DesktopCommanderMCP</span> / <code>src/utils/withTimeout.ts</code></p>
+<p>DesktopCommanderMCPは、Claudeにターミナル操作やファイル検索、diffベースのファイル編集能力を与えるMCP（Model Context Protocol）サーバーです。AIがファイル読み込みやPDF解析など「いつ終わるか分からない」処理を大量に呼び出すため、「時間切れになったら諦めて既定値を返す」ユーティリティが要になっています。今回はその中核であるwithTimeout関数を読みます。Promiseの基本パタ…</p>
+<a class="button-link" href="../../code/2026-09-22/">コードを読む</a>
+</section><nav class="neighbors issue-neighbors" aria-label="前後の号"><a class="prev" href="../2026-09-21/"><span>前の号</span>2026.09.21</a><span></span></nav>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

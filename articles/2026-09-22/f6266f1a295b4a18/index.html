@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>git diffから関連テストだけ抽出するCLI「jev-test-filter」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="mizchi氏が、今日話題のAI「Jev」を応用したCLIツール「jev-test-filter」を公開しました。git diffの変更内容から実際に影響を受ける可能性の高いテストだけを自動抽出し、vitest、jest、node:test、Playwright、cargo test、go testなど各種テストランナ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="git diffから関連テストだけ抽出するCLI「jev-test-filter」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="mizchi氏が、今日話題のAI「Jev」を応用したCLIツール「jev-test-filter」を公開しました。git diffの変更内容から実際に影響を受ける可能性の高いテストだけを自動抽出し、vitest、jest、node:test、Playwright、cargo test、go testなど各種テストランナ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/f6266f1a295b4a18/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/f6266f1a295b4a18/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "git diffから関連テストだけ抽出するCLI「jev-test-filter」", "datePublished": "2026-09-22", "description": "mizchi氏が、今日話題のAI「Jev」を応用したCLIツール「jev-test-filter」を公開しました。git diffの変更内容から実際に影響を受ける可能性の高いテストだけを自動抽出し、vitest、jest、node:test、Playwright、cargo test、go testなど各種テストランナーが解釈できるフィルタ引数として出力しま…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/f6266f1a295b4a18/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/mizchi/articles/jev-test-filter-intro", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-22/">2026.09.22 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>git diffから関連テストだけ抽出するCLI「jev-test-filter」</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</header>
+<div class="article-body">
+<p>mizchi氏が、今日話題のAI「Jev」を応用したCLIツール「jev-test-filter」を公開しました。git diffの変更内容から実際に影響を受ける可能性の高いテストだけを自動抽出し、vitest、jest、node:test、Playwright、cargo test、go testなど各種テストランナーが解釈できるフィルタ引数として出力します。precommit hook（コミット直前に自動実行される仕組み）での活用を想定しています。</p>
+<p>背景にあるのは、Jevが「1つのstateに対して複数の質問を1リクエストで投げられる」という特性です。これをgit diff（state）とテスト群（質問群）の組み合わせに応用しました。使用例は<code>jev-test-filter --base main --exec -- vitest run</code>という一行です。Playwrightプロジェクトでの実例では、割引計算関数の変更に対し<strong>7件中1件の関連テストを正しく選別</strong>できたとしています。110件のテストを1リクエストで処理してもコストは約0.15円、実行時間は1.3秒だったと報告されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>ツール名は「jev-test-filter」である</li><li>作者はmizchi氏である</li><li>jev-test-filterはgit diffの変更から影響を受けるテストのみを自動抽出するツールである</li><li>抽出結果はテストランナーが解釈できるフィルタ引数として出力される</li><li>対応するテストランナーはvitest、jest、node:test、Playwright、cargo test、go testである</li><li>テストとコード変更の関連性判定にAIを利用している</li><li>precommit hookでの使用を想定している</li><li>使用例のコマンドは「jev-test-filter --base main --exec -- vitest run」である</li><li>Playwrightプロジェクトで割引計算関数を変更した際、7件中1件の関連テストを正確に選別できたとされている</li><li>110件のテストを1リクエストで処理でき、コストは約0.15円だったとされている</li><li>その処理の実行時間は1.3秒、入力トークン数は23,423であったとされている</li><li>背景として、jevには1つのstateに対して複数の質問を1リクエストで投げられる特性があるとされている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>jev-test-filter --base main --exec -- vitest run</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/mizchi/articles/jev-test-filter-intro" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/mizchi/articles/jev-test-filter-intro" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=git%20diff%E3%81%8B%E3%82%89%E9%96%A2%E9%80%A3%E3%83%86%E3%82%B9%E3%83%88%E3%81%A0%E3%81%91%E6%8A%BD%E5%87%BA%E3%81%99%E3%82%8BCLI%E3%80%8Cjev-test-filter%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-22%2Ff6266f1a295b4a18%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=git%20diff%E3%81%8B%E3%82%89%E9%96%A2%E9%80%A3%E3%83%86%E3%82%B9%E3%83%88%E3%81%A0%E3%81%91%E6%8A%BD%E5%87%BA%E3%81%99%E3%82%8BCLI%E3%80%8Cjev-test-filter%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-22/f6266f1a295b4a18/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-22%2Ff6266f1a295b4a18%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../6597906e3681d9c6/"><span>前の記事</span>Codex使うなら権限プロファイルとRulesを分けて設計を</a><a class="next" href="../6bc5d7c8a7940c14/"><span>次の記事</span>Claude用MCPサーバー「Desktop Commander」、9.7kスター獲得</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-22/">← 2026.09.22 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../49c615a35f4e485b/">Pages→App Router移行、3つの選択パターン</a></h3>
+<p class="excerpt">Pages RouterからApp Routerへの移行戦略について、REST API構成のプロジェクトを対象に3つの移行パターンを提示する記事です。著者は個人開発でApp Router+REST+TanStack Queryの構成を実…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../0ecb29818e54b75c/">Vercel、Goサーバーのゼロコンフィグ対応で無料デプロイが簡単に</a></h3>
+<p class="excerpt">Vercelが「Zero-configuration Go backend support」という新機能を追加し、Goサーバーのデプロイ方法が簡単になったことを紹介する記事です。従来は&quot;/api&quot;ディレクトリ配下にindex.goを配置…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../5ff1bc26886a26aa/">Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り</a></h3>
+<p class="excerpt">著者ピータン氏は、自身運営の車中泊スポット検索アプリ「車旅のしおり」（Next.js製、車中泊スポット約2,000件掲載、AdSense・Amazonアソシエイト広告あり）のホスティングをVercel Hobbyプランから移行した体験を…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

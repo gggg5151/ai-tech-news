@@ -80,7 +80,7 @@ import { Theme } from &#x27;@/registry/themes&#x27;</code></pre><p>`@/`から始
   return useAtom(configAtom)
 }</code></pre><p>最後に、これまで作った`configAtom`を直接コンポーネントに公開せず、`useConfig`という自作フックで包んでいます。`useAtom(configAtom)`は`[現在の値, 更新用の関数]`という配列を返すので、呼び出し側は`const [config, setConfig] = useConfig()`のように使えます。なぜ`useAtom(configAtom)`をそのまま使わせないのか？　こうしておけば、将来jotaiから別の状態管理ライブラリに乗り換えたくなっても、このファイルの中身だけ書き換えれば良く、アプリ全体で`useConfig()`を呼んでいる箇所は一切変更せずに済みます。「外部ライブラリを直接あちこちで使わず、自分のフックで一枚ラップする」というのは実務で非常によく使われる設計判断です。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>外部ライブラリ（jotaiなど）の機能をそのままコンポーネントに使わせず、`useXxx`という自作フックで一枚ラップしておくと、将来ライブラリを差し替えたくなったときにこのフックの中身だけ直せばよくなる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-19/"><span>前の日</span>junegunn/fzf</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-19/"><span>前の日</span>junegunn/fzf</a><a class="next" href="../2026-09-22/"><span>次の日</span>wonderwhy-er/DesktopCommanderMCP</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-20/">← 2026.09.20 の号を読む</a>
 </div>
 </article>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wonderwhy-er/DesktopCommanderMCP の src/utils/withTimeout.ts を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="DesktopCommanderMCPは、Claudeにターミナル操作やファイル検索、diffベースのファイル編集能力を与えるMCP（Model Context Protocol）サーバーです。AIがファイル読み込みやPDF解析など「いつ終わるか分からない」処理を大量に呼び出すため、「時間切れになったら諦めて既定値を返…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="wonderwhy-er/DesktopCommanderMCP の src/utils/withTimeout.ts を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="DesktopCommanderMCPは、Claudeにターミナル操作やファイル検索、diffベースのファイル編集能力を与えるMCP（Model Context Protocol）サーバーです。AIがファイル読み込みやPDF解析など「いつ終わるか分からない」処理を大量に呼び出すため、「時間切れになったら諦めて既定値を返…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-22/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-22/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.22</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>wonderwhy-er/DesktopCommanderMCP の <code>src/utils/withTimeout.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/wonderwhy-er/DesktopCommanderMCP/blob/HEAD/src/utils/withTimeout.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-22">2026.09.22</time></div>
+</header>
+<div class="article-body">
+<p>DesktopCommanderMCPは、Claudeにターミナル操作やファイル検索、diffベースのファイル編集能力を与えるMCP（Model Context Protocol）サーバーです。AIがファイル読み込みやPDF解析など「いつ終わるか分からない」処理を大量に呼び出すため、「時間切れになったら諦めて既定値を返す」ユーティリティが要になっています。今回はその中核であるwithTimeout関数を読みます。Promiseの基本パターンと、非同期処理特有の「二重解決」というバグをどう防ぐかを学べる、コンパクトで実践的なコードです。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>/**
+ * Executes a promise with a timeout. If the promise doesn&#x27;t resolve or reject within
+ * the specified timeout, returns the provided default value.
+ *
+ * @param operation The promise to execute
+ * @param timeoutMs Timeout in milliseconds
+ * @param operationName Name of the operation (for logs)
+ * @param defaultValue Value to return if the operation times out
+ * @returns Promise that resolves with the operation result or the default value on timeout
+ */
+export function withTimeout&lt;T&gt;(
+    operation: Promise&lt;T&gt;,
+    timeoutMs: number,
+    operationName: string,
+    defaultValue: T
+): Promise&lt;T&gt; {
+    // Don&#x27;t sanitize operation name for logs - only telemetry will sanitize if needed
+    return new Promise((resolve, reject) =&gt; {
+        let isCompleted = false;
+
+        // Set up timeout
+        const timeoutId = setTimeout(() =&gt; {
+            if (!isCompleted) {
+                isCompleted = true;
+                if (defaultValue !== null) {
+                    resolve(defaultValue);
+                } else {
+                    // Keep the original operation name in the error message
+                    // Telemetry sanitization happens at the capture level
+                    reject(`__ERROR__: ${operationName} timed out after ${timeoutMs / 1000} seconds`);
+                }
+            }
+        }, timeoutMs);
+
+        // Execute the operation
+        operation
+            .then(result =&gt; {
+                if (!isCompleted) {
+                    isCompleted = true;
+                    clearTimeout(timeoutId);
+                    resolve(result);
+                }
+            })
+            .catch(error =&gt; {
+                if (!isCompleted) {
+                    isCompleted = true;
+                    clearTimeout(timeoutId);
+                    if (defaultValue !== null) {
+                        resolve(defaultValue);
+                    } else {
+                        // Pass the original error unchanged - sanitization for telemetry happens in capture
+                        reject(error);
+                    }
+                }
+            });
+    });
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>export function withTimeout&lt;T&gt;(
+    operation: Promise&lt;T&gt;,</code></pre><p>関数名の直後にある `&lt;T&gt;` はジェネリクス（型引数）です。「この関数はどんな型でも受け取れるが、受け取った型と返す型は連動する」ということを表します。例えば `withTimeout&lt;string&gt;(...)` として呼べば、`operation` は `Promise&lt;string&gt;`、`defaultValue` は `string` だと型チェッカーが理解します。1つの関数を色々な型（数値でも文字列でもオブジェクトでも）で使い回すためのTypeScriptの仕組みです。</p></div><div class="walk-step"><pre class="walk-quote"><code>timeoutMs: number,
+    operationName: string,
+    defaultValue: T
+): Promise&lt;T&gt; {</code></pre><p>引数は4つ。`operation`は「これから実行したい非同期処理そのもの」（Promise型の値）、`timeoutMs`は制限時間（ミリ秒）、`operationName`はログ用の名前、`defaultValue`はタイムアウト時に代わりに返す値です。関数全体の戻り値の型 `Promise&lt;T&gt;` は「T型の値でいつか解決されるPromiseを返す」という意味で、この関数自体が非同期関数として扱われます。</p></div><div class="walk-step"><pre class="walk-quote"><code>return new Promise((resolve, reject) =&gt; {</code></pre><p>これは「Promiseエグゼキューター」と呼ばれる定番パターンです。`new Promise(...)` に渡す関数（コールバック）は自動的に2つの関数 `resolve` と `reject` を受け取ります。`resolve(値)` を呼べばこのPromiseは成功として確定し、`reject(理由)` を呼べば失敗として確定します。中身のコードは、いつ・どんな条件でresolveやrejectを呼ぶかを自分で組み立てる場所です。</p></div><div class="walk-step"><pre class="walk-quote"><code>let isCompleted = false;</code></pre><p>`let` は再代入可能な変数を宣言するキーワードです。このフラグは「このPromiseはもう決着がついたか」を覚えておくためのものです。なぜ必要かというと、この後「タイマーが先に発火する」ケースと「元の処理が先に終わる」ケースの2つが競争していて、両方がresolve/rejectを呼んでしまうとPromiseの仕様上おかしなことになる（実際には2回目以降は無視されますが、意図が読みにくいコードになる）ため、明示的に「もう処理済みか」を見て制御しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const timeoutId = setTimeout(() =&gt; {
+            if (!isCompleted) {</code></pre><p>`setTimeout(コールバック, timeoutMs)` は「timeoutMsミリ秒後にコールバックを1回実行する」というブラウザ/Node.js標準のタイマー関数です。戻り値の `timeoutId` はこのタイマーを識別するIDで、後でキャンセルするために保存しておきます。`if (!isCompleted)` の `!` は否定（NOT）を表す演算子で、「isCompletedがfalseのときだけ中に入る」という意味です。つまり「まだ誰も決着をつけていなければ」という条件です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (defaultValue !== null) {
+                    resolve(defaultValue);
+                } else {</code></pre><p>タイムアウトが発生したときの分岐です。呼び出し側が「タイムアウトしたらこの値で妥協してほしい」という `defaultValue` を渡していれば（nullでなければ）、エラーにせず `resolve` で正常終了として扱います。何も妥協案がない（nullが渡された）場合だけ `reject` でエラーとして投げます。</p></div><div class="walk-step"><pre class="walk-quote"><code>reject(`__ERROR__: ${operationName} timed out after ${timeoutMs / 1000} seconds`);</code></pre><p>バッククォートで囲まれた文字列はテンプレートリテラルです。`${式}` の部分に変数の値がそのまま埋め込まれます（例: `timeoutMs / 1000` で秒数に変換）。`__ERROR__:` という接頭辞を付けているのは、このメッセージを受け取った呼び出し元やログ処理が「これはエラーだ」と文字列パターンで判別できるようにするためです。</p></div><div class="walk-step"><pre class="walk-quote"><code>operation
+            .then(result =&gt; {
+                if (!isCompleted) {</code></pre><p>タイマーとは別に、引数で渡された `operation`（本来の処理）自体も並行して走っています。`.then(result =&gt; {...})` は「operationが成功したら、その結果resultを使ってこの中身を実行する」という意味です。ここでは、まだ未完了ならフラグを立てて、`clearTimeout(timeoutId)` でさっき仕掛けたタイマーを解除（無駄に発火させない）してから、本来の結果で `resolve` します。</p></div><div class="walk-step"><pre class="walk-quote"><code>.catch(error =&gt; {
+                if (!isCompleted) {</code></pre><p>`.catch(error =&gt; {...})` は `operation` が失敗（reject）したときに実行されます。この場合もタイマーを解除した上で、defaultValueがあればエラーをもみ消して代わりの値で成功扱いにし、なければ元のエラーをそのまま `reject` で伝播させます。エラーメッセージを勝手に書き換えず「元のエラーをそのまま渡す」というコメントの方針が、デバッグのしやすさを重視した設計であることが分かります。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「タイマーvs本処理」のように2つの非同期経路が同じPromiseを解決しうる場面では、boolean フラグ（isCompleted）で「もう決着したか」を見張り、二重にresolve/rejectしないようにするのが定石です。自分で非同期処理を書くときもこのパターンを思い出してください。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-20/"><span>前の日</span>supabase/supabase</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-22/">← 2026.09.22 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

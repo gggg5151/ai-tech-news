@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BI自動化、最先端LLMでも精度50%未満をエージェントで底上げ — 1年目向けエンジニア新聞</title>
+<meta name="description" content="論文「BI-Agent and BI-Bench: Towards Automating End-to-End Business Intelligence」は、Chuxuan Hu氏を筆頭著者とする6名による研究です。従来のBI（ビジネスインテリジェンス、データ分析による意思決定支援）ワークフローでは、ビジネス質問に答…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="BI自動化、最先端LLMでも精度50%未満をエージェントで底上げ — 1年目向けエンジニア新聞">
+<meta property="og:description" content="論文「BI-Agent and BI-Bench: Towards Automating End-to-End Business Intelligence」は、Chuxuan Hu氏を筆頭著者とする6名による研究です。従来のBI（ビジネスインテリジェンス、データ分析による意思決定支援）ワークフローでは、ビジネス質問に答…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/a52d23018980ff29/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/a52d23018980ff29/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "BI自動化、最先端LLMでも精度50%未満をエージェントで底上げ", "datePublished": "2026-09-22", "description": "論文「BI-Agent and BI-Bench: Towards Automating End-to-End Business Intelligence」は、Chuxuan Hu氏を筆頭著者とする6名による研究です。従来のBI（ビジネスインテリジェンス、データ分析による意思決定支援）ワークフローでは、ビジネス質問に答える前に関連テーブルの特定・データ変換・…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/a52d23018980ff29/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.20886", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-22/">2026.09.22 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>BI自動化、最先端LLMでも精度50%未満をエージェントで底上げ</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-22">2026.09.22</time></div>
+</header>
+<div class="article-body">
+<p>論文「BI-Agent and BI-Bench: Towards Automating End-to-End Business Intelligence」は、Chuxuan Hu氏を筆頭著者とする6名による研究です。従来の<strong>BI（ビジネスインテリジェンス、データ分析による意思決定支援）</strong>ワークフローでは、ビジネス質問に答える前に関連テーブルの特定・データ変換・結合関係の構築という準備作業が必要という課題を指摘しています。</p>
+<p>著者らは、実世界のBIプロジェクトから抽出した質問と回答のペアからなるベンチマーク「BI-Bench」と、検索・結合・変換といった部分タスクにワークフローを分解するツール拡張エージェント「BI-Agent」を提案しました。最先端のLLMでもBI-Bench上での精度は50%未満にとどまる一方、<strong>BI-Agentの導入により精度が最大40ポイント向上</strong>し、教師あり学習と強化学習による事後訓練を加えることでさらに30ポイント向上したと報告されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「BI-Agent and BI-Bench: Towards Automating End-to-End Business Intelligence」である</li><li>著者にはChuxuan Hu（筆頭著者）、Yeye He、Penny Zhou、Wee Hyong Tok、Daniel Kang、Surajit Chaudhuriが含まれる（著者は6名）</li><li>従来のBIワークフローでは、ビジネス質問に答える前に関連テーブルの特定・データ変換・結合関係の構築という準備作業が必要である</li><li>BI-Benchは実世界のBIプロジェクトから抽出した質問と回答のペアからなるベンチマークである</li><li>BI-Benchは、LLMのエンドツーエンドBI能力を体系的に評価する初のベンチマークとされている</li><li>BI-Agentはツール拡張エージェントであり、検索・結合・変換といった構造化データ上の部分タスクにBIワークフローを分解し、データ管理手法を統合する</li><li>最先端のLLMでもBI-Bench上での精度は50%未満である</li><li>BI-Agentの導入により精度が最大40ポイント向上する</li><li>教師あり学習と強化学習による事後訓練を加えることで、さらに精度が30ポイント向上する</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.20886" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=BI%E8%87%AA%E5%8B%95%E5%8C%96%E3%80%81%E6%9C%80%E5%85%88%E7%AB%AFLLM%E3%81%A7%E3%82%82%E7%B2%BE%E5%BA%A650%25%E6%9C%AA%E6%BA%80%E3%82%92%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%A7%E5%BA%95%E4%B8%8A%E3%81%92%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-22%2Fa52d23018980ff29%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=BI%E8%87%AA%E5%8B%95%E5%8C%96%E3%80%81%E6%9C%80%E5%85%88%E7%AB%AFLLM%E3%81%A7%E3%82%82%E7%B2%BE%E5%BA%A650%25%E6%9C%AA%E6%BA%80%E3%82%92%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%A7%E5%BA%95%E4%B8%8A%E3%81%92%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-22/a52d23018980ff29/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-22%2Fa52d23018980ff29%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../b0b05d38902310d6/"><span>前の記事</span>グラフィックデザインAI、ユーザー経験から手続記憶を進化</a><a class="next" href="../5929d7cd0d5b6b39/"><span>次の記事</span>ロボット操作の苦手動作だけ強化学習、人手介入を最小化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-22/">← 2026.09.22 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../b0b05d38902310d6/">グラフィックデザインAI、ユーザー経験から手続記憶を進化</a></h3>
+<p class="excerpt">論文「Designer-RSI: Evolving Procedural Memory from User Traffic for Agentic Graphic Design」は、Hongyang Du氏ら4名による研究です。グラフィ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../5929d7cd0d5b6b39/">ロボット操作の苦手動作だけ強化学習、人手介入を最小化</a></h3>
+<p class="excerpt">論文「From Pretraining to Proficiency: Real-World Subtask RL for Long-Horizon Manipulation with Minimal Human Interventio…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-21/c3a60bcfefe6eb42/">AIにStarCraftをプレイさせる「Brood War Bench」</a></h3>
+<p class="excerpt">Ben Swerdlow氏が作成した「Brood War Bench」は、AI言語モデルがRTSゲーム『StarCraft: Brood War』をプレイする能力を測定・比較するベンチマークサイトです。Codex Astra、Claud…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>bw.swerdlow.dev</span><time datetime="2026-09-21">2026.09.21</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り — 1年目向けエンジニア新聞</title>
+<meta name="description" content="著者ピータン氏は、自身運営の車中泊スポット検索アプリ「車旅のしおり」（Next.js製、車中泊スポット約2,000件掲載、AdSense・Amazonアソシエイト広告あり）のホスティングをVercel Hobbyプランから移行した体験を公開しました。きっかけは、Function Invocations（関数呼び出し数）…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り — 1年目向けエンジニア新聞">
+<meta property="og:description" content="著者ピータン氏は、自身運営の車中泊スポット検索アプリ「車旅のしおり」（Next.js製、車中泊スポット約2,000件掲載、AdSense・Amazonアソシエイト広告あり）のホスティングをVercel Hobbyプランから移行した体験を公開しました。きっかけは、Function Invocations（関数呼び出し数）…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/5ff1bc26886a26aa/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/5ff1bc26886a26aa/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り", "datePublished": "2026-09-22", "description": "著者ピータン氏は、自身運営の車中泊スポット検索アプリ「車旅のしおり」（Next.js製、車中泊スポット約2,000件掲載、AdSense・Amazonアソシエイト広告あり）のホスティングをVercel Hobbyプランから移行した体験を公開しました。きっかけは、Function Invocations（関数呼び出し数）が無料枠の10万回を超過し、Fluid…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-22/5ff1bc26886a26aa/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/pitang1965/articles/bbd6fc66e17126", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-22/">2026.09.22 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Vercelの無料枠超過でVPSへ、Netlify・Cloudflare Workersは見送り</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</header>
+<div class="article-body">
+<p>著者ピータン氏は、自身運営の車中泊スポット検索アプリ「車旅のしおり」（Next.js製、車中泊スポット約2,000件掲載、AdSense・Amazonアソシエイト広告あり）のホスティングをVercel Hobbyプランから移行した体験を公開しました。きっかけは、Function Invocations（関数呼び出し数）が無料枠の10万回を超過し、Fluid Active CPU（実際にCPUが稼働した時間に基づく課金指標）も月によって150%程度超過したこと、さらに広告掲載がHobbyプランの「non-commercial使用のみ」という規約に抵触する懸念があったことです。</p>
+<p>代替候補としてCloudflare Workers、Netlify、自宅ミニPCを検証しましたが、いずれも見送っています。Cloudflare Workersは<strong>グローバルスコープのDB接続プール再利用が並列リクエストで機能不全</strong>となり、12件同時アクセスで10件が500エラーになったこと、Netlifyは応答が4〜5倍遅延しリージョン選択に有料プランが必要なこと、自宅ミニPCは初期費用約7万円で損益分岐点が約4年になり停止・侵害リスクもあることが理由です。最終的にVPS（ConoHa、4GB/4vCPU、月2,189円）に移行しました。</p>
+<p>移行前には詳細ページを<strong>ISR（Incremental Static Regeneration、静的ページを定期的に再生成する仕組み）</strong>化してrevalidate=86400を設定し、トップページのクエリを1時間キャッシュするなど、アプリ側の最適化も実施しています。移行過程では、キャッシュヒット時にAPIキー検証がスキップされる問題や、環境変数変更後もビルドキャッシュが再利用される問題、VERCEL_ENVに依存したSentry設定が無効化される問題など複数の落とし穴に遭遇したとのことです。</p>
+<p>移行後、東京からの応答時間（中央値）はトップページでVercelの192msからVPSの61msに改善しました。最終構成は「利用者→Cloudflare→Cloudflare Tunnel→VPS Docker→MongoDB Atlas」で、SSH接続のみポートを許可しHTTP/HTTPSは非公開、systemdタイマーで2分ごとにヘルスチェックを行う体制にしたとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者は「車旅のしおり」（https://tabi.over40web.club）という車中泊スポット検索アプリを運営している。Next.js製で車中泊スポット約2,000件を扱い、AdSenseとAmazonアソシエイトの広告を掲載している</li><li>Vercel HobbyプランのFunction Invocations（関数呼び出し数）が無料枠の100%（10万回）を超過し、Fluid Active CPUも月によって150%程度超過した</li><li>広告を掲載していることがVercel Hobbyプランの「non-commercial使用のみ」という規約に抵触する懸念があった</li><li>Cloudflare Workersを検証したが、グローバルスコープのDB接続プール再利用が並列リクエストで機能不全となり、12件同時アクセスで10件が500エラーとなったため見送った</li><li>Netlifyを検証したが、応答が4〜5倍遅延し、リージョン選択には有料プランが必要で費用効率が悪化するため見送った</li><li>自宅ミニPC導入を検討したが、初期費用約7万円で損益分岐点が約4年になり、停止・侵害・規約リスクもあるため見送った</li><li>最終的にVPS（ConoHa、4GB/4vCPU、月2,189円）に移行した</li><li>移行前の最適化として、詳細ページをISR化しrevalidate=86400を設定し、トップページクエリを1時間キャッシュし、router.replaceをhistory.replaceStateに変更した</li><li>移行時の落とし穴として、Cloudflareキャッシュヒット時にAPIキー検証がスキップされキーなしアクセスに200応答を返す問題、環境変数変更後もBuildKitビルドキャッシュが再利用されアクセス解析が動作しない問題、VERCEL_ENVに依存したSentry設定が&#x27;production&#x27;モードで無効化される問題、s-maxage不十分でCloudflareが拡張子なしレスポンスをキャッシュしない問題、ufwのlimit設定がデプロイ時の連続SSH接続を制限し自身の接続も遮断する問題に遷遇した</li><li>東京からの応答時間（中央値）は、/api/healthでVercel 67msからVPS 41ms、トップページでVercel 192msからVPS 61msに改善した</li><li>同時50接続でのVPSの処理量は、開発PC比で/api/healthが約59%、静的ページが約52%だった</li><li>最終構成は「利用者→Cloudflare→Cloudflare Tunnel→VPS Docker→MongoDB Atlas」で、SSH接続のみポート許可しHTTP/HTTPSは非公開、Cloudflare Accessで検証用サイトを制限し、systemdタイマーで2分ごとにヘルスチェックを行っている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>グローバルスコープのDB接続プール再利用が並列リクエストで機能不全。12件同時アクセスで10件が500エラー</blockquote><blockquote>キャッシュヒット時にAPIキー検証がスキップされ、キーなしアクセスに200応答を返却</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/pitang1965/articles/bbd6fc66e17126" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/pitang1965/articles/bbd6fc66e17126" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Vercel%E3%81%AE%E7%84%A1%E6%96%99%E6%9E%A0%E8%B6%85%E9%81%8E%E3%81%A7VPS%E3%81%B8%E3%80%81Netlify%E3%83%BBCloudflare%20Workers%E3%81%AF%E8%A6%8B%E9%80%81%E3%82%8A%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-22%2F5ff1bc26886a26aa%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Vercel%E3%81%AE%E7%84%A1%E6%96%99%E6%9E%A0%E8%B6%85%E9%81%8E%E3%81%A7VPS%E3%81%B8%E3%80%81Netlify%E3%83%BBCloudflare%20Workers%E3%81%AF%E8%A6%8B%E9%80%81%E3%82%8A%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-22/5ff1bc26886a26aa/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-22%2F5ff1bc26886a26aa%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../0ecb29818e54b75c/"><span>前の記事</span>Vercel、Goサーバーのゼロコンフィグ対応で無料デプロイが簡単に</a><a class="next" href="../6597906e3681d9c6/"><span>次の記事</span>Codex使うなら権限プロファイルとRulesを分けて設計を</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-22/">← 2026.09.22 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../49c615a35f4e485b/">Pages→App Router移行、3つの選択パターン</a></h3>
+<p class="excerpt">Pages RouterからApp Routerへの移行戦略について、REST API構成のプロジェクトを対象に3つの移行パターンを提示する記事です。著者は個人開発でApp Router+REST+TanStack Queryの構成を実…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../0ecb29818e54b75c/">Vercel、Goサーバーのゼロコンフィグ対応で無料デプロイが簡単に</a></h3>
+<p class="excerpt">Vercelが「Zero-configuration Go backend support」という新機能を追加し、Goサーバーのデプロイ方法が簡単になったことを紹介する記事です。従来は&quot;/api&quot;ディレクトリ配下にindex.goを配置…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../6597906e3681d9c6/">Codex使うなら権限プロファイルとRulesを分けて設計を</a></h3>
+<p class="excerpt">OpenAIのCodex（CLIツール）を使う際、確認プロンプトの多さだけで設定を判断せず、「権限プロファイル」（何を実行してよいか）と「Rules」（どの範囲なら任せるか）を分けて設計すべきだ、という実践解説記事です。筆者はClaud…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>syu-m-5151.hatenablog.com</span><time datetime="2026-09-22">2026.09.22</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
