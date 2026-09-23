@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub API未認証レート制限、共有IPでの429リスク — 1年目向けエンジニア新聞</title>
+<meta name="description" content="筆者はVercel Functions上で稼働する自作Webアプリから、GitHub APIを未認証で呼び出しています。未認証リクエストの上限は60回/時間ですが、この制限は呼び出し元IPアドレス単位でカウントされる仕様です。Vercelのようなサーバーレス環境は複数の利用者・アプリで送信元IPを共有することがあるため…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="GitHub API未認証レート制限、共有IPでの429リスク — 1年目向けエンジニア新聞">
+<meta property="og:description" content="筆者はVercel Functions上で稼働する自作Webアプリから、GitHub APIを未認証で呼び出しています。未認証リクエストの上限は60回/時間ですが、この制限は呼び出し元IPアドレス単位でカウントされる仕様です。Vercelのようなサーバーレス環境は複数の利用者・アプリで送信元IPを共有することがあるため…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/a3b35970d951ecb1/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/a3b35970d951ecb1/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "GitHub API未認証レート制限、共有IPでの429リスク", "datePublished": "2026-09-23", "description": "筆者はVercel Functions上で稼働する自作Webアプリから、GitHub APIを未認証で呼び出しています。未認証リクエストの上限は60回/時間ですが、この制限は呼び出し元IPアドレス単位でカウントされる仕様です。Vercelのようなサーバーレス環境は複数の利用者・アプリで送信元IPを共有することがあるため、自分のリクエスト頻度が低くても他者の呼…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/a3b35970d951ecb1/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/matsutake_prgrm/articles/github-api-unauthenticated-rate-limit-is-per-ip", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-23/">2026.09.23 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>GitHub API未認証レート制限、共有IPでの429リスク</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-23">2026.09.23</time></div>
+</header>
+<div class="article-body">
+<p>筆者はVercel Functions上で稼働する自作Webアプリから、GitHub APIを未認証で呼び出しています。未認証リクエストの上限は<strong>60回/時間</strong>ですが、この制限は呼び出し元IPアドレス単位でカウントされる仕様です。Vercelのようなサーバーレス環境は複数の利用者・アプリで送信元IPを共有することがあるため、自分のリクエスト頻度が低くても他者の呼び出しと合算されて上限に達し、429エラーになりうると気づいたことを紹介しています。</p>
+<p>「自分の呼び出し頻度と無関係に429が返りうる。『1時間に1回だから引っかからない』は、自分のリクエストだけを数えた見積もりでした」と振り返っています。対策として、API取得に失敗した場合は前回取得済みのデータを保持し続ける設計に変更したとのことです。</p>
+<p>本記事は2026年9月1日時点の実測に基づくもので、筆者はまだ実際に429エラーを経験したわけではなく、運用を続けた上で追記する予定だとしています。対処法の一つとしてPersonal Access Token（GitHubの個人用アクセストークン）を使えば上限が5000回/時間に上がる方法もありますが、今回は未採用とのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>GitHub APIの未認証リクエストは、送信元IPアドレスに紐づけてレート制限がカウントされる仕様である</li><li>GitHub APIの未認証リクエストの上限は60回/時間である</li><li>筆者はVercel Functionsなどサーバーレス環境からGitHub APIを未認証で呼び出している</li><li>Vercel Functions等のサーバーレス環境は複数の利用者・アプリで送信元IPを共有することがある</li><li>共有IPの場合、自分のリクエスト頻度が低くても、同じIPを使う他者の呼び出しと合算されて上限に達し429エラーになりうる</li><li>リポジトリ情報1件を取得した際のレスポンスサイズは約6.0KBだった</li><li>筆者はAPI取得に失敗した場合、前回取得済みのデータを保持し続ける設計に変更した</li><li>データ更新処理はdelete→insertを同一トランザクション内で実行しており、分離して実行すると表示が空になるリスクがあるとしている</li><li>本記事の実測時点は2026年9月1日である</li><li>筆者は記事執筆時点で実際に429エラーを経験したわけではなく、運用を続けた上で追記する予定だとしている</li><li>対処法の一つとしてPersonal Access Tokenを使えば上限が5000回/時間に上がる方法があるが、筆者はこれを未採用としている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>自分の呼び出し頻度と無関係に429が返りうる。「1時間に1回だから引っかからない」は、自分のリクエストだけを数えた見積もりでした。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/matsutake_prgrm/articles/github-api-unauthenticated-rate-limit-is-per-ip" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/matsutake_prgrm/articles/github-api-unauthenticated-rate-limit-is-per-ip" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=GitHub%20API%E6%9C%AA%E8%AA%8D%E8%A8%BC%E3%83%AC%E3%83%BC%E3%83%88%E5%88%B6%E9%99%90%E3%80%81%E5%85%B1%E6%9C%89IP%E3%81%A7%E3%81%AE429%E3%83%AA%E3%82%B9%E3%82%AF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-23%2Fa3b35970d951ecb1%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=GitHub%20API%E6%9C%AA%E8%AA%8D%E8%A8%BC%E3%83%AC%E3%83%BC%E3%83%88%E5%88%B6%E9%99%90%E3%80%81%E5%85%B1%E6%9C%89IP%E3%81%A7%E3%81%AE429%E3%83%AA%E3%82%B9%E3%82%AF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-23/a3b35970d951ecb1/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-23%2Fa3b35970d951ecb1%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1731d71bbecc301f/"><span>前の記事</span>Claude Code PluginsでSkillをパッケージ管理</a><a class="next" href="../dec9ea6853e4b700/"><span>次の記事</span>自動HTTPS標準搭載のGo製Webサーバー「Caddy」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-23/">← 2026.09.23 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../5f6aee73be527756/">RustマクロにC言語を直書きできるライブラリ「cinrs」</a></h3>
+<p class="excerpt">筆者は、Rustのマクロ内にC言語のコードをそのまま書けるライブラリ「cinrs」を開発し、GitHub上（tanakh/cinrs）で公開しました。マクロに書かれたCコードはプリプロセス・構文解析・意味解析を経て、外部のCコンパイラに…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../49e772c3bf832fe5/">定石が通用しなかった医療データのdbtモデリング</a></h3>
+<p class="excerpt">ホワイトヘルスケア開発部データチームの石田氏は、レセプト（診療報酬明細書）データをdbt（SQLベースのデータ変換ツール）でモデリングする際、公式のベストプラクティスがそのままでは通用せず、医療データ特有の事情に合わせて設計を調整した経…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>techblog.whitehealthcare.co.jp</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../9fee9bfca2293553/">Cloudflare AI Gateway、予算ベースのAIモデル自動切替</a></h3>
+<p class="excerpt">Cloudflareのシニアソリューションエンジニアによる記事では、AI Gatewayの「Spend Limits」（コスト上限ルール）と「Dynamic Routing」（モデル自動フォールバック）を組み合わせ、LLM利用コストを予…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloudflare AI Gateway、予算ベースのAIモデル自動切替 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Cloudflareのシニアソリューションエンジニアによる記事では、AI Gatewayの「Spend Limits」（コスト上限ルール）と「Dynamic Routing」（モデル自動フォールバック）を組み合わせ、LLM利用コストを予算内に収める実装方法が紹介されています。実装例では1日あたり100ドル（Claude…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Cloudflare AI Gateway、予算ベースのAIモデル自動切替 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Cloudflareのシニアソリューションエンジニアによる記事では、AI Gatewayの「Spend Limits」（コスト上限ルール）と「Dynamic Routing」（モデル自動フォールバック）を組み合わせ、LLM利用コストを予算内に収める実装方法が紹介されています。実装例では1日あたり100ドル（Claude…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/9fee9bfca2293553/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/9fee9bfca2293553/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Cloudflare AI Gateway、予算ベースのAIモデル自動切替", "datePublished": "2026-09-23", "description": "Cloudflareのシニアソリューションエンジニアによる記事では、AI Gatewayの「Spend Limits」（コスト上限ルール）と「Dynamic Routing」（モデル自動フォールバック）を組み合わせ、LLM利用コストを予算内に収める実装方法が紹介されています。実装例では1日あたり100ドル（Claude Sonnet利用分）の予算を設定し、超…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/9fee9bfca2293553/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/takaakisuzuki/articles/e6939a04f9ea9b", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-23/">2026.09.23 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Cloudflare AI Gateway、予算ベースのAIモデル自動切替</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-23">2026.09.23</time></div>
+</header>
+<div class="article-body">
+<p>Cloudflareのシニアソリューションエンジニアによる記事では、AI Gatewayの「Spend Limits」（コスト上限ルール）と「Dynamic Routing」（モデル自動フォールバック）を組み合わせ、LLM利用コストを予算内に収める実装方法が紹介されています。実装例では1日あたり100ドル（Claude Sonnet利用分）の予算を設定し、超過時にClaude Sonnet→Claude Haiku→Llama 3.2という3段階でモデルを自動的に切り替えます。</p>
+<p>1つのゲートウェイに設定できるルール数は上限20件です。AnthropicやOpenAIのプロバイダは予算超過時にリクエストを制限しますが、Workers AIは予算に関わらず常にリクエストを通す<strong>fail-open</strong>仕様のため、最終フォールバック先として想定されています。キャッシュヒットしたリクエストはコスト0円として扱われます。</p>
+<p>Spend Limitsはeventually consistent（結果整合性、変更が即時ではなく一定時間内に反映される特性）であり、一時的に予算上限を超過する場合がある点や、Dynamic Routingのフォールバックがコスト超過だけでなくプロバイダ障害時にも動作する点が説明されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Cloudflare AI Gatewayには「Spend Limits」というコスト上限ルール設定機能がある。</li><li>Cloudflare AI Gatewayには「Dynamic Routing」という複数モデルの自動フォールバック機構がある。</li><li>記事の実装例では予算上限を1日あたり$100(Claude Sonnet利用分)に設定している。</li><li>記事の実装例では、Claude Sonnet→Claude Haiku→Llama 3.2という3段階のカスケード構成でフォールバックさせている。</li><li>1つのゲートウェイに設定できるルール数の上限は20ルールである。</li><li>Anthropic・OpenAIのプロバイダは予算超過時にリクエストを制限する。</li><li>Workers AIは予算に関わらず常にリクエストを通過させる(fail-open)仕様で、最終フォールバック先として使うことが想定されている。</li><li>キャッシュヒットしたリクエストはコスト0円として扱われる。</li><li>Spend Limitsはeventually consistentであり、一時的に予算上限を超過する場合がある。</li><li>Dynamic Routingのフォールバック機構は、コスト超過時だけでなくプロバイダ障害時にも動作する。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Spend Limits と Dynamic Route の通常の fallback が拾って自動的に切り替わる</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/takaakisuzuki/articles/e6939a04f9ea9b" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/takaakisuzuki/articles/e6939a04f9ea9b" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Cloudflare%20AI%20Gateway%E3%80%81%E4%BA%88%E7%AE%97%E3%83%99%E3%83%BC%E3%82%B9%E3%81%AEAI%E3%83%A2%E3%83%87%E3%83%AB%E8%87%AA%E5%8B%95%E5%88%87%E6%9B%BF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-23%2F9fee9bfca2293553%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Cloudflare%20AI%20Gateway%E3%80%81%E4%BA%88%E7%AE%97%E3%83%99%E3%83%BC%E3%82%B9%E3%81%AEAI%E3%83%A2%E3%83%87%E3%83%AB%E8%87%AA%E5%8B%95%E5%88%87%E6%9B%BF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-23/9fee9bfca2293553/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-23%2F9fee9bfca2293553%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../49e772c3bf832fe5/"><span>前の記事</span>定石が通用しなかった医療データのdbtモデリング</a><a class="next" href="../1731d71bbecc301f/"><span>次の記事</span>Claude Code PluginsでSkillをパッケージ管理</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-23/">← 2026.09.23 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../5f6aee73be527756/">RustマクロにC言語を直書きできるライブラリ「cinrs」</a></h3>
+<p class="excerpt">筆者は、Rustのマクロ内にC言語のコードをそのまま書けるライブラリ「cinrs」を開発し、GitHub上（tanakh/cinrs）で公開しました。マクロに書かれたCコードはプリプロセス・構文解析・意味解析を経て、外部のCコンパイラに…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../49e772c3bf832fe5/">定石が通用しなかった医療データのdbtモデリング</a></h3>
+<p class="excerpt">ホワイトヘルスケア開発部データチームの石田氏は、レセプト（診療報酬明細書）データをdbt（SQLベースのデータ変換ツール）でモデリングする際、公式のベストプラクティスがそのままでは通用せず、医療データ特有の事情に合わせて設計を調整した経…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>techblog.whitehealthcare.co.jp</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../1731d71bbecc301f/">Claude Code PluginsでSkillをパッケージ管理</a></h3>
+<p class="excerpt">筆者は、複数のリポジトリにSkillをコピーして配布していた運用に悩み、Claude CodeのPlugins機能を試したことを紹介しています。Pluginsはスキル・サブエージェント・フックをまとめて配布・管理できる機能で、バージョン…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>syu-m-5151.hatenablog.com</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

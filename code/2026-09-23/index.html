@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>caddyserver/caddy の modules/caddyhttp/ip_range.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Caddyはミドルウェアを自作できるほど拡張性が高いGo製Webサーバーで、実運用されるOSSとしてコード品質が高いことで知られています。今日読むip_range.goは「アクセス元IPがCIDR範囲に含まれるか」を判定するための仕組みの一部。設定ファイルに書かれた&quot;192.168.0.0/24&quot;のような文字列を、Go…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="caddyserver/caddy の modules/caddyhttp/ip_range.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Caddyはミドルウェアを自作できるほど拡張性が高いGo製Webサーバーで、実運用されるOSSとしてコード品質が高いことで知られています。今日読むip_range.goは「アクセス元IPがCIDR範囲に含まれるか」を判定するための仕組みの一部。設定ファイルに書かれた&quot;192.168.0.0/24&quot;のような文字列を、Go…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-23/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-23/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.23</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>caddyserver/caddy の <code>modules/caddyhttp/ip_range.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/caddyserver/caddy/blob/HEAD/modules/caddyhttp/ip_range.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-23">2026.09.23</time></div>
+</header>
+<div class="article-body">
+<p>Caddyはミドルウェアを自作できるほど拡張性が高いGo製Webサーバーで、実運用されるOSSとしてコード品質が高いことで知られています。今日読むip_range.goは「アクセス元IPがCIDR範囲に含まれるか」を判定するための仕組みの一部。設定ファイルに書かれた&quot;192.168.0.0/24&quot;のような文字列を、Goの型安全なIPアドレス表現に変換する処理は、Web開発の実務で頻出するパターンなので教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>func (s *StaticIPRange) Provision(ctx caddy.Context) error {
+	for _, str := range s.Ranges {
+		prefix, err := CIDRExpressionToPrefix(str)
+		if err != nil {
+			return err
+		}
+		s.ranges = append(s.ranges, prefix)
+	}
+
+	return nil
+}
+
+// …略…
+
+// CIDRExpressionToPrefix takes a string which could be either a
+// CIDR expression or a single IP address, and returns a netip.Prefix.
+func CIDRExpressionToPrefix(expr string) (netip.Prefix, error) {
+	// Having a slash means it should be a CIDR expression
+	if strings.Contains(expr, &quot;/&quot;) {
+		prefix, err := netip.ParsePrefix(expr)
+		if err != nil {
+			return netip.Prefix{}, fmt.Errorf(&quot;parsing CIDR expression: &#x27;%s&#x27;: %v&quot;, expr, err)
+		}
+		return prefix, nil
+	}
+
+	// Otherwise it&#x27;s likely a single IP address
+	parsed, err := netip.ParseAddr(expr)
+	if err != nil {
+		return netip.Prefix{}, fmt.Errorf(&quot;invalid IP address: &#x27;%s&#x27;: %v&quot;, expr, err)
+	}
+	prefix := netip.PrefixFrom(parsed, parsed.BitLen())
+	return prefix, nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func (s *StaticIPRange) Provision(ctx caddy.Context) error {</code></pre><p>メソッドの定義です。`func (s *StaticIPRange)` の部分は「レシーバ」と呼ばれ、`StaticIPRange`という構造体に紐づくメソッドであることを示します。`*StaticIPRange`の`*`はポインタ型という意味で、「このメソッドは構造体のコピーではなく実体そのものを操作する（書き換えられる）」ことを示しています。戻り値の`error`はGoの標準的なエラー型です。</p></div><div class="walk-step"><pre class="walk-quote"><code>for _, str := range s.Ranges {</code></pre><p>`range`はスライス（可変長配列）やmapを1要素ずつ取り出すループ構文です。`range s.Ranges`は「インデックス, 値」の2つを返しますが、ここではインデックスを使わないので`_`（ブランク識別子。値を捨てる時に使う）を置き、値だけを`str`という変数名で受け取っています。`:=`は「新しい変数を宣言しつつ代入する」短縮記法です。</p></div><div class="walk-step"><pre class="walk-quote"><code>prefix, err := CIDRExpressionToPrefix(str)</code></pre><p>Goの関数は複数の値を同時に返せます。この行はその代表例で、変換結果の`prefix`と、失敗したかどうかを表す`err`を一度に受け取っています。呼び出す`CIDRExpressionToPrefix`は後ろで定義されている関数で、文字列をIPアドレスの範囲表現に変換します。</p></div><div class="walk-step"><pre class="walk-quote"><code>if err != nil {
+			return err
+		}</code></pre><p>Goには例外機構（try/catch）がなく、エラーは戻り値として渡されます。そのため「関数を呼んだ直後にerrがnil（何もない状態）でないかチェックし、あればすぐreturnして呼び出し元に伝える」というこのパターンが、Goコードの至るところに現れます。慣れないうちは冗長に見えますが、これがGoの標準的な書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>s.ranges = append(s.ranges, prefix)</code></pre><p>`append`はスライスに要素を追加する組み込み関数です。スライスは固定長ではないので、`append`は必要なら内部でより大きな配列を確保し直します。`s.ranges = append(...)`のように必ず戻り値を元の変数に代入し直す点がポイントです（append自体は元のスライスを直接変更しない場合があるため）。</p></div><div class="walk-step"><pre class="walk-quote"><code>func CIDRExpressionToPrefix(expr string) (netip.Prefix, error) {</code></pre><p>こちらは構造体に紐づかない普通の関数です。引数`expr string`は「exprという名前の、string型の引数」という意味（Goは型を変数名の後ろに書きます）。戻り値の`(netip.Prefix, error)`のようにカッコで複数の型を並べると、複数の値を返す関数だと宣言できます。`netip.Prefix`はGo標準ライブラリの`net/netip`パッケージが提供する、CIDR表記（IPアドレス＋ビット長）を表す型です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if strings.Contains(expr, &quot;/&quot;) {</code></pre><p>`strings`パッケージの`Contains`関数で、文字列に`/`が含まれるかを判定しています。`192.168.0.0/24`のようなCIDR表記にはスラッシュがあり、単なる`192.168.0.1`のような単一IPにはないので、この有無で処理を分岐させています。</p></div><div class="walk-step"><pre class="walk-quote"><code>prefix, err := netip.ParsePrefix(expr)</code></pre><p>`netip.ParsePrefix`は標準ライブラリの関数で、`&quot;192.168.0.0/24&quot;`のような文字列を解析して`netip.Prefix`型の値に変換します。文字列を自作でパースせず、標準ライブラリの型安全な関数に任せているのは、実務でよく見る「車輪の再発明をしない」判断です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return netip.Prefix{}, fmt.Errorf(&quot;parsing CIDR expression: &#x27;%s&#x27;: %v&quot;, expr, err)</code></pre><p>`netip.Prefix{}`はその型の「ゼロ値」（何も入っていない空の状態）を作るリテラルです。エラー時は意味のある値がないので空の構造体を返しています。`fmt.Errorf`は`%s`や`%v`のようなプレースホルダーに値を埋め込んで新しいエラーを作る関数で、`%v`は元のエラー`err`をそのまま文字列化して埋め込み、「どの入力が」「元々どんなエラーだったか」の両方を保持したメッセージを作っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>parsed, err := netip.ParseAddr(expr)</code></pre><p>スラッシュがない場合（単一IPアドレスの場合）の分岐です。今度は`netip.ParseAddr`で単なるIPアドレス文字列（例: &quot;192.168.0.1&quot;）をパースしています。関数名の違い（ParsePrefix vs ParseAddr）から、標準ライブラリがCIDR用とアドレス単体用で型・関数を使い分けていることが読み取れます。</p></div><div class="walk-step"><pre class="walk-quote"><code>prefix := netip.PrefixFrom(parsed, parsed.BitLen())</code></pre><p>単一IPアドレスを「範囲が自分自身だけのCIDR」として扱うための変換です。`parsed.BitLen()`はそのIPアドレスの全ビット数（IPv4なら32、IPv6なら128）を返すメソッドで、それをそのままプレフィックス長として使うことで「このIP1つだけを指す範囲」を表現しています。単一IPとCIDR範囲を同じ`netip.Prefix`型で統一的に扱えるようにする、地味だが実用的なテクニックです。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは「値, err := 関数呼び出し」の直後に「if err != nil { return err }」を書くのが基本パターン。例外機構がない代わりにこの形を徹底することで、エラーの発生源と伝播経路がコードを読むだけで追えるようになります。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-22/"><span>前の日</span>wonderwhy-er/DesktopCommanderMCP</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-23/">← 2026.09.23 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

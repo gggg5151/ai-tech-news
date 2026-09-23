@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPT-6向けプロンプトキャッシング機能を強化 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenAIはGPT-6向けに改善された「プロンプトキャッシング」を発表しました。複数のAPI呼び出しにまたがって共有されるコンテキストを再利用することで、応答時間の短縮とコスト削減を実現するとしています。キャッシュされた入力トークンには最大90%の割引が適用され、共有プレフィックスが30分以内に再利用された場合に割引…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="GPT-6向けプロンプトキャッシング機能を強化 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenAIはGPT-6向けに改善された「プロンプトキャッシング」を発表しました。複数のAPI呼び出しにまたがって共有されるコンテキストを再利用することで、応答時間の短縮とコスト削減を実現するとしています。キャッシュされた入力トークンには最大90%の割引が適用され、共有プレフィックスが30分以内に再利用された場合に割引…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/34776e1bffa174c0/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/34776e1bffa174c0/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "GPT-6向けプロンプトキャッシング機能を強化", "datePublished": "2026-09-23", "description": "OpenAIはGPT-6向けに改善された「プロンプトキャッシング」を発表しました。複数のAPI呼び出しにまたがって共有されるコンテキストを再利用することで、応答時間の短縮とコスト削減を実現するとしています。キャッシュされた入力トークンには最大90%の割引が適用され、共有プレフィックスが30分以内に再利用された場合に割引が有効になります。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-23/34776e1bffa174c0/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://openai.com/index/better-prompt-caching-for-gpt-6", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-23/">2026.09.23 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>GPT-6向けプロンプトキャッシング機能を強化</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-09-23">2026.09.23</time></div>
+</header>
+<div class="article-body">
+<p>OpenAIはGPT-6向けに改善された「プロンプトキャッシング」を発表しました。複数のAPI呼び出しにまたがって共有されるコンテキストを再利用することで、応答時間の短縮とコスト削減を実現するとしています。キャッシュされた入力トークンには最大90%の割引が適用され、共有プレフィックスが30分以内に再利用された場合に割引が有効になります。</p>
+<p>新機能として、キャッシュ性能を監視する「Prompt Caching Dashboard」、キャッシュミスを診断する「prompt caching diagnostics tool」、明示的な「キャッシュブレークポイント」の設定、推論努力（reasoning effort、モデルが回答を出す際にかける計算コストの度合い）を途中で変更してもキャッシュを保持できる機能、事前にキャッシュを温める「キャッシュプリウォーミング」などが提供されます。数時間かかる複雑なタスクに対応する「persistent agents」も紹介されており、コードベースのリファクタリングや研究資料作成などの用途が想定されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>キャッシュされた入力トークンには最大90%の割引が適用される</li><li>共有プレフィックスが30分以内に再利用された場合にキャッシュ割引が適用される</li><li>「persistent agents」が数時間かかる複雑なタスクの実行に対応するとしている</li><li>新機能として「Prompt Caching Dashboard」が提供され、キャッシュ性能を監視できる</li><li>新機能として「prompt caching diagnostics tool」が提供され、キャッシュミスを診断できる</li><li>明示的な「キャッシュブレークポイント」を設定できる機能がある</li><li>推論努力（reasoning effort）を途中で変更してもキャッシュを保持できる機能がある</li><li>キャッシュを事前に温めておく「キャッシュプリウォーミング」機能がある</li><li><code>configuration_update</code>というパラメータで推論努力を調整できる</li><li>想定される利用例として、コードベースのリファクタリング、研究資料の作成、プレゼンテーション生成が挙げられている</li></ul></section>
+
+<aside class="source-box"><a href="https://openai.com/index/better-prompt-caching-for-gpt-6" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">openai.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=GPT-6%E5%90%91%E3%81%91%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%B3%E3%82%B0%E6%A9%9F%E8%83%BD%E3%82%92%E5%BC%B7%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-23%2F34776e1bffa174c0%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=GPT-6%E5%90%91%E3%81%91%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%B3%E3%82%B0%E6%A9%9F%E8%83%BD%E3%82%92%E5%BC%B7%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-23/34776e1bffa174c0/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-23%2F34776e1bffa174c0%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../c45396bb94fccb67/"><span>前の記事</span>GPT-6、2005年から未解決だったエニグマ暗号を解読と報道</a><a class="next" href="../5f6aee73be527756/"><span>次の記事</span>RustマクロにC言語を直書きできるライブラリ「cinrs」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-23/">← 2026.09.23 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../e707060bcf13c472/">OpenAI、9月29日に新AIエージェント発表</a></h3>
+<p class="excerpt">OpenAIは米国時間2026年9月29日、サンフランシスコのフォート・メイソンで年次開発者会議「DevDay」を開催し、新しいAIエージェントを発表する予定です。複数のステップが必要な企業業務を、OpenAIのプラットフォーム上で直接…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>forbesjapan.com</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../29d2a4509f7b6303/">Claude Opus 5.5、コスト40%減と高速化を実現</a></h3>
+<p class="excerpt">Anthropicの発表によると、新フラッグシップモデル「Claude Opus 5.5」が登場しました。前世代のOpus 5から性能が改善されており、68万行規模のコード移行を1日未満で完了した事例が報告されているといいます。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../cf3bd4f2fda555f0/">GPT-6 Sol/Luna、API価格50%引き下げ</a></h3>
+<p class="excerpt">OpenAIの発表によると、新モデル「GPT-6 Sol」と「GPT-6 Luna」が登場しました。今月初めに発表された「GPT-6 Astra」と同様の訓練方法で開発されており、API価格は前世代比で50%引き下げられたとしています。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>openai.com</span><time datetime="2026-09-23">2026.09.23</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
