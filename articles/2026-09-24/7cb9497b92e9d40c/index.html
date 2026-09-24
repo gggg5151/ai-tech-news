@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>静的書き出しで4,710個の無駄ファイルを発見した話 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="小学生向けニュースサイト「こどもニュース」を運営する筆者が、Cloudflare Pages無料プラン（ファイル数上限20,000）の上限に近づいていた原因を調べたところ、Next.jsの静的書き出しで生成される、クライアント側遷移用のRSC（React Server Components）ペイロード（.txtファイル…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="静的書き出しで4,710個の無駄ファイルを発見した話 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="小学生向けニュースサイト「こどもニュース」を運営する筆者が、Cloudflare Pages無料プラン（ファイル数上限20,000）の上限に近づいていた原因を調べたところ、Next.jsの静的書き出しで生成される、クライアント側遷移用のRSC（React Server Components）ペイロード（.txtファイル…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-24/7cb9497b92e9d40c/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-24/7cb9497b92e9d40c/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "静的書き出しで4,710個の無駄ファイルを発見した話", "datePublished": "2026-09-24", "description": "小学生向けニュースサイト「こどもニュース」を運営する筆者が、Cloudflare Pages無料プラン（ファイル数上限20,000）の上限に近づいていた原因を調べたところ、Next.jsの静的書き出しで生成される、クライアント側遷移用のRSC（React Server Components）ペイロード（.txtファイル）の大半に誰もアクセスしていないことが分…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-24/7cb9497b92e9d40c/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/kodomo_news/articles/156-drop-unused-rsc-payloads", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-24/">2026.09.24 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>静的書き出しで4,710個の無駄ファイルを発見した話</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
+</header>
+<div class="article-body">
+<p>小学生向けニュースサイト「こどもニュース」を運営する筆者が、Cloudflare Pages無料プラン（ファイル数上限20,000）の上限に近づいていた原因を調べたところ、Next.jsの静的書き出しで生成される、クライアント側遷移用の<strong>RSC</strong>（React Server Components）ペイロード（.txtファイル）の大半に誰もアクセスしていないことが分かりました。</p>
+<p>2026年8月22日時点の実測では、全6,025ファイル中<strong>4,710ファイル、約78%</strong>がこの不要な.txtファイルだったといいます。記事を1日6本追加すると、対応前は1日あたり55ファイルが増える計算だったとのことです。</p>
+<p>ビルド後処理で不要な.txtファイルを削除する対応を実施した結果、ファイル数は6,025から1,443に、容量は620MBから355MBに減少。ファイル数上限到達までの余裕期間は<strong>7か月から2年以上</strong>に延びたということです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>対象サイトは「こどもニュース」という小学生向けニュースサイトである</li><li>ホスティングにはCloudflare Pagesの無料プランを使用している</li><li>Cloudflare Pages無料プランのファイル数上限は20,000ファイルである</li><li>2026年8月22日時点の実測で、全6,025ファイル中4,710ファイルが不要な.txtファイル（RSCペイロード）だった</li><li>不要な.txtファイルの割合は全体の約78%だった</li><li>ビルド後処理で不要な.txtファイルを削除する対応を実施した</li><li>対応後、ファイル数は6,025から1,443に減少した</li><li>対応後、容量は620MBから355MBに減少した</li><li>ファイル数上限到達までの余裕期間は7か月から2年以上に延びた</li><li>記事を1日6本追加すると、対応前は1日あたり55ファイル増加していた</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>配ってはいるが、誰も取りに来ていないファイルでした。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/kodomo_news/articles/156-drop-unused-rsc-payloads" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/kodomo_news/articles/156-drop-unused-rsc-payloads" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E9%9D%99%E7%9A%84%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%97%E3%81%A74%2C710%E5%80%8B%E3%81%AE%E7%84%A1%E9%A7%84%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%99%BA%E8%A6%8B%E3%81%97%E3%81%9F%E8%A9%B1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-24%2F7cb9497b92e9d40c%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E9%9D%99%E7%9A%84%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%97%E3%81%A74%2C710%E5%80%8B%E3%81%AE%E7%84%A1%E9%A7%84%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%99%BA%E8%A6%8B%E3%81%97%E3%81%9F%E8%A9%B1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-24/7cb9497b92e9d40c/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-24%2F7cb9497b92e9d40c%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../0b1d1d6766ca9d76/"><span>前の記事</span>MCP接続はなぜ危険になりうるか　4パターンと確認すべき7項目</a><a class="next" href="../d213379e61d93cf1/"><span>次の記事</span>標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-24/">← 2026.09.24 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../0b1d1d6766ca9d76/">MCP接続はなぜ危険になりうるか　4パターンと確認すべき7項目</a></h3>
+<p class="excerpt">MCP（Model Context Protocol）の仕様は、認可（authorization）を「任意」、人による確認（Human in the Loop）を「推奨」にとどめています。この記事は、接続しただけで即座に情報が漏洩するわ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../d213379e61d93cf1/">標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」</a></h3>
+<p class="excerpt">Go 1.22以降で導入された標準net/http.ServeMuxのルーティング機能を土台に、薄い便利機能を追加したWebフレームワーク「Mach」を紹介する記事です。GinやEchoほどの大規模フレームワークは不要だが、素のnet/…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../9af8d266b3274abd/">ORM選定に迷ったらPoEAAの設計パターンに立ち返る</a></h3>
+<p class="excerpt">TypeScript案件でORM（Object-Relational Mapper）を選ぶ際、Martin FowlerのPoEAA（Patterns of Enterprise Application Architecture）で紹介…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

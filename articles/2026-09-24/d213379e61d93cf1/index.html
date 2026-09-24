@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Go 1.22以降で導入された標準net/http.ServeMuxのルーティング機能を土台に、薄い便利機能を追加したWebフレームワーク「Mach」を紹介する記事です。GinやEchoほどの大規模フレームワークは不要だが、素のnet/httpでは物足りない、という中間ニーズに応える選択肢として位置づけられています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Go 1.22以降で導入された標準net/http.ServeMuxのルーティング機能を土台に、薄い便利機能を追加したWebフレームワーク「Mach」を紹介する記事です。GinやEchoほどの大規模フレームワークは不要だが、素のnet/httpでは物足りない、という中間ニーズに応える選択肢として位置づけられています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-24/d213379e61d93cf1/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-24/d213379e61d93cf1/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」", "datePublished": "2026-09-24", "description": "Go 1.22以降で導入された標準net/http.ServeMuxのルーティング機能を土台に、薄い便利機能を追加したWebフレームワーク「Mach」を紹介する記事です。GinやEchoほどの大規模フレームワークは不要だが、素のnet/httpでは物足りない、という中間ニーズに応える選択肢として位置づけられています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-24/d213379e61d93cf1/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/nonejp/articles/58b4439323c814", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-24/">2026.09.24 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
+</header>
+<div class="article-body">
+<p>Go 1.22以降で導入された標準net/http.ServeMuxのルーティング機能を土台に、薄い便利機能を追加したWebフレームワーク「<strong>Mach</strong>」を紹介する記事です。GinやEchoほどの大規模フレームワークは不要だが、素のnet/httpでは物足りない、という中間ニーズに応える選択肢として位置づけられています。</p>
+<p>ルーティングは&quot;GET /posts/{id}&quot;のような記法で、パラメータ取得はc.Param(&quot;id&quot;)。GET・POST・PUT・PATCH・DELETEなどのメソッドヘルパーやJSON()・DecodeJSON()・Query()を含むContext APIを備え、ミドルウェアはGo標準のfunc(http.Handler) http.Handler形式に準拠しています。Zero dependencies（外部依存なし）、MITライセンスで提供されています。</p>
+<p>記事内のベンチマーク（ns/op）では、Machが1943.8、Ginが1720.4、Echoが1843.0、標準ServeMuxが2400.2という結果でした。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>MachはGo 1.22以降を必須要件とする</li><li>Machは標準net/http.ServeMuxを基盤に構築されている</li><li>Machのルーティング記法の例は &quot;GET /posts/{id}&quot; のような形式である</li><li>パラメータ取得にはc.Param(&quot;id&quot;)を使う</li><li>MachはGET、POST、PUT、PATCH、DELETE、HEAD、OPTIONS、Routeといったメソッドヘルパーを提供する</li><li>MachのContext APIにはJSON()、DecodeJSON()、Param()、Query()などのメソッドがある</li><li>MachのミドルウェアはGo標準の関数形式func(http.Handler) http.Handlerに準拠する</li><li>記事内のベンチマーク（ns/op）ではMachが1943.8、Ginが1720.4、Echoが1843.0、標準ServeMuxが2400.2という結果だった</li><li>MachはMITライセンスで提供されている</li><li>MachはZero dependencies（外部依存なし）を特徴として掲げている</li><li>Mach公式ドキュメントは「Go 1.22で導入された新しいルーティング機能を活用しつつ、薄い便利レイヤーを追加している」と説明している</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Built directly on Go&#x27;s standard library net/http package, Mach leverages the new routing capabilities introduced in Go 1.22 while adding a thin layer of convenience.</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/nonejp/articles/58b4439323c814" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/nonejp/articles/58b4439323c814" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E6%A8%99%E6%BA%96net/http%E3%81%AE%E8%96%84%E3%81%84%E3%83%A9%E3%83%83%E3%83%91%E3%83%BC%E3%80%81Go%E3%81%AEWeb%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%E3%80%8CMach%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-24%2Fd213379e61d93cf1%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E6%A8%99%E6%BA%96net/http%E3%81%AE%E8%96%84%E3%81%84%E3%83%A9%E3%83%83%E3%83%91%E3%83%BC%E3%80%81Go%E3%81%AEWeb%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%E3%80%8CMach%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-24/d213379e61d93cf1/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-24%2Fd213379e61d93cf1%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../7cb9497b92e9d40c/"><span>前の記事</span>静的書き出しで4,710個の無駄ファイルを発見した話</a><a class="next" href="../9af8d266b3274abd/"><span>次の記事</span>ORM選定に迷ったらPoEAAの設計パターンに立ち返る</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-24/">← 2026.09.24 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../0b1d1d6766ca9d76/">MCP接続はなぜ危険になりうるか　4パターンと確認すべき7項目</a></h3>
+<p class="excerpt">MCP（Model Context Protocol）の仕様は、認可（authorization）を「任意」、人による確認（Human in the Loop）を「推奨」にとどめています。この記事は、接続しただけで即座に情報が漏洩するわ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../7cb9497b92e9d40c/">静的書き出しで4,710個の無駄ファイルを発見した話</a></h3>
+<p class="excerpt">小学生向けニュースサイト「こどもニュース」を運営する筆者が、Cloudflare Pages無料プラン（ファイル数上限20,000）の上限に近づいていた原因を調べたところ、Next.jsの静的書き出しで生成される、クライアント側遷移用の…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../9af8d266b3274abd/">ORM選定に迷ったらPoEAAの設計パターンに立ち返る</a></h3>
+<p class="excerpt">TypeScript案件でORM（Object-Relational Mapper）を選ぶ際、Martin FowlerのPoEAA（Patterns of Enterprise Application Architecture）で紹介…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
