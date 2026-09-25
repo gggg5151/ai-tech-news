@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>docker/compose の internal/paths/paths.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="docker/composeは、あのdocker compose upコマンドを実装しているCLIツールです。このファイルはファイルパスを扱うユーティリティで、「あるパスが別のパスの子（配下）にあるかどうか」を判定するIsChild関数を持っています。単純に見える処理ですが、大文字小文字を区別するOS/しないOSが混在…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="docker/compose の internal/paths/paths.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="docker/composeは、あのdocker compose upコマンドを実装しているCLIツールです。このファイルはファイルパスを扱うユーティリティで、「あるパスが別のパスの子（配下）にあるかどうか」を判定するIsChild関数を持っています。単純に見える処理ですが、大文字小文字を区別するOS/しないOSが混在…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-25/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-25/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.25</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>docker/compose の <code>internal/paths/paths.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/docker/compose/blob/HEAD/internal/paths/paths.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-25">2026.09.25</time></div>
+</header>
+<div class="article-body">
+<p>docker/composeは、あの`docker compose up`コマンドを実装しているCLIツールです。このファイルはファイルパスを扱うユーティリティで、「あるパスが別のパスの子（配下）にあるかどうか」を判定する`IsChild`関数を持っています。単純に見える処理ですが、大文字小文字を区別するOS/しないOSが混在する現実に対応するための工夫があり、Goらしいエラーハンドリングと早期returnの書き方がまとまって学べるので選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>func IsChild(dir string, file string) bool {
+	if dir == &quot;&quot; {
+		return false
+	}
+
+	dir = filepath.Clean(dir)
+	current := filepath.Clean(file)
+	child := &quot;.&quot;
+	for {
+		if strings.EqualFold(dir, current) {
+			// If the two paths are exactly equal, then they must be the same.
+			if dir == current {
+				return true
+			}
+
+			// If the two paths are equal under case-folding, but not exactly equal,
+			// then the only way to check if they&#x27;re truly &quot;equal&quot; is to check
+			// to see if we&#x27;re on a case-insensitive file system.
+			//
+			// This is a notoriously tricky problem. See how dep solves it here:
+			// https://github.com/golang/dep/blob/v0.5.4/internal/fs/fs.go#L33
+			//
+			// because you can mount case-sensitive filesystems onto case-insensitive
+			// file-systems, and vice versa :scream:
+			//
+			// We want to do as much of this check as possible with strings-only
+			// (to avoid a file system read and error handling), so we only
+			// do this check if we have no other choice.
+			dirInfo, err := os.Stat(dir)
+			if err != nil {
+				return false
+			}
+
+			currentInfo, err := os.Stat(current)
+			if err != nil {
+				return false
+			}
+
+			if !os.SameFile(dirInfo, currentInfo) {
+				return false
+			}
+			return true
+		}
+
+		if len(current) &lt;= len(dir) || current == &quot;.&quot; {
+			return false
+		}
+
+		cDir := filepath.Dir(current)
+		cBase := filepath.Base(current)
+		child = filepath.Join(cBase, child)
+		current = cDir
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func IsChild(dir string, file string) bool {</code></pre><p>funcは関数を定義するキーワード。IsChildが関数名、続く丸括弧の中身(dir string, file string)が引数リストで、両方ともstring型。丸括弧の外側にあるboolが戻り値の型で、Goでは戻り値の型を引数リストの後ろに書く。この関数は「fileがdirの配下（子）にあるか」をtrue/falseで返す。</p></div><div class="walk-step"><pre class="walk-quote"><code>if dir == &quot;&quot; {
+		return false
+	}</code></pre><p>早期return（ガード節）と呼ばれる書き方。dirが空文字列なら、その後の処理を続けても意味がないので、関数の先頭ですぐfalseを返して抜けてしまう。Goには例外機構がなく、こうして「まず異常系・自明なケースを弾いてから本処理を書く」パターンが多用される。</p></div><div class="walk-step"><pre class="walk-quote"><code>dir = filepath.Clean(dir)
+	current := filepath.Clean(file)</code></pre><p>filepath.Cleanはパスを正規化する標準ライブラリの関数で、例えば&quot;/foo/./bar/../baz&quot;を&quot;/foo/baz&quot;のように整理する。dirは既存の引数への再代入なので`=`、currentは新しい変数を宣言すると同時に代入するので`:=`（短縮変数宣言）を使っている。この`=`と`:=`の使い分けはGoの基本ルール。</p></div><div class="walk-step"><pre class="walk-quote"><code>child := &quot;.&quot;</code></pre><p>ループの中で使う作業用の文字列変数をここで宣言している。初期値の&quot;.&quot;は「カレントディレクトリ」を表す一般的な表記。</p></div><div class="walk-step"><pre class="walk-quote"><code>for {</code></pre><p>Goのforは条件式を書かずに`for {}`とだけ書くと無限ループになる（他言語のwhile(true)と同じ）。ループから抜けるにはbreakかreturnが必要で、この関数では内部の複数のreturn文だけでループを抜ける設計になっている。</p></div><div class="walk-step"><pre class="walk-quote"><code>if strings.EqualFold(dir, current) {</code></pre><p>strings.EqualFoldは大文字小文字の違いを無視して2つの文字列を比較する関数。例えば&quot;ABC&quot;と&quot;abc&quot;はtrueになる。ここではdirとcurrentが「大文字小文字を無視すれば」一致するかどうかを最初にチェックしている。</p></div><div class="walk-step"><pre class="walk-quote"><code>if dir == current {
+				return true
+			}</code></pre><p>EqualFoldで一致した上で、さらに`==`（厳密な完全一致、大文字小文字も区別する）で比較している。両方とも一致するなら文字列として完全に同じパスなので、迷わずtrueを返して関数を終える。</p></div><div class="walk-step"><pre class="walk-quote"><code>// This is a notoriously tricky problem. See how dep solves it here:
+			// https://github.com/golang/dep/blob/v0.5.4/internal/fs/fs.go#L33</code></pre><p>EqualFoldでは一致するのに`==`では一致しない＝大文字小文字だけが違うケースが起きたとき、それが本当に同じファイルかどうかはOSのファイルシステムが大文字小文字を区別するか（macOSやWindowsは基本区別しない、Linuxは区別する）に依存する。コード側は文字列だけでは判断できないと認めた上で、次の行から実際のファイルシステムに問い合わせて確認しに行く。</p></div><div class="walk-step"><pre class="walk-quote"><code>dirInfo, err := os.Stat(dir)
+			if err != nil {
+				return false
+			}</code></pre><p>os.Statはファイルやディレクトリのメタ情報（os.FileInfo型）を取得する標準ライブラリ関数。Goの多くの関数は(結果, error)の2つの値を返す設計になっており、呼び出し側はerrがnilでないかを毎回チェックする。ここでもStatに失敗したら（例えばパスが存在しない）、安全側に倒してfalseを返している。</p></div><div class="walk-step"><pre class="walk-quote"><code>if !os.SameFile(dirInfo, currentInfo) {
+				return false
+			}
+			return true</code></pre><p>os.SameFileは2つのFileInfoが実際に同一のファイル（同じinodeなど）を指しているかを判定する関数。先頭の`!`は否定演算子で、「同じファイルでない」場合にfalseを返し、それ以外（同じファイルだった）場合はtrueを返す。文字列だけでは決められなかった「大文字小文字違いだが実は同じファイルかもしれない」問題を、最終的にOSレベルの情報で決着させている。</p></div><div class="walk-step"><pre class="walk-quote"><code>if len(current) &lt;= len(dir) || current == &quot;.&quot; {
+			return false
+		}</code></pre><p>ループを終了させるもう一つの条件。lenは文字列の長さ（バイト数）を返す組み込み関数。currentを親ディレクトリへ遡っていった結果、dirと同じかそれより短くなった、あるいはルートまで遡り切って&quot;.&quot;になった場合は、もう一致する見込みがないのでfalseを返す。`||`は論理OR（どちらか一方でも真なら成立）。</p></div><div class="walk-step"><pre class="walk-quote"><code>cDir := filepath.Dir(current)
+		cBase := filepath.Base(current)
+		child = filepath.Join(cBase, child)
+		current = cDir</code></pre><p>filepath.Dirはパスから最後の要素を除いた「親ディレクトリ」部分を返し、filepath.Baseは逆に最後の要素だけを返す標準ライブラリ関数。例えば&quot;/foo/bar/baz&quot;ならDirは&quot;/foo/bar&quot;、Baseは&quot;baz&quot;になる。ここでcurrentを1階層ずつ親に向かって書き換えながらループの先頭（strings.EqualFoldでの比較）に戻ることで、ディレクトリツリーを下から上へ1段ずつ歩いてdirと一致するか確認していく。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは`結果, err := 何かの関数()`のあと必ず`if err != nil { return ... }`で即座に異常系を片付けてから次の処理に進む、というガード節スタイルの一貫性を意識すると、実務コードがぐっと読みやすくなる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-23/"><span>前の日</span>caddyserver/caddy</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-25/">← 2026.09.25 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

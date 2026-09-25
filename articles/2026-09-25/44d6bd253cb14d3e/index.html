@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>複数コンテナをまとめて動かすdocker/compose — 1年目向けエンジニア新聞</title>
+<meta name="description" content="複数コンテナで構成されるアプリケーションをCompose file形式で定義し、単一コマンドで起動・管理できるツール「Docker Compose」の公式リポジトリです。本体はGo言語で開発されており、Apache-2.0ライセンスで公開されています。スター数は38.2k、フォーク数は5.8k、オープンイシューは55件…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="複数コンテナをまとめて動かすdocker/compose — 1年目向けエンジニア新聞">
+<meta property="og:description" content="複数コンテナで構成されるアプリケーションをCompose file形式で定義し、単一コマンドで起動・管理できるツール「Docker Compose」の公式リポジトリです。本体はGo言語で開発されており、Apache-2.0ライセンスで公開されています。スター数は38.2k、フォーク数は5.8k、オープンイシューは55件…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-25/44d6bd253cb14d3e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-25/44d6bd253cb14d3e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "複数コンテナをまとめて動かすdocker/compose", "datePublished": "2026-09-25", "description": "複数コンテナで構成されるアプリケーションをCompose file形式で定義し、単一コマンドで起動・管理できるツール「Docker Compose」の公式リポジトリです。本体はGo言語で開発されており、Apache-2.0ライセンスで公開されています。スター数は38.2k、フォーク数は5.8k、オープンイシューは55件、mainブランチのコミット数は6,13…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-25/44d6bd253cb14d3e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/docker/compose", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-25/">2026.09.25 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>複数コンテナをまとめて動かすdocker/compose</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-25">2026.09.25</time></div>
+</header>
+<div class="article-body">
+<p>複数コンテナで構成されるアプリケーションをCompose file形式で定義し、単一コマンドで起動・管理できるツール「Docker Compose」の公式リポジトリです。本体はGo言語で開発されており、Apache-2.0ライセンスで公開されています。スター数は38.2k、フォーク数は5.8k、オープンイシューは55件、mainブランチのコミット数は6,139件です。</p>
+<p>「docker compose up」コマンドで定義済みのアプリケーション全体を起動できます。Windows/macOSではDocker Desktopに同梱されていますが、Linuxではリリースページからバイナリをダウンロードし、/usr/local/lib/docker/cli-pluginsなどに配置してインストールする必要があります。なお旧来のPython版はv1ブランチで別途提供されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Docker Composeは複数コンテナアプリケーションをCompose file形式で定義し実行するツールである</li><li>Compose fileの形式はcompose-spec.ioで規定されている</li><li>『docker compose up』コマンドで定義済みアプリケーション全体を起動できる</li><li>Windows/macOSではDocker Composeは Docker Desktop に同梱されている</li><li>Linux版はリリースページからバイナリをダウンロードし、/usr/local/lib/docker/cli-plugins または /usr/lib/docker/cli-plugins に配置してインストールする</li><li>リポジトリはApache-2.0ライセンスで公開されている</li><li>リポジトリは38.2kのスターを獲得している</li><li>リポジトリは5.8kのフォークがある</li><li>リポジトリには55件のオープンイシューがある</li><li>mainブランチには6,139件のコミットがある</li><li>Docker Composeの本体はGo言語で開発されている</li><li>Python版のDocker Composeはv1ブランチで利用可能である</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Define and run multi-container applications with Docker</blockquote><p class="quotes-source">出典: <a href="https://github.com/docker/compose" target="_blank" rel="noopener noreferrer">github.com</a></p></section>
+<aside class="source-box"><a href="https://github.com/docker/compose" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E8%A4%87%E6%95%B0%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E5%8B%95%E3%81%8B%E3%81%99docker/compose%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-25%2F44d6bd253cb14d3e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E8%A4%87%E6%95%B0%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E5%8B%95%E3%81%8B%E3%81%99docker/compose%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-25/44d6bd253cb14d3e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-25%2F44d6bd253cb14d3e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../5da37b2a9f2d8550/"><span>前の記事</span>実装前にAIと仕様を合意する、Quint読解入門</a><a class="next" href="../6e457314271c39ac/"><span>次の記事</span>複数のAIエージェントを並列比較するOrca</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-25/">← 2026.09.25 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../6e457314271c39ac/">複数のAIエージェントを並列比較するOrca</a></h3>
+<p class="excerpt">「AI Orchestrator for 100x builders」を掲げる開発環境(ADE)「Orca」が公開されています。Claude Code・Codex・OpenCode・Piなど複数のAIコーディングエージェントを同時に実行…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-25">2026.09.25</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../a53fb4ed3fe7d411/">複数のAI CLIを束ねる互換APIプロキシ</a></h3>
+<p class="excerpt">Antigravity・ChatGPT Codex・Claude Code・Grok Buildなど各種AIツールをラップし、OpenAI・Gemini・Claude互換のAPIエンドポイントとして統一的に扱えるプロキシサーバー「CLI…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-25">2026.09.25</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-09-24/cc0cc81233806003/">Go製の全方位音楽検索・ダウンロードツール「go-music-dl」</a></h3>
+<p class="excerpt">Go言語で開発されたオープンソースの音楽検索・ダウンロードツール「go-music-dl」が公開されています。Web・TUI（ターミナル）・デスクトップ・CLIの複数モードに対応し、NetEase Cloud MusicやQQ Musi…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-09-24">2026.09.24</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

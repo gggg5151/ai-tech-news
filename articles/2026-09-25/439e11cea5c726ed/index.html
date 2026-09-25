@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Goで対話型CLIを操れるGo-Expect入門 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="TclのExpectをGo言語に移植したライブラリ「Go-Expect(google/goexpect)」の入門記事が公開されました。SSHやtelnet、FTP、passwdコマンドなど対話的なやり取りが必要なCLIの自動操作やE2Eテスト(利用者視点で画面や対話の操作を確認する結合テスト)に使えるライブラリです。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Goで対話型CLIを操れるGo-Expect入門 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="TclのExpectをGo言語に移植したライブラリ「Go-Expect(google/goexpect)」の入門記事が公開されました。SSHやtelnet、FTP、passwdコマンドなど対話的なやり取りが必要なCLIの自動操作やE2Eテスト(利用者視点で画面や対話の操作を確認する結合テスト)に使えるライブラリです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-25/439e11cea5c726ed/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-25/439e11cea5c726ed/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Goで対話型CLIを操れるGo-Expect入門", "datePublished": "2026-09-25", "description": "TclのExpectをGo言語に移植したライブラリ「Go-Expect(google/goexpect)」の入門記事が公開されました。SSHやtelnet、FTP、passwdコマンドなど対話的なやり取りが必要なCLIの自動操作やE2Eテスト(利用者視点で画面や対話の操作を確認する結合テスト)に使えるライブラリです。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-25/439e11cea5c726ed/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/nonejp/articles/329a841632fd93", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-25/">2026.09.25 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Goで対話型CLIを操れるGo-Expect入門</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-25">2026.09.25</time></div>
+</header>
+<div class="article-body">
+<p>TclのExpectをGo言語に移植したライブラリ「Go-Expect(google/goexpect)」の入門記事が公開されました。SSHやtelnet、FTP、passwdコマンドなど対話的なやり取りが必要なCLIの自動操作やE2Eテスト(利用者視点で画面や対話の操作を確認する結合テスト)に使えるライブラリです。</p>
+<p>基本的な使い方はシンプルで、SpawnWithArgs()でプロセスを起動し、Expect()に正規表現を渡して出力を待ち受け、Send()で入力を送るという3ステップです。複数の操作をまとめるBatchや、条件分岐を行うSwitchCaseといった機能も備えています。検証環境はGo1.22.12(linux/amd64)、インストールは go get github.com/google/goexpect で行えます。</p>
+<p>記事にはNetflix版goexpectとの速度比較も掲載されており、<strong>100往復のベンチマークでGoogle版が約1541ms、Netflix版が約3898msとGoogle版が約2.53倍高速</strong>という結果でした。ただしgoogle/goexpectのリポジトリは2023年2月にアーカイブされ読み取り専用になっており、Googleの公式プロダクトでもない点には注意が必要です。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Go-Expect（google/goexpect）はTcl言語のExpectをGo言語に実装したライブラリである</li><li>公式リポジトリの説明文は&quot;Go version of the classic TCL Expect&quot;である</li><li>Go-ExpectはSSH、telnet、FTP、passwdコマンド、カスタムCLIなど対話型CLIの自動操作・E2Eテストに使われる</li><li>基本的な使い方は SpawnWithArgs() でプロセスを起動し、Expect(正規表現) で出力を待機し、Send() で入力を送信する</li><li>複数の操作をまとめる Batch 機能がある</li><li>条件分岐を行う SwitchCase 機能がある</li><li>記事の検証環境はGo1.22.12 linux/amd64である</li><li>インストールコマンドは go get github.com/google/goexpect である</li><li>記事にはNetflix版go-expectとのベンチマーク比較が掲載されている</li><li>100往復のベンチマークでGoogle版goexpectは約1541ms、Netflix版は約3898msで、Google版が約2.53倍高速だったとされる</li><li>google/goexpectのリポジトリは2023年2月7日にアーカイブされ読み取り専用になった</li><li>google/goexpectはGoogleの公式プロダクトではない</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>This package is an implementation of Expect in Go.</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/nonejp/articles/329a841632fd93" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/nonejp/articles/329a841632fd93" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Go%E3%81%A7%E5%AF%BE%E8%A9%B1%E5%9E%8BCLI%E3%82%92%E6%93%8D%E3%82%8C%E3%82%8BGo-Expect%E5%85%A5%E9%96%80%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-25%2F439e11cea5c726ed%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Go%E3%81%A7%E5%AF%BE%E8%A9%B1%E5%9E%8BCLI%E3%82%92%E6%93%8D%E3%82%8C%E3%82%8BGo-Expect%E5%85%A5%E9%96%80%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-25/439e11cea5c726ed/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-25%2F439e11cea5c726ed%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../f1c0cf11fa147a33/"><span>前の記事</span>中国Xiaomi、GPT-5.6級のAIモデルを無償公開</a><a class="next" href="../af9df5a66acffd92/"><span>次の記事</span>GoのAIエージェント開発、GenkitからADKへ作り直した記録</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-25/">← 2026.09.25 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../af9df5a66acffd92/">GoのAIエージェント開発、GenkitからADKへ作り直した記録</a></h3>
+<p class="excerpt">Genkitで旅行プラン作成エージェントを構築していた筆者は、役割を分けた複数エージェントを組み合わせてトークンコストを削減したいという要求から、ADK(Agent Development Kit)で作り直しました。その経験から、両フレ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-25">2026.09.25</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e540cdc40e417e25/">指示を守らないClaude Codeを、回数を数えてフックで拒否</a></h3>
+<p class="excerpt">筆者はClaude Codeに対しCLAUDE.md(エージェントへの指示をまとめたファイル)で「ファイル検索は専用ツールを使う」「Bashコマンドは最終手段」と指示していましたが、繰り返し無視されていました。感覚ではなく実際の回数を確…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-25">2026.09.25</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../5da37b2a9f2d8550/">実装前にAIと仕様を合意する、Quint読解入門</a></h3>
+<p class="excerpt">AIが生成した形式仕様を検証器にかけるだけでなく、人間がその仕様を実際に読んで「モデルが現実の業務・要求を正しく表しているか」を確認することが、実装に入る前の合意形成に欠かせないと説く記事です。題材は形式仕様言語Quint(TLA+の考…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-25">2026.09.25</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
