@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026.09.26 の号 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026.09.26の号: AkamaiとAnthropicが最大200億ドル規模の複数年契約を発表 / 米控訴裁、AnthropicのClaudeに米軍利用禁止の司法判断を支持 / Microsoft Copilotが次世代版へ、自律エージェント「Autopilot」も登場 / PS5非公式ハック主導者が離脱、AIコード時代のOSS運営に苦言 / Next.js・Go・MySQLの実践的な技術記…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="2026.09.26 の号 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026.09.26の号: AkamaiとAnthropicが最大200億ドル規模の複数年契約を発表 / 米控訴裁、AnthropicのClaudeに米軍利用禁止の司法判断を支持 / Microsoft Copilotが次世代版へ、自律エージェント「Autopilot」も登場 / PS5非公式ハック主導者が離脱、AIコード時代のOSS運営に苦言 / Next.js・Go・MySQLの実践的な技術記…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-09-26/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-09-26/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="active" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-26">2026年9月26日（土）</time><span class="edition-count">16記事・読了まで約11分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>AkamaiとAnthropicが最大200億ドル規模の複数年契約を発表</li><li>米控訴裁、AnthropicのClaudeに米軍利用禁止の司法判断を支持</li><li>Microsoft Copilotが次世代版へ、自律エージェント「Autopilot」も登場</li><li>PS5非公式ハック主導者が離脱、AIコード時代のOSS運営に苦言</li><li>Next.js・Go・MySQLの実践的な技術記事が充実</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-37dda04ba7222bf8">AkamaiとAnthropic、最大200億ドル規模の複数年契約</a></li><li><a href="#a-131dd987b4c27d13">Claudeの米軍利用禁止、控訴裁が支持</a></li><li><a href="#a-e8ecbab3577a8208">Copilot次世代版、業務ツールとAIを統合</a></li><li><a href="#a-68a087b27182cb65">PS5非公式ハック主導者、AI時代のOSSに苦言</a></li><li><a href="#a-4701bf594f616c86">Gemini、電話代行機能「Call for me」</a></li><li><a href="#a-5b7763e6af4b260b">軽量LLMをマリオに勝たせるため蒸留してみた</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-54b86a45c3a4ea7e">Next.jsのファイル置き場所、判断基準は「誰の都合か」</a></li><li><a href="#a-4ef50227a5f629bc">EXPLAINで詰まったら、Optimizer Traceという第三の手札</a></li><li><a href="#a-5c2a79d1209c5cfc">GoにプラットフォームフリーなSIMD API、実験的導入</a></li><li><a href="#a-b5f64125c3816904">モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-da7778a2f62e38dd">Gitに組み込まれた分散バグトラッカー「git-bug」</a></li><li><a href="#a-449a43680da8d14d">オランダ政府、NixOSベースでMicrosoft代替を構築</a></li><li><a href="#a-a97b49f0cafe8087">Vault代替のシークレット管理「OpenBao」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-e05ea45c0338a537">LLMの推論、「難しい問題ほど長く」は間違い？</a></li><li><a href="#a-3a0979109d82a281">AIコーディングエージェントのコストを賢く抑える「Jev」</a></li><li><a href="#a-73e5f7f791b71987">コーディングエージェントの中身、挙動だけで見破る</a></li></ol></li></ul></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-37dda04ba7222bf8">
+<h3><a href="../../articles/2026-09-26/37dda04ba7222bf8/">AkamaiとAnthropic、最大200億ドル規模の複数年契約</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>akamai.com</span></div>
+<div class="paper-body"><p>Akamai TechnologiesとAnthropicは9月24日、Anthropicの拡大するCPUワークロード需要を支えるための複数年契約を発表しました。契約金額は7年間で<strong>116億ドル</strong>、さらに最大90億ドルの拡張オプションを含めると合計で最大200億ドルに達する可能性がある大型契約です。Akamaiの分散型AIインフラが活用されます。</p>
+<p>この契約に伴い、Akamaiの2026年の設備投資（CapEx）は約17億ドル増加する見込みで、推定CapEx総額は55億ドルとされています。一方でAkamaiは、この契約が2026年の収益ガイダンスには影響しないとしています。</p>
+<p>契約の一環として、Anthropicには Akamaiの普通株式最大5%相当（転換後770万株、権利行使価格1株111.33ドル）の<strong>ワラント（将来一定価格で株式を取得できる権利）</strong>が付与されます。権利確定は段階的で、まず2%が即時確定し、拡張オプションの実現度合いに応じて追加で権利が確定します。AkamaiのCEOトム・レイトン氏は、AnthropicがAkamaiを選んだことを「光栄」と述べています。</p></div>
+<p class="paper-source"><a href="https://www.akamai.com/newsroom/press-release/akamai-announces-11-6-billion-multi-year-agreement-with-anthropic-to-support-growing-demand" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/37dda04ba7222bf8/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-131dd987b4c27d13">
+<h3><a href="../../articles/2026-09-26/131dd987b4c27d13/">Claudeの米軍利用禁止、控訴裁が支持</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>cnbc.com</span></div>
+<div class="paper-body"><p>米連邦控訴裁判所（DCサーキット）は9月25日、国防総省によるAnthropicの「サプライチェーンリスク」指定を2対1で支持する判決を下しました。この指定により、米軍とその防衛請負業者はAnthropicのAIモデルClaudeを使用できなくなります。</p>
+<p>多数意見を書いたのはトランプ大統領が任命したGregory Katsas判事とNeomi Rao判事で、ブッシュ・シニア任命のKaren LeCraft Henderson判事が反対意見を述べました。Katsas判事は判決文で、大統領と国防長官が相反するリスクを調整する方法を判断する立場にあると述べています。</p>
+<p>背景には、2025年7月に結ばれた2億ドルのペンタゴン契約や、同年9月に決裂した軍向けAIプラットフォーム「GenAI.mil」への展開交渉があります。国防総省は2026年3月にこの指定を行いました。2026年8月には別のリスク指定を違法と判断した連邦地裁の判断もありました。トランプ大統領はSNSで、政権がAI「人物」の悪事を止めたとの趣旨の投稿をしました。</p></div>
+<p class="paper-source"><a href="https://www.cnbc.com/2026/09/25/pentagon-anthropic-ai-risk-appeals-court.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/131dd987b4c27d13/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e8ecbab3577a8208">
+<h3><a href="../../articles/2026-09-26/e8ecbab3577a8208/">Copilot次世代版、業務ツールとAIを統合</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>forest.watch.impress.co.jp</span></div>
+<div class="paper-body"><p>Microsoftは9月25日、業務向けAIアシスタント「Copilot」の次世代版を発表しました。日々の業務ツールとAIをつなぐ方向性のもと、新たに「Home」「Code」「Autopilot」の3機能が追加されます。</p>
+<p>「Home」はチャットとエージェント機能を統合したハブで、簡単な質問に答える「Chat」と、複雑な業務を自動処理する「Cowork」を含み、Word・Excel・PowerPointとの連携も強化されました。「Code」は開発者でなくても自然な言葉での指示でアプリや自動化処理、ダッシュボードを構築できる機能で、GitHub Copilotと同じ基盤技術を使用しています。</p>
+<p>「Autopilot」はユーザーがPCを操作していない間もクラウド上で独立して稼働する自律型AIエージェントです。役割や目標を設定しておけば、チャットのやり取りの確認からスケジュール作成まで自発的に進めるとされています。</p></div>
+<p class="paper-source"><a href="https://forest.watch.impress.co.jp/docs/news/2143487.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/e8ecbab3577a8208/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-68a087b27182cb65">
+<h3><a href="../../articles/2026-09-26/68a087b27182cb65/">PS5非公式ハック主導者、AI時代のOSSに苦言</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>atmarkit.itmedia.co.jp</span></div>
+<div class="paper-body"><p>PS5の非公式Linux移植プロジェクトを主導してきたAndy Nguyen氏が、プロジェクトからの離脱をX（旧Twitter）で表明しました。理由として、OSS（オープンソースソフトウェア）コミュニティに「LLMを使用し、理解していないハックを書く初心者ばかり」になったことへの不満を挙げています。</p>
+<p>実際に、別の開発者がLLMで生成したコードを使った結果、PS5のハイパーバイザー（仮想化を担う基盤ソフトウェア）に脆弱性を作り込んでしまい、それがSonyに報告される事態も起きたといいます。</p>
+<p>LLM生成コードと「理解を伴うコード」は別物であり、脆弱性の範囲特定やバグ修正のタイミング判断など深い理解が求められるOSS開発の現場で、AI生成コードの浸透が「なぜ動くか理解していない」開発者を増やしているという問題意識が伝わってきます。</p></div>
+<p class="paper-source"><a href="https://atmarkit.itmedia.co.jp/ait/articles/2609/25/news048.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/68a087b27182cb65/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4701bf594f616c86">
+<h3><a href="../../articles/2026-09-26/4701bf594f616c86/">Gemini、電話代行機能「Call for me」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>japan.cnet.com</span></div>
+<div class="paper-body"><p>Googleは米国時間9月24日、AIアシスタント「Gemini」に新機能「Call for me」を発表しました。ユーザーに代わって店舗などに電話をかけ、営業時間や在庫の確認、レストラン予約、料金問い合わせなどを行います。</p>
+<p>支払いやクレジットカード番号などの機密情報は電話口で提供せず、その段階になるとユーザーが「Take over」を選んで通話を引き継ぐ仕組みです。提供は米国のみ・英語のみで、Pixel 11以降の端末、18歳以上かつGoogle AIサブスクリプション加入が条件となります。</p></div>
+<p class="paper-source"><a href="https://japan.cnet.com/article/35252958/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/4701bf594f616c86/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5b7763e6af4b260b">
+<h3><a href="../../articles/2026-09-26/5b7763e6af4b260b/">軽量LLMをマリオに勝たせるため蒸留してみた</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>軽量LLM「Jeu」にマリオをリアルタイムでプレイさせようとした著者は、クリア率0%という結果に直面します。そこで比較対象として高精度だったDeepSeek V4.1 Flashの判断を教師データとして、軽量な<strong>勾配ブースティング</strong>モデル（LightGBM）に蒸留するという実験に挑んだ体験記です。</p>
+<p>著者はまず操作を2択に絞る、接地判定を調整するなどゲームハーネス（操作インターフェース）を改善したうえで、JeuとDeepSeek V4.1 Flashを各20試行で比較する実験を実施。Jeuはゲーム停止方式で55%クリアしたものの、リアルタイム方式では0%だったのに対し、DeepSeek V4.1 Flashは90%クリアしました。</p>
+<p>このDeepSeekの判断4,911件（学習には2,145件を使用）を教師ラベルとしてLightGBMに蒸留したところ、<strong>100回のリアルタイムプレイすべてをクリア</strong>。推論時間の中央値は0.249msで、Jeuの約260msと比べて1,000倍以上高速だったといいます。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/nwn/articles/e49154653ecea9" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/5b7763e6af4b260b/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-54b86a45c3a4ea7e">
+<h3><a href="../../articles/2026-09-26/54b86a45c3a4ea7e/">Next.jsのファイル置き場所、判断基準は「誰の都合か」</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>個人開発者milky氏が、自身のNext.jsアプリで採用しているディレクトリ構成を解説しています。app/screens/features/sharedの4層構造を提案し、appは「URLとページの対応だけを持つ」層、screensは「1つの画面でしか使わないコード」、featuresは「複数の画面から使う、アプリ固有の機能」、sharedは「アプリの仕様に関係しない汎用的な部品」と定義しています。</p>
+<p>ファイルの配置判断で重視するのは、単に「複数箇所から使われているか」ではなく<strong>「その仕様が誰の都合で変わるか」</strong>という基準です。さらにapp→screens→features→sharedの一方向のみインポートを許可し、逆方向のインポートを禁止するルールを提案しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/milky/articles/nextjs-directory-structure" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/54b86a45c3a4ea7e/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4ef50227a5f629bc">
+<h3><a href="../../articles/2026-09-26/4ef50227a5f629bc/">EXPLAINで詰まったら、Optimizer Traceという第三の手札</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.timee.co.jp</span></div>
+<div class="paper-body"><p>タイミーのPlatform Engineeringチームが、Aurora MySQLをバージョン3.04.2から3.10.3にアップグレードした後、あるクエリの滞留時間が4,000〜5,000秒に悪化した実例を紹介しています。EXPLAINとEXPLAIN ANALYZE（実行計画を表示・実測する機能）だけでは、オプティマイザがなぜその計画を選んだのかまでは特定できませんでした。</p>
+<p>そこで使ったのがMySQL組み込みの<strong>Optimizer Trace</strong>です。5,000万行規模のeventsテーブルに対し、フルスキャン経路でのオプティマイザの選択率見積もりが実際と約971倍もズレていたことが判明し、既知の不具合（Bug #117770、実体化経路のインデックス選択に関するもの）に行き着きました。最終的にはオプティマイザヒントで対処したとのことです。</p></div>
+<p class="paper-source"><a href="https://tech.timee.co.jp/entry/2026/09/25/162348" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/4ef50227a5f629bc/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5c2a79d1209c5cfc">
+<h3><a href="../../articles/2026-09-26/5c2a79d1209c5cfc/">GoにプラットフォームフリーなSIMD API、実験的導入</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>go.dev</span></div>
+<div class="paper-body"><p>Go公式ブログが9月24日、<strong>SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）</strong>のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が必須でしたが、新APIによりアセンブリなしで暗号化やデータ処理を高速化できるようになります。</p>
+<p>Go 1.26ではamd64向けのアーキテクチャ固有API「archsimd」が導入され、Go 1.27ではarm64（NEON）とwasmにも対応が広がりました。さらにGo 1.27では、C++のHighwayライブラリを参考にした完全に移植可能な「simd」パッケージも実験的に追加され、ハードウェアSIMDがない環境でもエミュレーションで動作します。</p>
+<p>現状はビルド時にGOEXPERIMENT=simdフラグを指定する実験段階です。Go 1.28ではarm64向けSVE対応や、ベクトルシャッフリングなどの追加操作が計画されています。</p></div>
+<p class="paper-source"><a href="https://go.dev/blog/simd-experiment" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/5c2a79d1209c5cfc/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b5f64125c3816904">
+<h3><a href="../../articles/2026-09-26/b5f64125c3816904/">モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査の結果、これはCloudflare側の制約ではなく、モノレポ構成側の問題だったと判明します。</p>
+<p>Next.js 16では既定でビルド時のTurbopackキャッシュ（turbopackFileSystemCacheForBuild）が無効になっている点、Workers Buildsがビルドコマンド実行前に自前で依存をインストールする仕様である点が絡んでいました。対処として①Turbopackのビルド時キャッシュを有効化、②各アプリのキャッシュディレクトリをルートと往復させる、③ルートのpackage.jsonにnextを追加、の3点を実施しています。</p>
+<p>段階的な改善の結果、npm ci削除で247.7秒（−14.5%）、並列化で223.5秒（−8.7%）を経て、本番環境でのビルド時間は<strong>182.5秒から85.5秒（−53%）</strong>まで短縮されました。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/gsnhjj/articles/cloudflare-workers-builds-nextjs-monorepo-cache" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/b5f64125c3816904/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-da7778a2f62e38dd">
+<h3><a href="../../articles/2026-09-26/da7778a2f62e38dd/">Gitに組み込まれた分散バグトラッカー「git-bug」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
+<div class="paper-body"><p>git-bugは、Gitリポジトリに完全統合された分散型・オフライン対応のバグトラッカーです。バグデータは標準的なGitリポジトリ内に保存されるためベンダーロックインを防ぎ、プロジェクトのファイルには変更を加えません。一覧表示やオープンなどの操作は数ミリ秒で完了する高速性が特徴です。</p>
+<p>CLI（git bug add、git bug lsなど）に加え、対話的なターミナルUI、GraphQL APIを備えたWeb UIの3種類のインターフェースを提供し、GitHub・GitLab・Jira・Launchpadとのブリッジ機能による相互同期も可能です。Go言語で実装され、GPLv3ライセンスで公開されています。</p></div>
+<p class="paper-source"><a href="https://github.com/git-bug/git-bug" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/da7778a2f62e38dd/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-449a43680da8d14d">
+<h3><a href="../../articles/2026-09-26/449a43680da8d14d/">オランダ政府、NixOSベースでMicrosoft代替を構築</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>dawo.community</span></div>
+<div class="paper-body"><p>DAWO.communityは、オランダ政府のために「デジタル自律型の職場」を共同構築するオープンコミュニティです。政府機関が主導し業界とも協力しながら、政府職員向けにMicrosoftなどの既存ベンダーに代わる技術基盤を開発することを目指しています。</p>
+<p>構成要素の一つとして、再現可能な職場のためのOS「DAWO-NixOS」があり、オープンソースのAIコンポーネントやクラウドインフラ、協業ソフトウェアも含まれます。目的はデジタル自律性の強化、政府と社会の協力・知識共有の改善、セキュリティとデータ保護、イノベーションの促進、ITシステムの検査・検証のしやすさの5点です。</p></div>
+<p class="paper-source"><a href="https://www.dawo.community/en/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/449a43680da8d14d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a97b49f0cafe8087">
+<h3><a href="../../articles/2026-09-26/a97b49f0cafe8087/">Vault代替のシークレット管理「OpenBao」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>OpenBaoは、シークレット・証明書・鍵などの機密データを安全に管理・保存・配布するためのオープンソースソフトウェアです。任意のキー/値の暗号化保存に加え、AWSやSQLデータベース向けの動的シークレット生成、保存せずにデータを暗号化・復号化する機能、リースによる自動失効管理、シークレットの無効化といった機能を備えています。</p>
+<p>MPL-2.0（Mozilla Public License 2.0）ライセンスで提供され、GitHub上で7.7kスターを獲得しています。特定企業ではなく、オープンガバナンスの原則に基づくコミュニティが主導する独立プロジェクトとして運営されることを意図しています。</p></div>
+<p class="paper-source"><a href="https://github.com/openbao/openbao" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/a97b49f0cafe8087/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-e05ea45c0338a537">
+<h3><a href="../../articles/2026-09-26/e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中しており、難しい質問ほど長い推論が単調に役立つという従来の仮定は必ずしも成立しないと主張しています。</p>
+<p>これに基づき、質問ごとに有益な推論長を比較して適応的に報酬を与える手法「<strong>CARE</strong>（Contrastive Accuracy Reward Estimation）」を提案。複数ベンチマークでの実験で、正答率（Pass@1）を最大4%改善しつつ、推論長を37%削減したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.29664" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/e05ea45c0338a537/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-3a0979109d82a281">
+<h3><a href="../../articles/2026-09-26/3a0979109d82a281/">AIコーディングエージェントのコストを賢く抑える「Jev」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>企業がClaude CodeやCodexなどのAIコーディングエージェントを大規模導入する際、ベンダーのデフォルト設定をそのまま使い続けて不必要なコスト増を招いているという問題意識のもと、研究チームはリクエストを自動分類して処理を最適に振り分ける高速ルーター「<strong>Jev</strong>」を開発しました。</p>
+<p>Jevの特徴は、プロンプトキャッシュの再構築が不要なタイミング（セッション開始時・並列処理・サブエージェント起動時）でのみ処理の移行を行う設計です。1万ユーザー規模の仮想企業シミュレーションでは、モデル支出の14〜21%を削減でき、年間換算で330万〜500万ドル規模のコスト削減効果を示したとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.28919" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/3a0979109d82a281/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-73e5f7f791b71987">
+<h3><a href="../../articles/2026-09-26/73e5f7f791b71987/">コーディングエージェントの中身、挙動だけで見破る</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「<strong>LIDAR</strong>」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行フィードバックといったエージェントの複数レイヤーに阻まれ、効果が限定的だったといいます。</p>
+<p>LIDARは、編集後検証・一時的故障復旧・仕様テスト競合解決という3種類のコーディングタスクでの挙動パターンを特徴量化してモデルを識別します。36個のモデル（7ファミリー）×2種類のエージェントハーネスで評価したところ、既存の4つのベースライン手法より高い精度を達成したとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.28559" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-09-26/73e5f7f791b71987/">要点と引用を見る</a></p>
+</article></section>
+<nav class="neighbors issue-neighbors" aria-label="前後の号"><a class="prev" href="../2026-09-25/"><span>前の号</span>2026.09.25</a><span></span></nav>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

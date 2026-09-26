@@ -25,7 +25,25 @@
 </header>
 <div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../ai_news/">AIニュース</a><a class=""  href="../tech/">開発・技術</a><a class=""  href="../github/">リポジトリ</a><a class="active" aria-current="page" href="./">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading cat-papers"><h1><span class="category-dot"></span>論文・研究</h1><p>全67記事</p></header><div class="news-grid"><article class="news-card cat-papers">
+<header class="page-heading cat-papers"><h1><span class="category-dot"></span>論文・研究</h1><p>全70記事</p></header><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../articles/2026-09-26/e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
+<p class="excerpt">強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../articles/2026-09-26/3a0979109d82a281/">AIコーディングエージェントのコストを賢く抑える「Jev」</a></h3>
+<p class="excerpt">企業がClaude CodeやCodexなどのAIコーディングエージェントを大規模導入する際、ベンダーのデフォルト設定をそのまま使い続けて不必要なコスト増を招いているという問題意識のもと、研究チームはリクエストを自動分類して処理を最適に…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../articles/2026-09-26/73e5f7f791b71987/">コーディングエージェントの中身、挙動だけで見破る</a></h3>
+<p class="excerpt">コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「LIDAR」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-papers">
 <a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
 <h3><a href="../../articles/2026-09-25/01828d20d365e9ef/">コーディングエージェントはカーネル脆弱性を攻撃コードにできるか</a></h3>
 <p class="excerpt">AIコーディングエージェントが実際の脆弱性を発見できることは知られていますが、それを実際に悪用可能な攻撃の基本要素(exploit primitives)へと組み立てられるかは、これまで測定されてきませんでした。本論文はこれを評価するベ…</p>
@@ -150,24 +168,6 @@
 <h3><a href="../../articles/2026-09-18/a68136a8b47df4f4/">「信頼を信頼することについて」再訪、AIエージェントを汚染する</a></h3>
 <p class="excerpt">ワシントン大学のFranziska RoesnerとTadayoshi Kohno両氏による論文が、Ken Thompsonの古典的な「Trusting Trust」攻撃の概念を、自己修正・自己改善するAIコーディングエージェントに適用…</p>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-18">2026.09.18</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
-<h3><a href="../../articles/2026-09-18/11feb68dc3a67164/">重みを訓練せず「その場で生成」する、無限パラメータLLM構想</a></h3>
-<p class="excerpt">「Infinite-Parameter LLMs」と題する論文では、モデルの重みを学習後に固定せず、実行時にライブデータから生成・適応させる新しいアーキテクチャが提案されています。ハイパーネットワークを使ってランタイムデータを共有ベース…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-18">2026.09.18</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
-<h3><a href="../../articles/2026-09-18/f61ebe740b2b1a67/">1.58ビットの壁を破る、三値化LLMの新レイアウト方式</a></h3>
-<p class="excerpt">重みを{-1, 0, +1}の3値で表す三値化(ternary)LLMは、情報理論上1.585ビット/重みが限界とされてきました。しかし本研究では、実際のモデルで重みの最大51.5%がゼロに偏っているという非均一な分布が発見され、これを…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>arxiv.org</span><time datetime="2026-09-18">2026.09.18</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
-<h3><a href="../../articles/2026-09-17/72093e6115a13762/">進化する『世界』で自己改善するAIエージェント「Dream-RSI」</a></h3>
-<p class="excerpt">17名の共著による論文「Dream-RSI: Recursive Self-Improvement through Evolving Worlds」です(2026年9月14日投稿)。自律AIエージェントの再帰的自己改善(RSI)のための…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-17">2026.09.17</time></div>
 </article></div><nav class="pagination" aria-label="ページ切り替え"><a aria-current="page" href="./">1</a><a  href="page/2/">2</a><a  href="page/3/">3</a></nav>
 </main>
 <footer class="footer wrap">

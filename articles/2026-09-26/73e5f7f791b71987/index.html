@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>コーディングエージェントの中身、挙動だけで見破る — 1年目向けエンジニア新聞</title>
+<meta name="description" content="コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「LIDAR」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行フィードバックといったエージェントの複数レイヤーに阻まれ、効果が限定的だったといいま…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="コーディングエージェントの中身、挙動だけで見破る — 1年目向けエンジニア新聞">
+<meta property="og:description" content="コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「LIDAR」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行フィードバックといったエージェントの複数レイヤーに阻まれ、効果が限定的だったといいま…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/73e5f7f791b71987/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/73e5f7f791b71987/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "コーディングエージェントの中身、挙動だけで見破る", "datePublished": "2026-09-26", "description": "コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「LIDAR」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行フィードバックといったエージェントの複数レイヤーに阻まれ、効果が限定的だったといいます。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/73e5f7f791b71987/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.28559", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-26/">2026.09.26 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>コーディングエージェントの中身、挙動だけで見破る</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</header>
+<div class="article-body">
+<p>コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「<strong>LIDAR</strong>」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行フィードバックといったエージェントの複数レイヤーに阻まれ、効果が限定的だったといいます。</p>
+<p>LIDARは、編集後検証・一時的故障復旧・仕様テスト競合解決という3種類のコーディングタスクでの挙動パターンを特徴量化してモデルを識別します。36個のモデル（7ファミリー）×2種類のエージェントハーネスで評価したところ、既存の4つのベースライン手法より高い精度を達成したとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「Who Is Behind the Harness? Fingerprinting LLMs through Agentic Behavior」である。</li><li>著者はChuyi Wang、Xiaohui Xie、Tongze Wang、Fangchen Luo、Yong Cuiである。</li><li>本研究はコード実行エージェントが使用するLLMの身元を特定する手法を提唱している。</li><li>従来のテキストやトークン分布に基づく指紋認証は、システム命令・ツール・実行フィードバックというエージェントの複数レイヤーに阻まれ効果が限定的であると指摘している。</li><li>提案手法は「LIDAR（LLM Identification from Decisions and Actions at Runtime）」と呼ばれるブラックボックス指紋認証手法である。</li><li>LIDARは3つのコーディングプローブペア（編集後検証、一時的故障復旧、仕様テスト競合解決）を測定する。</li><li>LIDARはインスタンスレベルと分布レベルの二層的特徴表現を採用している。</li><li>LIDARはモデル重み、ロジット、プロバイダ内部へのアクセスを必要としないとされている。</li><li>36個のモデル(7ファミリー)と2つのエージェントハーネスを用いて評価された。</li><li>評価ではTop-1精度およびMRR(Mean Reciprocal Rank)で高い精度を達成したとされている。</li><li>既存の4つのベースライン手法を上回るパフォーマンスを実現したとされている。</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.28559" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%80%81%E6%8C%99%E5%8B%95%E3%81%A0%E3%81%91%E3%81%A7%E8%A6%8B%E7%A0%B4%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-26%2F73e5f7f791b71987%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%80%81%E6%8C%99%E5%8B%95%E3%81%A0%E3%81%91%E3%81%A7%E8%A6%8B%E7%A0%B4%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-26/73e5f7f791b71987/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-26%2F73e5f7f791b71987%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../3a0979109d82a281/"><span>前の記事</span>AIコーディングエージェントのコストを賢く抑える「Jev」</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-26/">← 2026.09.26 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
+<p class="excerpt">強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../3a0979109d82a281/">AIコーディングエージェントのコストを賢く抑える「Jev」</a></h3>
+<p class="excerpt">企業がClaude CodeやCodexなどのAIコーディングエージェントを大規模導入する際、ベンダーのデフォルト設定をそのまま使い続けて不必要なコスト増を招いているという問題意識のもと、研究チームはリクエストを自動分類して処理を最適に…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-25/01828d20d365e9ef/">コーディングエージェントはカーネル脆弱性を攻撃コードにできるか</a></h3>
+<p class="excerpt">AIコーディングエージェントが実際の脆弱性を発見できることは知られていますが、それを実際に悪用可能な攻撃の基本要素(exploit primitives)へと組み立てられるかは、これまで測定されてきませんでした。本論文はこれを評価するベ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-25">2026.09.25</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

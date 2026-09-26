@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査の結果、これはCloudflare側の制約ではなく、モノレポ構成側の問題だったと判明…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査の結果、これはCloudflare側の制約ではなく、モノレポ構成側の問題だったと判明…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/b5f64125c3816904/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/b5f64125c3816904/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった", "datePublished": "2026-09-26", "description": "Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査の結果、これはCloudflare側の制約ではなく、モノレポ構成側の問題だったと判明します。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/b5f64125c3816904/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/gsnhjj/articles/cloudflare-workers-builds-nextjs-monorepo-cache", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-26/">2026.09.26 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-26">2026.09.26</time></div>
+</header>
+<div class="article-body">
+<p>Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査の結果、これはCloudflare側の制約ではなく、モノレポ構成側の問題だったと判明します。</p>
+<p>Next.js 16では既定でビルド時のTurbopackキャッシュ（turbopackFileSystemCacheForBuild）が無効になっている点、Workers Buildsがビルドコマンド実行前に自前で依存をインストールする仕様である点が絡んでいました。対処として①Turbopackのビルド時キャッシュを有効化、②各アプリのキャッシュディレクトリをルートと往復させる、③ルートのpackage.jsonにnextを追加、の3点を実施しています。</p>
+<p>段階的な改善の結果、npm ci削除で247.7秒（−14.5%）、並列化で223.5秒（−8.7%）を経て、本番環境でのビルド時間は<strong>182.5秒から85.5秒（−53%）</strong>まで短縮されました。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>対象環境はNext.js 16、npm workspacesを使ったモノレポ（apps/*配下に15アプリ）、Cloudflare Workers Builds</li><li>改善前のビルド全体は289.8秒、ビルド計は198.0秒だった</li><li>npm ciを削除したところ247.7秒になった（−14.5%）</li><li>ビルドを並列化したところ223.5秒になった（−8.7%）</li><li>並列化の効果が期待より小さかったのは2コアの制限によるものと記事は説明している</li><li>キャッシュを有効化したところ、保存回は201.1秒、復元回は75.2秒になった</li><li>キャッシュサイズは547MB（15アプリ×36MB）だった</li><li>本番環境でのビルド時間は182.5秒から85.5秒に短縮された（−53%）</li><li>Next.js 16の既定値では、turbopackFileSystemCacheForBuildはfalse（ビルド時は無効）に設定されている</li><li>Cloudflare Workers Buildsはビルドコマンドを実行する前に自分で依存をインストールする仕様である</li><li>著者が打った対処は、Turbopackのビルド時キャッシュを有効化すること、各アプリのキャッシュをルートと往復させること、ルートのpackage.jsonにnextを追加することの3つである</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Workers Builds はビルドコマンドを実行する前に自分で依存をインストールする。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/gsnhjj/articles/cloudflare-workers-builds-nextjs-monorepo-cache" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/gsnhjj/articles/cloudflare-workers-builds-nextjs-monorepo-cache" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%83%A2%E3%83%8E%E3%83%AC%E3%83%9DNext.js%E3%81%AE%E3%83%93%E3%83%AB%E3%83%89%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E5%95%8F%E9%A1%8C%E3%80%81%E5%8E%9F%E5%9B%A0%E3%81%AF%E8%87%AA%E5%89%8D%E6%A7%8B%E6%88%90%E3%81%A0%E3%81%A3%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-26%2Fb5f64125c3816904%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%83%A2%E3%83%8E%E3%83%AC%E3%83%9DNext.js%E3%81%AE%E3%83%93%E3%83%AB%E3%83%89%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E5%95%8F%E9%A1%8C%E3%80%81%E5%8E%9F%E5%9B%A0%E3%81%AF%E8%87%AA%E5%89%8D%E6%A7%8B%E6%88%90%E3%81%A0%E3%81%A3%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-26/b5f64125c3816904/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-26%2Fb5f64125c3816904%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../5c2a79d1209c5cfc/"><span>前の記事</span>GoにプラットフォームフリーなSIMD API、実験的導入</a><a class="next" href="../da7778a2f62e38dd/"><span>次の記事</span>Gitに組み込まれた分散バグトラッカー「git-bug」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-26/">← 2026.09.26 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../54b86a45c3a4ea7e/">Next.jsのファイル置き場所、判断基準は「誰の都合か」</a></h3>
+<p class="excerpt">個人開発者milky氏が、自身のNext.jsアプリで採用しているディレクトリ構成を解説しています。app/screens/features/sharedの4層構造を提案し、appは「URLとページの対応だけを持つ」層、screensは…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../4ef50227a5f629bc/">EXPLAINで詰まったら、Optimizer Traceという第三の手札</a></h3>
+<p class="excerpt">タイミーのPlatform Engineeringチームが、Aurora MySQLをバージョン3.04.2から3.10.3にアップグレードした後、あるクエリの滞留時間が4,000〜5,000秒に悪化した実例を紹介しています。EXPLA…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.timee.co.jp</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../5c2a79d1209c5cfc/">GoにプラットフォームフリーなSIMD API、実験的導入</a></h3>
+<p class="excerpt">Go公式ブログが9月24日、SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>go.dev</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

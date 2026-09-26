@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GoにプラットフォームフリーなSIMD API、実験的導入 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Go公式ブログが9月24日、SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が必須でしたが、新APIによりアセンブリなしで暗号化やデータ処理を高速化できるようにな…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="GoにプラットフォームフリーなSIMD API、実験的導入 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Go公式ブログが9月24日、SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が必須でしたが、新APIによりアセンブリなしで暗号化やデータ処理を高速化できるようにな…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/5c2a79d1209c5cfc/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/5c2a79d1209c5cfc/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "GoにプラットフォームフリーなSIMD API、実験的導入", "datePublished": "2026-09-26", "description": "Go公式ブログが9月24日、SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が必須でしたが、新APIによりアセンブリなしで暗号化やデータ処理を高速化できるようになります。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-26/5c2a79d1209c5cfc/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://go.dev/blog/simd-experiment", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-26/">2026.09.26 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>GoにプラットフォームフリーなSIMD API、実験的導入</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>go.dev</span><time datetime="2026-09-26">2026.09.26</time></div>
+</header>
+<div class="article-body">
+<p>Go公式ブログが9月24日、<strong>SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）</strong>のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が必須でしたが、新APIによりアセンブリなしで暗号化やデータ処理を高速化できるようになります。</p>
+<p>Go 1.26ではamd64向けのアーキテクチャ固有API「archsimd」が導入され、Go 1.27ではarm64（NEON）とwasmにも対応が広がりました。さらにGo 1.27では、C++のHighwayライブラリを参考にした完全に移植可能な「simd」パッケージも実験的に追加され、ハードウェアSIMDがない環境でもエミュレーションで動作します。</p>
+<p>現状はビルド時にGOEXPERIMENT=simdフラグを指定する実験段階です。Go 1.28ではarm64向けSVE対応や、ベクトルシャッフリングなどの追加操作が計画されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>この記事はGo公式ブログにDavid ChaseとJunyang Shaoが執筆し、2026年9月24日に公開された</li><li>Go 1.26と1.27に、SIMD（Single Instruction Multiple Data）操作のための実験的APIが導入された</li><li>従来GoでSIMDにアクセスするにはアセンブリ言語での実装が必須だった</li><li>Go 1.26ではamd64用のアーキテクチャ固有SIMD API（archsimdパッケージ）が導入された</li><li>Go 1.27ではarm64（NEON）とwasm向けのarchsimd対応が追加された</li><li>Go 1.27では、C++のHighwayライブラリに基づいた完全に移植可能なsimdパッケージが実験的に導入された</li><li>simdパッケージは固定サイズベクトルを型システムから排除し、全プラットフォーム共通の操作のみをサポートする</li><li>simdパッケージで不足する操作はエミュレーションで補完され、ハードウェアSIMDがない環境でも動作する</li><li>amd64ではAVX、AVX2、AVX512がサポートされる</li><li>arm64ではNEONがサポートされる</li><li>SVE（arm64向け）、RiscV64、PowerPC、s390xへの対応が計画されている</li><li>この機能は実験的段階で、ビルド時にGOEXPERIMENT=simdフラグを設定して使用する</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Go 1.26では`amd64`用SIMD APIを導入し、Go 1.27で`arm64`（NEON）と`wasm`対応を追加しました</blockquote><blockquote>Go 1.28ではSVE対応と追加SIMD操作（OnesCount、マスク操作、削減操作、ベクトルシャッフリング）の実装を予定</blockquote><p class="quotes-source">出典: <a href="https://go.dev/blog/simd-experiment" target="_blank" rel="noopener noreferrer">go.dev</a></p></section>
+<aside class="source-box"><a href="https://go.dev/blog/simd-experiment" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">go.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Go%E3%81%AB%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%83%95%E3%83%AA%E3%83%BC%E3%81%AASIMD%20API%E3%80%81%E5%AE%9F%E9%A8%93%E7%9A%84%E5%B0%8E%E5%85%A5%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-26%2F5c2a79d1209c5cfc%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Go%E3%81%AB%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%83%95%E3%83%AA%E3%83%BC%E3%81%AASIMD%20API%E3%80%81%E5%AE%9F%E9%A8%93%E7%9A%84%E5%B0%8E%E5%85%A5%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-26/5c2a79d1209c5cfc/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-26%2F5c2a79d1209c5cfc%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../4ef50227a5f629bc/"><span>前の記事</span>EXPLAINで詰まったら、Optimizer Traceという第三の手札</a><a class="next" href="../b5f64125c3816904/"><span>次の記事</span>モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-26/">← 2026.09.26 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../54b86a45c3a4ea7e/">Next.jsのファイル置き場所、判断基準は「誰の都合か」</a></h3>
+<p class="excerpt">個人開発者milky氏が、自身のNext.jsアプリで採用しているディレクトリ構成を解説しています。app/screens/features/sharedの4層構造を提案し、appは「URLとページの対応だけを持つ」層、screensは…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../4ef50227a5f629bc/">EXPLAINで詰まったら、Optimizer Traceという第三の手札</a></h3>
+<p class="excerpt">タイミーのPlatform Engineeringチームが、Aurora MySQLをバージョン3.04.2から3.10.3にアップグレードした後、あるクエリの滞留時間が4,000〜5,000秒に悪化した実例を紹介しています。EXPLA…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.timee.co.jp</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../b5f64125c3816904/">モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</a></h3>
+<p class="excerpt">Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

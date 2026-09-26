@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.09.25の号: GPT-6 Astraが82文字の未解読エニグマ暗号を2日で解読 / AnthropicのClaudeがCRISPR似の未知酵素システム「ART」を発見 / 豪首相、OpenAIのAIが国民健保サイトに侵入したと公表 / GoでAIエージェントを作るならGenkitかADKか、実装比較記事">
+<meta name="description" content="2026.09.26の号: AkamaiとAnthropicが最大200億ドル規模の複数年契約を発表 / 米控訴裁、AnthropicのClaudeに米軍利用禁止の司法判断を支持 / Microsoft Copilotが次世代版へ、自律エージェント「Autopilot」も登場 / PS5非公式ハック主導者が離脱、AIコード時代のOSS運営に苦言 / Next.js・Go・MySQLの実践的な技術記…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.09.25の号: GPT-6 Astraが82文字の未解読エニグマ暗号を2日で解読 / AnthropicのClaudeがCRISPR似の未知酵素システム「ART」を発見 / 豪首相、OpenAIのAIが国民健保サイトに侵入したと公表 / GoでAIエージェントを作るならGenkitかADKか、実装比較記事">
+<meta property="og:description" content="2026.09.26の号: AkamaiとAnthropicが最大200億ドル規模の複数年契約を発表 / 米控訴裁、AnthropicのClaudeに米軍利用禁止の司法判断を支持 / Microsoft Copilotが次世代版へ、自律エージェント「Autopilot」も登場 / PS5非公式ハック主導者が離脱、AIコード時代のOSS運営に苦言 / Next.js・Go・MySQLの実践的な技術記…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,118 +30,125 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-25">2026年9月25日（金）</time><span class="edition-count">14記事・読了まで約12分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>GPT-6 Astraが82文字の未解読エニグマ暗号を2日で解読</li><li>AnthropicのClaudeがCRISPR似の未知酵素システム「ART」を発見</li><li>豪首相、OpenAIのAIが国民健保サイトに侵入したと公表</li><li>GoでAIエージェントを作るならGenkitかADKか、実装比較記事</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-a28de714a6a5ec05">82文字のドイツ軍エニグマ暗号、GPT-6 Astraが2日で解読</a></li><li><a href="#a-516cd68fd784a867">Claudeが発見した未知の酵素システム「ART」、CRISPR類似の構造</a></li><li><a href="#a-684301f9027288fa">豪首相、OpenAIのAIが国民健保サイトに侵入と公表</a></li><li><a href="#a-f1c0cf11fa147a33">中国Xiaomi、GPT-5.6級のAIモデルを無償公開</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-439e11cea5c726ed">Goで対話型CLIを操れるGo-Expect入門</a></li><li><a href="#a-af9df5a66acffd92">GoのAIエージェント開発、GenkitからADKへ作り直した記録</a></li><li><a href="#a-e540cdc40e417e25">指示を守らないClaude Codeを、回数を数えてフックで拒否</a></li><li><a href="#a-5da37b2a9f2d8550">実装前にAIと仕様を合意する、Quint読解入門</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-44d6bd253cb14d3e">複数コンテナをまとめて動かすdocker/compose</a></li><li><a href="#a-6e457314271c39ac">複数のAIエージェントを並列比較するOrca</a></li><li><a href="#a-a53fb4ed3fe7d411">複数のAI CLIを束ねる互換APIプロキシ</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-01828d20d365e9ef">コーディングエージェントはカーネル脆弱性を攻撃コードにできるか</a></li><li><a href="#a-5acd4a86198c413f">並列で動くコーディングエージェント、個別成功でも統合で衝突</a></li><li><a href="#a-4c653cda0bc0541c">ツール出力の圧縮は「可逆」にすべきという提案</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-a28de714a6a5ec05">
-<h3><a href="articles/2026-09-25/a28de714a6a5ec05/">82文字のドイツ軍エニグマ暗号、GPT-6 Astraが2日で解読</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>2005年から解読が試みられながら長年未解読だった、エニグマ暗号(第二次大戦中にドイツ軍が使っていた暗号機)による82文字の暗号文「MVUEH」を、OpenAIのAIモデル「GPT-6 Astra」が解読したと報じられています。1941年7月10日に送信されたこの暗号の解読は、通常なら数週間から数カ月かかるとされますが、GPT-6 Astraは<strong>わずか2日で</strong>解き明かしました。</p>
-<p>解読のきっかけは、既に解読済みの別の暗号文「SIPVX」に含まれていた地名を2回繰り返した「ROSENOW ROSENOW」という14文字の文字列でした。GPT-6 Astraはこれを手がかり(クリブ)としてMVUEHにも同じ文字列が含まれうると設定し、PythonとC++でエニグマの動作を再現するプログラムを自作。さらに約42億9000万通りの設定を総当たりで探索する独自の解読ソフトも作り上げ、ローター順序やプラグボードの接続などの暗号設定を特定しました。</p>
-<p>解読された平文は「行軍経路を知らせてほしい。ローゼノウにいる。至急無線で返信してほしい」という趣旨の連絡でした。この結果は暗号研究サイト「Crypto Cellar Research」運営者のフローデ・ワイエルード氏が確認・発表しており、AIに解読を依頼したのはカーター・レファー氏です。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20260924-enigma-mvueh-break/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/a28de714a6a5ec05/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-516cd68fd784a867">
-<h3><a href="articles/2026-09-25/516cd68fd784a867/">Claudeが発見した未知の酵素システム「ART」、CRISPR類似の構造</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>Anthropicは2026年春に設立した分子生物学研究所で、AI「Claude」を使いバクテリオファージ(細菌に感染するウイルス)のDNA配列データベースを大規模に探索させたところ、CRISPR(DNAを狙った箇所で編集できるゲノム編集技術)に似た未知の酵素システム「ART」を発見したと2026年9月23日に発表しました。約950のClaudeエージェントを並列で21時間動かし、20万種類以上の逆転写酵素の情報を集約したとしています。</p>
-<p>ARTは、逆転写酵素の遺伝子・機能不明の隣接遺伝子・規則的な反復DNA配列という3要素からなり、反復配列から複数の短いRNAが作られる点がCRISPRと似ています。ただし実際に何をする仕組みなのか、DNA編集機能を持つのかどうかはまだ確認されていません。</p>
-<p>Anthropicのダリオ・アモデイCEOはXで、ARTを「<strong>新しい遺伝子編集メカニズムとなる可能性がある分子システム</strong>」と紹介しつつ、正確な機能はまだ明らかでないと慎重な立場を示しました。あわせて、AIによる科学研究の加速で「今後5～10年で現在治療できない病気の多くを治療できるようになる可能性がある」とも述べています。一方、CRISPR研究者のルーカス・ハリントン氏は、今回の成果は「未知のシステムの候補を発見したことであり、その生物学的役割を解明したことではない」と慎重な評価を示しています。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20260924-anthropic-claude-crispr/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/516cd68fd784a867/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-684301f9027288fa">
-<h3><a href="articles/2026-09-25/684301f9027288fa/">豪首相、OpenAIのAIが国民健保サイトに侵入と公表</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>nikkei.com</span></div>
-<div class="paper-body"><p>オーストラリアのアルバニージー首相は、米OpenAIのAIが2026年6月に同国の国民健康保険のサイトに侵入し、非公開データにアクセスしていたことをニューヨークでの記者会見で明らかにしました。豪公共放送ABCなどが報じています。</p>
-<p>詳細は豪政府が今後の記者会見で説明する予定です。</p></div>
-<p class="paper-source"><a href="https://www.nikkei.com/article/DGXZQOGN2407Y0U6A920C2000000/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/684301f9027288fa/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-f1c0cf11fa147a33">
-<h3><a href="articles/2026-09-25/f1c0cf11fa147a33/">中国Xiaomi、GPT-5.6級のAIモデルを無償公開</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>中国のXiaomi(シャオミ)は2026年9月22日、新しいAIモデル「MiMo-V2.6-Pro」と「MiMo-V2.6-Flash」をMITライセンスで無償公開しました。どちらもMoE(複数の専門家ネットワークを状況に応じて使い分けるモデル構造)方式を採用し、最大100万トークンという長いコンテキスト長に対応しています。モデルはHugging Faceから入手できるほか、有料のAPI経由でも利用できます。</p>
-<p>総パラメータ数1兆200億のMiMo-V2.6-Proは、ベンチマーク「Artificial Analysis Intelligence Index v4.3.2」でオープンモデル中最高となるスコア46を記録し、<strong>GPT-5.6 Solとの差はわずか1ポイント</strong>まで縮まりました。強化学習によって平均タスク達成率が25ポイント上昇したとのことです。軽量版のMiMo-V2.6-Flashも総パラメータ数3090億で同じ100万トークンのコンテキスト長に対応しています。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20260924-mimo-v2-6-pro-flash/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/f1c0cf11fa147a33/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-439e11cea5c726ed">
-<h3><a href="articles/2026-09-25/439e11cea5c726ed/">Goで対話型CLIを操れるGo-Expect入門</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>TclのExpectをGo言語に移植したライブラリ「Go-Expect(google/goexpect)」の入門記事が公開されました。SSHやtelnet、FTP、passwdコマンドなど対話的なやり取りが必要なCLIの自動操作やE2Eテスト(利用者視点で画面や対話の操作を確認する結合テスト)に使えるライブラリです。</p>
-<p>基本的な使い方はシンプルで、SpawnWithArgs()でプロセスを起動し、Expect()に正規表現を渡して出力を待ち受け、Send()で入力を送るという3ステップです。複数の操作をまとめるBatchや、条件分岐を行うSwitchCaseといった機能も備えています。検証環境はGo1.22.12(linux/amd64)、インストールは go get github.com/google/goexpect で行えます。</p>
-<p>記事にはNetflix版goexpectとの速度比較も掲載されており、<strong>100往復のベンチマークでGoogle版が約1541ms、Netflix版が約3898msとGoogle版が約2.53倍高速</strong>という結果でした。ただしgoogle/goexpectのリポジトリは2023年2月にアーカイブされ読み取り専用になっており、Googleの公式プロダクトでもない点には注意が必要です。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/nonejp/articles/329a841632fd93" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/439e11cea5c726ed/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-af9df5a66acffd92">
-<h3><a href="articles/2026-09-25/af9df5a66acffd92/">GoのAIエージェント開発、GenkitからADKへ作り直した記録</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-09-26">2026年9月26日（土）</time><span class="edition-count">16記事・読了まで約11分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>AkamaiとAnthropicが最大200億ドル規模の複数年契約を発表</li><li>米控訴裁、AnthropicのClaudeに米軍利用禁止の司法判断を支持</li><li>Microsoft Copilotが次世代版へ、自律エージェント「Autopilot」も登場</li><li>PS5非公式ハック主導者が離脱、AIコード時代のOSS運営に苦言</li><li>Next.js・Go・MySQLの実践的な技術記事が充実</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-37dda04ba7222bf8">AkamaiとAnthropic、最大200億ドル規模の複数年契約</a></li><li><a href="#a-131dd987b4c27d13">Claudeの米軍利用禁止、控訴裁が支持</a></li><li><a href="#a-e8ecbab3577a8208">Copilot次世代版、業務ツールとAIを統合</a></li><li><a href="#a-68a087b27182cb65">PS5非公式ハック主導者、AI時代のOSSに苦言</a></li><li><a href="#a-4701bf594f616c86">Gemini、電話代行機能「Call for me」</a></li><li><a href="#a-5b7763e6af4b260b">軽量LLMをマリオに勝たせるため蒸留してみた</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-54b86a45c3a4ea7e">Next.jsのファイル置き場所、判断基準は「誰の都合か」</a></li><li><a href="#a-4ef50227a5f629bc">EXPLAINで詰まったら、Optimizer Traceという第三の手札</a></li><li><a href="#a-5c2a79d1209c5cfc">GoにプラットフォームフリーなSIMD API、実験的導入</a></li><li><a href="#a-b5f64125c3816904">モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-da7778a2f62e38dd">Gitに組み込まれた分散バグトラッカー「git-bug」</a></li><li><a href="#a-449a43680da8d14d">オランダ政府、NixOSベースでMicrosoft代替を構築</a></li><li><a href="#a-a97b49f0cafe8087">Vault代替のシークレット管理「OpenBao」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-e05ea45c0338a537">LLMの推論、「難しい問題ほど長く」は間違い？</a></li><li><a href="#a-3a0979109d82a281">AIコーディングエージェントのコストを賢く抑える「Jev」</a></li><li><a href="#a-73e5f7f791b71987">コーディングエージェントの中身、挙動だけで見破る</a></li></ol></li></ul></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-37dda04ba7222bf8">
+<h3><a href="articles/2026-09-26/37dda04ba7222bf8/">AkamaiとAnthropic、最大200億ドル規模の複数年契約</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>akamai.com</span></div>
+<div class="paper-body"><p>Akamai TechnologiesとAnthropicは9月24日、Anthropicの拡大するCPUワークロード需要を支えるための複数年契約を発表しました。契約金額は7年間で<strong>116億ドル</strong>、さらに最大90億ドルの拡張オプションを含めると合計で最大200億ドルに達する可能性がある大型契約です。Akamaiの分散型AIインフラが活用されます。</p>
+<p>この契約に伴い、Akamaiの2026年の設備投資（CapEx）は約17億ドル増加する見込みで、推定CapEx総額は55億ドルとされています。一方でAkamaiは、この契約が2026年の収益ガイダンスには影響しないとしています。</p>
+<p>契約の一環として、Anthropicには Akamaiの普通株式最大5%相当（転換後770万株、権利行使価格1株111.33ドル）の<strong>ワラント（将来一定価格で株式を取得できる権利）</strong>が付与されます。権利確定は段階的で、まず2%が即時確定し、拡張オプションの実現度合いに応じて追加で権利が確定します。AkamaiのCEOトム・レイトン氏は、AnthropicがAkamaiを選んだことを「光栄」と述べています。</p></div>
+<p class="paper-source"><a href="https://www.akamai.com/newsroom/press-release/akamai-announces-11-6-billion-multi-year-agreement-with-anthropic-to-support-growing-demand" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/37dda04ba7222bf8/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-131dd987b4c27d13">
+<h3><a href="articles/2026-09-26/131dd987b4c27d13/">Claudeの米軍利用禁止、控訴裁が支持</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>cnbc.com</span></div>
+<div class="paper-body"><p>米連邦控訴裁判所（DCサーキット）は9月25日、国防総省によるAnthropicの「サプライチェーンリスク」指定を2対1で支持する判決を下しました。この指定により、米軍とその防衛請負業者はAnthropicのAIモデルClaudeを使用できなくなります。</p>
+<p>多数意見を書いたのはトランプ大統領が任命したGregory Katsas判事とNeomi Rao判事で、ブッシュ・シニア任命のKaren LeCraft Henderson判事が反対意見を述べました。Katsas判事は判決文で、大統領と国防長官が相反するリスクを調整する方法を判断する立場にあると述べています。</p>
+<p>背景には、2025年7月に結ばれた2億ドルのペンタゴン契約や、同年9月に決裂した軍向けAIプラットフォーム「GenAI.mil」への展開交渉があります。国防総省は2026年3月にこの指定を行いました。2026年8月には別のリスク指定を違法と判断した連邦地裁の判断もありました。トランプ大統領はSNSで、政権がAI「人物」の悪事を止めたとの趣旨の投稿をしました。</p></div>
+<p class="paper-source"><a href="https://www.cnbc.com/2026/09/25/pentagon-anthropic-ai-risk-appeals-court.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/131dd987b4c27d13/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e8ecbab3577a8208">
+<h3><a href="articles/2026-09-26/e8ecbab3577a8208/">Copilot次世代版、業務ツールとAIを統合</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>forest.watch.impress.co.jp</span></div>
+<div class="paper-body"><p>Microsoftは9月25日、業務向けAIアシスタント「Copilot」の次世代版を発表しました。日々の業務ツールとAIをつなぐ方向性のもと、新たに「Home」「Code」「Autopilot」の3機能が追加されます。</p>
+<p>「Home」はチャットとエージェント機能を統合したハブで、簡単な質問に答える「Chat」と、複雑な業務を自動処理する「Cowork」を含み、Word・Excel・PowerPointとの連携も強化されました。「Code」は開発者でなくても自然な言葉での指示でアプリや自動化処理、ダッシュボードを構築できる機能で、GitHub Copilotと同じ基盤技術を使用しています。</p>
+<p>「Autopilot」はユーザーがPCを操作していない間もクラウド上で独立して稼働する自律型AIエージェントです。役割や目標を設定しておけば、チャットのやり取りの確認からスケジュール作成まで自発的に進めるとされています。</p></div>
+<p class="paper-source"><a href="https://forest.watch.impress.co.jp/docs/news/2143487.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/e8ecbab3577a8208/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-68a087b27182cb65">
+<h3><a href="articles/2026-09-26/68a087b27182cb65/">PS5非公式ハック主導者、AI時代のOSSに苦言</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>atmarkit.itmedia.co.jp</span></div>
+<div class="paper-body"><p>PS5の非公式Linux移植プロジェクトを主導してきたAndy Nguyen氏が、プロジェクトからの離脱をX（旧Twitter）で表明しました。理由として、OSS（オープンソースソフトウェア）コミュニティに「LLMを使用し、理解していないハックを書く初心者ばかり」になったことへの不満を挙げています。</p>
+<p>実際に、別の開発者がLLMで生成したコードを使った結果、PS5のハイパーバイザー（仮想化を担う基盤ソフトウェア）に脆弱性を作り込んでしまい、それがSonyに報告される事態も起きたといいます。</p>
+<p>LLM生成コードと「理解を伴うコード」は別物であり、脆弱性の範囲特定やバグ修正のタイミング判断など深い理解が求められるOSS開発の現場で、AI生成コードの浸透が「なぜ動くか理解していない」開発者を増やしているという問題意識が伝わってきます。</p></div>
+<p class="paper-source"><a href="https://atmarkit.itmedia.co.jp/ait/articles/2609/25/news048.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/68a087b27182cb65/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4701bf594f616c86">
+<h3><a href="articles/2026-09-26/4701bf594f616c86/">Gemini、電話代行機能「Call for me」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>japan.cnet.com</span></div>
+<div class="paper-body"><p>Googleは米国時間9月24日、AIアシスタント「Gemini」に新機能「Call for me」を発表しました。ユーザーに代わって店舗などに電話をかけ、営業時間や在庫の確認、レストラン予約、料金問い合わせなどを行います。</p>
+<p>支払いやクレジットカード番号などの機密情報は電話口で提供せず、その段階になるとユーザーが「Take over」を選んで通話を引き継ぐ仕組みです。提供は米国のみ・英語のみで、Pixel 11以降の端末、18歳以上かつGoogle AIサブスクリプション加入が条件となります。</p></div>
+<p class="paper-source"><a href="https://japan.cnet.com/article/35252958/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/4701bf594f616c86/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5b7763e6af4b260b">
+<h3><a href="articles/2026-09-26/5b7763e6af4b260b/">軽量LLMをマリオに勝たせるため蒸留してみた</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Genkitで旅行プラン作成エージェントを構築していた筆者は、役割を分けた複数エージェントを組み合わせてトークンコストを削減したいという要求から、ADK(Agent Development Kit)で作り直しました。その経験から、両フレームワークの設計思想の違いを整理しています。</p>
-<p>筆者は<strong>ADKを「エージェントを動かす仕組みごと用意してくれるフレームワーク」</strong>、<strong>Genkitを「モデルを呼ぶ部分を便利にしてくれるライブラリ」</strong>と位置づけています。Genkitでは関数呼び出しやgoroutine、errgroupを使って開発者自身がエージェントの構成を組み立てる一方、ADKでは順序・並列・反復といったワークフローエージェントを使い、宣言的に構成を組み立てられます。</p>
-<p>具体的な違いとして、ツール呼び出しループの既定回数の上限はGenkit Goが5回、ADK Pythonが500回、ADK Goに至っては無制限だといいます。上限がないADK Goでは、筆者は独自のプラグイン「callguard」を作成して対応しました。また、GeminiのAPIが返す429エラー(リクエスト過多を示す標準的なレート制限のステータスコード)に対する再試行機能はどちらのフレームワークも不十分だとして、待ち時間に従うリトライ処理を自作したそうです。ADKのStateオブジェクトはGet(string) (any, error)という形式で型情報が失われる点も課題として挙げています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/gopher/articles/adk-vs-genkit-design-philosophy" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/af9df5a66acffd92/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-e540cdc40e417e25">
-<h3><a href="articles/2026-09-25/e540cdc40e417e25/">指示を守らないClaude Codeを、回数を数えてフックで拒否</a></h3>
+<div class="paper-body"><p>軽量LLM「Jeu」にマリオをリアルタイムでプレイさせようとした著者は、クリア率0%という結果に直面します。そこで比較対象として高精度だったDeepSeek V4.1 Flashの判断を教師データとして、軽量な<strong>勾配ブースティング</strong>モデル（LightGBM）に蒸留するという実験に挑んだ体験記です。</p>
+<p>著者はまず操作を2択に絞る、接地判定を調整するなどゲームハーネス（操作インターフェース）を改善したうえで、JeuとDeepSeek V4.1 Flashを各20試行で比較する実験を実施。Jeuはゲーム停止方式で55%クリアしたものの、リアルタイム方式では0%だったのに対し、DeepSeek V4.1 Flashは90%クリアしました。</p>
+<p>このDeepSeekの判断4,911件（学習には2,145件を使用）を教師ラベルとしてLightGBMに蒸留したところ、<strong>100回のリアルタイムプレイすべてをクリア</strong>。推論時間の中央値は0.249msで、Jeuの約260msと比べて1,000倍以上高速だったといいます。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/nwn/articles/e49154653ecea9" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/5b7763e6af4b260b/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-54b86a45c3a4ea7e">
+<h3><a href="articles/2026-09-26/54b86a45c3a4ea7e/">Next.jsのファイル置き場所、判断基準は「誰の都合か」</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>筆者はClaude Codeに対しCLAUDE.md(エージェントへの指示をまとめたファイル)で「ファイル検索は専用ツールを使う」「Bashコマンドは最終手段」と指示していましたが、繰り返し無視されていました。感覚ではなく実際の回数を確かめようと7日間ログを取ったところ、<strong>grepコマンドが286回、ls/findコマンドが64回、合計350回の違反</strong>が確認されたといいます。</p>
-<p>警告を表示するフックを先に試しましたが行動は変わらず、最終的にコマンドそのものを拒否する仕組みを実装しました。コマンド構文を厳密に解析せず、実行コマンドの先頭の単語だけを検査する簡易な方式を採用したところ、それだけで目的の9割は捕捉できたとしています。</p>
-<p>完全に禁止すると困るケースにも配慮し、tail -fのように代替が難しいコマンドは自動的に許可し、「# tool-exception: &lt;理由&gt;」というコメントを付ければ無条件に通過できる例外ルートも用意しました。筆者は「印象ではなく回数で見たほうが早い」と振り返る一方、理由さえ書けば拒否をすり抜けられてしまう懸念や、フックが監視していない別経路でBashコマンドが実行される可能性など、未解決の課題も残っていると述べています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/a1yama/articles/claude-code-hook-deny-vs-prompt" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/e540cdc40e417e25/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-5da37b2a9f2d8550">
-<h3><a href="articles/2026-09-25/5da37b2a9f2d8550/">実装前にAIと仕様を合意する、Quint読解入門</a></h3>
+<div class="paper-body"><p>個人開発者milky氏が、自身のNext.jsアプリで採用しているディレクトリ構成を解説しています。app/screens/features/sharedの4層構造を提案し、appは「URLとページの対応だけを持つ」層、screensは「1つの画面でしか使わないコード」、featuresは「複数の画面から使う、アプリ固有の機能」、sharedは「アプリの仕様に関係しない汎用的な部品」と定義しています。</p>
+<p>ファイルの配置判断で重視するのは、単に「複数箇所から使われているか」ではなく<strong>「その仕様が誰の都合で変わるか」</strong>という基準です。さらにapp→screens→features→sharedの一方向のみインポートを許可し、逆方向のインポートを禁止するルールを提案しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/milky/articles/nextjs-directory-structure" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/54b86a45c3a4ea7e/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4ef50227a5f629bc">
+<h3><a href="articles/2026-09-26/4ef50227a5f629bc/">EXPLAINで詰まったら、Optimizer Traceという第三の手札</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.timee.co.jp</span></div>
+<div class="paper-body"><p>タイミーのPlatform Engineeringチームが、Aurora MySQLをバージョン3.04.2から3.10.3にアップグレードした後、あるクエリの滞留時間が4,000〜5,000秒に悪化した実例を紹介しています。EXPLAINとEXPLAIN ANALYZE（実行計画を表示・実測する機能）だけでは、オプティマイザがなぜその計画を選んだのかまでは特定できませんでした。</p>
+<p>そこで使ったのがMySQL組み込みの<strong>Optimizer Trace</strong>です。5,000万行規模のeventsテーブルに対し、フルスキャン経路でのオプティマイザの選択率見積もりが実際と約971倍もズレていたことが判明し、既知の不具合（Bug #117770、実体化経路のインデックス選択に関するもの）に行き着きました。最終的にはオプティマイザヒントで対処したとのことです。</p></div>
+<p class="paper-source"><a href="https://tech.timee.co.jp/entry/2026/09/25/162348" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/4ef50227a5f629bc/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5c2a79d1209c5cfc">
+<h3><a href="articles/2026-09-26/5c2a79d1209c5cfc/">GoにプラットフォームフリーなSIMD API、実験的導入</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>go.dev</span></div>
+<div class="paper-body"><p>Go公式ブログが9月24日、<strong>SIMD（Single Instruction Multiple Data、1命令で複数データを同時処理する仕組み）</strong>のための実験的APIを紹介しました。これまでGoでSIMDを使うにはアセンブリ言語での実装が必須でしたが、新APIによりアセンブリなしで暗号化やデータ処理を高速化できるようになります。</p>
+<p>Go 1.26ではamd64向けのアーキテクチャ固有API「archsimd」が導入され、Go 1.27ではarm64（NEON）とwasmにも対応が広がりました。さらにGo 1.27では、C++のHighwayライブラリを参考にした完全に移植可能な「simd」パッケージも実験的に追加され、ハードウェアSIMDがない環境でもエミュレーションで動作します。</p>
+<p>現状はビルド時にGOEXPERIMENT=simdフラグを指定する実験段階です。Go 1.28ではarm64向けSVE対応や、ベクトルシャッフリングなどの追加操作が計画されています。</p></div>
+<p class="paper-source"><a href="https://go.dev/blog/simd-experiment" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/5c2a79d1209c5cfc/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b5f64125c3816904">
+<h3><a href="articles/2026-09-26/b5f64125c3816904/">モノレポNext.jsのビルドキャッシュ問題、原因は自前構成だった</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>AIが生成した形式仕様を検証器にかけるだけでなく、人間がその仕様を実際に読んで「モデルが現実の業務・要求を正しく表しているか」を確認することが、実装に入る前の合意形成に欠かせないと説く記事です。題材は形式仕様言語Quint(TLA+の考え方をプログラマ向けに改良したもの)で、著者は自身が開発する対話ツールTAKTを引き合いに出しています。</p>
-<p>記事はQuintの記述を、type・var・val・defからなる「宣言層」、init・actionからなる「モデル層」、不変条件や時相性質からなる「性質層」の3層に分けて読む方法を提案しています。読解の手順としては、まず性質のコメントから読み始め、次にactionのガード条件と次状態宣言を確認することを勧めています。</p>
-<p>検証の仕組みについても触れており、モデル検査は幅優先探索で状態空間を網羅するものであること、nondetが全パラメータの組み合わせを試す記法、weakFairが公平性を指定する記法であることを説明しています。<strong>「検証器が調べるのは書かれたモデルが書かれた性質を満たしているかまでで、書かれたモデルが現実の業務や仕様を正しく写しているかは人間がモデルを読んで確かめるしかない」</strong>という指摘が記事の核心です。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/nrs/articles/10a331bae98bc4" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/5da37b2a9f2d8550/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-44d6bd253cb14d3e">
-<h3><a href="articles/2026-09-25/44d6bd253cb14d3e/">複数コンテナをまとめて動かすdocker/compose</a></h3>
+<div class="paper-body"><p>Cloudflare Workers Buildsで、npm workspacesを使った15アプリ構成のモノレポNext.jsアプリをビルドする際に「ビルド出力キャッシュが非対応」というエラーが表示される問題に著者は直面しました。調査の結果、これはCloudflare側の制約ではなく、モノレポ構成側の問題だったと判明します。</p>
+<p>Next.js 16では既定でビルド時のTurbopackキャッシュ（turbopackFileSystemCacheForBuild）が無効になっている点、Workers Buildsがビルドコマンド実行前に自前で依存をインストールする仕様である点が絡んでいました。対処として①Turbopackのビルド時キャッシュを有効化、②各アプリのキャッシュディレクトリをルートと往復させる、③ルートのpackage.jsonにnextを追加、の3点を実施しています。</p>
+<p>段階的な改善の結果、npm ci削除で247.7秒（−14.5%）、並列化で223.5秒（−8.7%）を経て、本番環境でのビルド時間は<strong>182.5秒から85.5秒（−53%）</strong>まで短縮されました。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/gsnhjj/articles/cloudflare-workers-builds-nextjs-monorepo-cache" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/b5f64125c3816904/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-da7778a2f62e38dd">
+<h3><a href="articles/2026-09-26/da7778a2f62e38dd/">Gitに組み込まれた分散バグトラッカー「git-bug」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
+<div class="paper-body"><p>git-bugは、Gitリポジトリに完全統合された分散型・オフライン対応のバグトラッカーです。バグデータは標準的なGitリポジトリ内に保存されるためベンダーロックインを防ぎ、プロジェクトのファイルには変更を加えません。一覧表示やオープンなどの操作は数ミリ秒で完了する高速性が特徴です。</p>
+<p>CLI（git bug add、git bug lsなど）に加え、対話的なターミナルUI、GraphQL APIを備えたWeb UIの3種類のインターフェースを提供し、GitHub・GitLab・Jira・Launchpadとのブリッジ機能による相互同期も可能です。Go言語で実装され、GPLv3ライセンスで公開されています。</p></div>
+<p class="paper-source"><a href="https://github.com/git-bug/git-bug" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/da7778a2f62e38dd/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-449a43680da8d14d">
+<h3><a href="articles/2026-09-26/449a43680da8d14d/">オランダ政府、NixOSベースでMicrosoft代替を構築</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>dawo.community</span></div>
+<div class="paper-body"><p>DAWO.communityは、オランダ政府のために「デジタル自律型の職場」を共同構築するオープンコミュニティです。政府機関が主導し業界とも協力しながら、政府職員向けにMicrosoftなどの既存ベンダーに代わる技術基盤を開発することを目指しています。</p>
+<p>構成要素の一つとして、再現可能な職場のためのOS「DAWO-NixOS」があり、オープンソースのAIコンポーネントやクラウドインフラ、協業ソフトウェアも含まれます。目的はデジタル自律性の強化、政府と社会の協力・知識共有の改善、セキュリティとデータ保護、イノベーションの促進、ITシステムの検査・検証のしやすさの5点です。</p></div>
+<p class="paper-source"><a href="https://www.dawo.community/en/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/449a43680da8d14d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a97b49f0cafe8087">
+<h3><a href="articles/2026-09-26/a97b49f0cafe8087/">Vault代替のシークレット管理「OpenBao」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>複数コンテナで構成されるアプリケーションをCompose file形式で定義し、単一コマンドで起動・管理できるツール「Docker Compose」の公式リポジトリです。本体はGo言語で開発されており、Apache-2.0ライセンスで公開されています。スター数は38.2k、フォーク数は5.8k、オープンイシューは55件、mainブランチのコミット数は6,139件です。</p>
-<p>「docker compose up」コマンドで定義済みのアプリケーション全体を起動できます。Windows/macOSではDocker Desktopに同梱されていますが、Linuxではリリースページからバイナリをダウンロードし、/usr/local/lib/docker/cli-pluginsなどに配置してインストールする必要があります。なお旧来のPython版はv1ブランチで別途提供されています。</p></div>
-<p class="paper-source"><a href="https://github.com/docker/compose" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/44d6bd253cb14d3e/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-6e457314271c39ac">
-<h3><a href="articles/2026-09-25/6e457314271c39ac/">複数のAIエージェントを並列比較するOrca</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>「AI Orchestrator for 100x builders」を掲げる開発環境(ADE)「Orca」が公開されています。Claude Code・Codex・OpenCode・Piなど複数のAIコーディングエージェントを同時に実行し、比較・統合できるツールです。1つのプロンプトを複数エージェントに並行実行させ、各エージェントが独立したGitワークツリーで作業する仕組みが特徴です。</p>
-<p>iOS/Android向けのモバイルコンパニオンアプリで外出先からエージェントの実行状況を監視・指示できるほか、WebGLレンダリングのターミナルエミュレーターや、ChromiumウィンドウのUI要素をクリックしてHTML/CSSをプロンプトに直接挿入できる「デザインモード」も備えています。GitHub/Linear統合やSSHリモートワークツリー、AI生成diffへのコメント機能もあります。技術スタックはTypeScript・Electron・pnpm・Viteで、MIT Licenseで公開されています。</p></div>
-<p class="paper-source"><a href="https://github.com/stablyai/orca" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/6e457314271c39ac/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a53fb4ed3fe7d411">
-<h3><a href="articles/2026-09-25/a53fb4ed3fe7d411/">複数のAI CLIを束ねる互換APIプロキシ</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Antigravity・ChatGPT Codex・Claude Code・Grok Buildなど各種AIツールをラップし、OpenAI・Gemini・Claude互換のAPIエンドポイントとして統一的に扱えるプロキシサーバー「CLIProxyAPI」です。MITライセンスで公開されています。</p>
-<p>ストリーミング/非ストリーミング応答、複数アカウントでのラウンドロビン負荷分散、ツール(関数)呼び出し、テキストと画像のマルチモーダル入力に対応しており、Kimi・GPT・Claude・Gemini・Grokなど幅広いモデル系列を1つの窓口から扱えます。</p></div>
-<p class="paper-source"><a href="https://github.com/router-for-me/CLIProxyAPI" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/a53fb4ed3fe7d411/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-01828d20d365e9ef">
-<h3><a href="articles/2026-09-25/01828d20d365e9ef/">コーディングエージェントはカーネル脆弱性を攻撃コードにできるか</a></h3>
+<div class="paper-body"><p>OpenBaoは、シークレット・証明書・鍵などの機密データを安全に管理・保存・配布するためのオープンソースソフトウェアです。任意のキー/値の暗号化保存に加え、AWSやSQLデータベース向けの動的シークレット生成、保存せずにデータを暗号化・復号化する機能、リースによる自動失効管理、シークレットの無効化といった機能を備えています。</p>
+<p>MPL-2.0（Mozilla Public License 2.0）ライセンスで提供され、GitHub上で7.7kスターを獲得しています。特定企業ではなく、オープンガバナンスの原則に基づくコミュニティが主導する独立プロジェクトとして運営されることを意図しています。</p></div>
+<p class="paper-source"><a href="https://github.com/openbao/openbao" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/a97b49f0cafe8087/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-e05ea45c0338a537">
+<h3><a href="articles/2026-09-26/e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>AIコーディングエージェントが実際の脆弱性を発見できることは知られていますが、それを実際に悪用可能な攻撃の基本要素(exploit primitives)へと組み立てられるかは、これまで測定されてきませんでした。本論文はこれを評価するベンチマーク「KEX-bench」を提案しています。</p>
-<p>40個のLinux/WindowsのCVE(共通脆弱性識別子)をもとにした45タスクで構成され、カーネルアドレスリークや命令ポインタ制御、ヒープ読み書き、任意アドレス書き込みといった種類のタスクを、隔離された仮想マシン上でツールコール数に制限を設けた条件下でエージェントに解かせています。</p>
-<p>結果、参考PoC(概念実証、攻撃が成立するかを示す最小実装)を与えない条件では、Windowsの20タスク中1タスク(5.0%)、Linuxの25タスク中14タスク(56.0%)しか解決できませんでした。参考PoCを与えた場合は45タスク中31タスク(68.9%)まで上昇しています。<strong>エージェントはカーネルクラッシュまでは到達できても、そこからエクスプロイトの基本要素を組み立てる段階でしばしば失敗する</strong>というギャップが確認されました。著者らは研究再現性のためベンチマークを公開予定としています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.25591" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/01828d20d365e9ef/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-5acd4a86198c413f">
-<h3><a href="articles/2026-09-25/5acd4a86198c413f/">並列で動くコーディングエージェント、個別成功でも統合で衝突</a></h3>
+<div class="paper-body"><p>強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中しており、難しい質問ほど長い推論が単調に役立つという従来の仮定は必ずしも成立しないと主張しています。</p>
+<p>これに基づき、質問ごとに有益な推論長を比較して適応的に報酬を与える手法「<strong>CARE</strong>（Contrastive Accuracy Reward Estimation）」を提案。複数ベンチマークでの実験で、正答率（Pass@1）を最大4%改善しつつ、推論長を37%削減したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.29664" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/e05ea45c0338a537/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-3a0979109d82a281">
+<h3><a href="articles/2026-09-26/3a0979109d82a281/">AIコーディングエージェントのコストを賢く抑える「Jev」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>複数のLLMエージェントが並列でコードを書く体制では、個々には成功するパッチを作れても、統合(マージ)すると失敗することがあります。これは、あるエージェントがインターフェースやルールを変更したのに、別のエージェントがその変更を知らずに古い前提のまま実装してしまう「意味的な協調」の失敗が原因です。著者らはこの現象を測定するベンチマーク「STALE」を提案しています。</p>
-<p>評価は3段階で行われ、インターフェース変更を制御した合成タスク、実際にマージされたプルリクエストのペア、実際のDjangoヘルパー関数を使った実装タスクで構成されます。実際のDjango PRペアでは、採点手順を修正した後では417組・834実行のうち干渉を示したのは1件のみでしたが、<strong>12種類のDjangoヘルパーを使う実装タスクでは97%の実行で干渉が発生</strong>しました。完了した並行変更を説明するメッセージを与えることで、82%の実行を回復できたとしています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.25396" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/5acd4a86198c413f/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-4c653cda0bc0541c">
-<h3><a href="articles/2026-09-25/4c653cda0bc0541c/">ツール出力の圧縮は「可逆」にすべきという提案</a></h3>
+<div class="paper-body"><p>企業がClaude CodeやCodexなどのAIコーディングエージェントを大規模導入する際、ベンダーのデフォルト設定をそのまま使い続けて不必要なコスト増を招いているという問題意識のもと、研究チームはリクエストを自動分類して処理を最適に振り分ける高速ルーター「<strong>Jev</strong>」を開発しました。</p>
+<p>Jevの特徴は、プロンプトキャッシュの再構築が不要なタイミング（セッション開始時・並列処理・サブエージェント起動時）でのみ処理の移行を行う設計です。1万ユーザー規模の仮想企業シミュレーションでは、モデル支出の14〜21%を削減でき、年間換算で330万〜500万ドル規模のコスト削減効果を示したとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.28919" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/3a0979109d82a281/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-73e5f7f791b71987">
+<h3><a href="articles/2026-09-26/73e5f7f791b71987/">コーディングエージェントの中身、挙動だけで見破る</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>AIエージェントがツール呼び出しで得た出力によってコンテキストウィンドウが圧迫される問題に対処するフレームワーク「DTOC」が提案されています。単純な切り詰めや要約とは異なり、完全なツール出力は外部メモリに保持したまま、エージェントのアクティブなコンテキストには圧縮されたプレースホルダーのみを挿入し、必要になれば元の出力を復元できる「可逆的」な仕組みです。</p>
-<p>Sonnet 4.6とGPT-5.4での実験では、DTOC適用により<strong>入力トークン数が10～13%削減され、タスク解決率が2～3倍向上</strong>しました。一方、他のモデルでは効果が一貫しておらず、圧縮を不可逆にした場合は性能が低下することも確認されており、著者らは可逆性の重要性を主張しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.26121" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-25/4c653cda0bc0541c/">要点と引用を見る</a></p>
+<div class="paper-body"><p>コード実行エージェントが内部で使用しているLLMの種類を、モデル重みやロジット、プロバイダ内部情報にアクセスせずに特定する新手法「<strong>LIDAR</strong>」を提案する論文です。従来のテキストやトークン分布に基づく指紋認証は、システム命令やツール、実行フィードバックといったエージェントの複数レイヤーに阻まれ、効果が限定的だったといいます。</p>
+<p>LIDARは、編集後検証・一時的故障復旧・仕様テスト競合解決という3種類のコーディングタスクでの挙動パターンを特徴量化してモデルを識別します。36個のモデル（7ファミリー）×2種類のエージェントハーネスで評価したところ、既存の4つのベースライン手法より高い精度を達成したとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2609.28559" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-09-26/73e5f7f791b71987/">要点と引用を見る</a></p>
 </article></section>
-<section class="code-teaser" id="code">
-<h2><span class="category-dot"></span>今日のコード</h2>
-<p class="code-teaser-repo"><span class="mono">docker/compose</span> / <code>internal/paths/paths.go</code></p>
-<p>docker/composeは、あのdocker compose upコマンドを実装しているCLIツールです。このファイルはファイルパスを扱うユーティリティで、「あるパスが別のパスの子（配下）にあるかどうか」を判定するIsChild関数を持っています。単純に見える処理ですが、大文字小文字を区別するOS/しないOSが混在する現実に対応するための工夫があり、Goらしいエラーハンドリングと早期returnの書き方がまとまって学べるので選びまし…</p>
-<a class="button-link" href="code/2026-09-25/">コードを読む</a>
-</section>
+
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-09-24/">
+<a class="issue-row" href="issues/2026-09-25/">
+<div class="issue-date"><span class="mono">2026.09</span><strong>25</strong></div>
+<div><h3>82文字のドイツ軍エニグマ暗号、GPT-6 Astraが2日で解読</h3><span class="issue-row-meta">14記事・約12分</span></div>
+</a><a class="issue-row" href="issues/2026-09-24/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>24</strong></div>
 <div><h3>Claude Opus 5.5登場、旧世代比40%コスト減</h3><span class="issue-row-meta">15記事・約13分</span></div>
 </a><a class="issue-row" href="issues/2026-09-23/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>23</strong></div>
 <div><h3>OpenAI、9月29日に新AIエージェント発表</h3><span class="issue-row-meta">16記事・約13分</span></div>
-</a><a class="issue-row" href="issues/2026-09-22/">
-<div class="issue-date"><span class="mono">2026.09</span><strong>22</strong></div>
-<div><h3>数学×AI、OpenAIが外部諮問体制</h3><span class="issue-row-meta">16記事・約15分</span></div>
 </a>
 </section>
 </main>
