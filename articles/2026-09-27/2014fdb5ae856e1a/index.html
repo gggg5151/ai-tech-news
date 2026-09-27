@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opus5.5「40%安い」の実態、キャッシュ次第で24〜59% — 1年目向けエンジニア新聞</title>
+<meta name="description" content="株式会社JQIT所属の筆者(@suwa_nobu)が、Claude Opus 5.5の「40%安い」という公式発表について、業務タスクを実際に実行して検証しています。Windows 10上のClaude Code バージョン2.1.282を用い、2026年9月25日に測定しました。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Opus5.5「40%安い」の実態、キャッシュ次第で24〜59% — 1年目向けエンジニア新聞">
+<meta property="og:description" content="株式会社JQIT所属の筆者(@suwa_nobu)が、Claude Opus 5.5の「40%安い」という公式発表について、業務タスクを実際に実行して検証しています。Windows 10上のClaude Code バージョン2.1.282を用い、2026年9月25日に測定しました。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/2014fdb5ae856e1a/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/2014fdb5ae856e1a/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Opus5.5「40%安い」の実態、キャッシュ次第で24〜59%", "datePublished": "2026-09-27", "description": "株式会社JQIT所属の筆者(@suwa_nobu)が、Claude Opus 5.5の「40%安い」という公式発表について、業務タスクを実際に実行して検証しています。Windows 10上のClaude Code バージョン2.1.282を用い、2026年9月25日に測定しました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/2014fdb5ae856e1a/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/suwa_nobu/items/870b1d6c5502aca68f55?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-27/">2026.09.27 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Opus5.5「40%安い」の実態、キャッシュ次第で24〜59%</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</header>
+<div class="article-body">
+<p>株式会社JQIT所属の筆者(@suwa_nobu)が、Claude Opus 5.5の「40%安い」という公式発表について、業務タスクを実際に実行して検証しています。Windows 10上のClaude Code バージョン2.1.282を用い、2026年9月25日に測定しました。</p>
+<p>25.5KBのPythonコード解析(Aタスク)と80行のリスト出力(Bタスク)を旧モデルと新モデルでそれぞれ3回ずつ実行し中央値を比較したところ、初回(キャッシュ作成時)のコスト削減率は24%、2回目以降(キャッシュ読み出し時)は59%と、<strong>キャッシュの当たり方で大きくばらついた</strong>といいます。</p>
+<p>要因として、価格改定でキャッシュ読み出し単価が60%値下げされたことが挙げられており、同じセッションを継続する場合は削減効果が大きく、新規セッションを開始する場合は効果が限定的になるとしています。速度面でも、出力93トークンの短い応答では2.6%の改善にとどまった一方、出力約1,800トークンの長い応答では21%の速度改善が見られたとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者は@suwa_nobu、株式会社JQIT所属である</li><li>検証はWindows 10上のClaude Code バージョン2.1.282を用いて行われた</li><li>測定日は2026年9月25日である</li><li>公式発表ではClaude Opus 5.5は旧モデルより40%安いとされている</li><li>筆者の実測では初回(キャッシュ作成時)のコスト削減率は24%だった</li><li>筆者の実測では2回目以降(キャッシュ読み出し時)のコスト削減率は59%だった</li><li>比較には同じ業務を両モデルで3回ずつ実行し中央値を採用する方法が用いられた</li><li>Aタスクは25.5KBのPythonコード解析で、出力は93トークンだった</li><li>Bタスクは80行のリスト出力で、出力は約1,800トークンだった</li><li>価格改定によりキャッシュ読み出し単価が60%値下げされたとされている</li><li>同じセッションを継続する場合は削減効果が大きく、新規セッションを開始する場合は効果が限定的だったとされている</li><li>速度面では出力93トークンの短い応答で2.6%、出力約1,800トークンの長い応答で21%の速度改善が見られたとされている</li></ul></section>
+
+<aside class="source-box"><a href="https://qiita.com/suwa_nobu/items/870b1d6c5502aca68f55?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Opus5.5%E3%80%8C40%25%E5%AE%89%E3%81%84%E3%80%8D%E3%81%AE%E5%AE%9F%E6%85%8B%E3%80%81%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E6%AC%A1%E7%AC%AC%E3%81%A724%E3%80%9C59%25%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2F2014fdb5ae856e1a%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Opus5.5%E3%80%8C40%25%E5%AE%89%E3%81%84%E3%80%8D%E3%81%AE%E5%AE%9F%E6%85%8B%E3%80%81%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E6%AC%A1%E7%AC%AC%E3%81%A724%E3%80%9C59%25%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-27/2014fdb5ae856e1a/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2F2014fdb5ae856e1a%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../384494311995ff53/"><span>前の記事</span>Docker公式のAIエージェント向けスキル公開</a><a class="next" href="../0462c66772b76233/"><span>次の記事</span>Anthropic公式のGitHub Action、claude-code-action</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-27/">← 2026.09.27 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../536d87abc0c9bdc8/">AI感のないAWS構成図、5パターンで検証</a></h3>
+<p class="excerpt">AIエージェントが生成するAWS構成図は「角が丸っぽい」「AI感がある」「線が重なる」など品質面の課題があると筆者は指摘します。そこでAWS Diagram MCP(Model Context Protocolの略、AIとツールをつなぐ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2e4843cdd1d60b33/">許可ルールが効かない罠、フォルダ信頼がカギ</a></h3>
+<p class="excerpt">Claude Codeの許可ルール(permissions.allow)は、プロジェクトフォルダが「信頼済み」でない場合、.claude/settings.jsonに書いても無視されるという挙動を筆者が検証しています。未信頼のフォルダで…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e5b6bb61c98c2c54/">ローカルLLMのWeb検索手段まとめ</a></h3>
+<p class="excerpt">ローカルLLMで利用できるWeb検索サービス・APIをまとめた記事です。Brave Search APIは独自の300億ページ超のWebインデックスを持ち、月$5分の無料クレジットとMCP Serverを提供します。Ollama Web…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>note.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

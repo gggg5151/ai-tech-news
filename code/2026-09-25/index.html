@@ -110,7 +110,7 @@
 		child = filepath.Join(cBase, child)
 		current = cDir</code></pre><p>filepath.Dirはパスから最後の要素を除いた「親ディレクトリ」部分を返し、filepath.Baseは逆に最後の要素だけを返す標準ライブラリ関数。例えば&quot;/foo/bar/baz&quot;ならDirは&quot;/foo/bar&quot;、Baseは&quot;baz&quot;になる。ここでcurrentを1階層ずつ親に向かって書き換えながらループの先頭（strings.EqualFoldでの比較）に戻ることで、ディレクトリツリーを下から上へ1段ずつ歩いてdirと一致するか確認していく。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは`結果, err := 何かの関数()`のあと必ず`if err != nil { return ... }`で即座に異常系を片付けてから次の処理に進む、というガード節スタイルの一貫性を意識すると、実務コードがぐっと読みやすくなる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-23/"><span>前の日</span>caddyserver/caddy</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-23/"><span>前の日</span>caddyserver/caddy</a><a class="next" href="../2026-09-27/"><span>次の日</span>anthropics/claude-code-action</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-25/">← 2026.09.25 の号を読む</a>
 </div>
 </article>

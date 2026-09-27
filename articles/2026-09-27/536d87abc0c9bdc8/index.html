@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI感のないAWS構成図、5パターンで検証 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="AIエージェントが生成するAWS構成図は「角が丸っぽい」「AI感がある」「線が重なる」など品質面の課題があると筆者は指摘します。そこでAWS Diagram MCP(Model Context Protocolの略、AIとツールをつなぐ共通規格)Server、aws-architecture-diagramスキル、dr…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AI感のないAWS構成図、5パターンで検証 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="AIエージェントが生成するAWS構成図は「角が丸っぽい」「AI感がある」「線が重なる」など品質面の課題があると筆者は指摘します。そこでAWS Diagram MCP(Model Context Protocolの略、AIとツールをつなぐ共通規格)Server、aws-architecture-diagramスキル、dr…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/536d87abc0c9bdc8/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/536d87abc0c9bdc8/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "AI感のないAWS構成図、5パターンで検証", "datePublished": "2026-09-27", "description": "AIエージェントが生成するAWS構成図は「角が丸っぽい」「AI感がある」「線が重なる」など品質面の課題があると筆者は指摘します。そこでAWS Diagram MCP(Model Context Protocolの略、AIとツールをつなぐ共通規格)Server、aws-architecture-diagramスキル、draw.io MCP Tool Serve…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/536d87abc0c9bdc8/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/sagochiko/items/ef77b084ff2dee1f859c?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-27/">2026.09.27 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>AI感のないAWS構成図、5パターンで検証</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</header>
+<div class="article-body">
+<p>AIエージェントが生成するAWS構成図は「角が丸っぽい」「AI感がある」「線が重なる」など品質面の課題があると筆者は指摘します。そこでAWS Diagram MCP(Model Context Protocolの略、AIとツールをつなぐ共通規格)Server、aws-architecture-diagramスキル、draw.io MCP Tool Server、draw.io Claude Codeプラグイン、Claude Code単体の5パターンで同一の構成図を生成し、出力品質を比較検証しています。検証環境はClaude Code バージョン2.1.278、モデルはClaude Opus 5です。</p>
+<p>線とラベルの重複回避、AWS公式アイコンの使用、アベイラビリティゾーンの正式名称記載、配置ルールの統一、線の出発点を辺の中央に指定するといった追加指示を組み込むことで、<strong>全パターンで品質が向上</strong>したとしています。特にdraw.io MCP、draw.io Claude Codeプラグイン、Claude Code単体の3パターンは「業務利用レベル」に達したと評価しています。</p>
+<p>筆者は検証で使用した指示をまとめたカスタムスキルも公開しており、同じ課題を抱えるエンジニアがすぐに試せる形になっています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者はAIエージェントが生成するAWS構成図について、角が丸っぽい・AI感がある・線が重なるなどの品質上の問題があると指摘している</li><li>著者は5つのパターンで同じAWS構成図を生成して比較検証した</li><li>検証に使用したツールはAWS Diagram MCP Server、aws-architecture-diagramスキル、draw.io MCP Tool Server、draw.io Claude Codeプラグイン、Claude Code単体の5つ</li><li>検証環境はClaude Code バージョン2.1.278、使用モデルはClaude Opus 5</li><li>起動オプション--strict-mcp-configで不要なMCPを除外して検証した</li><li>著者は追加指示として線とラベルの重複回避、AWS公式アイコンの使用、アベイラビリティゾーンの正式名称記載、図要素の配置ルール統一、線の出発点を辺の中央に指定することを組み込んだ</li><li>詳細で明確な指示を与えることで全パターンで品質が向上したと著者は述べている</li><li>draw.io MCP、draw.io Claude Codeプラグイン、Claude Code単体の3パターンが業務利用レベルに達したと著者は評価している</li><li>著者は検証で使用した指示を集約したカスタムスキルを公開した</li></ul></section>
+
+<aside class="source-box"><a href="https://qiita.com/sagochiko/items/ef77b084ff2dee1f859c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=AI%E6%84%9F%E3%81%AE%E3%81%AA%E3%81%84AWS%E6%A7%8B%E6%88%90%E5%9B%B3%E3%80%815%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%A7%E6%A4%9C%E8%A8%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2F536d87abc0c9bdc8%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=AI%E6%84%9F%E3%81%AE%E3%81%AA%E3%81%84AWS%E6%A7%8B%E6%88%90%E5%9B%B3%E3%80%815%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%A7%E6%A4%9C%E8%A8%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-27/536d87abc0c9bdc8/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2F536d87abc0c9bdc8%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../bef2d54cfae21338/"><span>前の記事</span>Google、AIエージェント専用のPostgreSQL基盤を発表</a><a class="next" href="../2e4843cdd1d60b33/"><span>次の記事</span>許可ルールが効かない罠、フォルダ信頼がカギ</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-27/">← 2026.09.27 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2e4843cdd1d60b33/">許可ルールが効かない罠、フォルダ信頼がカギ</a></h3>
+<p class="excerpt">Claude Codeの許可ルール(permissions.allow)は、プロジェクトフォルダが「信頼済み」でない場合、.claude/settings.jsonに書いても無視されるという挙動を筆者が検証しています。未信頼のフォルダで…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e5b6bb61c98c2c54/">ローカルLLMのWeb検索手段まとめ</a></h3>
+<p class="excerpt">ローカルLLMで利用できるWeb検索サービス・APIをまとめた記事です。Brave Search APIは独自の300億ページ超のWebインデックスを持ち、月$5分の無料クレジットとMCP Serverを提供します。Ollama Web…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>note.com</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../384494311995ff53/">Docker公式のAIエージェント向けスキル公開</a></h3>
+<p class="excerpt">Dockerは2026年9月24日、AIコーディングエージェント向けの公式スキル集「Docker Skills」を公開しました。発表はDocker社のArnaud Héritier氏によるものです。Claude Code、Codex、G…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gihyo.jp</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

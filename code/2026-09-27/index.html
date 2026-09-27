@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>anthropics/claude-code-action の src/mcp/path-validation.ts を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="このリポジトリは、GitHub上のIssueやPRコメントでの指示を受けてClaude CodeがGitHubアクションとしてファイルを読み書きするツールです。AIがユーザーの投稿から「このパスのファイルを書き換えて」という指示を受け取る以上、そのパス文字列を鵜呑みにするとリポジトリの外のファイルを触られてしまう危険が…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="anthropics/claude-code-action の src/mcp/path-validation.ts を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="このリポジトリは、GitHub上のIssueやPRコメントでの指示を受けてClaude CodeがGitHubアクションとしてファイルを読み書きするツールです。AIがユーザーの投稿から「このパスのファイルを書き換えて」という指示を受け取る以上、そのパス文字列を鵜呑みにするとリポジトリの外のファイルを触られてしまう危険が…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-27/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-27/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.27</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>anthropics/claude-code-action の <code>src/mcp/path-validation.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/anthropics/claude-code-action/blob/HEAD/src/mcp/path-validation.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-27">2026.09.27</time></div>
+</header>
+<div class="article-body">
+<p>このリポジトリは、GitHub上のIssueやPRコメントでの指示を受けてClaude CodeがGitHubアクションとしてファイルを読み書きするツールです。AIがユーザーの投稿から「このパスのファイルを書き換えて」という指示を受け取る以上、そのパス文字列を鵜呑みにするとリポジトリの外のファイルを触られてしまう危険があります。今回選んだファイルは、まさにその「外部から来たパスを安全かどうか判定する」処理そのもので、60行に満たない短さながらセキュリティ上の判断がぎっしり詰まっているため教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>import { realpath } from &quot;fs/promises&quot;;
+import { resolve, sep } from &quot;path&quot;;
+
+/**
+ * Validates that a file path resolves within the repository root.
+ * Prevents path traversal attacks via &quot;../&quot; sequences and symlinks.
+ * @param filePath - The file path to validate (can be relative or absolute)
+ * @param repoRoot - The repository root directory
+ * @returns The resolved absolute path (with symlinks resolved) if valid
+ * @throws Error if the path resolves outside the repository root
+ */
+export async function validatePathWithinRepo(
+  filePath: string,
+  repoRoot: string,
+): Promise&lt;string&gt; {
+  // First resolve the path string (handles .. and . segments)
+  const initialPath = resolve(repoRoot, filePath);
+
+  // Resolve symlinks to get the real path
+  // This prevents symlink attacks where a link inside the repo points outside
+  let resolvedRoot: string;
+  let resolvedPath: string;
+
+  try {
+    resolvedRoot = await realpath(repoRoot);
+  } catch {
+    throw new Error(`Repository root &#x27;${repoRoot}&#x27; does not exist`);
+  }
+
+  try {
+    resolvedPath = await realpath(initialPath);
+  } catch {
+    // File doesn&#x27;t exist yet - fall back to checking the parent directory
+    // This handles the case where we&#x27;re creating a new file
+    const parentDir = resolve(initialPath, &quot;..&quot;);
+    try {
+      const resolvedParent = await realpath(parentDir);
+      if (
+        resolvedParent !== resolvedRoot &amp;&amp;
+        !resolvedParent.startsWith(resolvedRoot + sep)
+      ) {
+        throw new Error(
+          `Path &#x27;${filePath}&#x27; resolves outside the repository root`,
+        );
+      }
+      // Parent is valid, return the initial path since file doesn&#x27;t exist yet
+      return initialPath;
+    } catch {
+      throw new Error(
+        `Path &#x27;${filePath}&#x27; resolves outside the repository root`,
+      );
+    }
+  }
+
+  // Path must be within repo root (or be the root itself)
+  if (
+    resolvedPath !== resolvedRoot &amp;&amp;
+    !resolvedPath.startsWith(resolvedRoot + sep)
+  ) {
+    throw new Error(`Path &#x27;${filePath}&#x27; resolves outside the repository root`);
+  }
+
+  return resolvedPath;
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>import { realpath } from &quot;fs/promises&quot;;
+import { resolve, sep } from &quot;path&quot;;</code></pre><p>Node.jsの標準モジュールから関数を読み込んでいます。`{ }`で囲むのは「名前付きインポート」で、そのモジュールが持つ複数の機能から必要な名前だけを取り出す書き方です。`fs/promises`はファイル操作系APIのPromise版（`await`で使える版）。`realpath`は、シンボリックリンクなどを全部たどった先の“本当の”絶対パスを返す関数です。`path`モジュールの`resolve`は複数のパス断片を結合して1つの絶対パスに正規化する関数、`sep`はOSごとのパス区切り文字（Windowsなら`\`、Mac/Linuxなら`/`）が入った定数です。</p></div><div class="walk-step"><pre class="walk-quote"><code>/**
+ * Validates that a file path resolves within the repository root.
+...
+ * @throws Error if the path resolves outside the repository root
+ */</code></pre><p>`/** ... */`はJSDocと呼ばれる特殊な形式のコメントです。普通の`//`コメントと違い、エディタがこの関数にカーソルを合わせたときにポップアップで説明を表示してくれます。`@param`は引数の説明、`@returns`は戻り値の説明、`@throws`は「この関数はこういう場合にエラーを投げます」という注意書きです。呼び出す側は中身を読まなくても、このコメントだけで使い方と注意点がわかります。</p></div><div class="walk-step"><pre class="walk-quote"><code>export async function validatePathWithinRepo(
+  filePath: string,
+  repoRoot: string,
+): Promise&lt;string&gt; {</code></pre><p>`export`を付けると他のファイルからこの関数を`import`できるようになります。`async`が付いた関数は内部で`await`（後述）を使え、戻り値は自動的に`Promise`で包まれます。`Promise&lt;string&gt;`は「今はまだ結果がないが、いずれ`string`型の値が手に入る箱」を表す型です。引数の`filePath: string`のようにコロンの後に型を書くのがTypeScriptの型注釈で、ここでは「文字列以外を渡すとコンパイルエラーになる」という制約を付けています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const initialPath = resolve(repoRoot, filePath);</code></pre><p>`resolve`はパスの断片を順番に結合し、`..`（1つ上の階層）や`.`（現在の階層）を計算し尽くして1つの絶対パス文字列にする関数です。例えば`repoRoot`が`/repo`、`filePath`が`../../etc/passwd`なら、結合した上で`..`を計算し、`/etc/passwd`のような文字列になります。この時点ではまだファイルシステム上に本当にそのファイルがあるかは確認していません。あくまで文字列としての計算です。</p></div><div class="walk-step"><pre class="walk-quote"><code>let resolvedRoot: string;
+let resolvedPath: string;</code></pre><p>`let`は後から値を代入し直せる変数の宣言です。ここでは型だけ先に決めて（`: string`）、値は次の`try`ブロックの中で代入しています。関数の外の広いスコープで宣言しておくことで、複数の`try`ブロックをまたいで同じ変数を使い続けられるようにしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>try {
+    resolvedRoot = await realpath(repoRoot);
+  } catch {
+    throw new Error(`Repository root &#x27;${repoRoot}&#x27; does not exist`);
+  }</code></pre><p>`try { ... } catch { ... }`は「tryの中でエラーが起きたらcatchの中を実行する」という構文です。ここでの`catch`はエラーの中身を受け取る変数名を書いていません（`catch (e)`のようにも書けますが、中身を使わないなら省略できます）。`await`は「Promiseが解決するまでここで待つ」という意味です。`realpath`は指定したパスが実在しないと失敗（Promiseがreject）するので、リポジトリのルート自体が存在しない異常事態をここで検出し、`throw new Error(...)`で処理を中断してエラーを投げています。バッククォートで囲まれた文字列はテンプレートリテラルで、`${repoRoot}`の部分に変数の値が埋め込まれます。</p></div><div class="walk-step"><pre class="walk-quote"><code>try {
+    resolvedPath = await realpath(initialPath);
+  } catch {</code></pre><p>今度は検証対象のパス自体に対して`realpath`を試みています。ここで失敗するのは「そのファイルがまだ存在しない」ケースです。Claude Codeは新規ファイルを作成する操作もするので、存在しないパスを即座にエラー扱いにはできません。コメントが示す通り、この場合は諦めずに一段階上の「親ディレクトリ」の実在チェックに切り替える、という設計判断がされています。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (
+        resolvedParent !== resolvedRoot &amp;&amp;
+        !resolvedParent.startsWith(resolvedRoot + sep)
+      ) {</code></pre><p>ここがこの関数の核心のチェックです。「親ディレクトリの実パスが、リポジトリルートそのものと完全一致する」か「リポジトリルート＋区切り文字から始まっている」かのどちらでもなければ、リポジトリの外にあると判定します。単に`resolvedParent.includes(resolvedRoot)`のような緩い判定にすると、`/repo`というルートに対して`/repository-evil`のような紛らわしいパスまで“内側”と誤判定してしまいます。`resolvedRoot + sep`（例：`/repo/`）を接頭辞にすることで、そのような取り違えを防いでいます。`&amp;&amp;`は「両方の条件が真のときだけ全体が真になる」論理演算子、`!`は真偽を反転させる否定演算子です。</p></div><div class="walk-step"><pre class="walk-quote"><code>// Parent is valid, return the initial path since file doesn&#x27;t exist yet
+      return initialPath;</code></pre><p>親ディレクトリが安全だと確認できたら、まだ実在しない`initialPath`（symlink解決前の、文字列として計算した絶対パス）をそのまま返しています。ファイルがないのでこれ以上symlinkを解決しようがない、という理屈です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if (
+    resolvedPath !== resolvedRoot &amp;&amp;
+    !resolvedPath.startsWith(resolvedRoot + sep)
+  ) {</code></pre><p>ファイルが実在して`realpath`が成功した場合は、こちらの外側のチェックが実行されます。ロジックは先ほどの親ディレクトリのチェックと全く同じ形（一致するか、区切り文字付きの接頭辞になっているか）ですが、対象が「symlinkまで解決した本物の実体パス」である点が違います。たとえリポジトリ内の相対パス表記が安全そうに見えても、そのパスの正体がシンボリックリンクを通じてリポジトリ外の実ファイルを指していれば、ここで弾かれます。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>外部から受け取ったファイルパスを検証するときは、文字列の見た目（`../`が含まれるかなど）だけを見るのではなく、`realpath`のような関数で「実際にファイルシステム上のどこを指しているか」まで解決してから、安全なディレクトリのパス＋区切り文字を接頭辞として一致するか確認する、という一段深いチェックが必要になる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-25/"><span>前の日</span>docker/compose</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-27/">← 2026.09.27 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

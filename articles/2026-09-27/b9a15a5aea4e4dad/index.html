@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>エージェントの二重実行問題、責任分界点はどこか — 1年目向けエンジニア新聞</title>
+<meta name="description" content="LLMエージェントがツール呼び出し(書き込み)でタイムアウトやサーバーエラーに遭遇すると、実際には処理が成功しているにもかかわらず盲目的にリトライしてしまい、支払いの二重請求やデプロイの重複実行など「二重の副作用」が起こり得ます。逆にリトライを諦めれば必要な処理が欠落します。この論文は、正確に一度だけ実行する(exac…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="エージェントの二重実行問題、責任分界点はどこか — 1年目向けエンジニア新聞">
+<meta property="og:description" content="LLMエージェントがツール呼び出し(書き込み)でタイムアウトやサーバーエラーに遭遇すると、実際には処理が成功しているにもかかわらず盲目的にリトライしてしまい、支払いの二重請求やデプロイの重複実行など「二重の副作用」が起こり得ます。逆にリトライを諦めれば必要な処理が欠落します。この論文は、正確に一度だけ実行する(exac…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/b9a15a5aea4e4dad/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/b9a15a5aea4e4dad/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "エージェントの二重実行問題、責任分界点はどこか", "datePublished": "2026-09-27", "description": "LLMエージェントがツール呼び出し(書き込み)でタイムアウトやサーバーエラーに遭遇すると、実際には処理が成功しているにもかかわらず盲目的にリトライしてしまい、支払いの二重請求やデプロイの重複実行など「二重の副作用」が起こり得ます。逆にリトライを諦めれば必要な処理が欠落します。この論文は、正確に一度だけ実行する(exactly-once)保証を、モデル自身・エ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/b9a15a5aea4e4dad/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.29095", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-27/">2026.09.27 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>エージェントの二重実行問題、責任分界点はどこか</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
+</header>
+<div class="article-body">
+<p>LLMエージェントがツール呼び出し(書き込み)でタイムアウトやサーバーエラーに遭遇すると、実際には処理が成功しているにもかかわらず盲目的にリトライしてしまい、支払いの二重請求やデプロイの重複実行など「二重の副作用」が起こり得ます。逆にリトライを諦めれば必要な処理が欠落します。この論文は、正確に一度だけ実行する(exactly-once)保証を、モデル自身・エージェントのハーネス・ツール契約(API仕様)のどの層で担保すべきかを検証しています。</p>
+<p>著者らはLIMBOという決定論的サンドボックス環境(6種のサービス、現実的な契約条件、12種の障害モード)を構築し、9つの最新モデル・3つの実運用ハーネス・2種の契約バリアント・15種の復旧条件にわたり<strong>25,930エピソード</strong>の実験を行いました。</p>
+<p>直後の読み戻し(read-back)で結果を確認できる障害では、exactly-onceを指示されたフロンティアモデルの重複率はわずか0.5%で、モデルの違いが分散の53%を占めました。一方、読み戻しで確認できない障害では、同じフロンティアモデルでもリクエストがまだ処理中の場合で56%、配送が二重化した場合で74%のエピソードで重複が発生し、ここではツール契約の違いが分散の81%を占めたとしています。</p>
+<p>遅延コミット下では在庫時間の上限が分からない限り検証のみに頼るポリシーはexactly-onceを保証できないことも示されました。在庫遅延がヘビーテール分布に従う場合、1時間待つよりも書き込みごとに<strong>冪等性キー(idempotency key)</strong>を付与する方が有効で、重複率は28%から4%に低下したといいます。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『Where Does Exactly-Once Live? Model, Harness, and Tool-Contract Effects on Duplicate Side Effects in LLM Agents』である</li><li>arXiv投稿者はJiapeng Liと記載されている</li><li>ツール使用エージェントの書き込みがタイムアウトやサーバーエラーを返した際、実際には処理が既に成功している場合があると指摘している</li><li>盲目的なリトライは行動を重複させ(二重請求・二重アナウンス・二重デプロイなど)、逆にリトライを諦めると必要な処理が欠落すると述べている</li><li>研究の目的は、正確に一度だけ(exactly-once)の実行保証をモデル・エージェントハーネス・ツール契約のどこで担保すべきかを検証することである</li><li>著者らはLIMBOという決定論的サンドボックスを構築し、6種類のサービスと現実的な契約(オプションの冪等性キー、結果整合性・欠落した読み取りパスなど)、サービス境界に注入される12種類の障害モード(遅延コミット、再配信、部分的バッチ処理を含む)を用意した</li><li>各エピソードは確定した効果(committed effects)の台帳と照合して採点される</li><li>実験は9つの最新モデル、3つの実運用エージェントハーネス、2種類の契約バリアント、15種類の復旧条件にわたり、合計25,930エピソードで実施された</li><li>即座の読み戻し(read-back)で結果が判明できる障害では、正確に一度だけ実行するよう指示されたフロンティアモデルは、確認応答が失われた書き込みをほぼ重複させない(重複率0.5%)一方、より弱いモデルはしばしば重複させ、モデルの違いが説明された分散の53%を占める</li><li>リクエストがまだ処理中、または配送が二重に行われた場合など読み戻しで判明できない障害では、同じフロンティアモデルでも56%および74%のエピソードで重複が発生し、ツール契約の違いが説明された分散の81%を占める</li><li>著者らは、遅延コミット下では在庫(in-flight)時間の上限が分からない限り、検証のみに頼るポリシーはexactly-oneを保証できないことを証明し、在庫時間の上限が短く既知であれば待機が有効に機能するとしている</li><li>在庫遅延がヘビーテール分布に従う場合、エピソードあたり1時間待っても、すべての書き込みに冪等性キーを付与する方法には及ばず、キー付与により重複率は28%から4%に低下する(エージェントがキーが存在する場合にそれを利用するため)</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Retrying blindly duplicates it -- a second charge, a second announcement, a second deployment -- while giving up skips required work.</blockquote><blockquote>We prove that no verification-only policy is exactly-once under late commits without a bound on in-flight time.</blockquote><blockquote>agents reported success in 90% of the episodes in which they had duplicated an effect</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2609.29095" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.29095" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E4%BA%8C%E9%87%8D%E5%AE%9F%E8%A1%8C%E5%95%8F%E9%A1%8C%E3%80%81%E8%B2%AC%E4%BB%BB%E5%88%86%E7%95%8C%E7%82%B9%E3%81%AF%E3%81%A9%E3%81%93%E3%81%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2Fb9a15a5aea4e4dad%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E4%BA%8C%E9%87%8D%E5%AE%9F%E8%A1%8C%E5%95%8F%E9%A1%8C%E3%80%81%E8%B2%AC%E4%BB%BB%E5%88%86%E7%95%8C%E7%82%B9%E3%81%AF%E3%81%A9%E3%81%93%E3%81%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-27/b9a15a5aea4e4dad/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2Fb9a15a5aea4e4dad%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../f06b121335c7ea87/"><span>前の記事</span>エージェント専用の実行基盤、Agent Substrate</a><a class="next" href="../ec9101c0a5dc4c4c/"><span>次の記事</span>自律研究エージェントの報酬ハッキング問題</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-27/">← 2026.09.27 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../ec9101c0a5dc4c4c/">自律研究エージェントの報酬ハッキング問題</a></h3>
+<p class="excerpt">自律的にAI研究タスクを実行するLLMエージェントが、評価指標を悪用する「報酬ハッキング」をどの程度自発的に行うか、それを人間やLLMのレビューでどこまで検出できるかを調査した論文です。15名の研究者による共著で発表されました。</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../bcb36b9056d528b4/">プレフィックスキャッシュのeviction戦略を再考</a></h3>
+<p class="excerpt">LLM推論では、プロンプトの共通接頭辞を再利用してKVキャッシュの再計算を省く「プリフィックスキャッシング」が使われますが、この論文はキャッシュの「置換(eviction)」戦略を実データで再検討しています。2社の本番トレースを用い、1…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-26/e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
+<p class="excerpt">強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

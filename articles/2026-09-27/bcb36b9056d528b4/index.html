@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>プレフィックスキャッシュのeviction戦略を再考 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="LLM推論では、プロンプトの共通接頭辞を再利用してKVキャッシュの再計算を省く「プリフィックスキャッシング」が使われますが、この論文はキャッシュの「置換(eviction)」戦略を実データで再検討しています。2社の本番トレースを用い、14種類の置換アルゴリズムをHBM(高帯域幅メモリ)制約環境と大規模メモリプール環境の…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="プレフィックスキャッシュのeviction戦略を再考 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="LLM推論では、プロンプトの共通接頭辞を再利用してKVキャッシュの再計算を省く「プリフィックスキャッシング」が使われますが、この論文はキャッシュの「置換(eviction)」戦略を実データで再検討しています。2社の本番トレースを用い、14種類の置換アルゴリズムをHBM(高帯域幅メモリ)制約環境と大規模メモリプール環境の…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/bcb36b9056d528b4/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/bcb36b9056d528b4/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "プレフィックスキャッシュのeviction戦略を再考", "datePublished": "2026-09-27", "description": "LLM推論では、プロンプトの共通接頭辞を再利用してKVキャッシュの再計算を省く「プリフィックスキャッシング」が使われますが、この論文はキャッシュの「置換(eviction)」戦略を実データで再検討しています。2社の本番トレースを用い、14種類の置換アルゴリズムをHBM(高帯域幅メモリ)制約環境と大規模メモリプール環境の両方で比較しました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-27/bcb36b9056d528b4/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.28870", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-27/">2026.09.27 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>プレフィックスキャッシュのeviction戦略を再考</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
+</header>
+<div class="article-body">
+<p>LLM推論では、プロンプトの共通接頭辞を再利用してKVキャッシュの再計算を省く「プリフィックスキャッシング」が使われますが、この論文はキャッシュの「置換(eviction)」戦略を実データで再検討しています。2社の本番トレースを用い、14種類の置換アルゴリズムをHBM(高帯域幅メモリ)制約環境と大規模メモリプール環境の両方で比較しました。</p>
+<p>結果、従来型キャッシュ向けに洗練された置換ポリシーは、単純なLRU(直近使用されていないデータを優先的に削除する方式)に対して<strong>大きな優位性を示しませんでした</strong>。原因として、実際のワークロードではアクティブセッションのアクセス間隔が規則的なため、直近アクセス(新近性)が異常に強い予測力を持つという構造的特徴があると分析しています。</p>
+<p>これを踏まえ、新近性重視を基本としつつ、一度しかヒットしないプリフィックスの早期削除、計算コストを考慮した部分削除、キャッシュ容量に応じた削除粒度の調整を組み合わせるべきだと提言しています。また新たな評価指標「計算節約比率」と2つのオフラインオラクル(理論上の性能上限を示す基準)も提案しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>研究チームは2社の企業から得た本番(プロダクション)トレースを分析対象とした。</li><li>研究チームは14種類のキャッシュ置換アルゴリズムを比較評価した。</li><li>評価はHBM(高帯域幅メモリ)制約環境と大規模メモリプール環境の両方で行われた。</li><li>研究チームは「計算節約比率」という新しい評価指標を提案した。</li><li>研究チームは2つのオフラインオラクル(理論的な性能上限を示す基準)を提案した。</li><li>実験結果として、従来型キャッシュ向けに設計された洗練された置換ポリシーは、LRU(Least Recently Used)と比べて大きな優位性をもたらさなかった。</li><li>論文は、この結果の根本原因として、アクティブセッションのアクセスが規則的なペーシングを示すことを挙げている。</li><li>論文は、この規則的なペーシングにより新近性(直近アクセスされたかどうか)が異常に高い予測力を持つと分析している。</li><li>論文は、効果的なプリフィックスキャッシュ管理には新近性原則を基盤とすべきだと提言している。</li><li>論文は、ワンヒット(一度しかアクセスされない)プリフィックスを迅速に削除すべきだと提言している。</li><li>論文は、計算コストを考慮した部分削除(計算認識型の部分削除)を行うべきだと提言している。</li><li>論文は、キャッシュ容量に応じて削除の粒度を変えるべき(容量依存的な削除粒度)だと提言している。</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.28870" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%83%97%E3%83%AC%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%81%AEeviction%E6%88%A6%E7%95%A5%E3%82%92%E5%86%8D%E8%80%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2Fbcb36b9056d528b4%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%83%97%E3%83%AC%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%81%AEeviction%E6%88%A6%E7%95%A5%E3%82%92%E5%86%8D%E8%80%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-27/bcb36b9056d528b4/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-27%2Fbcb36b9056d528b4%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../ec9101c0a5dc4c4c/"><span>前の記事</span>自律研究エージェントの報酬ハッキング問題</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-27/">← 2026.09.27 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../b9a15a5aea4e4dad/">エージェントの二重実行問題、責任分界点はどこか</a></h3>
+<p class="excerpt">LLMエージェントがツール呼び出し(書き込み)でタイムアウトやサーバーエラーに遭遇すると、実際には処理が成功しているにもかかわらず盲目的にリトライしてしまい、支払いの二重請求やデプロイの重複実行など「二重の副作用」が起こり得ます。逆にリ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../ec9101c0a5dc4c4c/">自律研究エージェントの報酬ハッキング問題</a></h3>
+<p class="excerpt">自律的にAI研究タスクを実行するLLMエージェントが、評価指標を悪用する「報酬ハッキング」をどの程度自発的に行うか、それを人間やLLMのレビューでどこまで検出できるかを調査した論文です。15名の研究者による共著で発表されました。</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-26/e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
+<p class="excerpt">強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
