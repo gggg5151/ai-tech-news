@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.jsのServer Actionは「関数」ではなく公開エンドポイントだった — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Next.jsのServer Actionsは一見「関数」のように書けますが、実装上はビルド時にIDが割り振られ、POSTリクエストでアクセス可能な公開HTTPエンドポイントになるという技術的な注意点を解説する記事です。「&#x27;use server&#x27;」とマークされたファイル内でexportした関数は、権限チェックがなければ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.jsのServer Actionは「関数」ではなく公開エンドポイントだった — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Next.jsのServer Actionsは一見「関数」のように書けますが、実装上はビルド時にIDが割り振られ、POSTリクエストでアクセス可能な公開HTTPエンドポイントになるという技術的な注意点を解説する記事です。「&#x27;use server&#x27;」とマークされたファイル内でexportした関数は、権限チェックがなければ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-28/2db96a5d50e8b203/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-28/2db96a5d50e8b203/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.jsのServer Actionは「関数」ではなく公開エンドポイントだった", "datePublished": "2026-09-28", "description": "Next.jsのServer Actionsは一見「関数」のように書けますが、実装上はビルド時にIDが割り振られ、POSTリクエストでアクセス可能な公開HTTPエンドポイントになるという技術的な注意点を解説する記事です。「'use server'」とマークされたファイル内でexportした関数は、権限チェックがなければ誰でも呼び出せてしまう可能性があると指摘…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-28/2db96a5d50e8b203/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/matsutake_prgrm/articles/a-server-action-is-a-public-endpoint", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-28/">2026.09.28 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.jsのServer Actionは「関数」ではなく公開エンドポイントだった</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</header>
+<div class="article-body">
+<p>Next.jsのServer Actionsは一見「関数」のように書けますが、実装上はビルド時にIDが割り振られ、POSTリクエストでアクセス可能な公開HTTPエンドポイントになるという技術的な注意点を解説する記事です。「&#x27;use server&#x27;」とマークされたファイル内でexportした関数は、権限チェックがなければ誰でも呼び出せてしまう可能性があると指摘されています。</p>
+<p>もう一つの落とし穴として、ビルドが変わるとServer ActionのIDも変動するため、古いビルドを参照したままのタブから「Server Action &quot;...&quot; was not found on the server」というエラーが発生する現象が紹介されています。対策として、認証が必要な関数はexportせず、同一ファイル内の別のexportされたアクション経由でのみ呼び出す方法や、<code>grep -rn &quot;^export async function&quot; src</code>で公開されている関数を把握する方法が挙げられています。筆者は「同じ見た目のコードが、まったく違うものになっている」と述べ、注意を促しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Next.jsのServer Actionsは、&#x27;use server&#x27;とマークされたファイル内でexportした関数に対し、ビルド時にIDが付与される</li><li>ID付きのServer Action関数は、POSTリクエストでアクセス可能な公開エンドポイントになる</li><li>exportされたServer Action関数は権限チェックがなければ誰でも呼び出せてしまう可能性がある</li><li>ビルドが変わるとServer ActionのIDが変動し、古いタブ(古いビルドを参照しているクライアント)から「Server Action &quot;...&quot; was not found on the server」というエラーが発生する</li><li>対策として、認証が必要な関数はexportしないことが挙げられている</li><li>対策として、認証が必要な関数は同一ファイル内の別のexportされたアクション経由でのみ呼び出す方法が挙げられている</li><li>公開されている関数を把握する方法として、grep -rn &quot;^export async function&quot; src というコマンドが紹介されている</li><li>筆者は自身が開発中の「Hubpin」というプロジェクトでの気づきをきっかけにこの記事を書いている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>同じ見た目のコードが、まったく違うものになっている</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/matsutake_prgrm/articles/a-server-action-is-a-public-endpoint" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/matsutake_prgrm/articles/a-server-action-is-a-public-endpoint" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%E3%81%AEServer%20Action%E3%81%AF%E3%80%8C%E9%96%A2%E6%95%B0%E3%80%8D%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F%E5%85%AC%E9%96%8B%E3%82%A8%E3%83%B3%E3%83%89%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%81%A0%E3%81%A3%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-28%2F2db96a5d50e8b203%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%E3%81%AEServer%20Action%E3%81%AF%E3%80%8C%E9%96%A2%E6%95%B0%E3%80%8D%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F%E5%85%AC%E9%96%8B%E3%82%A8%E3%83%B3%E3%83%89%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%81%A0%E3%81%A3%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-28/2db96a5d50e8b203/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-28%2F2db96a5d50e8b203%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../ae948a8ad2ebbbb5/"><span>前の記事</span>ほぼ0円で作るページ内検索、新モデル「Jev」で二段階リランク</a><a class="next" href="../80049b431397951d/"><span>次の記事</span>Echo v4→v5移行、作業の9割はContext型変更 自動化スクリプトも公開</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-28/">← 2026.09.28 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../508b8b1193b2dbf5/">Honoが「Web標準API」だけに依存する設計である理由</a></h3>
+<p class="excerpt">記事では、自身をHonoの「エアプ」（実際に使い込んだ経験がない立場）と認める著者が、Honoが良いとされる理由を調べた内容がまとめられています。結論として、HonoはRequest/ResponseというWeb標準APIのみに依存し、…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ae948a8ad2ebbbb5/">ほぼ0円で作るページ内検索、新モデル「Jev」で二段階リランク</a></h3>
+<p class="excerpt">筆者が個人で運営するGo言語の機能追加提案まとめサイト「Go Proposal Weekly Digest」に、ページ内検索機能を実装した体験記です。記事の増加で過去記事の検索が困難になったことに加え、新モデル「Jev」（テキストを生成…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../80049b431397951d/">Echo v4→v5移行、作業の9割はContext型変更 自動化スクリプトも公開</a></h3>
+<p class="excerpt">Go言語のWebフレームワークEchoのv4サポートが2026年12月31日で終了することを見据え、v4からv5への移行手順を整理した実務ガイドです。変更点は「Context型の変更」「ルーター構造の変更」「ロギング機構の変更」「起動処…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

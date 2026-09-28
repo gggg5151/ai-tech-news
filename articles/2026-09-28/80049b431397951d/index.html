@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Echo v4→v5移行、作業の9割はContext型変更 自動化スクリプトも公開 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Go言語のWebフレームワークEchoのv4サポートが2026年12月31日で終了することを見据え、v4からv5への移行手順を整理した実務ガイドです。変更点は「Context型の変更」「ルーター構造の変更」「ロギング機構の変更」「起動処理の変更」の4つに整理されており、著者によれば作業量の約9割がContext型の変更…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Echo v4→v5移行、作業の9割はContext型変更 自動化スクリプトも公開 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Go言語のWebフレームワークEchoのv4サポートが2026年12月31日で終了することを見据え、v4からv5への移行手順を整理した実務ガイドです。変更点は「Context型の変更」「ルーター構造の変更」「ロギング機構の変更」「起動処理の変更」の4つに整理されており、著者によれば作業量の約9割がContext型の変更…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-28/80049b431397951d/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-28/80049b431397951d/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Echo v4→v5移行、作業の9割はContext型変更 自動化スクリプトも公開", "datePublished": "2026-09-28", "description": "Go言語のWebフレームワークEchoのv4サポートが2026年12月31日で終了することを見据え、v4からv5への移行手順を整理した実務ガイドです。変更点は「Context型の変更」「ルーター構造の変更」「ロギング機構の変更」「起動処理の変更」の4つに整理されており、著者によれば作業量の約9割がContext型の変更に関するものだといいます。Context…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-28/80049b431397951d/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/kohei03/articles/5e3e2a40938bea", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-28/">2026.09.28 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Echo v4→v5移行、作業の9割はContext型変更 自動化スクリプトも公開</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</header>
+<div class="article-body">
+<p>Go言語のWebフレームワーク<strong>Echo</strong>のv4サポートが2026年12月31日で終了することを見据え、v4からv5への移行手順を整理した実務ガイドです。変更点は「Context型の変更」「ルーター構造の変更」「ロギング機構の変更」「起動処理の変更」の4つに整理されており、著者によれば作業量の約9割がContext型の変更に関するものだといいます。Context型はインターフェースから構造体へ変わり、ハンドラ引数はすべて*echo.Contextに統一されます。</p>
+<p>ロギング機構は独自インターフェースからlog/slogへ移行し、InfofやFatalメソッドが削除されるため、例えば<code>e.Logger.Infof(&quot;route: %s&quot;, p)</code>は<code>e.Logger.Info(&quot;route&quot;, slog.String(&quot;path&quot;, p))</code>のように書き換える必要があります。エラーハンドラの引数順序も<code>errorHandler(err error, c echo.Context)</code>から<code>errorHandler(c *echo.Context, err error)</code>へ変更されます。</p>
+<p>著者は機械的に置換できる部分を自動化するBashスクリプト「migrate-echo-v5.sh」を公開しており、GNU sedとBSD sedの自動判別や、未コミット変更がある場合の処理中断などに対応しています。一方で「コンパイルもテストも通ってしまう」落とし穴もあると注意を促しており、動作確認を怠らないよう呼びかけています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Echo v4のサポートは2026年12月31日で終了する</li><li>著者はEcho v4からv5への移行手順を段階的なガイドとして提供している</li><li>移行における変更点は4つの柱に整理されている:Context型の変更、ルーター構造の変更、ロギング機構の変更、起動処理の変更</li><li>Context型はインターフェースから構造体へ変更され、ハンドラ引数はすべて*echo.Contextに統一される</li><li>著者によれば、この記事の作業量の約90%がContext型の変更に関するものである</li><li>ルーター構造は構造体からインターフェースへ変更され、e.Routes()などのアクセス方法が変わる</li><li>ロギング機構は独自インターフェースからlog/slogへ移行し、InfofやFatalメソッドが削除される</li><li>起動処理では複数のe.Start*メソッドがStartConfigに統合され、Context引数が統一される</li><li>著者はmigrate-echo-v5.shというBashスクリプトを提供しており、GNU sedとBSD sedを自動判別し、vendor/や.gitディレクトリを除外し、未コミット変更があると処理を中断する</li><li>ロギングの呼び出しはe.Logger.Infof(&quot;route: %s&quot;, p)からe.Logger.Info(&quot;route&quot;, slog.String(&quot;path&quot;, p))への書き換えが必要</li><li>エラーハンドラの関数シグネチャはerrorHandler(err error, c echo.Context)からerrorHandler(c *echo.Context, err error)へ引数順序が変更される</li><li>RealIP()を利用する場合はIPExtractorを明示的に設定する必要がある</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>2-3と2-4はコンパイルもテストも通ってしまいます</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/kohei03/articles/5e3e2a40938bea" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/kohei03/articles/5e3e2a40938bea" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Echo%20v4%E2%86%92v5%E7%A7%BB%E8%A1%8C%E3%80%81%E4%BD%9C%E6%A5%AD%E3%81%AE9%E5%89%B2%E3%81%AFContext%E5%9E%8B%E5%A4%89%E6%9B%B4%20%E8%87%AA%E5%8B%95%E5%8C%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%82%82%E5%85%AC%E9%96%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-28%2F80049b431397951d%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Echo%20v4%E2%86%92v5%E7%A7%BB%E8%A1%8C%E3%80%81%E4%BD%9C%E6%A5%AD%E3%81%AE9%E5%89%B2%E3%81%AFContext%E5%9E%8B%E5%A4%89%E6%9B%B4%20%E8%87%AA%E5%8B%95%E5%8C%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%82%82%E5%85%AC%E9%96%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-28/80049b431397951d/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-28%2F80049b431397951d%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2db96a5d50e8b203/"><span>前の記事</span>Next.jsのServer Actionは「関数」ではなく公開エンドポイントだった</a><a class="next" href="../5fbc9f6125cab790/"><span>次の記事</span>人とAIエージェントが図でアーキテクチャを協働設計する「Whiteboard」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-28/">← 2026.09.28 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../508b8b1193b2dbf5/">Honoが「Web標準API」だけに依存する設計である理由</a></h3>
+<p class="excerpt">記事では、自身をHonoの「エアプ」（実際に使い込んだ経験がない立場）と認める著者が、Honoが良いとされる理由を調べた内容がまとめられています。結論として、HonoはRequest/ResponseというWeb標準APIのみに依存し、…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ae948a8ad2ebbbb5/">ほぼ0円で作るページ内検索、新モデル「Jev」で二段階リランク</a></h3>
+<p class="excerpt">筆者が個人で運営するGo言語の機能追加提案まとめサイト「Go Proposal Weekly Digest」に、ページ内検索機能を実装した体験記です。記事の増加で過去記事の検索が困難になったことに加え、新モデル「Jev」（テキストを生成…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2db96a5d50e8b203/">Next.jsのServer Actionは「関数」ではなく公開エンドポイントだった</a></h3>
+<p class="excerpt">Next.jsのServer Actionsは一見「関数」のように書けますが、実装上はビルド時にIDが割り振られ、POSTリクエストでアクセス可能な公開HTTPエンドポイントになるという技術的な注意点を解説する記事です。「&#x27;use se…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
