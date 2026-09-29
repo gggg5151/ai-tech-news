@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>コード評価AIの判定は『根拠』があるのか — 1年目向けエンジニア新聞</title>
+<meta name="description" content="あるLLMが別のLLMの生成したコードの正しさを判定する「コード審査」タスクで、その判定が実際に証拠に基づいているか（根拠があるか）を、正解ラベルなしで検証する手法を提案する論文です。著者らは、言語モデルが証拠不十分な場合でもそれを報告せず、根拠のある判定と見分けがつかない自信ありげな判定を返してしまうと指摘しています…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="コード評価AIの判定は『根拠』があるのか — 1年目向けエンジニア新聞">
+<meta property="og:description" content="あるLLMが別のLLMの生成したコードの正しさを判定する「コード審査」タスクで、その判定が実際に証拠に基づいているか（根拠があるか）を、正解ラベルなしで検証する手法を提案する論文です。著者らは、言語モデルが証拠不十分な場合でもそれを報告せず、根拠のある判定と見分けがつかない自信ありげな判定を返してしまうと指摘しています…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/6f80c2e5937f8fd7/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/6f80c2e5937f8fd7/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "コード評価AIの判定は『根拠』があるのか", "datePublished": "2026-09-29", "description": "あるLLMが別のLLMの生成したコードの正しさを判定する「コード審査」タスクで、その判定が実際に証拠に基づいているか（根拠があるか）を、正解ラベルなしで検証する手法を提案する論文です。著者らは、言語モデルが証拠不十分な場合でもそれを報告せず、根拠のある判定と見分けがつかない自信ありげな判定を返してしまうと指摘しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/6f80c2e5937f8fd7/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.30328", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-29/">2026.09.29 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>コード評価AIの判定は『根拠』があるのか</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-29">2026.09.29</time></div>
+</header>
+<div class="article-body">
+<p>あるLLMが別のLLMの生成したコードの正しさを判定する「コード審査」タスクで、その判定が実際に証拠に基づいているか（根拠があるか）を、正解ラベルなしで検証する手法を提案する論文です。著者らは、言語モデルが証拠不十分な場合でもそれを報告せず、根拠のある判定と見分けがつかない自信ありげな判定を返してしまうと指摘しています。</p>
+<p>判定をチェック可能な主張に分解し証拠と照合する「マルチエージェント検証」という手法は文書検索タスクではうまく機能しますが、コード判定では機能しないと著者らは主張します。根拠のある判定には「証拠が判定対象の回答から独立していること」「比較する2つの候補間で証拠が異なること」という2条件が必要だとし、これを測る2つのラベルフリーな指標を提案しています。</p>
+<p>MARCHというフレームワークを実装して評価したところ、78〜95%の比較で2つの解を同等と判定してしまい、精度はわずか<strong>4.4%</strong>でした。著者らが提案する、根拠が薄い場合には判定を保留する「ゲーティング」機構を導入すると、精度は20.7%から36.9%に向上し、半数の比較には保留せず答えられるようになったとしています。コードレビューをAIに任せる際の落とし穴として参考になりそうです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『When Is a Multi-Agent Code Judge Actually Grounded? Two Label-Free Measurements, and a Judge That Declines to Guess』</li><li>著者はSalma Roshdy Aly、Hussein Assaf、Ziad Kobtiの3名</li><li>著者らは、言語モデルが他のモデルのコードの正確性を判定する際、証拠が不十分な場合でもそれを報告せず、根拠のある判定と区別できない自信ありげな判定を返すと主張している</li><li>マルチエージェント検証は判定をチェック可能なクレームに分解し、各クレームを証拠と照合する手法である</li><li>著者らは、マルチエージェント検証は文書検索が証拠となる場面では機能するが、コード判定では機能しないと主張している</li><li>著者らは根拠のある判定に必要な2条件を提示：証拠が判定対象の回答から独立していること、比較する2つの候補間で証拠が異なること</li><li>著者らはMARCHというフレームワークを実装し評価を行った</li><li>MARCHの評価では78〜95%の比較で両方の解を同等と判定した</li><li>MARCHの精度は4.4%だったと報告されている</li><li>著者らが提案するゲーティング機構により、精度を20.7%から36.9%に向上させたとしている</li><li>このゲーティング機構は、半数の比較に対して応答を保留せずに答えられるとしている</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.30328" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%B3%E3%83%BC%E3%83%89%E8%A9%95%E4%BE%A1AI%E3%81%AE%E5%88%A4%E5%AE%9A%E3%81%AF%E3%80%8E%E6%A0%B9%E6%8B%A0%E3%80%8F%E3%81%8C%E3%81%82%E3%82%8B%E3%81%AE%E3%81%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F6f80c2e5937f8fd7%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%B3%E3%83%BC%E3%83%89%E8%A9%95%E4%BE%A1AI%E3%81%AE%E5%88%A4%E5%AE%9A%E3%81%AF%E3%80%8E%E6%A0%B9%E6%8B%A0%E3%80%8F%E3%81%8C%E3%81%82%E3%82%8B%E3%81%AE%E3%81%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-29/6f80c2e5937f8fd7/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F6f80c2e5937f8fd7%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1ad0e13efbd77fc4/"><span>前の記事</span>コーディングエージェントの『無駄なコスト』を初めて体系分析</a><a class="next" href="../644503053ce3ed52/"><span>次の記事</span>無害な『スキル』の組み合わせが有害に変わる新攻撃</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-29/">← 2026.09.29 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../1ad0e13efbd77fc4/">コーディングエージェントの『無駄なコスト』を初めて体系分析</a></h3>
+<p class="excerpt">Claude CodeやMini-SWE-Agentといったコーディングエージェントのコスト非効率な挙動を初めて体系的に調査した論文です。SWE-bench Verified（ソフトウェア修正タスクのベンチマーク）における1,200件の…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../644503053ce3ed52/">無害な『スキル』の組み合わせが有害に変わる新攻撃</a></h3>
+<p class="excerpt">Claude Codeのような、スキルを呼び出して動くエージェントシステムを狙う新しい攻撃手法「スキルカスケーディング攻撃」を報告する論文です。単体では無害に見える複数の「スキル」に悪意ある目的を分散させ、それらが連鎖的に組み合わさるこ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-28/655f9d1e1d89ea34/">RLVR入門、人間の採点を介さずコードやSQLの正誤で報酬を与える</a></h3>
+<p class="excerpt">RLVR(Reinforcement Learning with Verifiable Rewards、検証可能な報酬による強化学習)を解説する記事です。人間の採点(報酬モデル)を介さず、テストの成否や最終解の正誤など機械的に判定可能な…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.js 16のmiddleware移行、codemodが拾えない落とし穴 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="個人開発者の「こそあど」氏が、自身が同一リポジトリから運用する3つのマッチングアプリ（SparMate、NetaPair、BoardLink、いずれもVercel運用）でNext.js 16のmiddleware→Proxy API移行を行った際の落とし穴を報告しています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.js 16のmiddleware移行、codemodが拾えない落とし穴 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="個人開発者の「こそあど」氏が、自身が同一リポジトリから運用する3つのマッチングアプリ（SparMate、NetaPair、BoardLink、いずれもVercel運用）でNext.js 16のmiddleware→Proxy API移行を行った際の落とし穴を報告しています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/1e248637cc3a069c/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/1e248637cc3a069c/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.js 16のmiddleware移行、codemodが拾えない落とし穴", "datePublished": "2026-09-29", "description": "個人開発者の「こそあど」氏が、自身が同一リポジトリから運用する3つのマッチングアプリ（SparMate、NetaPair、BoardLink、いずれもVercel運用）でNext.js 16のmiddleware→Proxy API移行を行った際の落とし穴を報告しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/1e248637cc3a069c/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/cosoado/articles/nextjs16-middleware-to-proxy-migration", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-29/">2026.09.29 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.js 16のmiddleware移行、codemodが拾えない落とし穴</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
+</header>
+<div class="article-body">
+<p>個人開発者の「こそあど」氏が、自身が同一リポジトリから運用する3つのマッチングアプリ（SparMate、NetaPair、BoardLink、いずれもVercel運用）でNext.js 16のmiddleware→Proxy API移行を行った際の落とし穴を報告しています。</p>
+<p>Next.js 16ではmiddlewareが新しい<strong>Proxy API</strong>に置き換わり、デフォルトの実行環境がEdge Runtime（CDNのエッジサーバー上で動く軽量な実行環境）になります。公式のcodemod（コードを自動変換するツール）は<code>export const runtime = &#x27;edge&#x27;</code>という宣言を自動的に削除しますが、middleware.tsとproxy.tsの共存は許可されないため、段階的な移行ができません。筆者が試したところ、同一リポジトリの3プロジェクトすべてがビルドエラーになったといいます。</p>
+<p>さらに厄介なのは、<code>lib/auth-guard.ts</code>のような型注釈ファイル内にある<code>NextMiddleware</code>型の参照をcodemodが自動修正してくれない点です。筆者は<code>grep -r &quot;NextMiddleware|MiddlewareConfig&quot;</code>のようなコマンドで、codemodが見落とした箇所を手動で洗い出すことを勧めています。Next.js 16への移行を控えている方は、ビルドを通しただけで安心せず型ファイルまで確認することが必要そうです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者は「こそあど」という個人開発者である。</li><li>筆者は同一リポジトリからSparMate、NetaPair、BoardLinkという3つのマッチングアプリを運用している。</li><li>これら3つのアプリはVercelで運用されている。</li><li>Next.js 16ではmiddlewareがProxy APIに移行する。</li><li>Proxy APIはEdge Runtimeがデフォルトになる。</li><li>公式のcodemodは<code>export const runtime = &#x27;edge&#x27;</code>という宣言を自動的に削除する。</li><li>Next.js 16ではmiddleware.tsとproxy.tsの共存が許可されない。</li><li>筆者が段階的移行を試みたところ、同一リポジトリの3プロジェクトすべてがビルドエラーになった。</li><li>codemodは<code>lib/auth-guard.ts</code>のような型注釈ファイル内の<code>NextMiddleware</code>型参照を自動修正しない。</li><li>記事は<code>grep -r &quot;NextMiddleware|MiddlewareConfig&quot;</code>のようなコマンドで、codemodが見落とした箇所を検出することを提案している。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>middleware.ts と proxy.ts の共存を許可しない</blockquote><blockquote>grep -r &quot;NextMiddleware|MiddlewareConfig&quot;で漏れを確認することを勧める</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/cosoado/articles/nextjs16-middleware-to-proxy-migration" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/cosoado/articles/nextjs16-middleware-to-proxy-migration" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%2016%E3%81%AEmiddleware%E7%A7%BB%E8%A1%8C%E3%80%81codemod%E3%81%8C%E6%8B%BE%E3%81%88%E3%81%AA%E3%81%84%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F1e248637cc3a069c%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%2016%E3%81%AEmiddleware%E7%A7%BB%E8%A1%8C%E3%80%81codemod%E3%81%8C%E6%8B%BE%E3%81%88%E3%81%AA%E3%81%84%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-29/1e248637cc3a069c/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F1e248637cc3a069c%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../b6fcc11d66bebe3a/"><span>前の記事</span>Fireworks AI、トークン削減特化モデル「Ember-1」公開</a><a class="next" href="../3fbf14bd0a9210cc/"><span>次の記事</span>Go 1.28でstring(int)の直接変換が制限へ</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-29/">← 2026.09.29 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../3fbf14bd0a9210cc/">Go 1.28でstring(int)の直接変換が制限へ</a></h3>
+<p class="excerpt">Go言語のProposal #3939により、整数値を文字列に直接変換するstring(int)という記法が制限される見込みです。現状のGo 1.27ではstring(65)のようなコードが書け、これは整数をUnicodeコードポイント…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e4b644aaebd449db/">Claude Codeの定期タスク停止、原因は前日実行の『滞留』</a></h3>
+<p class="excerpt">筆者が運用するClaude Codeの定期実行タスク2本が、2026年9月25日から27日までの3日間、まったく動作しませんでした。しかもエラーも通知も一切出ていなかったといいます。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f8ce882f7918f2a6/">Qdrant Go clientでベクトル検索を最小構成から再現</a></h3>
+<p class="excerpt">Qdrant Go client v1.19.0を使い、gRPC（高速なリモート手続き呼び出しの通信規格）経由でベクトルの登録・検索・フィルタを実装する方法を紹介する記事です。gRPC接続にはポート6334を使用し、CreateColl…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

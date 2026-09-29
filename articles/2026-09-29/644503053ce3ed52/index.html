@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>無害な『スキル』の組み合わせが有害に変わる新攻撃 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Claude Codeのような、スキルを呼び出して動くエージェントシステムを狙う新しい攻撃手法「スキルカスケーディング攻撃」を報告する論文です。単体では無害に見える複数の「スキル」に悪意ある目的を分散させ、それらが連鎖的に組み合わさることで有害な結果を引き起こす点が特徴です。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="無害な『スキル』の組み合わせが有害に変わる新攻撃 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Claude Codeのような、スキルを呼び出して動くエージェントシステムを狙う新しい攻撃手法「スキルカスケーディング攻撃」を報告する論文です。単体では無害に見える複数の「スキル」に悪意ある目的を分散させ、それらが連鎖的に組み合わさることで有害な結果を引き起こす点が特徴です。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/644503053ce3ed52/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/644503053ce3ed52/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "無害な『スキル』の組み合わせが有害に変わる新攻撃", "datePublished": "2026-09-29", "description": "Claude Codeのような、スキルを呼び出して動くエージェントシステムを狙う新しい攻撃手法「スキルカスケーディング攻撃」を報告する論文です。単体では無害に見える複数の「スキル」に悪意ある目的を分散させ、それらが連鎖的に組み合わさることで有害な結果を引き起こす点が特徴です。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/644503053ce3ed52/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.30383", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-29/">2026.09.29 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>無害な『スキル』の組み合わせが有害に変わる新攻撃</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-29">2026.09.29</time></div>
+</header>
+<div class="article-body">
+<p>Claude Codeのような、スキルを呼び出して動くエージェントシステムを狙う新しい攻撃手法「スキルカスケーディング攻撃」を報告する論文です。単体では無害に見える複数の「スキル」に悪意ある目的を分散させ、それらが連鎖的に組み合わさることで有害な結果を引き起こす点が特徴です。</p>
+<p>論文では処方箋レビューのパイプラインを例に挙げています。第1のスキルが最近中止された薬剤の信号を弱め、第2のスキルが関連する薬物相互作用の重大度を下げ、第3のスキルが優先度の低いアラートを抑制する——その結果、重大な薬物相互作用の警告が医師に届く前に消えてしまうというシナリオです。</p>
+<p>研究チームは自動化されたレッドチーミングフレームワーク「SkillCascade」を開発し、213件の検証済みテストケースからなるベンチマークを公開しました。OpenClawやClaude Codeなどの実際のエージェント環境で、既存のスキャナーや監視ツールをすり抜ける有害な挙動が確認されたとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文のタイトルは「Stealth Apart, Harm Together: Skill Cascading Attacks on Skill-Based Agent Systems」である</li><li>著者はZihao Zhu、Siwei Lyu、Adel Bibi、Baoyuan Wuである</li><li>提案する攻撃「スキルカスケーディング攻撃」は、悪意のある目的を複数のスキル間に分散させる手法である</li><li>個々のスキルは単体では無害に見えるが、組み合わさることで有害な結果をもたらす</li><li>論文では処方箋レビューパイプラインを例として挙げている</li><li>この例では第1スキルが最近中止された薬剤の信号を弱める</li><li>第2スキルが関連する薬物相互作用の重大度を低下させる</li><li>第3スキルが優先度の低いアラートを抑制する</li><li>その結果、重大な薬物相互作用警告が医師に届く前に消えるとされている</li><li>研究チームは自動化されたレッドティーミングフレームワーク「SkillCascade」を開発した</li><li>213件の検証済みテストケースを含むベンチマークを公開した</li><li>OpenClawやClaude Codeなどのエージェントにおいて、既存のスキャナーや監視ツールを回避する有害な動作が確認された</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.30383" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E7%84%A1%E5%AE%B3%E3%81%AA%E3%80%8E%E3%82%B9%E3%82%AD%E3%83%AB%E3%80%8F%E3%81%AE%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B%E3%81%8C%E6%9C%89%E5%AE%B3%E3%81%AB%E5%A4%89%E3%82%8F%E3%82%8B%E6%96%B0%E6%94%BB%E6%92%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F644503053ce3ed52%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E7%84%A1%E5%AE%B3%E3%81%AA%E3%80%8E%E3%82%B9%E3%82%AD%E3%83%AB%E3%80%8F%E3%81%AE%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B%E3%81%8C%E6%9C%89%E5%AE%B3%E3%81%AB%E5%A4%89%E3%82%8F%E3%82%8B%E6%96%B0%E6%94%BB%E6%92%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-29/644503053ce3ed52/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F644503053ce3ed52%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../6f80c2e5937f8fd7/"><span>前の記事</span>コード評価AIの判定は『根拠』があるのか</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-29/">← 2026.09.29 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../1ad0e13efbd77fc4/">コーディングエージェントの『無駄なコスト』を初めて体系分析</a></h3>
+<p class="excerpt">Claude CodeやMini-SWE-Agentといったコーディングエージェントのコスト非効率な挙動を初めて体系的に調査した論文です。SWE-bench Verified（ソフトウェア修正タスクのベンチマーク）における1,200件の…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../6f80c2e5937f8fd7/">コード評価AIの判定は『根拠』があるのか</a></h3>
+<p class="excerpt">あるLLMが別のLLMの生成したコードの正しさを判定する「コード審査」タスクで、その判定が実際に証拠に基づいているか（根拠があるか）を、正解ラベルなしで検証する手法を提案する論文です。著者らは、言語モデルが証拠不十分な場合でもそれを報告…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-09-28/655f9d1e1d89ea34/">RLVR入門、人間の採点を介さずコードやSQLの正誤で報酬を与える</a></h3>
+<p class="excerpt">RLVR(Reinforcement Learning with Verifiable Rewards、検証可能な報酬による強化学習)を解説する記事です。人間の採点(報酬モデル)を介さず、テストの成否や最終解の正誤など機械的に判定可能な…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

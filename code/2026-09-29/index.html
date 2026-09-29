@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>go-playground/validator の cache.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="go-playground/validatorはGoの構造体タグ(validate:&quot;required,email&quot;のような書き方)でバリデーションを行う定番ライブラリです。構造体のタグ解析は文字列処理を含むためそこそこ重く、同じ型を毎回リクエストごとに解析すると遅くなります。そこで「一度解析した結果をキャッシュしてお…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="go-playground/validator の cache.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="go-playground/validatorはGoの構造体タグ(validate:&quot;required,email&quot;のような書き方)でバリデーションを行う定番ライブラリです。構造体のタグ解析は文字列処理を含むためそこそこ重く、同じ型を毎回リクエストごとに解析すると遅くなります。そこで「一度解析した結果をキャッシュしてお…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-09-29/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-09-29/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.09.29</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>go-playground/validator の <code>cache.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/go-playground/validator/blob/HEAD/cache.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-09-29">2026.09.29</time></div>
+</header>
+<div class="article-body">
+<p>go-playground/validatorはGoの構造体タグ(`validate:&quot;required,email&quot;`のような書き方)でバリデーションを行う定番ライブラリです。構造体のタグ解析は文字列処理を含むためそこそこ重く、同じ型を毎回リクエストごとに解析すると遅くなります。そこで「一度解析した結果をキャッシュしておく」ためのstructCache/tagCacheという仕組みがcache.goにあります。ここには「読み取りは頻繁・書き込みはまれ」というWebサーバー特有のアクセスパターンに対して、Goの並行処理プリミティブをどう使うかという実践的な設計判断が詰まっているので選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>type structCache struct {
+	lock sync.Mutex
+	m    atomic.Value // map[reflect.Type]*cStruct
+}
+
+func (sc *structCache) Get(key reflect.Type) (c *cStruct, found bool) {
+	c, found = sc.m.Load().(map[reflect.Type]*cStruct)[key]
+	return
+}
+
+func (sc *structCache) Set(key reflect.Type, value *cStruct) {
+	m := sc.m.Load().(map[reflect.Type]*cStruct)
+	nm := make(map[reflect.Type]*cStruct, len(m)+1)
+	for k, v := range m {
+		nm[k] = v
+	}
+	nm[key] = value
+	sc.m.Store(nm)
+}
+
+type tagCache struct {
+	lock sync.Mutex
+	m    atomic.Value // map[string]*cTag
+}
+
+func (tc *tagCache) Get(key string) (c *cTag, found bool) {
+	c, found = tc.m.Load().(map[string]*cTag)[key]
+	return
+}
+
+func (tc *tagCache) Set(key string, value *cTag) {
+	m := tc.m.Load().(map[string]*cTag)
+	nm := make(map[string]*cTag, len(m)+1)
+	for k, v := range m {
+		nm[k] = v
+	}
+	nm[key] = value
+	tc.m.Store(nm)
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>type structCache struct {
+	lock sync.Mutex
+	m    atomic.Value // map[reflect.Type]*cStruct
+}</code></pre><p>structという構造体を定義しています。`type 名前 struct { フィールド... }`はGoの構造体定義の基本形です。フィールドは2つ。`lock sync.Mutex`は排他ロック(ミューテックス)で、「同時に1つのゴルーチン(Goの軽量スレッド)しかこの値を触れないようにする」ための道具です。`m atomic.Value`は「読み書きをアトミック(不可分)に行える箱」で、複数のゴルーチンが同時にLoad(読む)・Store(書く)しても壊れないことが保証されています。コメント`// map[reflect.Type]*cStruct`はコンパイラには効きませんが、「このValueの中には実際にはこの型のmapが入っている」という約束をコードを読む人に伝えるためのものです。atomic.Valueはinterface{}(任意の型)を保持するので、型情報がコード上からは見えなくなるのを、この一行コメントで補っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (sc *structCache) Get(key reflect.Type) (c *cStruct, found bool) {</code></pre><p>メソッド定義です。`func (sc *structCache) Get(...)`の`(sc *structCache)`部分は「レシーバ」で、この関数を`structCache`型の値(のポインタ)に対する専用メソッドにします。呼び出すときは`sc.Get(key)`のように書けます。`*structCache`とポインタ型にしているのは、値をコピーせず元の構造体を直接操作・参照したいからです。戻り値の`(c *cStruct, found bool)`は「名前付き戻り値」で、関数の中で`c`と`found`という名前の変数がすでに用意されている状態で処理が始まります(この後の行で使われます)。</p></div><div class="walk-step"><pre class="walk-quote"><code>c, found = sc.m.Load().(map[reflect.Type]*cStruct)[key]</code></pre><p>1行にいくつもの処理が詰まっています。まず`sc.m.Load()`でatomic.Valueに今入っている値を安全に取り出します。返り値の型は`interface{}`(なんでも入る型)なので、次に`.(map[reflect.Type]*cStruct)`という「型アサーション」でそれを目的のmap型に変換します。最後に`[key]`でそのmapからkeyに対応する値を取り出します。Goのmapは`値, ok := m[key]`という書き方(コンマok構文)ができ、keyが存在しない場合は`ok`がfalseになり、値はゼロ値(この場合はnil)になります。ここではその2つの受け皿として、前の行で用意されていた名前付き戻り値`c`と`found`にそのまま代入しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return
+}</code></pre><p>引数も値もない、ただの`return`です。これができるのは戻り値がすでに名前付き(`c *cStruct, found bool`)で宣言されているためで、Goでは「名前付き戻り値」に値を入れておけば、最後に`return`と書くだけでその時点の値がそのまま返されます。何を返しているか一目で分かりにくくなる面もありますが、短いGetterではよく使われる書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (sc *structCache) Set(key reflect.Type, value *cStruct) {
+	m := sc.m.Load().(map[reflect.Type]*cStruct)</code></pre><p>Setメソッドの中身です。まず現在atomic.Valueに入っているmapを、Getと同じ手順(Load→型アサーション)で取り出し、ローカル変数`m`に入れます。`:=`はGoの短縮変数宣言で、「新しい変数`m`を作り、右辺の値で初期化する」という意味です。ここではまだ何も変更しておらず、あくまで「今の状態のスナップショットを読んだ」だけです。</p></div><div class="walk-step"><pre class="walk-quote"><code>nm := make(map[reflect.Type]*cStruct, len(m)+1)
+	for k, v := range m {
+		nm[k] = v
+	}</code></pre><p>`make(map[K]V, n)`はmapを新しく作る組み込み関数で、第2引数は「これくらいの要素数が入る予定です」という容量のヒントです(厳密な上限ではなく、内部の再確保を減らすための最適化)。ここでは元のmapの要素数+1(これから1件追加するため)を渡しています。続く`for k, v := range m { ... }`は「mapのすべてのキーと値を順番に取り出すループ」で、Goのmapを全走査する標準的な書き方です。ループの中で、古いmap`m`の内容をすべて新しいmap`nm`にコピーしています。つまり、既存のmapを直接書き換えるのではなく、コピーした新しいmapを作っているのがポイントです。</p></div><div class="walk-step"><pre class="walk-quote"><code>nm[key] = value
+	sc.m.Store(nm)
+}</code></pre><p>コピーしてできた新しいmap`nm`に、今回追加したいkeyとvalueを書き込みます。そして最後に`sc.m.Store(nm)`で、atomic.Value全体を新しいmapに丸ごと入れ替えます。ここが重要な設計です。Storeは一瞬で完了する「差し替え」の操作なので、他のゴルーチンがちょうどそのタイミングでLoad()していても、古い完全なmapか新しい完全なmapのどちらかしか見えません。作業途中の中途半端なmapが見えることは絶対にないので、Get側でロックを取らなくても安全に読めるのです。</p></div><div class="walk-step"><pre class="walk-quote"><code>type tagCache struct {
+	lock sync.Mutex
+	m    atomic.Value // map[string]*cTag
+}</code></pre><p>同じ構造がもう一度出てきます。今度はキーが`reflect.Type`ではなく`string`(タグ文字列)で、値も`*cStruct`ではなく`*cTag`です。GetとSetの実装ロジックはstructCacheと一字一句同じパターンで、型だけが違います。このコードが書かれた時点のGoにはジェネリクス(型を後から差し込める仕組み)がまだ普及していなかったため、同じロジックを型ごとに手で書き直す必要がありました。今のGoであれば`type cache[K comparable, V any] struct {...}`のような形で1つにまとめられますが、ここでは意図的に(あるいは歴史的経緯で)コピー＆ペーストされています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「読み取りが多く書き込みがまれ」なキャッシュは、mutexでmap全体をロックするより、atomic.ValueにイミュータブルなmapをStoreで丸ごと差し替える方式にすると、読み取り側が一切ロックを待たずに安全に動くようになる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-27/"><span>前の日</span>anthropics/claude-code-action</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-09-29/">← 2026.09.29 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

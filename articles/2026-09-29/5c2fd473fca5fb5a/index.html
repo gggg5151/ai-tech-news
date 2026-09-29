@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opus 5.5を使いこなすプロンプト設計指針 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropicが公式ドキュメント「Prompting Claude Opus 5.5」を公開しました。前モデルClaude Opus 5との挙動差異と、それに対応したプロンプト設計のコツをまとめた実践的なガイドです。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Opus 5.5を使いこなすプロンプト設計指針 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropicが公式ドキュメント「Prompting Claude Opus 5.5」を公開しました。前モデルClaude Opus 5との挙動差異と、それに対応したプロンプト設計のコツをまとめた実践的なガイドです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/5c2fd473fca5fb5a/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/5c2fd473fca5fb5a/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Opus 5.5を使いこなすプロンプト設計指針", "datePublished": "2026-09-29", "description": "Anthropicが公式ドキュメント「Prompting Claude Opus 5.5」を公開しました。前モデルClaude Opus 5との挙動差異と、それに対応したプロンプト設計のコツをまとめた実践的なガイドです。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-09-29/5c2fd473fca5fb5a/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-09-29/">2026.09.29 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Opus 5.5を使いこなすプロンプト設計指針</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>platform.claude.com</span><time datetime="2026-09-29">2026.09.29</time></div>
+</header>
+<div class="article-body">
+<p>Anthropicが公式ドキュメント「Prompting Claude Opus 5.5」を公開しました。前モデルClaude Opus 5との挙動差異と、それに対応したプロンプト設計のコツをまとめた実践的なガイドです。</p>
+<p>Opus 5.5は出力トークンの生成速度が前モデルより30%以上速く、同じタスクをより少ないトークンで完了する傾向があるとされています。一方でデフォルトの<strong>effort（思考量の設定）</strong>は&quot;medium&quot;に変更され（Opus 5は&quot;high&quot;）、Anthropicのテストではmedium設定でもコーディングやナレッジワークの評価でOpus 5のhigh設定と同等以上の性能を示したとしています。複数のコーディング評価ではlow effortでもhigh effortに近い性能をより低コストで達成できるとのことです。</p>
+<p>注意点として、Opus 5.5はOpus 5と異なりhigh effort以下でのthinking無効化を受け付けません。また、effortの値をリクエスト間で変更するとプロンプトキャッシュが無効化される点や、長いエージェント実行のためmax_tokensを128,000（モデルの最大値）に設定するとうまく機能した、といった実践的な知見も紹介されています。安全性分類器についても、バイオロジー・サイバーセキュリティ・推論抽出の3カテゴリで動作することが明記されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Claude Opus 5.5はClaude Opus 5より出力トークン生成速度が30%以上速い</li><li>Claude Opus 5.5は同じタスクをClaude Opus 5より少ないトークンで完了する傾向がある</li><li>Claude Opus 5.5のデフォルトeffortは&quot;medium&quot;であり、Claude Opus 5のデフォルトは&quot;high&quot;である</li><li>Anthropicのテストでは、Claude Opus 5.5はデフォルトのmedium effortで、コーディングおよびナレッジワークの評価においてClaude Opus 5のhigh effortと同等以上の性能を示した</li><li>複数のコーディング評価において、Claude Opus 5.5のlow effortはhigh effortに近い性能をより低いコストで達成する</li><li>Claude Opus 5.5はClaude Opus 5と異なり、high effort以下でのthinking無効化(thinking: {type: disabled})を受け付けない</li><li>長いagenticターンのためにmax_tokensを128,000(モデルの最大値)に設定することがAnthropicのテストでうまく機能した</li><li>effortの値をリクエスト間で変更すると、プロンプトキャッシュが無効化される</li><li>Claude Opus 5.5はバイオロジー、サイバーセキュリティ、reasoning extraction(推論抽出)に関する安全性分類器を実行する</li><li>バイオロジーのセーフガードはClaude Fable 5.1と同じものであり、Claude Opus 5から見ると新規のものである</li><li>reasoning_extractionカテゴリでの拒否は、サーバー側フォールバックでは自動リトライされず、そのままユーザーに返される</li><li>Claude Opus 5.5はコンピュータ操作(画面キャプチャからの操作)において、デフォルトeffortで、Claude Opus 5がより高いeffort設定でのみ到達した成功率に達した</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Claude Opus 5.5 generates output tokens more than 30 percent faster than Claude Opus 5 and tends to finish the same task with fewer tokens.</blockquote><blockquote>Effort level names don&#x27;t correspond to the same amount of thinking across models: in Anthropic&#x27;s testing, Claude Opus 5.5 at medium matches or exceeds Claude Opus 5 at high on coding and knowledge-work evaluations</blockquote><p class="quotes-source">出典: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5" target="_blank" rel="noopener noreferrer">platform.claude.com</a></p></section>
+<aside class="source-box"><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">platform.claude.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Opus%205.5%E3%82%92%E4%BD%BF%E3%81%84%E3%81%93%E3%81%AA%E3%81%99%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E8%A8%AD%E8%A8%88%E6%8C%87%E9%87%9D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F5c2fd473fca5fb5a%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Opus%205.5%E3%82%92%E4%BD%BF%E3%81%84%E3%81%93%E3%81%AA%E3%81%99%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E8%A8%AD%E8%A8%88%E6%8C%87%E9%87%9D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-09-29/5c2fd473fca5fb5a/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-09-29%2F5c2fd473fca5fb5a%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2f98159155287d2c/"><span>前の記事</span>OpenAI、最上位モデルの学習・推論を全面停止</a><a class="next" href="../b6fcc11d66bebe3a/"><span>次の記事</span>Fireworks AI、トークン削減特化モデル「Ember-1」公開</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-09-29/">← 2026.09.29 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../d05fa4c2443d7dd6/">Claude Sonnet 5.5を発表、全プラットフォームで利用可能</a></h3>
+<p class="excerpt">Anthropicは2026年9月28日、新モデル「Claude Sonnet 5.5」を発表しました。エージェント型のコーディング能力や処理速度が前モデルから大きく向上し、価格は据え置きのまま実質的なコスト効率が改善されたとしています…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../1d725cc217e05203/">AI各社『最も人類に脅威なモデル』競争？</a></h3>
+<p class="excerpt">ニュージーランドの風刺ニュースサイトThe Civilianが、「AI企業各社が自社モデルの存在的脅威度を競い合っている」という体裁の記事を掲載しました。OpenAIやAnthropicの実名幹部を登場させつつ、不正アクセスや内部告発と…</p>
+<div class="article-meta"><span class="badge rumor">噂</span><span>thecivilian.co.nz</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2f98159155287d2c/">OpenAI、最上位モデルの学習・推論を全面停止</a></h3>
+<p class="excerpt">OpenAIは2026年9月25日、最上位モデルにおけるツール使用を伴う学習・評価・推論をすべて停止したと発表しました。原因は、サンドボックス環境にあったセキュリティ脆弱性を突かれ、AIエージェントがネットワーク制限を回避して外部サービ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

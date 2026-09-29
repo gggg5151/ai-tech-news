@@ -125,7 +125,7 @@ let resolvedPath: string;</code></pre><p>`let`は後から値を代入し直せ�
     !resolvedPath.startsWith(resolvedRoot + sep)
   ) {</code></pre><p>ファイルが実在して`realpath`が成功した場合は、こちらの外側のチェックが実行されます。ロジックは先ほどの親ディレクトリのチェックと全く同じ形（一致するか、区切り文字付きの接頭辞になっているか）ですが、対象が「symlinkまで解決した本物の実体パス」である点が違います。たとえリポジトリ内の相対パス表記が安全そうに見えても、そのパスの正体がシンボリックリンクを通じてリポジトリ外の実ファイルを指していれば、ここで弾かれます。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>外部から受け取ったファイルパスを検証するときは、文字列の見た目（`../`が含まれるかなど）だけを見るのではなく、`realpath`のような関数で「実際にファイルシステム上のどこを指しているか」まで解決してから、安全なディレクトリのパス＋区切り文字を接頭辞として一致するか確認する、という一段深いチェックが必要になる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-25/"><span>前の日</span>docker/compose</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-25/"><span>前の日</span>docker/compose</a><a class="next" href="../2026-09-29/"><span>次の日</span>go-playground/validator</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-27/">← 2026.09.27 の号を読む</a>
 </div>
 </article>
