@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>蒸留攻撃の阻止、OpenAIが不正な大量アクセスを遮断 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenAIは、保護された推論（reasoning、モデルが答えを出す前の思考過程）の出力を無断で抜き出し、別モデルの学習に流用しようとする組織的な「敵対的蒸留」キャンペーンを検出し、阻止したと公式ブログで発表しました。攻撃は7月1日に小規模で始まり、7月24〜25日に急拡大。このスパイクだけで16,000件のリクエス…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="蒸留攻撃の阻止、OpenAIが不正な大量アクセスを遮断 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenAIは、保護された推論（reasoning、モデルが答えを出す前の思考過程）の出力を無断で抜き出し、別モデルの学習に流用しようとする組織的な「敵対的蒸留」キャンペーンを検出し、阻止したと公式ブログで発表しました。攻撃は7月1日に小規模で始まり、7月24〜25日に急拡大。このスパイクだけで16,000件のリクエス…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-01/16d2a25f0f97b937/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-01/16d2a25f0f97b937/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "蒸留攻撃の阻止、OpenAIが不正な大量アクセスを遮断", "datePublished": "2026-10-01", "description": "OpenAIは、保護された推論（reasoning、モデルが答えを出す前の思考過程）の出力を無断で抜き出し、別モデルの学習に流用しようとする組織的な「敵対的蒸留」キャンペーンを検出し、阻止したと公式ブログで発表しました。攻撃は7月1日に小規模で始まり、7月24〜25日に急拡大。このスパイクだけで16,000件のリクエストと4,000件超のユーザーアカウントが…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-01/16d2a25f0f97b937/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-01/">2026.10.01 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>蒸留攻撃の阻止、OpenAIが不正な大量アクセスを遮断</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-01">2026.10.01</time></div>
+</header>
+<div class="article-body">
+<p>OpenAIは、保護された推論（reasoning、モデルが答えを出す前の思考過程）の出力を無断で抜き出し、別モデルの学習に流用しようとする組織的な「敵対的蒸留」キャンペーンを検出し、阻止したと公式ブログで発表しました。攻撃は7月1日に小規模で始まり、7月24〜25日に急拡大。このスパイクだけで<strong>16,000件のリクエストと4,000件超のユーザーアカウント</strong>が関与し、関連する活動は15,000以上のユーザーに広がっていたといいます。OpenAIは7月28日にこの活動を完全に遮断しました。</p>
+<p>手口は、暗号化された推論の内容をあるやり取りからコピーし、別のやり取りで復号を要求するというものでした。OpenAIはこのキャンペーンの中核を<strong>Moonshot AI（Kimiの開発企業）</strong>および関連する個人だと判断したとしています。</p>
+<p>対応として、不正アカウントの禁止・制限、サインアップ審査の強化、インフラ管理の改善、監視体制の拡張、推論保護の強化、ストリーム出力チェックの追加を実施しました。自社の知的財産をどう守るかという、フロンティアラボ間の競争の裏側が垣間見える発表です。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>攻撃は7月1日に開始し、当初は低規模だった。</li><li>7月24〜25日に活動が急拡大(大規模スパイク)した。</li><li>OpenAIは7月28日にこの活動を完全に阻止した。</li><li>7月24〜25日のスパイクで16,000件のリクエストが確認された。</li><li>このスパイクには4,000以上のユーザーアカウントが関与した。</li><li>関連する活動は15,000以上のユーザーにわたって確認された。</li><li>OpenAIはこのキャンペーンの中核をMoonshot AI(Kimiの開発企業)および関連する個人だと判断した。</li><li>攻撃手法は、暗号化された推論をあるやり取りからコピーし、別のやり取りで復号を要求するというものだった。</li><li>OpenAIは不正アカウントを禁止または制限する対応を行った。</li><li>OpenAIはサインアップ審査プロセスを強化した。</li><li>OpenAIはインフラ管理の改善、監視体制の拡張、推論保護の強化、ストリーム出力チェックの追加などの対策を実施した。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>We banned or restricted fraudulent accounts, strengthened signup and...(文が途中で切れているため全文は未確認)</blockquote><p class="quotes-source">出典: <a href="https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign" target="_blank" rel="noopener noreferrer">openai.com</a></p></section>
+<aside class="source-box"><a href="https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">openai.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E8%92%B8%E7%95%99%E6%94%BB%E6%92%83%E3%81%AE%E9%98%BB%E6%AD%A2%E3%80%81OpenAI%E3%81%8C%E4%B8%8D%E6%AD%A3%E3%81%AA%E5%A4%A7%E9%87%8F%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%92%E9%81%AE%E6%96%AD%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-01%2F16d2a25f0f97b937%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E8%92%B8%E7%95%99%E6%94%BB%E6%92%83%E3%81%AE%E9%98%BB%E6%AD%A2%E3%80%81OpenAI%E3%81%8C%E4%B8%8D%E6%AD%A3%E3%81%AA%E5%A4%A7%E9%87%8F%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%92%E9%81%AE%E6%96%AD%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-01/16d2a25f0f97b937/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-01%2F16d2a25f0f97b937%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><span></span><a class="next" href="../dd99066cdae67460/"><span>次の記事</span>次世代フロンティアモデル「Gemini 4 Argon」登場</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-01/">← 2026.10.01 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../dd99066cdae67460/">次世代フロンティアモデル「Gemini 4 Argon」登場</a></h3>
+<p class="excerpt">Google DeepMindは新しいフロンティアモデル「Gemini 4 Argon」を発表しました。ソフトウェアエンジニアリング、法律・財務などの企業知識作業、サイバーセキュリティ防御を得意とし、業界最高水準とされる100万トークン…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>deepmind.google</span><time datetime="2026-10-01">2026.10.01</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../cd03ed257db572bf/">Zhipu AI製モデルGLM-5.3、サイバー攻撃能力の拡散に警鐘</a></h3>
+<p class="excerpt">Anthropicの研究チームは、Zhipu AI製のモデル「GLM-5.3」を分析した結果を公開しました。GLM-5.3は自社のClaude Mythos Previewに匹敵する、エンドツーエンドの自律的なサイバーエクスプロイト開発…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span><time datetime="2026-10-01">2026.10.01</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../4d2424c3f10b3a14/">GPT-6.1 Sol登場、Astra級性能を5分の1のコストで</a></h3>
+<p class="excerpt">OpenAIは「GPT-6 Sol」の後継モデル「GPT-6.1 Sol」を発表しました。エージェント型コーディングやコンピュータ操作、専門業務において、上位モデルのGPT-6 Astraに近い性能を、大幅に低いコストで実現するとしてい…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-01">2026.10.01</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

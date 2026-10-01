@@ -91,7 +91,7 @@ func (tc *tagCache) Set(key string, value *cTag) {
 	m    atomic.Value // map[string]*cTag
 }</code></pre><p>同じ構造がもう一度出てきます。今度はキーが`reflect.Type`ではなく`string`(タグ文字列)で、値も`*cStruct`ではなく`*cTag`です。GetとSetの実装ロジックはstructCacheと一字一句同じパターンで、型だけが違います。このコードが書かれた時点のGoにはジェネリクス(型を後から差し込める仕組み)がまだ普及していなかったため、同じロジックを型ごとに手で書き直す必要がありました。今のGoであれば`type cache[K comparable, V any] struct {...}`のような形で1つにまとめられますが、ここでは意図的に(あるいは歴史的経緯で)コピー＆ペーストされています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「読み取りが多く書き込みがまれ」なキャッシュは、mutexでmap全体をロックするより、atomic.ValueにイミュータブルなmapをStoreで丸ごと差し替える方式にすると、読み取り側が一切ロックを待たずに安全に動くようになる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-27/"><span>前の日</span>anthropics/claude-code-action</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-27/"><span>前の日</span>anthropics/claude-code-action</a><a class="next" href="../2026-10-01/"><span>次の日</span>urfave/cli</a></nav>
 <a class="back-to-issue" href="../../issues/2026-09-29/">← 2026.09.29 の号を読む</a>
 </div>
 </article>
