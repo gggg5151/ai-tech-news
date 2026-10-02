@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.js v16.3.8、SSRF含む6件の脆弱性を修正 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Next.jsのv16.3.8がリリースされました。6件のセキュリティ脆弱性への対応を含むパッチリリースで、画像最適化機能におけるSSRF（サーバーサイドリクエストフォージェリ、意図しない宛先への通信を強制される脆弱性）が高リスクの脆弱性として修正されています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.js v16.3.8、SSRF含む6件の脆弱性を修正 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Next.jsのv16.3.8がリリースされました。6件のセキュリティ脆弱性への対応を含むパッチリリースで、画像最適化機能におけるSSRF（サーバーサイドリクエストフォージェリ、意図しない宛先への通信を強制される脆弱性）が高リスクの脆弱性として修正されています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-02/774fbaeb30c72ec5/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-02/774fbaeb30c72ec5/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.js v16.3.8、SSRF含む6件の脆弱性を修正", "datePublished": "2026-10-02", "description": "Next.jsのv16.3.8がリリースされました。6件のセキュリティ脆弱性への対応を含むパッチリリースで、画像最適化機能におけるSSRF（サーバーサイドリクエストフォージェリ、意図しない宛先への通信を強制される脆弱性）が高リスクの脆弱性として修正されています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-02/774fbaeb30c72ec5/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/vercel/next.js/releases/tag/v16.3.8", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-02/">2026.10.02 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.js v16.3.8、SSRF含む6件の脆弱性を修正</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-02">2026.10.02</time></div>
+</header>
+<div class="article-body">
+<p>Next.jsのv16.3.8がリリースされました。6件のセキュリティ脆弱性への対応を含むパッチリリースで、画像最適化機能における<strong>SSRF（サーバーサイドリクエストフォージェリ、意図しない宛先への通信を強制される脆弱性）</strong>が高リスクの脆弱性として修正されています。</p>
+<p>中程度の脆弱性としては、App Routerのメタデータ画像ルートでの情報開示、自ホスト環境でのSSG/ISRキャッシュポイズニング、キャッシュ汚染による永続的なDoS、Draft Modeの内容リーク、ネストされた「use cache」関数のキャッシュリークが修正されました。低リスクとして開発サーバーのMCPエンドポイントの情報開示も修正されています。該当する環境では早めのアップデートが推奨されます。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Next.js v16.3.8は2024年9月30日16:13 UTCにリリースされた</li><li>リリーサーは@eps1lon</li><li>コミットハッシュはb0fad0d45eb4c4430fda5eeeb442e8a5af08a5f6</li><li>このリリースには6件のセキュリティ脆弱性への対応が含まれる</li><li>高リスクの脆弱性として画像最適化機能におけるサーバーサイドリクエストフォージェリ(SSRF)が修正された</li><li>中程度の脆弱性としてApp Routerメタデータ画像ルートにおける情報開示(dynamicParams回避)が修正された</li><li>中程度の脆弱性として自ホスト環境でのSSG/ISRページのキャッシュポイズニングが修正された</li><li>中程度の脆弱性としてSSG/ISRレンダリングのキャッシュ汚染による実装間でのコンテンツ置換と永続的なDoSが修正された</li><li>中程度の脆弱性としてDraft Mode内容が通常応答および永続ページにリークする問題が修正された</li><li>中程度の脆弱性としてネストされた「use cache」関数における根パラメータ値間のキャッシュリークが修正された</li><li>低リスクの脆弱性として開発サーバーのModel Context Protocolエンドポイントにおける情報開示が修正された</li></ul></section>
+
+<aside class="source-box"><a href="https://github.com/vercel/next.js/releases/tag/v16.3.8" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%20v16.3.8%E3%80%81SSRF%E5%90%AB%E3%82%806%E4%BB%B6%E3%81%AE%E8%84%86%E5%BC%B1%E6%80%A7%E3%82%92%E4%BF%AE%E6%AD%A3%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-02%2F774fbaeb30c72ec5%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%20v16.3.8%E3%80%81SSRF%E5%90%AB%E3%82%806%E4%BB%B6%E3%81%AE%E8%84%86%E5%BC%B1%E6%80%A7%E3%82%92%E4%BF%AE%E6%AD%A3%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-02/774fbaeb30c72ec5/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-02%2F774fbaeb30c72ec5%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../a1f1f32c2dc71365/"><span>前の記事</span>AIエージェント優先に作り変えたdotfiles</a><a class="next" href="../8537be32ef524efb/"><span>次の記事</span>バックエンドエンジニアがFigma MCPでフロント実装に挑戦</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-02/">← 2026.10.02 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../82343b97d05667ce/">AI文章を構造から直すClaude Skill「yomiyasu」</a></h3>
+<p class="excerpt">AI生成テキスト特有の不自然さ（いわゆる「AI-Slop」）を、禁止語句のブラックリストではなく統語構造の復元と比喩動詞の具体化レベルで改善するAgent Skill「yomiyasu（よみやす）」が作者自身によって公開されました。Cl…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-02">2026.10.02</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2731b170e5cee050/">useLinkStatusで遷移中フィードバックを実装</a></h3>
+<p class="excerpt">筆者が個人開発する日程調整・集金アプリ「いいカンジ」で、参加者ページから幹事ページ（/e/[editToken]という動的ルートでSupabaseからデータ取得）へのリンクをタップした際に画面が固まって見える問題を解決した記録です。以前…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-02">2026.10.02</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../a1f1f32c2dc71365/">AIエージェント優先に作り変えたdotfiles</a></h3>
+<p class="excerpt">筆者は直近のコマンド実行統計でghコマンドの実行回数が人間80回に対しAI（Claude/Codexなど）が1,339回だったことに気づき、10年以上かけて人間向けに構築してきたdotfilesをAI優先に作り変えました。既存dotfi…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tellme.tokyo</span><time datetime="2026-10-02">2026.10.02</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

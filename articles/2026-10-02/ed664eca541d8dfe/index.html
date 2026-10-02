@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>エージェントの実行基盤を自動発見する「MILO」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="エージェント用の実行制御フレームワーク（ハーネス）の設計を自動化する新手法「MILO」を提案する論文です。既存の自動化手法は探索空間が限定的という課題があったのに対し、MILOは島（island）ベースの進化的探索に階層的な系統記憶やミューテータエージェント、オーケストレータを組み合わせて探索範囲を拡大します。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="エージェントの実行基盤を自動発見する「MILO」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="エージェント用の実行制御フレームワーク（ハーネス）の設計を自動化する新手法「MILO」を提案する論文です。既存の自動化手法は探索空間が限定的という課題があったのに対し、MILOは島（island）ベースの進化的探索に階層的な系統記憶やミューテータエージェント、オーケストレータを組み合わせて探索範囲を拡大します。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-02/ed664eca541d8dfe/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-02/ed664eca541d8dfe/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "エージェントの実行基盤を自動発見する「MILO」", "datePublished": "2026-10-02", "description": "エージェント用の実行制御フレームワーク（ハーネス）の設計を自動化する新手法「MILO」を提案する論文です。既存の自動化手法は探索空間が限定的という課題があったのに対し、MILOは島（island）ベースの進化的探索に階層的な系統記憶やミューテータエージェント、オーケストレータを組み合わせて探索範囲を拡大します。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-02/ed664eca541d8dfe/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2609.38349", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-02/">2026.10.02 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>エージェントの実行基盤を自動発見する「MILO」</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-02">2026.10.02</time></div>
+</header>
+<div class="article-body">
+<p>エージェント用の実行制御フレームワーク（ハーネス）の設計を自動化する新手法「MILO」を提案する論文です。既存の自動化手法は探索空間が限定的という課題があったのに対し、MILOは島（island）ベースの進化的探索に階層的な系統記憶やミューテータエージェント、オーケストレータを組み合わせて探索範囲を拡大します。</p>
+<p>複数のベンチマークで既存手法を大幅に上回る性能を示し、特にTerminal-Bench 2.1ではMILOが86.1%を記録、公式リーダーボードの最高記録83.8%を上回ったと報告しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「MILO: Automated Harness Discovery via Orchestrated Multi-Agent Evolution」</li><li>著者はPrithwish Jana、Mononito Goswami、Hao Liu、Xinyu Li、Langlin Huang、Zhehui Huang、Zhishen Huang、Patrick Blöbaum、Anoop Deoras、Purak Jain、Nikos Kanakaris、Sahika Genc</li><li>MILOはエージェントシステムの制御フレームワーク(ハーネス)の設計を自動化する枠組みである</li><li>既存手法は探索空間が限定的であるとされる</li><li>MILOはisland(島)ベースのツリー上で階層的な系統記憶(lineage memory)を用いる</li><li>MILOは拒否された変異(rejected mutations)を負の証拠として利用する</li><li>MILOは島ごとにミューテータエージェントを持ち、完全なハーネスを書き換える</li><li>MILOはオーケストレータがlineage graftingとspeciationを通じて探索戦略を適応させる</li><li>複数のベンチマークでの実験によりMILOは既存手法を大幅に上回る性能を示した</li><li>Terminal-Bench 2.1においてMILOは86.1%のスコアを達成した</li><li>Terminal-Bench 2.1の公式リーダーボードの最高記録は83.8%である</li><li>MILOのスコア86.1%は公式リーダーボードの最高記録83.8%を上回った</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>hierarchical lineage memory over island-based trees, using rejected mutations as negative evidence</blockquote><blockquote>per-island mutator agents that rewrite complete harnesses</blockquote><blockquote>orchestrator that adapts search through lineage grafting and speciation</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2609.38349" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2609.38349" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E5%AE%9F%E8%A1%8C%E5%9F%BA%E7%9B%A4%E3%82%92%E8%87%AA%E5%8B%95%E7%99%BA%E8%A6%8B%E3%81%99%E3%82%8B%E3%80%8CMILO%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-02%2Fed664eca541d8dfe%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E5%AE%9F%E8%A1%8C%E5%9F%BA%E7%9B%A4%E3%82%92%E8%87%AA%E5%8B%95%E7%99%BA%E8%A6%8B%E3%81%99%E3%82%8B%E3%80%8CMILO%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-02/ed664eca541d8dfe/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-02%2Fed664eca541d8dfe%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../733d3e44acf3697b/"><span>前の記事</span>文脈を自ら管理する言語モデル</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-02/">← 2026.10.02 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../c3446dcdb4051e28/">長期の一人称視点動画を記憶するAI「MemLife」</a></h3>
+<p class="excerpt">長期間の一人称視点（エゴセントリック）ビデオから日常生活を理解・推論するAIアシスタント向けのメモリシステム「MemLife」を提案する論文です。数百時間規模の動画をそのまま処理するのは計算コストが高すぎるため、動画内容をテキスト化して…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-02">2026.10.02</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../733d3e44acf3697b/">文脈を自ら管理する言語モデル</a></h3>
+<p class="excerpt">言語モデル自身が「文脈」をファイルとして扱い、自律的に更新・管理する仕組みを提案する論文「Context Language Models」です。既存モデルにゼロショットで組み込むだけで複数タスクの性能が向上し、BrowseComp-Pl…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-02">2026.10.02</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-01/0c1350bd5ace3366/">若者とChatGPT、2万件の対話に見るすれ違い</a></h3>
+<p class="excerpt">18〜25歳の若年成人158名から集めた19,930件のChatGPT会話を分析し、代表的な5件を10名の臨床医が検討した論文です。ストレスを抱えた参加者は、そうでない参加者よりもChatGPTへの感情的な関与や行動変化が大きかったと報…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-01">2026.10.01</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
