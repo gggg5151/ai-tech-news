@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Next.js v16で導入された「use cache: private」ディレクティブは、cookies()などリクエスト固有の値をキャッシュし、本来はサーバーに保存されず単一リクエスト内での再利用のみを意図したものです。しかし筆者がNext.js 16.3.8の本番モード（next build &amp;&amp; next st…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Next.js v16で導入された「use cache: private」ディレクティブは、cookies()などリクエスト固有の値をキャッシュし、本来はサーバーに保存されず単一リクエスト内での再利用のみを意図したものです。しかし筆者がNext.js 16.3.8の本番モード（next build &amp;&amp; next st…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-03/04d0ee1229647d5e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-03/04d0ee1229647d5e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴", "datePublished": "2026-10-03", "description": "Next.js v16で導入された「use cache: private」ディレクティブは、cookies()などリクエスト固有の値をキャッシュし、本来はサーバーに保存されず単一リクエスト内での再利用のみを意図したものです。しかし筆者がNext.js 16.3.8の本番モード（next build && next start）で検証したところ、特定の設定下で…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-03/04d0ee1229647d5e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/chot/articles/362b7a2420ef1a", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-03/">2026.10.03 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</header>
+<div class="article-body">
+<p>Next.js v16で導入された「<strong>use cache: private</strong>」ディレクティブは、cookies()などリクエスト固有の値をキャッシュし、本来はサーバーに保存されず単一リクエスト内での再利用のみを意図したものです。しかし筆者がNext.js 16.3.8の本番モード（next build &amp;&amp; next start）で検証したところ、特定の設定下ではこのキャッシュがブラウザのメモリに保存され、stale timeの間は複数のリクエストやページ遷移をまたいで再利用されてしまうことが分かりました。</p>
+<p>検証では、cacheComponents設定のみの場合はキャッシュがブラウザに保存されませんが、Partial Prefetchingを有効にしかつstale timeが5分以上の場合、キャッシュがブラウザに保存され、同一パスへの再遷移時に旧キャッシュが使われてしまうことが確認されました。これにより、ログアウト後も古いユーザー固有情報が表示され続けるなど、<strong>情報漏洩につながるリスク</strong>があると筆者は指摘しています。</p>
+<p>対策として、Server Action経由でcookieを削除すればキャッシュは即座に消えますが、Route Handlerやクライアント側でcookieを削除した場合はキャッシュが残存するため、router.refresh()の実行で解消する必要があるとまとめています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>「use cache: private」はNext.js v16で導入されたディレクティブである</li><li>「use cache: private」はcookies()などリクエスト固有の値を読む関数の結果をキャッシュする機能である</li><li>「use cache: private」は本来、サーバーに保存されず単一リクエスト内での再利用を目的としている</li><li>Next.jsのドキュメントには、クライアントルーターがレンダリング結果をブラウザメモリに保存し、設定されたstale timeまで保持するという記載がある</li><li>著者はNext.js 16.3.8を使用し、本番モード（next build &amp;&amp; next start）で検証を行った</li><li>著者はcookieの値をキャッシュする関数を作成し、複数ページ間をリンク遷移させてキャッシュ生成時刻の変化を追跡する方法で検証した</li><li>cacheComponents設定のみの場合、キャッシュはブラウザに保存されない</li><li>Partial Prefetchingを有効にし、かつstale timeが5分以上の場合、キャッシュはブラウザに保存される</li><li>Partial Prefetching有効かつstale time5分以上の条件下では、同一パスへの再遷移時に旧キャッシュが使用される</li><li>Server Action経由でcookieを削除した場合、キャッシュは即座に消える</li><li>Route Handlerまたはクライアント側でcookieを削除した場合、キャッシュは残存する</li><li>Route Handlerまたはクライアント側でのcookie削除後に残存したキャッシュは、router.refresh()を実行することで解消される</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/chot/articles/362b7a2420ef1a" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%E3%81%AEuse%20cache%3A%20private%E3%80%81%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E5%81%B4%E3%81%AB%E5%8F%A4%E3%81%84%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%81%8C%E6%AE%8B%E5%AD%98%E3%81%99%E3%82%8B%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-03%2F04d0ee1229647d5e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%E3%81%AEuse%20cache%3A%20private%E3%80%81%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E5%81%B4%E3%81%AB%E5%8F%A4%E3%81%84%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%81%8C%E6%AE%8B%E5%AD%98%E3%81%99%E3%82%8B%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-03/04d0ee1229647d5e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-03%2F04d0ee1229647d5e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../f63565cf7bf76116/"><span>前の記事</span>Anthropic Batches APIで大量リクエストのコストを半減</a><a class="next" href="../ff28df275342542d/"><span>次の記事</span>cursor/plugins、100以上の公式プラグインを集約</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-03/">← 2026.10.03 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../c7640bd1d5ceec12/">Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った</a></h3>
+<p class="excerpt">Claude Code Max 20xプランを契約する筆者が、ClaudeCodeとAPIの間に自作プロキシを挟み、リクエストごとのトークン数と使用率（%）のレスポンスヘッダを記録する独自の手法で、Max枠内での各トークン種別・モデルの…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../aa079348589f9def/">GoのchromedpでブラウザをAPIのように操作する</a></h3>
+<p class="excerpt">Go言語でブラウザ操作を行うライブラリ「chromedp」を紹介する技術解説記事です。chromedpはChrome DevTools Protocol（CDP）を介してChromium系ブラウザを直接制御できるGoライブラリで、Sel…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f63565cf7bf76116/">Anthropic Batches APIで大量リクエストのコストを半減</a></h3>
+<p class="excerpt">5万件のレビュー分類作業でコストを気にした経験を動機に、Anthropic Message Batches APIを使って大量のLLMリクエストのコストを削減する実装手順を5ステップで解説する記事です。著者は「リアルタイム応答が不要なの…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

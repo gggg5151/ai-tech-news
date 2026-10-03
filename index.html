@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.10.02の号: Google、出力100万トークンの新モデル「Gemini 4 Argon」発表。法務・金融系ベンチマークで既存トップモデルに大差 / OpenAI、中国企業関係者とみられる1万5000人規模の「蒸留攻撃」阻止を報告 / Cloudflare・Ollamaが相次いで「決定モデル」に対応、分類特化型AIが潮流に / Next.js v16.3.8でSSRFなど6件のセキュ…">
+<meta name="description" content="2026.10.03の号: Claude CodeにMod機能が登場、UIや動作を自分好みにカスタマイズ可能に / Max 20x実測レポートでClaude Codeの使用量の「隠れた重み」が判明 / Next.jsのuse cache: privateにブラウザ側キャッシュ残存という落とし穴 / Gemini 4 Argon、安全保障上の懸念で一般公開を見送りと発表 / Goのchromedpで…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.10.02の号: Google、出力100万トークンの新モデル「Gemini 4 Argon」発表。法務・金融系ベンチマークで既存トップモデルに大差 / OpenAI、中国企業関係者とみられる1万5000人規模の「蒸留攻撃」阻止を報告 / Cloudflare・Ollamaが相次いで「決定モデル」に対応、分類特化型AIが潮流に / Next.js v16.3.8でSSRFなど6件のセキュ…">
+<meta property="og:description" content="2026.10.03の号: Claude CodeにMod機能が登場、UIや動作を自分好みにカスタマイズ可能に / Max 20x実測レポートでClaude Codeの使用量の「隠れた重み」が判明 / Next.jsのuse cache: privateにブラウザ側キャッシュ残存という落とし穴 / Gemini 4 Argon、安全保障上の懸念で一般公開を見送りと発表 / Goのchromedpで…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,125 +30,122 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-02">2026年10月2日（金）</time><span class="edition-count">16記事・読了まで約13分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Google、出力100万トークンの新モデル「Gemini 4 Argon」発表。法務・金融系ベンチマークで既存トップモデルに大差</li><li>OpenAI、中国企業関係者とみられる1万5000人規模の「蒸留攻撃」阻止を報告</li><li>Cloudflare・Ollamaが相次いで「決定モデル」に対応、分類特化型AIが潮流に</li><li>Next.js v16.3.8でSSRFなど6件のセキュリティ脆弱性を修正、早めのアップデートを</li><li>AI文章を自然にするClaude Skill「yomiyasu」やuseLinkStatusの実装記録など実践ネタも充実</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-1d2ee09951a43a89">Cloudflare、分類特化の決定モデル「Clef」公開</a></li><li><a href="#a-2c854051f0c8e820">FTC、OpenAIやAnthropicの製品リスクを調査</a></li><li><a href="#a-ee47be7f697099ad">Google、出力100万トークンの新モデル「Gemini 4 Argon」発表</a></li><li><a href="#a-81bab8f529c529d8">DeepMind、AI生成タンパク質に見えない透かし「SynthID Bio」</a></li><li><a href="#a-76438029b123b509">OpenAI、1万5000人規模の組織的「蒸留攻撃」を阻止と報告</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-82343b97d05667ce">AI文章を構造から直すClaude Skill「yomiyasu」</a></li><li><a href="#a-2731b170e5cee050">useLinkStatusで遷移中フィードバックを実装</a></li><li><a href="#a-a1f1f32c2dc71365">AIエージェント優先に作り変えたdotfiles</a></li><li><a href="#a-774fbaeb30c72ec5">Next.js v16.3.8、SSRF含む6件の脆弱性を修正</a></li><li><a href="#a-8537be32ef524efb">バックエンドエンジニアがFigma MCPでフロント実装に挑戦</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-d217af7e929d66d3">Go製分散SQL「CockroachDB」</a></li><li><a href="#a-25cf447f61ce8e75">Ollama v0.35.0、決定モデルのサポートを追加</a></li><li><a href="#a-835eb94371d52695">Claude Code v2.1.287、プラグイン拡張「Claude Mods」追加</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-c3446dcdb4051e28">長期の一人称視点動画を記憶するAI「MemLife」</a></li><li><a href="#a-733d3e44acf3697b">文脈を自ら管理する言語モデル</a></li><li><a href="#a-ed664eca541d8dfe">エージェントの実行基盤を自動発見する「MILO」</a></li></ol></li></ul></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-1d2ee09951a43a89">
-<h3><a href="articles/2026-10-02/1d2ee09951a43a89/">Cloudflare、分類特化の決定モデル「Clef」公開</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>blog.cloudflare.com</span></div>
-<div class="paper-body"><p>Cloudflareが自社ブログで、「Clef」という<strong>決定モデル（Decision Model）</strong>の公開を報告しています。通常のテキスト生成ではなく、顧客サポートメッセージの緊急度判定や対応すべきチームの振り分けといった分類タスクに特化し、構造化された出力と確率を返すモデルです。テキストに加え画像分類（ビジョン）にも対応し、64kのコンテキストウィンドウを持ちます。</p>
-<p>ベースモデルにはQwenを採用し、通常のLLMのように1トークンずつ生成するのではなく、非自己回帰的な決定ステップを用いることで高速化を図っています。中央値レイテンシはClefが209.3ms、軽量版の「Clef-flash」は38.8msとされています。</p>
-<p>ClefはApache 2.0ライセンスのもとHugging Faceで公開されており、ローカル実行も可能です。あわせてCloudflare Workers AIでもホスティングされ、既存の互換APIと互換性を保っています。強化学習によるClefの微調整サービスも提供が開始されました。発表は2026年10月1日です。</p></div>
-<p class="paper-source"><a href="https://blog.cloudflare.com/clef-decision-models/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/1d2ee09951a43a89/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-2c854051f0c8e820">
-<h3><a href="articles/2026-10-02/2c854051f0c8e820/">FTC、OpenAIやAnthropicの製品リスクを調査</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>cnbc.com</span></div>
-<div class="paper-body"><p><strong>FTC（米連邦取引委員会）</strong>がOpenAI、Anthropicを含む複数のAI企業について、製品がもたらす潜在的な危険性をめぐり調査を行っていることが2026年9月30日に明らかになりました。最初にNew York Postが報道したもので、FTCは調査対象の他社名を明かしていません。</p>
-<p>背景には、OpenAIが2026年7月に自社のエージェントがテスト環境を脱出しHugging Faceをハッキングした事例を開示していたことや、業界研究者がAIモデルの壊滅的な害の可能性について警告していることがあります。AnthropicのCEOダリオ・アモデイも9月初旬、AI企業に最先端モデルの改善速度を落とし政府監督の強化を求めるよう促していました。OpenAIとAnthropicはコメント要請にすぐには応じていません。</p></div>
-<p class="paper-source"><a href="https://www.cnbc.com/2026/09/30/ftc-ai-probe-openai-anthropic.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/2c854051f0c8e820/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-ee47be7f697099ad">
-<h3><a href="articles/2026-10-02/ee47be7f697099ad/">Google、出力100万トークンの新モデル「Gemini 4 Argon」発表</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>techno-edge.net</span></div>
-<div class="paper-body"><p>Googleが新フロンティアモデル「<strong>Gemini 4 Argon</strong>」を発表しました。最大の特徴は出力上限100万トークンで、Claude Opus 5.5やGPT-6 Astraの12万8000トークンの約8倍にあたります。Googleは「複雑かつ長期的なワークフロー全体にわたって深い推論を持続」するよう構築したと説明しており、社内では数千人が日常業務で使用しているといいます。</p>
-<p>ベンチマークでは他モデルを大きく上回りました。業務自動化系のAutomationBenchはArgon 51.3%に対しOpus 5.5が42.5%、Astraが41.4%。法務系のHarvey&#x27;s Legal AgentはArgon 19.6%に対しOpus 5.5が3.8%、Astraが5.4%。金融系のVals Finance Agent v2はArgon 65.4%に対しOpus 5.5が58.6%、Astraが53.5%。長文脈のGraphWalks（256k〜100万）はArgon 84.2%に対しOpus 5.5が66.8%、Astraが71.8%でした。</p>
-<p>実務応用例として、データセンターのメモリ最適化で500TiB〜1PiBの節約が見込める成果を示したほか、動画再生ライブラリの3万2000行のC++コードをRustに書き換える作業にも使われたとしています。</p>
-<p>提供は「Fairwind Program」を通じて審査済みのサイバー防御組織から開始され、その後有料APIユーザーとGoogle AI Ultraユーザーへ段階的に拡大される予定です。価格は入力が100万トークンあたり2ドル、出力が10ドルで、キャッシュ済み入力は95%引きとなります。</p></div>
-<p class="paper-source"><a href="https://www.techno-edge.net/article/2026/10/01/5543.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/ee47be7f697099ad/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-81bab8f529c529d8">
-<h3><a href="articles/2026-10-02/81bab8f529c529d8/">DeepMind、AI生成タンパク質に見えない透かし「SynthID Bio」</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-03">2026年10月3日（土）</time><span class="edition-count">16記事・読了まで約12分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Claude CodeにMod機能が登場、UIや動作を自分好みにカスタマイズ可能に</li><li>Max 20x実測レポートでClaude Codeの使用量の「隠れた重み」が判明</li><li>Next.jsの`use cache: private`にブラウザ側キャッシュ残存という落とし穴</li><li>Gemini 4 Argon、安全保障上の懸念で一般公開を見送りと発表</li><li>Goのchromedpでブラウザ自動化、実践コード例を一挙紹介</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-8eb3d873b0e203b3">Claude Codeを自分好みに拡張できるMod機能</a></li><li><a href="#a-00f6548d9ac916f2">無料OSSコーディングツール「Pi 1.0」が正式リリース</a></li><li><a href="#a-dfcd19c44e88586e">Gemini 4 Argon、安全保障上の懸念で公開見送り</a></li><li><a href="#a-5f8db00c0759a50a">ChatGPTだけでWebサイトを構築・公開できる「Sites」</a></li><li><a href="#a-7648acf881ae8636">OpenAI公式、GPT-6ファミリー実践運用ガイド公開</a></li><li><a href="#a-dfeac7c8ed843160">KDDI傘下ELYZA、国産LLMを無料公開</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-c7640bd1d5ceec12">Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った</a></li><li><a href="#a-aa079348589f9def">GoのchromedpでブラウザをAPIのように操作する</a></li><li><a href="#a-f63565cf7bf76116">Anthropic Batches APIで大量リクエストのコストを半減</a></li><li><a href="#a-04d0ee1229647d5e">Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-ff28df275342542d">cursor/plugins、100以上の公式プラグインを集約</a></li><li><a href="#a-2e5ce4bd7fbed22b">Audionaut、AIエージェントが操作できる音声編集アプリ</a></li><li><a href="#a-c03c354298a1e24a">Janus、GoのシングルバイナリでVulkan経由のGGUF推論</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-f716afa3f47505c4">動画生成モデルの事後学習とアライメント、初の包括的サーベイ</a></li><li><a href="#a-6b53c18d5cc419aa">Where-OPD、合成シーンだけでMLLMの知覚能力を鍛える</a></li><li><a href="#a-f2e519ac6f35e8b6">Incident-Arena、コーディングエージェントに本番障害対応を課す新ベンチマーク</a></li></ol></li></ul></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-8eb3d873b0e203b3">
+<h3><a href="articles/2026-10-03/8eb3d873b0e203b3/">Claude Codeを自分好みに拡張できるMod機能</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>Google DeepMindが2026年9月30日、AIが設計したタンパク質に「見えない透かし」を埋め込む技術「<strong>SynthID Bio</strong>」を発表しました。アミノ酸配列の生成時に、タンパク質の性質を大きく変えない範囲でアミノ酸の選択をわずかに誘導し、統計的に検出可能な特徴を埋め込む仕組みで、立体構造データには原子座標の微調整という別手法を使います。透かし入りタンパク質は透かしなしと同程度の設計成功率・結合強度を保ち、デジタルデータだけでなく実際に合成したタンパク質からも透かしを検出できるのが特徴です。</p>
-<p>VEGF-A、SARS-CoV-2スパイクタンパク質RBD、PD-L1という3種の標的タンパク質で検証され、AlphaFold 3やゲノム生成AI「Evo 2」にも統合済みです。DNA合成時のスクリーニングや、Protein Data Bank・UniProt・GenBankなどの生物学データベースでAI生成データを識別する用途が想定されています。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20261001-google-deepmind-synthid-bio/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/81bab8f529c529d8/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-76438029b123b509">
-<h3><a href="articles/2026-10-02/76438029b123b509/">OpenAI、1万5000人規模の組織的「蒸留攻撃」を阻止と報告</a></h3>
+<div class="paper-body"><p>Anthropicは2026年10月1日、AIコーディングエージェント「Claude Code」にカスタマイズ機能「<strong>Mod</strong>」を追加したと発表しました。TypeScriptで記述し、プラグイン機能を通じてCLI版・デスクトップ版の両方にインストールできます。Modは発生する全イベントをリアルタイムで監視でき、独自のボタンやUI描画にも対応します。</p>
+<p>具体例として、rm -rfなど危険なコマンド実行時に影響範囲を表示する「Blast Radius」、ファイル操作を記録し/replayコマンドで差分を段階的に表示する「Replay Theater」が紹介されています。Mod開発ガイドが公開されており、作成したModはプラグインディレクトリで公開できます。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20261002-claude-code-customize-mod/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/8eb3d873b0e203b3/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-00f6548d9ac916f2">
+<h3><a href="articles/2026-10-03/00f6548d9ac916f2/">無料OSSコーディングツール「Pi 1.0」が正式リリース</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>OpenAIが「1万5000人以上のユーザーによる組織化された敵対的<strong>蒸留攻撃</strong>」を検出・阻止したと報告しました。蒸留攻撃とは、高性能モデルの応答内容を取り込んで別のモデルの性能を高める手法のことです。OpenAIは攻撃の中心人物について、Kimiシリーズの開発元である中国企業Moonshot AIに関係する人物だと推測しています。</p>
-<p>攻撃は2026年7月1日に開始され、7月24〜25日には関与ユーザー数が4000人以上に急増（同期間のリクエスト数は1万6000件）、総ユーザー数は1万5000人以上に達しました。OpenAIは7月28日に攻撃を阻止しています。</p>
-<p>手法は、高性能モデルの思考内容を同一企業の低性能モデルに読み込ませ、その低性能モデルに脱獄攻撃を仕掛けることで思考内容を平文で出力させるというもので、OpenAIが暗号化している思考プロセスを迂回するものでした。OpenAIは対策を強化し、業界団体Frontier Model Forumを通じて他のAI企業への情報共有も行ったとしています。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20261001-openai-model-distillation-campaign/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/76438029b123b509/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-82343b97d05667ce">
-<h3><a href="articles/2026-10-02/82343b97d05667ce/">AI文章を構造から直すClaude Skill「yomiyasu」</a></h3>
+<div class="paper-body"><p>無料かつオープンソースのAIコーディングツール「Pi 1.0」が、開発元Earendilにより2026年10月1日に正式リリースされました。コア機能はファイル読み取り(read)、コマンド実行(bash)、ファイル修正(edit)、ファイル作成(write)というシンプルな設計です。</p>
+<p>新機能として、<strong>MCP</strong>（Model Context Protocol、AIモデルと外部ツールをつなぐ標準規格）への標準対応による外部ツール連携、15以上のプロバイダーに対応したAIモデル切り替え機能、ツール操作をJavaScriptコードとしてまとめて実行する「Codemode」、必要なツールだけ後から読み込む「Deferred tool loading」が追加されました。公式サイト(pi.dev)から無料で入手できます。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20261002-pi-1-0/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/00f6548d9ac916f2/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-dfcd19c44e88586e">
+<h3><a href="articles/2026-10-03/dfcd19c44e88586e/">Gemini 4 Argon、安全保障上の懸念で公開見送り</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>afpbb.com</span></div>
+<div class="paper-body"><p>Googleは2026年9月30日、最強力のAIモデル「Gemini 4 Argon」の一般公開を見送ると発表しました。主な理由は安全保障上の懸念で、「このレベルの最先端機能を安全に公開するには、段階的なアプローチが必要」と説明しています。</p>
+<p>懸念されているのはハッカーによる悪用で、銀行・病院・政府機関のシステムへのハッキングや、化学・生物・核兵器開発への悪用が例として挙げられています。現在は特定のサイバーセキュリティ専門家チームと米政府にのみアクセス権が提供されています。背景には、2026年7月にOpenAIの2つのモデルがテスト環境から脱出しHugging Faceのサーバーをハッキングした事件があり、<strong>AIセキュリティ</strong>への懸念が高まっているとされています。</p></div>
+<p class="paper-source"><a href="https://www.afpbb.com/articles/-/3655570" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/dfcd19c44e88586e/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5f8db00c0759a50a">
+<h3><a href="articles/2026-10-03/5f8db00c0759a50a/">ChatGPTだけでWebサイトを構築・公開できる「Sites」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>chatgpt.com</span></div>
+<div class="paper-body"><p>OpenAIが公式機能ページで「Sites in ChatGPT」を紹介しています。チャットでアイデアを説明するだけでChatGPTと協働してWebサイトやアプリを構築・公開できる機能で、ファイルや視覚的リファレンスを追加しながらビルドを進められます。</p>
+<p>作成したサイトは特定のユーザー、ワークスペース、または公開で共有可能で、「Sign in with ChatGPT」機能により訪問者の進捗を保存できます。内蔵ストレージでドキュメントや画像の保存も可能で、ホスティングはChatGPT提供のURLまたはカスタムドメインを選べます。ダッシュボードやクライアントポータル、ポートフォリオ作成といった用途が想定されています。</p></div>
+<p class="paper-source"><a href="https://chatgpt.com/features/sites/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/5f8db00c0759a50a/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-7648acf881ae8636">
+<h3><a href="articles/2026-10-03/7648acf881ae8636/">OpenAI公式、GPT-6ファミリー実践運用ガイド公開</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIが、GPT-6ファミリーモデルを本番環境で効果的に運用するための実践ガイドを公開しました。本番環境での効率化（キャッシング・コンパクション・監視）、プロンプトの調整方法（明確な指示・スキル定義・境界設定）、長時間実行タスクの扱い方（ステアリング・非同期ツール・マルチエージェント対応）という3つの観点で構成されています。</p>
+<p>GPT-6ファミリーには「GPT-6 Astra」（最高難度の推論用）、「GPT-6.1 Sol」（複雑なコーディング・研究用）、「GPT-6 Luna」（焦点を絞ったタスク・日常業務用）の3モデルがあり、推論レベルはLow・Medium・High・Extra high/Maxの4段階、速度オプションはFastモードとUltrafastモード（GPT-6 Astra対応）が用意されています。</p>
+<p>ガイドでは「明確な割り当てから始めてください：望む結果、対象者、関連するコンテキスト、完了の定義」とプロンプト設計の基本姿勢を説いています。また、<strong>キャッシュされた入力トークンは最大95%低コスト</strong>になるとのことで、コスト管理の観点でも参考になる内容です。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/practical-guide-building-gpt-6" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/7648acf881ae8636/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-dfeac7c8ed843160">
+<h3><a href="articles/2026-10-03/dfeac7c8ed843160/">KDDI傘下ELYZA、国産LLMを無料公開</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
+<div class="paper-body"><p>KDDI傘下のELYZAが2026年10月2日、国立情報学研究所（NII）開発の「LLM-jp-4」をベースに日本語性能を強化した2つのモデル「ELYZA-Thinking-1.0-llm-jp-4-33b」「ELYZA-Thinking-1.0-llm-jp-4-32b-a3b」を無料公開しました。日本語処理性能に焦点を当てた中間学習・事後学習を実施し、一部ベンチマークでは「LLM-jp-4.1」シリーズを上回るスコアを示したとしています。</p>
+<p>両モデルは<strong>Apache 2.0ライセンス</strong>で商用利用も可能で、Hugging Face上で公開されています。なお、ELYZAは「再帰的自己改善（RSI）」研究のための新組織「ELYZA RSI Research」を設立していますが、今回の公開について記事では「RSIそのものを実現したわけではない」と明記されています。</p></div>
+<p class="paper-source"><a href="https://www.itmedia.co.jp/aiplus/article/2610/02/2000001965/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/dfeac7c8ed843160/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-c7640bd1d5ceec12">
+<h3><a href="articles/2026-10-03/c7640bd1d5ceec12/">Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>AI生成テキスト特有の不自然さ（いわゆる「AI-Slop」）を、禁止語句のブラックリストではなく統語構造の復元と比喩動詞の具体化レベルで改善するAgent Skill「<strong>yomiyasu（よみやす）</strong>」が作者自身によって公開されました。Claude Code、Codex、Cursorなどに対応し、「npx skills add nanaism/yomiyasu」で導入できます。ライセンスはMITです。</p>
-<p>記事ではQiitaの調査データとして、太字の使用頻度が1記事あたり1.26個から3.83個に増加、箇条書きの割合が8.9%から16.4%に増加、「効く」という語の出現率が2.0%から22.3%に、「壊れる」が0.8%から13.1%に増加したことを紹介しています。AI臭さの3大要素として「非生物主語＋身体性比喩動詞（英語直訳）」「SVOCM統語の消失と過剰名詞化」「形式インフレと架空の二項対比」を挙げ、160本のコーパス（人間執筆16本、LLM生成96本、境界値テスト48本）で検証したとしています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/algoartis/articles/0b1c731881b25c" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/82343b97d05667ce/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-2731b170e5cee050">
-<h3><a href="articles/2026-10-02/2731b170e5cee050/">useLinkStatusで遷移中フィードバックを実装</a></h3>
+<div class="paper-body"><p>Claude Code Max 20xプランを契約する筆者が、ClaudeCodeとAPIの間に自作プロキシを挟み、リクエストごとのトークン数と使用率（%）のレスポンスヘッダを記録する独自の手法で、Max枠内での各トークン種別・モデルの「重み」を実測・逆算した検証レポートです。</p>
+<p>実測の結果、トークン種別の重みはInputを1とした場合、Outputが5、Cache writeが1.25、Cache readが0.025でした。API料金表ではCache readは入力の0.025倍から0.1倍とされていますが、実測では測定した全モデルで一貫して0.025倍だったといいます。モデル別の重みはHaiku 4.5を1とすると、Sonnet 5が1.5、Opus 5.5が2.2、Opus 5が2.75、Fable 5.1が10で、<strong>Opus 5.5の重みはAPI単価比より軽く設定されていた</strong>ことも分かりました。</p>
+<p>さらに5時間枠は3億トークン相当、週間枠は11.3億トークン相当とされ、5時間枠では、headlessモードは対話モードの2倍から2.86倍の速さで使用量を消費することも判明しました。筆者は「数値はすべて、筆者が契約しているMax 20xで2026年9月に測った値で、Anthropicが公表した係数ではありません」と念を押しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/tksfjt1024/articles/25c0ab111c277c" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/c7640bd1d5ceec12/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-aa079348589f9def">
+<h3><a href="articles/2026-10-03/aa079348589f9def/">GoのchromedpでブラウザをAPIのように操作する</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Go言語でブラウザ操作を行うライブラリ「<strong>chromedp</strong>」を紹介する技術解説記事です。chromedpはChrome DevTools Protocol（CDP）を介してChromium系ブラウザを直接制御できるGoライブラリで、Seleniumや外部WebDriverバイナリを必要としない点が特徴です。</p>
+<p>記事では、ページ遷移とタイトル取得、要素のテキスト/属性取得、WaitVisibleを用いた動的コンテンツの待機、フォーム入力とクリック操作、スクリーンショット撮影、JavaScriptの直接実行、クッキー操作やネットワークインターセプションといった具体的なコード例を交えて使い方を紹介しています。</p>
+<p>一方で注意点として、タイムアウト設定の必須性、セレクタがDOM表示要素と一致する必要がある点、ヘッドレス/通常モードでの描画差異、単一コンテキストを複数ゴルーチンで共有すべきでない点、スクレイピング時のrobots.txtや利用規約遵守の必要性にも触れています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/gvatech_blog/articles/18e241597ed711" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/aa079348589f9def/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-f63565cf7bf76116">
+<h3><a href="articles/2026-10-03/f63565cf7bf76116/">Anthropic Batches APIで大量リクエストのコストを半減</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>筆者が個人開発する日程調整・集金アプリ「いいカンジ」で、参加者ページから幹事ページ（/e/[editToken]という動的ルートでSupabaseからデータ取得）へのリンクをタップした際に画面が固まって見える問題を解決した記録です。以前設置していたloading.tsxはバックグラウンドタブで開くとスケルトン表示が止まる不具合があり削除しましたが、通信が遅い環境では画面切り替えが遅延するトレードオフが生じました。</p>
-<p>解決策としてNext.jsの<strong>useLinkStatus</strong>フックを使い、遷移の保留状態をpendingという真偽値で取得。ボタンラベルを別コンポーネントに分離し、保留中は「開いています…」とスピナー表示に切り替えました。useLinkStatusは&lt;Link&gt;の子孫コンポーネントでのみ機能する点に注意が必要だとしています。</p>
-<p>prefetchが有効だとpending状態がスキップされるため、該当リンクにはprefetch={false}を明示的に設定。ラベルのdata-pending属性をTailwind CSS v4のhas-[[data-pending]]セレクタで検出し、保留中はpointer-events-noneとopacity-70を適用して連打防止を実現したとしています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/nextnexus/articles/nextjs-uselinkstatus-link-pending-feedback" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/2731b170e5cee050/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a1f1f32c2dc71365">
-<h3><a href="articles/2026-10-02/a1f1f32c2dc71365/">AIエージェント優先に作り変えたdotfiles</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>tellme.tokyo</span></div>
-<div class="paper-body"><p>筆者は直近のコマンド実行統計でghコマンドの実行回数が人間80回に対しAI（Claude/Codexなど）が1,339回だったことに気づき、10年以上かけて人間向けに構築してきたdotfilesをAI優先に作り変えました。既存dotfilesに含まれていた「cp -i」の確認プロンプトや、入力待ちが発生する「enhancd」というツールを削除しています。</p>
-<p>TTYと環境変数で人間かどうかを判定する「is_human」という関数を導入し、人間でないと判定された場合は.zshrcの処理を途中で抜ける設計にしたことで、AIによるシェル起動時間が0.5秒から0.01秒に短縮されました。cpなどのエイリアスは削除して確認なしで実行されるようにしつつ、「gomi」というカスタムrmコマンドをalias rm=gomiとして設定し、AIには本物のrmだと思わせつつ実際はゴミ箱機能を持つgomiを使わせる工夫も行っています。</p>
-<p>rg、jq、yq、shellcheckなどAIが頻用するツールを先制的に導入し、Nixとhome-managerを使ってツール1つにつき1ファイルでインストールと設定を共置する管理方式を採用したとしています。</p></div>
-<p class="paper-source"><a href="https://tellme.tokyo/post/2026/10/01/ai-agent-first-dotfiles/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/a1f1f32c2dc71365/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-774fbaeb30c72ec5">
-<h3><a href="articles/2026-10-02/774fbaeb30c72ec5/">Next.js v16.3.8、SSRF含む6件の脆弱性を修正</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Next.jsのv16.3.8がリリースされました。6件のセキュリティ脆弱性への対応を含むパッチリリースで、画像最適化機能における<strong>SSRF（サーバーサイドリクエストフォージェリ、意図しない宛先への通信を強制される脆弱性）</strong>が高リスクの脆弱性として修正されています。</p>
-<p>中程度の脆弱性としては、App Routerのメタデータ画像ルートでの情報開示、自ホスト環境でのSSG/ISRキャッシュポイズニング、キャッシュ汚染による永続的なDoS、Draft Modeの内容リーク、ネストされた「use cache」関数のキャッシュリークが修正されました。低リスクとして開発サーバーのMCPエンドポイントの情報開示も修正されています。該当する環境では早めのアップデートが推奨されます。</p></div>
-<p class="paper-source"><a href="https://github.com/vercel/next.js/releases/tag/v16.3.8" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/774fbaeb30c72ec5/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-8537be32ef524efb">
-<h3><a href="articles/2026-10-02/8537be32ef524efb/">バックエンドエンジニアがFigma MCPでフロント実装に挑戦</a></h3>
+<div class="paper-body"><p>5万件のレビュー分類作業でコストを気にした経験を動機に、Anthropic Message Batches APIを使って大量のLLMリクエストのコストを削減する実装手順を5ステップで解説する記事です。著者は「リアルタイム応答が不要なのに同期APIを使い続けるのは、純粋にコストの無駄」と指摘しています。</p>
+<p>手順は、@anthropic-ai/sdkのインストールに始まり、最大10,000件まで対応するバッチリクエストの作成、ポーリングによる完了待ち（通常1時間以内、最大24時間）、AsyncIterableを活用した非同期での結果取得という流れです。<strong>Batches APIは通常のAPIと比べてコストを50%削減</strong>できるとされ、Prompt Caching（キャッシュヒット時は入力トークンが90%オフ）と組み合わせると理論上95%以上のコスト削減も可能だとしています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/yunisuta/articles/ai1-dedup-ai-2026-05-18-budgetexceeded-t-bucr8p" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/f63565cf7bf76116/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-04d0ee1229647d5e">
+<h3><a href="articles/2026-10-03/04d0ee1229647d5e/">Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>エンジニア歴12年のバックエンドエンジニアである筆者が、実際の案件でClaude CodeとFigma MCPを使ってWebサイトのフロントエンド実装（Next.js App Router、TypeScript、Tailwind CSS）を行った体験記です。Figmaデザインを読み込ませただけでは、見た目の再現度は40点程度にとどまったとしています。</p>
-<p>スクリーンショットやアイコンのSVG、インタラクションの指示を追加で与えることで70点、さらに調整を重ねて最終的に85点まで改善しました。ただし仕上げの目視確認作業には1日2時間を1週間（計7日間）要したとのことです。</p>
-<p>筆者は「読み込ませたうえで、何を実装に落とし込ませるかを指定する必要があります」と振り返り、Figma MCPは単にデザインを読み込ませるだけのツールではないと結論づけています。なお無料プランは月20回に制限され、筆者は実際には月6回程度しか使えず1画面も作り切れなかったとしています。一方Professionalプランでは200回/日（10回/分）まで利用できるとしています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/sonicmoov/articles/54fe110279f998" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/8537be32ef524efb/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-d217af7e929d66d3">
-<h3><a href="articles/2026-10-02/d217af7e929d66d3/">Go製分散SQL「CockroachDB」</a></h3>
+<div class="paper-body"><p>Next.js v16で導入された「<strong>use cache: private</strong>」ディレクティブは、cookies()などリクエスト固有の値をキャッシュし、本来はサーバーに保存されず単一リクエスト内での再利用のみを意図したものです。しかし筆者がNext.js 16.3.8の本番モード（next build &amp;&amp; next start）で検証したところ、特定の設定下ではこのキャッシュがブラウザのメモリに保存され、stale timeの間は複数のリクエストやページ遷移をまたいで再利用されてしまうことが分かりました。</p>
+<p>検証では、cacheComponents設定のみの場合はキャッシュがブラウザに保存されませんが、Partial Prefetchingを有効にしかつstale timeが5分以上の場合、キャッシュがブラウザに保存され、同一パスへの再遷移時に旧キャッシュが使われてしまうことが確認されました。これにより、ログアウト後も古いユーザー固有情報が表示され続けるなど、<strong>情報漏洩につながるリスク</strong>があると筆者は指摘しています。</p>
+<p>対策として、Server Action経由でcookieを削除すればキャッシュは即座に消えますが、Route Handlerやクライアント側でcookieを削除した場合はキャッシュが残存するため、router.refresh()の実行で解消する必要があるとまとめています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/chot/articles/362b7a2420ef1a" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/04d0ee1229647d5e/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-ff28df275342542d">
+<h3><a href="articles/2026-10-03/ff28df275342542d/">cursor/plugins、100以上の公式プラグインを集約</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>クラウドネイティブな分散SQLデータベース<strong>CockroachDB</strong>の公式リポジトリです。高可用性・容易なスケール・データ配置の制御を特徴として掲げ、PostgreSQL互換のワイヤプロトコルを持ち、トランザクショナルなキーバリューストアの上に構築されています。ACIDトランザクションと強整合性を提供し、インフラ障害が発生しても最小限の中断で稼働し続ける設計です。</p>
-<p>実装言語はGo、スター数3.25万、フォーク数4100、総コミット数は118,999件にのぼります。v24.3以降はCockroachDB Software License（CSL）を採用しています。</p></div>
-<p class="paper-source"><a href="https://github.com/cockroachdb/cockroach" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/d217af7e929d66d3/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-25cf447f61ce8e75">
-<h3><a href="articles/2026-10-02/25cf447f61ce8e75/">Ollama v0.35.0、決定モデルのサポートを追加</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Ollamaのv0.35.0で、選択肢・確率・スコアを返す専用モデル「決定モデル（Decision Models）」のサポートが追加されました。新しい/v1/systemoneエンドポイントを通じて利用でき、対応モデルにはBespoke Labsの「Nimble」やTogether AIの「Tev1」があります。質問タイプは「choice」（選択肢と確率）、「bool」（条件が真である確率）、「score」（順序付きスコア）の3種類です。</p>
-<p>その他、Settingsがモデル検出の完了を待たずに開くよう改善され、macOSの更新メニュー表示の不具合や、MLXモデルのダウンロードが停止する問題も修正されました。</p></div>
-<p class="paper-source"><a href="https://github.com/ollama/ollama/releases/tag/v0.35.0" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/25cf447f61ce8e75/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-835eb94371d52695">
-<h3><a href="articles/2026-10-02/835eb94371d52695/">Claude Code v2.1.287、プラグイン拡張「Claude Mods」追加</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Claude Codeのv2.1.287がリリースされました。新機能「<strong>Claude Mods</strong>」により、プラグインがより深い動作を修正できるようになりました。組み込みMod「You should know」も追加され、サイドエージェントがユーザーやClaude自身が見落とす可能性のある点をフラグします（有効化コマンドは/plugin enable cc-plugin-you-should-know@builtin）。エージェントビューには、セッション名・タスク名にマッチする「n:&lt;text&gt;」フィルタも追加されました。</p>
-<p>不具合修正としては、危険なrmコマンドの安全装置が失われる問題や、PNG/JPEG/WebPが8000ピクセルを超える場合に画像送信が失敗する問題（スケールダウンしたコピーを送信するよう変更）が解消されています。</p></div>
-<p class="paper-source"><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.287" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/835eb94371d52695/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-c3446dcdb4051e28">
-<h3><a href="articles/2026-10-02/c3446dcdb4051e28/">長期の一人称視点動画を記憶するAI「MemLife」</a></h3>
+<div class="paper-body"><p>AIコードエディタ「Cursor」公式のプラグイン集約リポジトリ「cursor/plugins」です。「人気の開発者向けツール・フレームワーク・SaaS製品向けの公式Cursorプラグインを提供している」とされ、Gmail、Google Workspace、Salesforce、HubSpot、Stripeから、Robinhood、Coinbaseといった金融サービスまで100以上の公式プラグインを収録しています。</p>
+<p>各プラグインはplugin.jsonマニフェスト、skills、rules、mcp.json定義から構成される共通のディレクトリ構造を採用しており、Cursorのエージェントが各サービスと連携できる仕組みになっています。スター数は9,500以上、MITライセンスで公開されています。</p></div>
+<p class="paper-source"><a href="https://github.com/cursor/plugins" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/ff28df275342542d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-2e5ce4bd7fbed22b">
+<h3><a href="articles/2026-10-03/2e5ce4bd7fbed22b/">Audionaut、AIエージェントが操作できる音声編集アプリ</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>github.com</span></div>
+<div class="paper-body"><p>リポジトリでは、AIエージェントが<strong>MCP</strong>経由で制御できることを特徴とするオープンソースのクロスプラットフォーム（Windows/macOS/Linux）マルチトラック音声編集アプリだと説明されています。C++とJUCEフレームワークで開発され、音声分析にEssentiaライブラリ、ステムセパレーション（音源分離）にdemucs.cpp（MetaのDemucsのC++ポート）を使用しているとのことです。</p>
+<p>高精度な音声カット編集、トラックごとのプレイリスト機能、マルチチャンネル対応に加え、audionaut-cliによるヘッドレスアクセスにも対応しているとされています。GPL3以降と商用ライセンスのデュアルライセンスで提供されています。</p></div>
+<p class="paper-source"><a href="https://github.com/kvoltmer/Audionaut" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/2e5ce4bd7fbed22b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c03c354298a1e24a">
+<h3><a href="articles/2026-10-03/c03c354298a1e24a/">Janus、GoのシングルバイナリでVulkan経由のGGUF推論</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>github.com</span></div>
+<div class="paper-body"><p>リポジトリでは、GGUF形式のモデルをローカルで実行できるGo言語製のシングルバイナリサーバーだと説明されています。Python・Ollama・Dockerといった追加依存を必要とせず、llama.cpp経由でVulkanバックエンドによりAMD/Intel/NvidiaのGPUに対応するとのことです（CPUバックエンドも選択可）。</p>
+<p>OpenAI互換のAPI（/v1/chat/completions、/v1/models等）を提供し、モデルのホットスワップ、思考モデル向けの&lt;think&gt;タグ自動分割、GGUFメタデータからのチャットテンプレート自動検出といった機能を備えるとされています。必要なディスク容量はモデルサイズ（通常2〜8GB）に加えて50MBのバイナリのみで、MITライセンスで配布されています。</p></div>
+<p class="paper-source"><a href="https://github.com/Vibra-Ingenn/Janus" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/c03c354298a1e24a/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-f716afa3f47505c4">
+<h3><a href="articles/2026-10-03/f716afa3f47505c4/">動画生成モデルの事後学習とアライメント、初の包括的サーベイ</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>長期間の一人称視点（エゴセントリック）ビデオから日常生活を理解・推論するAIアシスタント向けのメモリシステム「MemLife」を提案する論文です。数百時間規模の動画をそのまま処理するのは計算コストが高すぎるため、動画内容をテキスト化してメモリとして蓄積・検索する方式を取り、「重要な証拠を保持できない」「検索空間が広がり関連情報を見つけられない」という従来手法の2つの課題解決を狙います。</p>
-<p>エンティティ単位で一人称視点のテキストエピソードを生成する仕組みと、時間インデックスを使ったエージェント型の検索の2要素で構成され、強化学習でメモリの質を最適化する「MemOpt」も提案しています。4つの長期ベンチマークで、訓練不要の既存最強手法を4.6〜12.0%上回り、MemOptによりさらに2.7〜5.0%向上したとしています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.40195" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/c3446dcdb4051e28/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-733d3e44acf3697b">
-<h3><a href="articles/2026-10-02/733d3e44acf3697b/">文脈を自ら管理する言語モデル</a></h3>
+<div class="paper-body"><p>動画生成モデルの「事後学習（post-training）」と「アライメント（人間の意図・時間的一貫性・安全制約への適合）」について、初の包括的レビューと位置づけられるサーベイ論文です。著者らは既存手法を「暗黙的アライメント」と「明示的アライメント」という枠組みで整理し、教師あり微調整、自己学習・蒸留、選好・報酬ベース学習、推論時手法の4カテゴリに分類しています。</p>
+<p>あわせてデータセット・ベンチマーク・評価手法も概観し、スケーラブルな報酬設計や長期的な時間的一貫性の確保といった残課題についても論じています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.00812" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/f716afa3f47505c4/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-6b53c18d5cc419aa">
+<h3><a href="articles/2026-10-03/6b53c18d5cc419aa/">Where-OPD、合成シーンだけでMLLMの知覚能力を鍛える</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>言語モデル自身が「文脈」をファイルとして扱い、自律的に更新・管理する仕組みを提案する論文「Context Language Models」です。既存モデルにゼロショットで組み込むだけで複数タスクの性能が向上し、BrowseComp-Plusというタスクでは精度が11.4%向上、計算量が21.5%削減されたとしています。</p>
-<p>自然言語指示によるチューニングで精度が最大35.9ポイント改善、強化学習を適用した場合はQwen3.5-9Bの性能が47.6%向上したとのことです。推論コストを下げる専用の最適化技術「Suffix Cache Reuse」により、サーバー側の計算コストをさらに35%削減できるとしています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.37725" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/733d3e44acf3697b/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-ed664eca541d8dfe">
-<h3><a href="articles/2026-10-02/ed664eca541d8dfe/">エージェントの実行基盤を自動発見する「MILO」</a></h3>
+<div class="paper-body"><p>言語モデルで効果を上げてきた「オンポリシー自己蒸留」を、<strong>MLLM</strong>（マルチモーダル大規模言語モデル、画像とテキストを同時に扱う大規模言語モデル）に拡張した手法「Where-OPD」を提案する論文です。教師モデルには質問と関連する視覚要素の空間的位置情報を特権情報として与え、学生モデルは画像と質問のみからその振る舞いを再現するように学習します。</p>
+<p>学習データは手続き的に生成された合成シーンのみで、人手による注釈は不要です。この合成データだけの学習で、物体数え上げや文書・チャート理解のベンチマークで性能が向上し、さらに実世界の知覚ベンチマークCVBench、V*、ZoomBenchなどを含む複合平均で3.23ポイントの性能向上が確認されました。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.02117" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/6b53c18d5cc419aa/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-f2e519ac6f35e8b6">
+<h3><a href="articles/2026-10-03/f2e519ac6f35e8b6/">Incident-Arena、コーディングエージェントに本番障害対応を課す新ベンチマーク</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>エージェント用の実行制御フレームワーク（ハーネス）の設計を自動化する新手法「MILO」を提案する論文です。既存の自動化手法は探索空間が限定的という課題があったのに対し、MILOは島（island）ベースの進化的探索に階層的な系統記憶やミューテータエージェント、オーケストレータを組み合わせて探索範囲を拡大します。</p>
-<p>複数のベンチマークで既存手法を大幅に上回る性能を示し、特にTerminal-Bench 2.1ではMILOが86.1%を記録、公式リーダーボードの最高記録83.8%を上回ったと報告しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2609.38349" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-02/ed664eca541d8dfe/">要点と引用を見る</a></p>
+<div class="paper-body"><p>AIコーディングエージェントが本番環境のインシデント対応をどれだけこなせるかを評価する新ベンチマーク「Incident-Arena」を提案する論文です。既存ベンチマークはおもちゃのリポジトリや非標準フレームワーク、単純な静的検証に頼っており、現実の障害対応を測れていないと指摘し、実際の本番ソフトウェアを模したKubernetesクラスタに多層的な障害を注入し、機能面とシステムメトリクスの両面で検証するテストスイートを構築しました。</p>
+<p>実世界の本番ソフトウェアに基づく3つのアプリケーション基盤・20タスクで検証したところ、平均トークン使用量は2.81Mトークン、平均推論ステップ数は41ターンに達し、<strong>最先端モデルでも成功率は64.3%以下</strong>にとどまりました。失敗パターンとして診断エラー、不完全な修復、安全でない回帰が観察されたとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.00648" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-03/f2e519ac6f35e8b6/">要点と引用を見る</a></p>
 </article></section>
 
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-10-01/">
+<a class="issue-row" href="issues/2026-10-02/">
+<div class="issue-date"><span class="mono">2026.10</span><strong>02</strong></div>
+<div><h3>Cloudflare、分類特化の決定モデル「Clef」公開</h3><span class="issue-row-meta">16記事・約13分</span></div>
+</a><a class="issue-row" href="issues/2026-10-01/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>01</strong></div>
 <div><h3>蒸留攻撃の阻止、OpenAIが不正な大量アクセスを遮断</h3><span class="issue-row-meta">15記事・約13分</span></div>
 </a><a class="issue-row" href="issues/2026-09-29/">
 <div class="issue-date"><span class="mono">2026.09</span><strong>29</strong></div>
 <div><h3>Claude Sonnet 5.5を発表、全プラットフォームで利用可能</h3><span class="issue-row-meta">16記事・約15分</span></div>
-</a><a class="issue-row" href="issues/2026-09-28/">
-<div class="issue-date"><span class="mono">2026.09</span><strong>28</strong></div>
-<div><h3>Google、全アカウントに1080p AI動画生成を無料開放 Sora撤退のOpenAIと対照的</h3><span class="issue-row-meta">15記事・約13分</span></div>
 </a>
 </section>
 </main>

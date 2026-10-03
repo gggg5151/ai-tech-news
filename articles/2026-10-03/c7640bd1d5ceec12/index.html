@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Claude Code Max 20xプランを契約する筆者が、ClaudeCodeとAPIの間に自作プロキシを挟み、リクエストごとのトークン数と使用率（%）のレスポンスヘッダを記録する独自の手法で、Max枠内での各トークン種別・モデルの「重み」を実測・逆算した検証レポートです。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Claude Code Max 20xプランを契約する筆者が、ClaudeCodeとAPIの間に自作プロキシを挟み、リクエストごとのトークン数と使用率（%）のレスポンスヘッダを記録する独自の手法で、Max枠内での各トークン種別・モデルの「重み」を実測・逆算した検証レポートです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-03/c7640bd1d5ceec12/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-03/c7640bd1d5ceec12/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った", "datePublished": "2026-10-03", "description": "Claude Code Max 20xプランを契約する筆者が、ClaudeCodeとAPIの間に自作プロキシを挟み、リクエストごとのトークン数と使用率（%）のレスポンスヘッダを記録する独自の手法で、Max枠内での各トークン種別・モデルの「重み」を実測・逆算した検証レポートです。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-03/c7640bd1d5ceec12/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/tksfjt1024/articles/25c0ab111c277c", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-03/">2026.10.03 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude Code使用量を実測、Max枠の「重み」がAPI料金表と違った</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</header>
+<div class="article-body">
+<p>Claude Code Max 20xプランを契約する筆者が、ClaudeCodeとAPIの間に自作プロキシを挟み、リクエストごとのトークン数と使用率（%）のレスポンスヘッダを記録する独自の手法で、Max枠内での各トークン種別・モデルの「重み」を実測・逆算した検証レポートです。</p>
+<p>実測の結果、トークン種別の重みはInputを1とした場合、Outputが5、Cache writeが1.25、Cache readが0.025でした。API料金表ではCache readは入力の0.025倍から0.1倍とされていますが、実測では測定した全モデルで一貫して0.025倍だったといいます。モデル別の重みはHaiku 4.5を1とすると、Sonnet 5が1.5、Opus 5.5が2.2、Opus 5が2.75、Fable 5.1が10で、<strong>Opus 5.5の重みはAPI単価比より軽く設定されていた</strong>ことも分かりました。</p>
+<p>さらに5時間枠は3億トークン相当、週間枠は11.3億トークン相当とされ、5時間枠では、headlessモードは対話モードの2倍から2.86倍の速さで使用量を消費することも判明しました。筆者は「数値はすべて、筆者が契約しているMax 20xで2026年9月に測った値で、Anthropicが公表した係数ではありません」と念を押しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者はClaude CodeとAPIの間にプロキシを挿入し、リクエストごとのトークン数と使用率のレスポンスヘッダを記録する方法で計測した</li><li>計測は使用率が1%進む間に流した量から各トークン種別の重みを逆算する方法で行われた</li><li>実測によるトークン種別の重みはInputを1とした場合、Outputが5、Cache writeが1.25、Cache readが0.025だった</li><li>実測によるモデル別の重みはHaiku 4.5が1、Sonnet 5が1.5、Opus 5.5が2.2、Opus 5が2.75、Fable 5.1が10だった</li><li>5時間枠は3億トークン相当、週間枠は11.3億トークン相当とされた</li><li>5時間枠においてheadlessモードは対話モードの2倍から2.86倍のスピードで使用量を消費した</li><li>API料金表ではCache readは入力の0.025倍から0.1倍とされているが、実測では測定した全モデルでCache readは0.025倍だった</li><li>Opus 5.5の重みはAPI単価比より軽く設定されていた</li><li>数値は筆者が契約しているMax 20xで2026年9月に測定した値であり、Anthropicが公表した係数ではないと記事中で述べられている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>数値はすべて、筆者が契約している Max 20x で 2026 年 9 月に測った値で、Anthropic が公表した係数ではありません。係数は変わることがあります。</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/tksfjt1024/articles/25c0ab111c277c" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/tksfjt1024/articles/25c0ab111c277c" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E4%BD%BF%E7%94%A8%E9%87%8F%E3%82%92%E5%AE%9F%E6%B8%AC%E3%80%81Max%E6%9E%A0%E3%81%AE%E3%80%8C%E9%87%8D%E3%81%BF%E3%80%8D%E3%81%8CAPI%E6%96%99%E9%87%91%E8%A1%A8%E3%81%A8%E9%81%95%E3%81%A3%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-03%2Fc7640bd1d5ceec12%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E4%BD%BF%E7%94%A8%E9%87%8F%E3%82%92%E5%AE%9F%E6%B8%AC%E3%80%81Max%E6%9E%A0%E3%81%AE%E3%80%8C%E9%87%8D%E3%81%BF%E3%80%8D%E3%81%8CAPI%E6%96%99%E9%87%91%E8%A1%A8%E3%81%A8%E9%81%95%E3%81%A3%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-03/c7640bd1d5ceec12/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-03%2Fc7640bd1d5ceec12%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../dfeac7c8ed843160/"><span>前の記事</span>KDDI傘下ELYZA、国産LLMを無料公開</a><a class="next" href="../aa079348589f9def/"><span>次の記事</span>GoのchromedpでブラウザをAPIのように操作する</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-03/">← 2026.10.03 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../aa079348589f9def/">GoのchromedpでブラウザをAPIのように操作する</a></h3>
+<p class="excerpt">Go言語でブラウザ操作を行うライブラリ「chromedp」を紹介する技術解説記事です。chromedpはChrome DevTools Protocol（CDP）を介してChromium系ブラウザを直接制御できるGoライブラリで、Sel…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f63565cf7bf76116/">Anthropic Batches APIで大量リクエストのコストを半減</a></h3>
+<p class="excerpt">5万件のレビュー分類作業でコストを気にした経験を動機に、Anthropic Message Batches APIを使って大量のLLMリクエストのコストを削減する実装手順を5ステップで解説する記事です。著者は「リアルタイム応答が不要なの…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../04d0ee1229647d5e/">Next.jsのuse cache: private、ブラウザ側に古いキャッシュが残存する落とし穴</a></h3>
+<p class="excerpt">Next.js v16で導入された「use cache: private」ディレクティブは、cookies()などリクエスト固有の値をキャッシュし、本来はサーバーに保存されず単一リクエスト内での再利用のみを意図したものです。しかし筆者が…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
