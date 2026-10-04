@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Redis作者antirezの新作ローカル推論エンジン「ds4」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="公式サイトdwarfstar.shによると、Redisの作者として知られるSalvatore Sanfilippo氏（antirez）が、新しい推論エンジン「DwarfStar 4（ds4）」を公開したとされています。高メモリのApple Silicon Mac、NVIDIA CUDA、AMD ROCm環境で最先端のオ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Redis作者antirezの新作ローカル推論エンジン「ds4」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="公式サイトdwarfstar.shによると、Redisの作者として知られるSalvatore Sanfilippo氏（antirez）が、新しい推論エンジン「DwarfStar 4（ds4）」を公開したとされています。高メモリのApple Silicon Mac、NVIDIA CUDA、AMD ROCm環境で最先端のオ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-04/0fde8a47df8f6a97/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-04/0fde8a47df8f6a97/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Redis作者antirezの新作ローカル推論エンジン「ds4」", "datePublished": "2026-10-04", "description": "公式サイトdwarfstar.shによると、Redisの作者として知られるSalvatore Sanfilippo氏（antirez）が、新しい推論エンジン「DwarfStar 4（ds4）」を公開したとされています。高メモリのApple Silicon Mac、NVIDIA CUDA、AMD ROCm環境で最先端のオープンウェイトモデルをローカル実行するこ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-04/0fde8a47df8f6a97/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://dwarfstar.sh/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-04/">2026.10.04 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Redis作者antirezの新作ローカル推論エンジン「ds4」</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>dwarfstar.sh</span><time datetime="2026-10-04">2026.10.04</time></div>
+</header>
+<div class="article-body">
+<p>公式サイトdwarfstar.shによると、Redisの作者として知られるSalvatore Sanfilippo氏（antirez）が、新しい推論エンジン「DwarfStar 4（ds4）」を公開したとされています。高メモリのApple Silicon Mac、NVIDIA CUDA、AMD ROCm環境で最先端のオープンウェイトモデルをローカル実行することを目的としたC言語ベースのプロジェクトで、MITライセンスです。</p>
+<p>同サイトでは、対応モデルにDeepSeek V4やGLM 5.xなどが含まれるとし、ルーテッド専門家を圧縮しつつ重要なパスを保持する「<strong>非対称2bit量子化</strong>」と、長いプレフィックスをSSDに保存する「KVキャッシュのディスク常駐化」を特徴として掲げています。CLI・API・ネイティブエージェントという3つのインターフェースを単一エンジンで提供する設計だとしていますが、性能面の第三者検証はまだなく、現時点では開発元の主張にとどまります。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>製品名は「DwarfStar 4」、略称「ds4」である</li><li>ds4はSalvatore Sanfilippo(antirez)によるプロジェクトである</li><li>antirezはRedisの作者として知られる人物である</li><li>ds4は最先端のオープンウェイトモデルをローカルで実行するための推論エンジンである</li><li>ds4が対応するモデルにはDeepSeek V4、DeepSeek V4.1 Flash、GLM 5.x、Qwen3.8 Flash Nextが含まれる</li><li>ds4はテキストモデルとビジョンモデルの両方に対応する</li><li>ds4は「Asymmetric 2-bit quantization」と呼ぶ手法でルーテッド専門家を圧縮しつつ重要なパスを保持すると説明されている</li><li>ds4は「KV cache as a disk citizen」というコンセプトで長いプレフィックスをSSDに保存する機能を持つ</li><li>ds4はCLI・API・ネイティブエージェントという3つのインターフェースを単一のエンジンで提供する(One engine, three interfaces)</li><li>ds4はC言語で書かれた推論エンジンであり、高メモリのApple Silicon Mac、NVIDIA CUDA環境、AMD ROCm環境で動作するとされる</li><li>ds4はMITライセンスで公開されている</li><li>サイトにはビルド日として2026-09-17という記載がある</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Run frontier open weights locally with ds4</blockquote><blockquote>a narrow C inference engine for high-memory Mac, CUDA and ROCm machines</blockquote><blockquote>One engine, three interfaces</blockquote><p class="quotes-source">出典: <a href="https://dwarfstar.sh/" target="_blank" rel="noopener noreferrer">dwarfstar.sh</a></p></section>
+<aside class="source-box"><a href="https://dwarfstar.sh/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">dwarfstar.sh</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Redis%E4%BD%9C%E8%80%85antirez%E3%81%AE%E6%96%B0%E4%BD%9C%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E6%8E%A8%E8%AB%96%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%80%8Cds4%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-04%2F0fde8a47df8f6a97%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Redis%E4%BD%9C%E8%80%85antirez%E3%81%AE%E6%96%B0%E4%BD%9C%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E6%8E%A8%E8%AB%96%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%80%8Cds4%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-04/0fde8a47df8f6a97/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-04%2F0fde8a47df8f6a97%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../d962b119d6e1768d/"><span>前の記事</span>Ollama、Cloudflare製決定モデルClefに対応</a><a class="next" href="../cb29ef4780510e83/"><span>次の記事</span>Anthropic、AI導入人材1万人育成に1億ドル「Claude Frontier Academy」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-04/">← 2026.10.04 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../d0359c018563a3db/">「フルディスクアクセス」許可にAppleが追加制御、AIエージェント時代の防衛線</a></h3>
+<p class="excerpt">Appleは2026年10月2日、開発者向けサイトでmacOSの「フルディスクアクセス」権限について、ユーザーが許可を与える際の制御と説明を強化する方針を発表しました。この権限はファイル・メール・メッセージ・閲覧履歴へのアクセスを可能に…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../d962b119d6e1768d/">Ollama、Cloudflare製決定モデルClefに対応</a></h3>
+<p class="excerpt">Ollamaのv0.35.1がリリースされ、Cloudflareが開発した新しいオープンソースの決定モデル（分類・判定に特化したモデル）「Clef」「Clef Flash」のサポートが目玉として加わりました。/v1/systemoneエ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../cb29ef4780510e83/">Anthropic、AI導入人材1万人育成に1億ドル「Claude Frontier Academy」</a></h3>
+<p class="excerpt">Anthropicは2026年10月2日、企業のClaude導入を主導するエンジニアを育成するプログラム「Claude Frontier Academy」を発表しました。1億ドルを投資し、2027年末までに1万人の「Frontier D…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

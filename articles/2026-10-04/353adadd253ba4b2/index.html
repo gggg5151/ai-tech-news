@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Codeに記憶を持たせるツール「claude-mem」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="claude-memは、AIエージェント（Claude Code等）がセッション中に行った操作をAIで圧縮・要約し、将来のセッションに関連コンテキストを再注入することで、セッションをまたいだ記憶の継続性を実現するツールです。作者はAlex Newman氏（@thedotmack）。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Codeに記憶を持たせるツール「claude-mem」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="claude-memは、AIエージェント（Claude Code等）がセッション中に行った操作をAIで圧縮・要約し、将来のセッションに関連コンテキストを再注入することで、セッションをまたいだ記憶の継続性を実現するツールです。作者はAlex Newman氏（@thedotmack）。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-04/353adadd253ba4b2/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-04/353adadd253ba4b2/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Codeに記憶を持たせるツール「claude-mem」", "datePublished": "2026-10-04", "description": "claude-memは、AIエージェント（Claude Code等）がセッション中に行った操作をAIで圧縮・要約し、将来のセッションに関連コンテキストを再注入することで、セッションをまたいだ記憶の継続性を実現するツールです。作者はAlex Newman氏（@thedotmack）。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-04/353adadd253ba4b2/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/thedotmack/claude-mem", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-04/">2026.10.04 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>Claude Codeに記憶を持たせるツール「claude-mem」</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-04">2026.10.04</time></div>
+</header>
+<div class="article-body">
+<p>claude-memは、AIエージェント（Claude Code等）がセッション中に行った操作をAIで圧縮・要約し、将来のセッションに関連コンテキストを再注入することで、セッションをまたいだ記憶の継続性を実現するツールです。作者はAlex Newman氏（@thedotmack）。</p>
+<p>SessionStart、UserPromptSubmit、PostToolUse、Stop、SessionEndという5つの<strong>ライフサイクルフック</strong>を通じて操作を記録し、ローカルのSQLiteデータベースとChromaベクトルデータベースを組み合わせたハイブリッド検索で過去の文脈を呼び出します。search・timeline・get_observationsという3つのMCPツールを通じて段階的にコンテキストを開示する設計です。</p>
+<p>Claude Code、OpenCode、Grok Bot、OpenClawに対応し、&lt;private&gt;タグによるプライバシー制御も備えます。Apache 2.0ライセンスで、npmおよびClaude Codeマーケットプレイスのプラグインとして公開されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>claude-memは、エージェントがセッション中に行った操作を記録し、AIで圧縮し、将来のセッションに関連コンテキストを注入するシステムである</li><li>claude-memはSessionStart、UserPromptSubmit、PostToolUse、Stop、SessionEndの5つのライフサイクルフックを通じて観察(observations)を取得する</li><li>claude-memはローカルワーカーサービスがSQLiteデータベース(全文検索対応)を管理する</li><li>claude-memはChromaベクトルデータベースを使い、ハイブリッドなセマンティック検索とキーワード検索を可能にする</li><li>claude-memは search・timeline・get_observations という3つのMCPツールを通じて段階的にコンテキストを開示する</li><li>claude-memの作者はAlex Newman(ユーザー名@thedotmack)である</li><li>READMEには公式X(旧Twitter)アカウント@Claude_Memoryおよび公式Discordコミュニティが記載されている</li><li>インストールは npx claude-mem install コマンドでブラウザベースのサインインを行う</li><li>claude-memはClaude Code、OpenCode、Grok Bot、OpenClawに対応している</li><li>claude-memは &lt;private&gt; タグによるプライバシー制御機能を持つ</li><li>claude-memはApache 2.0ライセンスで公開されており、Node.js 20.0.0以上が必要</li><li>claude-memはnpmおよびClaude Codeマーケットプレイスのプラグインとして公開されている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions</blockquote><p class="quotes-source">出典: <a href="https://github.com/thedotmack/claude-mem" target="_blank" rel="noopener noreferrer">github.com</a></p></section>
+<aside class="source-box"><a href="https://github.com/thedotmack/claude-mem" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E3%81%AB%E8%A8%98%E6%86%B6%E3%82%92%E6%8C%81%E3%81%9F%E3%81%9B%E3%82%8B%E3%83%84%E3%83%BC%E3%83%AB%E3%80%8Cclaude-mem%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-04%2F353adadd253ba4b2%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E3%81%AB%E8%A8%98%E6%86%B6%E3%82%92%E6%8C%81%E3%81%9F%E3%81%9B%E3%82%8B%E3%83%84%E3%83%BC%E3%83%AB%E3%80%8Cclaude-mem%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-04/353adadd253ba4b2/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-04%2F353adadd253ba4b2%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../9487cb8b2e282144/"><span>前の記事</span>巨大if/elseの通知ルーティングを型付きGoライブラリに切り出し</a><a class="next" href="../5b3bbaa5cf8638ca/"><span>次の記事</span>TypeScriptの本番運用を支えるEffect、4.x系がLTSに</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-04/">← 2026.10.04 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../5b3bbaa5cf8638ca/">TypeScriptの本番運用を支えるEffect、4.x系がLTSに</a></h3>
+<p class="excerpt">Effectは「Build production-ready applications in TypeScript」を掲げるライブラリで、型安全なエラーハンドリング、依存性注入、構造化された並行処理、スケジューリング、トレーシング、スキ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../6dad3fcb5f6ec7f5/">CapCut代替OSS動画編集ソフトOpenCut、大規模リアーキテクチャへ</a></h3>
+<p class="excerpt">OpenCutは「Web・デスクトップ・モバイル向けの無料かつオープンソースの動画編集ソフト」を目指すプロジェクトで、CapCutの代替として位置づけられています。現在は大規模な再設計段階にあり、従来版は別リポジトリ「opencut-c…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-10-03/ff28df275342542d/">cursor/plugins、100以上の公式プラグインを集約</a></h3>
+<p class="excerpt">AIコードエディタ「Cursor」公式のプラグイン集約リポジトリ「cursor/plugins」です。「人気の開発者向けツール・フレームワーク・SaaS製品向けの公式Cursorプラグインを提供している」とされ、Gmail、Google…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-03">2026.10.03</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -99,7 +99,7 @@ func (b *boolValue) IsBoolFlag() bool { return true }</code></pre>
 	return strconv.FormatBool(*b.destination)
 }</code></pre><p>strconv.FormatBoolはParseBoolの逆で、bool値を&quot;true&quot;/&quot;false&quot;という文字列に変換します。このStringメソッドを持つ型はfmt.Stringer interfaceも同時に満たすことになり、Printlnなどで自動的にこの文字列表現が使われるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (b *boolValue) IsBoolFlag() bool { return true }</code></pre><p>このメソッドこそが、最初のコメントで説明されていた「boolFlag interfaceを満たすための特別なメソッド」です。標準のflagパッケージは、フラグの型がIsBoolFlag()というメソッドを持ち、それがtrueを返すかどうかを内部でチェックします。trueだと分かれば、&quot;-v&quot;のように値を書かずに指定しても&quot;-v=true&quot;と同じ意味に解釈してもらえるようになります。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goのinterfaceは「型名の一致」ではなく「必要なメソッド群を持っているか」だけで満たされる。boolValueはBoolFlag interfaceだと一言も書かず、Set/Get/String/IsBoolFlagを実装するだけでflagパッケージに認識される——この暗黙的な仕組みを覚えて帰ろう。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-29/"><span>前の日</span>go-playground/validator</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-09-29/"><span>前の日</span>go-playground/validator</a><a class="next" href="../2026-10-04/"><span>次の日</span>OpenCut-app/OpenCut</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-01/">← 2026.10.01 の号を読む</a>
 </div>
 </article>

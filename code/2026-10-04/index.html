@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenCut-app/OpenCut の apps/web/src/hooks/use-mobile.ts を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenCutはブラウザで動く無料・オープンソースの動画編集アプリで、CapCutのようなUIをWebで提供しています。今日選んだのは画面サイズがモバイルかどうかを判定するだけの小さなカスタムフックです。行数は少ないですが、Reactのフックで必ず出てくる「状態管理」「副作用の登録と後始末」「SSR対応」という3つの定…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="OpenCut-app/OpenCut の apps/web/src/hooks/use-mobile.ts を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenCutはブラウザで動く無料・オープンソースの動画編集アプリで、CapCutのようなUIをWebで提供しています。今日選んだのは画面サイズがモバイルかどうかを判定するだけの小さなカスタムフックです。行数は少ないですが、Reactのフックで必ず出てくる「状態管理」「副作用の登録と後始末」「SSR対応」という3つの定…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-04/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-04/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.04</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・typescript</span>
+<h1>OpenCut-app/OpenCut の <code>apps/web/src/hooks/use-mobile.ts</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/OpenCut-app/OpenCut/blob/HEAD/apps/web/src/hooks/use-mobile.ts" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-04">2026.10.04</time></div>
+</header>
+<div class="article-body">
+<p>OpenCutはブラウザで動く無料・オープンソースの動画編集アプリで、CapCutのようなUIをWebで提供しています。今日選んだのは画面サイズがモバイルかどうかを判定するだけの小さなカスタムフックです。行数は少ないですが、Reactのフックで必ず出てくる「状態管理」「副作用の登録と後始末」「SSR対応」という3つの定番パターンがそのまま詰まっていて、&quot;カスタムフックの書き方&quot;を丸ごと真似できる教材です。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>import * as React from &quot;react&quot;
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState&lt;boolean | undefined&gt;(undefined)
+
+  React.useEffect(() =&gt; {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () =&gt; {
+      setIsMobile(window.innerWidth &lt; MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener(&quot;change&quot;, onChange)
+    setIsMobile(window.innerWidth &lt; MOBILE_BREAKPOINT)
+    return () =&gt; mql.removeEventListener(&quot;change&quot;, onChange)
+  }, [])
+
+  return !!isMobile
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>import * as React from &quot;react&quot;</code></pre><p>`import * as X from &quot;モジュール名&quot;` は、そのモジュールが持つ全部の機能を `X` という名前の箱にまとめて取り込む書き方です。これ以降、`React.useState` や `React.useEffect` のように `React.` を頭につけて呼び出します。`import { useState } from &quot;react&quot;` のように個別に取り込む書き方もできますが、このファイルは全部 `React.` 経由で統一しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const MOBILE_BREAKPOINT = 768</code></pre><p>画面幅が何px未満だったら「モバイル」とみなすか、の閾値を定数にしています。768という数字がコードの中に直接埋め込まれる(マジックナンバー)のを避けて、名前付きの定数にすることで、後で読む人にも意味が伝わるようにしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>export function useIsMobile() {</code></pre><p>`export` は、この関数を他のファイルからも `import` して使えるようにする宣言です。関数名が `use` から始まっているのはReactの約束事で、「これはフックです(コンポーネントの中でだけ呼び出せる、状態や副作用を扱う特別な関数です)」という目印になっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>const [isMobile, setIsMobile] = React.useState&lt;boolean | undefined&gt;(undefined)</code></pre><p>`useState(初期値)` は「現在の値」と「その値を更新する関数」の2つをペアで返します。左辺の `const [a, b] = ...` は配列の分割代入で、返ってきた配列の1番目を `isMobile`、2番目を `setIsMobile` という名前で受け取っています。`&lt;boolean | undefined&gt;` は型をコードに明示する書き方(ジェネリクス)で、「isMobileはtrue/falseか、まだ分からない(undefined)状態になり得る」という意味です。初期値をtrue/falseにせず`undefined`にしているのは、このコードがサーバー側で最初に実行される(SSR)ときはブラウザのwindowオブジェクトがまだ無く、画面幅を知る手段がないためです。</p></div><div class="walk-step"><pre class="walk-quote"><code>React.useEffect(() =&gt; {
+    // …略…
+  }, [])</code></pre><p>`useEffect(関数, 依存配列)` は「コンポーネントが画面に表示された後に、何か副作用(DOMを触る、イベントを登録するなど)を実行したい」ときに使います。第2引数の `[]` は空の配列で、「この副作用は依存する値が何も無いので、最初に1回だけ実行してください」という指示です。</p></div><div class="walk-step"><pre class="walk-quote"><code>const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)</code></pre><p>`window.matchMedia(条件)` はブラウザ標準のAPIで、CSSのメディアクエリと同じ書き方の条件(ここでは「画面幅が767px以下か」)を渡すと、その条件が今成立しているか・変化したかを監視できるオブジェクトを返します。バッククォートで囲まれた文字列はテンプレートリテラルで、`${...}` の中にJavaScriptの式(ここでは `MOBILE_BREAKPOINT - 1`)を埋め込めます。</p></div><div class="walk-step"><pre class="walk-quote"><code>const onChange = () =&gt; {
+      setIsMobile(window.innerWidth &lt; MOBILE_BREAKPOINT)
+    }</code></pre><p>useEffectの中で、画面幅が変わったときに呼ばれる関数を定義しています。`window.innerWidth` はブラウザの表示領域の幅(px)で、それが閾値未満かどうかの真偽値を `setIsMobile` に渡して状態を更新しています。この `setIsMobile` を呼ぶと、Reactは `isMobile` の値が変わったことを検知して、このフックを使っているコンポーネントを再描画します。</p></div><div class="walk-step"><pre class="walk-quote"><code>mql.addEventListener(&quot;change&quot;, onChange)</code></pre><p>先ほどの `mql`(メディアクエリの監視オブジェクト)に対して、「`change` イベント(条件の成立/不成立が切り替わったとき)が起きたら `onChange` を呼んでください」と登録しています。これでユーザーがブラウザの幅を変えるたびに `isMobile` が自動更新されるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>setIsMobile(window.innerWidth &lt; MOBILE_BREAKPOINT)</code></pre><p>`addEventListener` は登録した時点ではまだ何も実行されず、次に `change` が起きるまで `onChange` は呼ばれません。そのため、フックが最初に動いた瞬間の「今の画面幅」を使って `isMobile` を一度手動でセットしています。これを忘れると、画面幅が変化するまで `isMobile` が `undefined` のままになってしまいます。</p></div><div class="walk-step"><pre class="walk-quote"><code>return () =&gt; mql.removeEventListener(&quot;change&quot;, onChange)</code></pre><p>`useEffect` に渡した関数が、関数を `return` すると、その返した関数は「クリーンアップ関数」としてReactに扱われます。コンポーネントが画面から消えるときにReactが自動でこの関数を呼び出し、先ほど登録した `change` イベントの監視を解除します。これを書かないと、コンポーネントが消えた後もイベントリスナーが残り続けて、メモリリークの原因になります。</p></div><div class="walk-step"><pre class="walk-quote"><code>return !!isMobile</code></pre><p>`!` は真偽値を反転させる演算子で、`!!x` と2回続けて書くと「xを真偽値に変換する」という意味になります(`!x` で反転し、もう一度 `!` で元の真偽性に戻すことで、型をbooleanに揃えます)。`isMobile` が `undefined` のときは `!!undefined` は `false` になるので、呼び出し側は常に `true`/`false` だけを受け取れて、`undefined` を気にする必要がなくなります。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>useEffectの中でaddEventListenerのようにイベント登録をしたら、必ず同じ関数の中でreturnする関数を使ってremoveEventListener(後片付け)を書く。登録と解除は常にペアで考える。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-01/"><span>前の日</span>urfave/cli</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-04/">← 2026.10.04 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
