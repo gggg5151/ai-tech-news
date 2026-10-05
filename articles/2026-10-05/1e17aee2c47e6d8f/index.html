@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>エージェントは「完了」と言うが、DBは違う結果を示す — 1年目向けエンジニア新聞</title>
+<meta name="description" content="マイクロソフトとHugging Faceの共同ブログ記事（主執筆者Tuhin Kundu）は、AIエージェントが「タスク完了」と報告しても、実際のデータベースやシステムの状態が要求通りになっていないケースがあるという問題を指摘しています。記事によれば、67.24%の失敗ケースでツールエラーが出ずに「完了」と報告されなが…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="エージェントは「完了」と言うが、DBは違う結果を示す — 1年目向けエンジニア新聞">
+<meta property="og:description" content="マイクロソフトとHugging Faceの共同ブログ記事（主執筆者Tuhin Kundu）は、AIエージェントが「タスク完了」と報告しても、実際のデータベースやシステムの状態が要求通りになっていないケースがあるという問題を指摘しています。記事によれば、67.24%の失敗ケースでツールエラーが出ずに「完了」と報告されなが…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-05/1e17aee2c47e6d8f/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-05/1e17aee2c47e6d8f/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "エージェントは「完了」と言うが、DBは違う結果を示す", "datePublished": "2026-10-05", "description": "マイクロソフトとHugging Faceの共同ブログ記事（主執筆者Tuhin Kundu）は、AIエージェントが「タスク完了」と報告しても、実際のデータベースやシステムの状態が要求通りになっていないケースがあるという問題を指摘しています。記事によれば、67.24%の失敗ケースでツールエラーが出ずに「完了」と報告されながら、状態チェックでしか検出できない問題が…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-05/1e17aee2c47e6d8f/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://huggingface.co/blog/microsoft/thinkingbox", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-05/">2026.10.05 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>エージェントは「完了」と言うが、DBは違う結果を示す</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>huggingface.co</span><time datetime="2026-10-05">2026.10.05</time></div>
+</header>
+<div class="article-body">
+<p>マイクロソフトとHugging Faceの共同ブログ記事（主執筆者Tuhin Kundu）は、AIエージェントが「タスク完了」と報告しても、実際のデータベースやシステムの状態が要求通りになっていないケースがあるという問題を指摘しています。記事によれば、67.24%の失敗ケースでツールエラーが出ずに「完了」と報告されながら、状態チェックでしか検出できない問題が発生していたといいます。</p>
+<p>これを検証するため、評価フレームワーク「ThinkingBox」が紹介されています。507のビジネスワークフローをそれぞれ20回独立実行し、単発の成功率（pass@1）だけでなく、全20回成功したかという「一貫性」（observed 20/20）まで測定するのが特徴です。</p>
+<p>507タスクの重み付け平均pass@1スコアでは、Claude Opus 5.5が67.16%で最高、GPT-5.4が65.36%、オープン重みモデルではKimi-K3が57.37%で最高でした。しかし一貫性で見ると様相が変わります。<strong>Claude Opus 5.5は単回成功率67.16%に対し全20回成功は47.53%</strong>、Kimi-K3は93.89%のタスクで少なくとも一度は成功する一方、全20回成功したのはわずか13.41%でした。</p>
+<p>失敗の79.9%は推論の誤りではなく「ツール使用の問題」という実行エラーが原因だったとのことです。フレームワークとベンチマークデータセットはGitHub上で公開されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者はマイクロソフトとHugging Faceの共同ブログで、主執筆者はTuhin Kundu、共著者にTommy Guy、Sergio Paniego、複数の大学インターンが名を連ねている</li><li>記事は2026年10月3日に公開された</li><li>記事によれば、67.24%の失敗ケースでツールエラーが出ずに「完了」と報告されたが、状態チェックでしか検出できない問題が発生していた</li><li>評価手法として、507のビジネスワークフローそれぞれを20回独立実行し、全20回成功したタスク数を測定した</li><li>評価フレームワーク「ThinkingBox」はエージェントサンドボックス環境で、MCPツール、隔離セッション、終端状態チェック、実行可能な判定ルールで構成される</li><li>測定指標は3種類:pass@1(単回成功率)、pass@20(20回中少なくとも1回成功)、observed 20/20(全20回成功)</li><li>507タスクの重み付け平均pass@1スコアで、Claude Opus 5.5が67.16%で最高、GPT-5.4が65.36%、Kimi-K3が57.37%でオープン重みモデル中最高だった</li><li>Claude Opus 5.5は単回成功率67.16%だが、全20回成功したのは47.53%だった</li><li>Kimi-K3は93.89%のタスクで少なくとも一度成功したが、全20回成功したのは13.41%のみだった</li><li>コスト効率では、成功1件あたりの最低コストはGPT-5.6 Solで0.127ドル、完全に依頼可能なタスク1件あたりの最低コストはGPT-5.4で6.80ドルだった</li><li>失敗の79.9%は「ツール使用の問題」によるもので、推論の誤りではなく実行エラーが原因だった</li><li>フレームワーク、ベンチマークデータセット、OpenEnvインテグレーションがGitHub上でMIT、BSD-3-Clause、CDLA-Permissive-2.0のライセンスで公開されている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>67.24%の失敗ケースで、ツールエラーなく完了したのに、状態チェックで検出不可能な問題が発生</blockquote><blockquote>Claude Opus 5.5は単回67.16%だが、全20回成功は47.53%。Kimi-K3は93.89%が少なくとも一度成功するが、13.41%のみ全20回成功</blockquote><p class="quotes-source">出典: <a href="https://huggingface.co/blog/microsoft/thinkingbox" target="_blank" rel="noopener noreferrer">huggingface.co</a></p></section>
+<aside class="source-box"><a href="https://huggingface.co/blog/microsoft/thinkingbox" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">huggingface.co</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AF%E3%80%8C%E5%AE%8C%E4%BA%86%E3%80%8D%E3%81%A8%E8%A8%80%E3%81%86%E3%81%8C%E3%80%81DB%E3%81%AF%E9%81%95%E3%81%86%E7%B5%90%E6%9E%9C%E3%82%92%E7%A4%BA%E3%81%99%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-05%2F1e17aee2c47e6d8f%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AF%E3%80%8C%E5%AE%8C%E4%BA%86%E3%80%8D%E3%81%A8%E8%A8%80%E3%81%86%E3%81%8C%E3%80%81DB%E3%81%AF%E9%81%95%E3%81%86%E7%B5%90%E6%9E%9C%E3%82%92%E7%A4%BA%E3%81%99%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-05/1e17aee2c47e6d8f/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-05%2F1e17aee2c47e6d8f%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../7e14acfdf29f2b07/"><span>前の記事</span>Claude Code向けスキル380種超を無料公開</a><a class="next" href="../3e867953ae54f717/"><span>次の記事</span>GPT-6.1 Solより注目すべきは「MentalHealthBench」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-05/">← 2026.10.05 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../3e867953ae54f717/">GPT-6.1 Solより注目すべきは「MentalHealthBench」</a></h3>
+<p class="excerpt">OpenAIが新モデル「GPT-6.1 Sol」を発表しましたが、同時期に公開されたベンチマーク「MentalHealthBench」の方が長期的には重要だと論じる意見記事です。AI評価の軸が「能力」から「人間への影響・関わり方」へ移る…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-04/e1d6de621c24f09b/">ラベル不足下でもゼロデイ検知、侵入検知モデル「Jev-IDS」</a></h3>
+<p class="excerpt">arXivに投稿された論文「Jev-IDS: System One Models for Network Intrusion Detection」は、従来の機械学習型IDS（侵入検知システム）がラベル付きデータを必要とする課題と、LLM…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>arxiv.org</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-04/06c486474841c844/">「四色定理」の色の偏りをO(n log n)で均す新定理</a></h3>
+<p class="excerpt">筆者（米田寛峻氏）が2026年7月に発表した自身の論文「The Balanced Four-Color Theorem」を、Qiitaで分かりやすく解説した記事です。平面グラフ（地図）を4色で塗り分ける際、各色の使用頻度を全体の半分未満…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-10-04">2026.10.04</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

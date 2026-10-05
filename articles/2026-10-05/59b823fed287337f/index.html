@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opus 5.5を使いこなすコツ、公式ブログが解説 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Claude Codeの開発者ブログで、著者Addy Osmaniが新モデル「Opus 5.5」の使い方を解説しています。長時間自律的に作業し、作業内容を明確に報告し、返信前に毎回考えるという特徴を持ち、マルチステップ作業で大幅な改善があったとされます。早期テスターは、ほとんど監督なしに数時間かかるコーディング作業を任…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Opus 5.5を使いこなすコツ、公式ブログが解説 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Claude Codeの開発者ブログで、著者Addy Osmaniが新モデル「Opus 5.5」の使い方を解説しています。長時間自律的に作業し、作業内容を明確に報告し、返信前に毎回考えるという特徴を持ち、マルチステップ作業で大幅な改善があったとされます。早期テスターは、ほとんど監督なしに数時間かかるコーディング作業を任…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-05/59b823fed287337f/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-05/59b823fed287337f/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Opus 5.5を使いこなすコツ、公式ブログが解説", "datePublished": "2026-10-05", "description": "Claude Codeの開発者ブログで、著者Addy Osmaniが新モデル「Opus 5.5」の使い方を解説しています。長時間自律的に作業し、作業内容を明確に報告し、返信前に毎回考えるという特徴を持ち、マルチステップ作業で大幅な改善があったとされます。早期テスターは、ほとんど監督なしに数時間かかるコーディング作業を任せられたと報告しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-05/59b823fed287337f/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://claude.dev/blog/getting-the-most-out-of-opus-5-5/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-05/">2026.10.05 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Opus 5.5を使いこなすコツ、公式ブログが解説</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>claude.dev</span><time datetime="2026-10-05">2026.10.05</time></div>
+</header>
+<div class="article-body">
+<p>Claude Codeの開発者ブログで、著者Addy Osmaniが新モデル「Opus 5.5」の使い方を解説しています。長時間自律的に作業し、作業内容を明確に報告し、返信前に毎回考えるという特徴を持ち、マルチステップ作業で大幅な改善があったとされます。早期テスターは、ほとんど監督なしに数時間かかるコーディング作業を任せられたと報告しています。</p>
+<p>記事はプロンプトの書き方にも具体的な助言をしています。「think carefully」のような思考促進フレーズは削除した方が返信開始が速くなり、品質の明確な低下は見られなかったとのことです。デザイン作業では、望まないスタイルを具体的に列挙する指示が推奨されています。</p>
+<p>あるテスターによれば、Opus 5.5の「最低努力」設定でも旧モデルOpus 5の「高努力」設定より多くのバグを検出できたといいます。Opus 5.5は<strong>「Fable-level」</strong>と呼ばれる生物・サイバーセキュリティ上のセーフガードを備えて起動し、危険性を示すフラグが付いたメッセージは旧モデルに処理が移されるとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>記事のタイトルは「Getting the most out of Opus 5.5 in Claude and Claude Code」である</li><li>記事の著者はAddy Osmaniである</li><li>記事の発表日は2026年9月22日である</li><li>Opus 5.5は「longer on its own」で作業でき、「plainly what it did」を報告し、「thinks before every reply」という特徴を持つとされている</li><li>Opus 5.5はマルチステップ作業において大幅な改善を実現したとされている</li><li>早期テスターは長時間のコーディングタスクを「hours with little oversight」で実行できたとされている</li><li>記事はプロンプトから「think carefully」など思考促進フレーズを削除すべきと推奨している</li><li>「think carefully」を削除すると返信開始がより迅速になり、品質の明確な低下は見られなかったとされている</li><li>デザイン作業では不要なスタイルの具体的なリストを指定することが推奨されている</li><li>あるテスターによれば、Opus 5.5の「lowest effort」設定はOpus 5の「high effort」設定より多くのバグを検出したとされている</li><li>Opus 5.5は「Fable-level bio and cyber safeguards」を備えて起動するとされている</li><li>フラグが付いたメッセージは古いモデルに移行されるとされている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>longer on its own</blockquote><blockquote>thinks before every reply</blockquote><blockquote>Fable-level bio and cyber safeguards</blockquote><p class="quotes-source">出典: <a href="https://claude.dev/blog/getting-the-most-out-of-opus-5-5/" target="_blank" rel="noopener noreferrer">claude.dev</a></p></section>
+<aside class="source-box"><a href="https://claude.dev/blog/getting-the-most-out-of-opus-5-5/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">claude.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Opus%205.5%E3%82%92%E4%BD%BF%E3%81%84%E3%81%93%E3%81%AA%E3%81%99%E3%82%B3%E3%83%84%E3%80%81%E5%85%AC%E5%BC%8F%E3%83%96%E3%83%AD%E3%82%B0%E3%81%8C%E8%A7%A3%E8%AA%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-05%2F59b823fed287337f%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Opus%205.5%E3%82%92%E4%BD%BF%E3%81%84%E3%81%93%E3%81%AA%E3%81%99%E3%82%B3%E3%83%84%E3%80%81%E5%85%AC%E5%BC%8F%E3%83%96%E3%83%AD%E3%82%B0%E3%81%8C%E8%A7%A3%E8%AA%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-05/59b823fed287337f/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-05%2F59b823fed287337f%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../58980835c41af667/"><span>前の記事</span>無料版Geminiは「Flash-Lite」専用に</a><a class="next" href="../caa5daf499edc9e4/"><span>次の記事</span>macOS次期版、AIエージェント対策でアクセス権限を厳格化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-05/">← 2026.10.05 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../da75eedf0402fa96/">「OpenAIの文化は壊れている」元安全性統括が退社後に告発</a></h3>
+<p class="excerpt">OpenAIで安全性報告書（Preparedness Framework含む）の執筆を統括していたデビッド・ロビンソン氏が約3年半の在籍を経て退社し、The Atlanticに「OpenAIの文化は壊れている」と題する寄稿を発表しました…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../58980835c41af667/">無料版Geminiは「Flash-Lite」専用に</a></h3>
+<p class="excerpt">Googleは個人向けGeminiのモデル選択を2026年10月9日からプラン別に厳格化します。無料ユーザーが使えるのは下位モデル「Flash-Lite」のみとなり、より高性能な「Flash」「Pro」は有料プラン（AI Plus/Pr…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../caa5daf499edc9e4/">macOS次期版、AIエージェント対策でアクセス権限を厳格化</a></h3>
+<p class="excerpt">Appleは次期macOS 27で「フルディスクアクセス」設定に追加の制御機能を導入します。ユーザーが明確に意図した操作をした場合のみ、アプリに高度なファイルアクセス権を付与できるようにする仕組みです。</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>kobonemi.com</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
