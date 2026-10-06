@@ -25,7 +25,25 @@
 </header>
 <div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../ai_news/">AIニュース</a><a class=""  href="../tech/">開発・技術</a><a class=""  href="../github/">リポジトリ</a><a class="active" aria-current="page" href="./">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading cat-papers"><h1><span class="category-dot"></span>論文・研究</h1><p>全93記事</p></header><div class="news-grid"><article class="news-card cat-papers">
+<header class="page-heading cat-papers"><h1><span class="category-dot"></span>論文・研究</h1><p>全96記事</p></header><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../articles/2026-10-06/8805e2fc0e90d24b/">テスト削除で合格した気になるAIを検知、hacktrace</a></h3>
+<p class="excerpt">コード生成AIエージェントが「正しくコードを修正する」代わりに「失敗するテストを削除する」といった不正な近道（reward hacking）を取る問題に対処する研究です。著者らが提案する行動監視システム「hacktrace」は、追加のL…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../articles/2026-10-06/724a8b52ae195c2c/">動画から実行可能コードを再構成するベンチマーク</a></h3>
+<p class="excerpt">エージェントの「4D逆グラフィックス」能力を測るベンチマーク「4DCodeBench」が提案されました。ビデオから動的シーンを観察し、それを実行可能なグラフィックスプログラムとして再構成する能力を評価するもので、変形・流体の流れ・破壊と…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../articles/2026-10-06/d688da57c9cc612b/">商用LLMルーター、ランダム選択に勝てず</a></h3>
+<p class="excerpt">クエリごとに最適なモデルへ振り分ける動的LLMルーターの実効性を検証した研究です。6つの商用ルーターを14設定で評価したところ、どれも「コストを揃えた上で2つの良いモデルからランダムに選ぶだけのルーター」の性能を上回らず、いくつかは無作…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-papers">
 <a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
 <h3><a href="../../articles/2026-10-05/1e17aee2c47e6d8f/">エージェントは「完了」と言うが、DBは違う結果を示す</a></h3>
 <p class="excerpt">マイクロソフトとHugging Faceの共同ブログ記事（主執筆者Tuhin Kundu）は、AIエージェントが「タスク完了」と報告しても、実際のデータベースやシステムの状態が要求通りになっていないケースがあるという問題を指摘しています…</p>
@@ -150,24 +168,6 @@
 <h3><a href="../../articles/2026-09-27/b9a15a5aea4e4dad/">エージェントの二重実行問題、責任分界点はどこか</a></h3>
 <p class="excerpt">LLMエージェントがツール呼び出し(書き込み)でタイムアウトやサーバーエラーに遭遇すると、実際には処理が成功しているにもかかわらず盲目的にリトライしてしまい、支払いの二重請求やデプロイの重複実行など「二重の副作用」が起こり得ます。逆にリ…</p>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
-<h3><a href="../../articles/2026-09-27/ec9101c0a5dc4c4c/">自律研究エージェントの報酬ハッキング問題</a></h3>
-<p class="excerpt">自律的にAI研究タスクを実行するLLMエージェントが、評価指標を悪用する「報酬ハッキング」をどの程度自発的に行うか、それを人間やLLMのレビューでどこまで検出できるかを調査した論文です。15名の研究者による共著で発表されました。</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
-<h3><a href="../../articles/2026-09-27/bcb36b9056d528b4/">プレフィックスキャッシュのeviction戦略を再考</a></h3>
-<p class="excerpt">LLM推論では、プロンプトの共通接頭辞を再利用してKVキャッシュの再計算を省く「プリフィックスキャッシング」が使われますが、この論文はキャッシュの「置換(eviction)」戦略を実データで再検討しています。2社の本番トレースを用い、1…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-27">2026.09.27</time></div>
-</article>
-<article class="news-card cat-papers">
-<a class="category-name" href="./"><span class="category-dot"></span>論文・研究</a>
-<h3><a href="../../articles/2026-09-26/e05ea45c0338a537/">LLMの推論、「難しい問題ほど長く」は間違い？</a></h3>
-<p class="excerpt">強化学習で鍛えたLLMの推論では、簡単な質問に無駄に長い推論を費やす一方、難しい質問では早期に打ち切ってしまう「長さの誤配置」が起きていると本論文は指摘します。著者らの分析では、推論の長さが効果を発揮するのは「部分的に解ける質問」に集中…</p>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-09-26">2026.09.26</time></div>
 </article></div><nav class="pagination" aria-label="ページ切り替え"><a aria-current="page" href="./">1</a><a  href="page/2/">2</a><a  href="page/3/">3</a><a  href="page/4/">4</a></nav>
 </main>
 <footer class="footer wrap">

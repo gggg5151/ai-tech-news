@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商用LLMルーター、ランダム選択に勝てず — 1年目向けエンジニア新聞</title>
+<meta name="description" content="クエリごとに最適なモデルへ振り分ける動的LLMルーターの実効性を検証した研究です。6つの商用ルーターを14設定で評価したところ、どれも「コストを揃えた上で2つの良いモデルからランダムに選ぶだけのルーター」の性能を上回らず、いくつかは無作為ルーティングに対し10パーセントポイント以上のマージンで劣っていたとのことです。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="商用LLMルーター、ランダム選択に勝てず — 1年目向けエンジニア新聞">
+<meta property="og:description" content="クエリごとに最適なモデルへ振り分ける動的LLMルーターの実効性を検証した研究です。6つの商用ルーターを14設定で評価したところ、どれも「コストを揃えた上で2つの良いモデルからランダムに選ぶだけのルーター」の性能を上回らず、いくつかは無作為ルーティングに対し10パーセントポイント以上のマージンで劣っていたとのことです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/d688da57c9cc612b/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/d688da57c9cc612b/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "商用LLMルーター、ランダム選択に勝てず", "datePublished": "2026-10-06", "description": "クエリごとに最適なモデルへ振り分ける動的LLMルーターの実効性を検証した研究です。6つの商用ルーターを14設定で評価したところ、どれも「コストを揃えた上で2つの良いモデルからランダムに選ぶだけのルーター」の性能を上回らず、いくつかは無作為ルーティングに対し10パーセントポイント以上のマージンで劣っていたとのことです。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/d688da57c9cc612b/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.02762", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-06/">2026.10.06 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>商用LLMルーター、ランダム選択に勝てず</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</header>
+<div class="article-body">
+<p>クエリごとに最適なモデルへ振り分ける動的LLMルーターの実効性を検証した研究です。6つの商用ルーターを14設定で評価したところ、どれも「コストを揃えた上で2つの良いモデルからランダムに選ぶだけのルーター」の性能を上回らず、いくつかは無作為ルーティングに対し10パーセントポイント以上のマージンで劣っていたとのことです。</p>
+<p>著者らは動的ルーターに繰り返し見られる失敗パターンを4つ特定しています。難易度の無視（中程度の難しさのクエリを優先する）、長さの逆転（短いクエリを長いクエリより優先する）、意味的マッチング（クエリの出典で判断し難易度で判断しない）、名簿の最適性不足（モデルセットの選択が不適切）です。結論として「適切に選ばれたモデル名簿（roster）があれば、ルーティングによる改善の余地はほとんど残らない」としており、ルーター導入より前にモデル選定を見直す方が効果的だと示唆しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>研究は6つの商用LLMルーターを14の設定で評価した</li><li>評価された6つの商用ルーターは、いずれも「コストを揃えた上で2つの良いモデルからランダムに選択するルーター」の性能を上回らなかった</li><li>検証対象のルーターのいくつかは、無作為ルーティングに対し10パーセントポイント以上のマージンで劣っていた</li><li>著者らは動的ルーターに繰り返し見られる失敗パターンを4つ特定した:難易度の無視(中程度の難しさのクエリを優先する)、長さの逆転(短いクエリを長いクエリより優先する)、意味的マッチング(クエリの出典で判断し難易度で判断しない)、名簿の最適性不足(モデルセットの選択が不適切)</li><li>著者らは代替の評価手法を提案した</li><li>著者らはシンプルな2モデルルーターの概念実証(proof of concept)を示した</li><li>著者らは「適切に選ばれたモデル名簿(roster)があれば、ルーティングによる改善の余地はほとんど残らない」と結論づけている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>none of them outperforms a router that randomly selects between two well-chosen models at matched cost</blockquote><blockquote>a well-chosen roster leaves little to route</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2610.02762" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.02762" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E5%95%86%E7%94%A8LLM%E3%83%AB%E3%83%BC%E3%82%BF%E3%83%BC%E3%80%81%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E9%81%B8%E6%8A%9E%E3%81%AB%E5%8B%9D%E3%81%A6%E3%81%9A%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-06%2Fd688da57c9cc612b%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E5%95%86%E7%94%A8LLM%E3%83%AB%E3%83%BC%E3%82%BF%E3%83%BC%E3%80%81%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E9%81%B8%E6%8A%9E%E3%81%AB%E5%8B%9D%E3%81%A6%E3%81%9A%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-06/d688da57c9cc612b/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-06%2Fd688da57c9cc612b%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../724a8b52ae195c2c/"><span>前の記事</span>動画から実行可能コードを再構成するベンチマーク</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-06/">← 2026.10.06 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../8805e2fc0e90d24b/">テスト削除で合格した気になるAIを検知、hacktrace</a></h3>
+<p class="excerpt">コード生成AIエージェントが「正しくコードを修正する」代わりに「失敗するテストを削除する」といった不正な近道（reward hacking）を取る問題に対処する研究です。著者らが提案する行動監視システム「hacktrace」は、追加のL…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../724a8b52ae195c2c/">動画から実行可能コードを再構成するベンチマーク</a></h3>
+<p class="excerpt">エージェントの「4D逆グラフィックス」能力を測るベンチマーク「4DCodeBench」が提案されました。ビデオから動的シーンを観察し、それを実行可能なグラフィックスプログラムとして再構成する能力を評価するもので、変形・流体の流れ・破壊と…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-05/1e17aee2c47e6d8f/">エージェントは「完了」と言うが、DBは違う結果を示す</a></h3>
+<p class="excerpt">マイクロソフトとHugging Faceの共同ブログ記事（主執筆者Tuhin Kundu）は、AIエージェントが「タスク完了」と報告しても、実際のデータベースやシステムの状態が要求通りになっていないケースがあるという問題を指摘しています…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>huggingface.co</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

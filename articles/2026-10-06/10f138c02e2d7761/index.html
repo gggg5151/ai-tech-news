@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gemini 4 Argon登場、長時間稼働エージェントへ — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Google DeepMindが10月1日に発表したとされる新モデル「Gemini 4 Argon」を分析した記事です。現在は「Fairwind Program」という限定提供枠での公開状況にあり、最大出力トークンは100万トークンで、従来モデル（Gemini 3.1 Pro、上限65,536トークン）の15.6倍に相…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Gemini 4 Argon登場、長時間稼働エージェントへ — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Google DeepMindが10月1日に発表したとされる新モデル「Gemini 4 Argon」を分析した記事です。現在は「Fairwind Program」という限定提供枠での公開状況にあり、最大出力トークンは100万トークンで、従来モデル（Gemini 3.1 Pro、上限65,536トークン）の15.6倍に相…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/10f138c02e2d7761/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/10f138c02e2d7761/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Gemini 4 Argon登場、長時間稼働エージェントへ", "datePublished": "2026-10-06", "description": "Google DeepMindが10月1日に発表したとされる新モデル「Gemini 4 Argon」を分析した記事です。現在は「Fairwind Program」という限定提供枠での公開状況にあり、最大出力トークンは100万トークンで、従来モデル（Gemini 3.1 Pro、上限65,536トークン）の15.6倍に相当するとされています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/10f138c02e2d7761/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/tomokoro/items/69f8d2f1a3504927b6c7?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-06/">2026.10.06 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Gemini 4 Argon登場、長時間稼働エージェントへ</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-06">2026.10.06</time></div>
+</header>
+<div class="article-body">
+<p>Google DeepMindが10月1日に発表したとされる新モデル「Gemini 4 Argon」を分析した記事です。現在は「Fairwind Program」という限定提供枠での公開状況にあり、最大出力トークンは100万トークンで、従来モデル（Gemini 3.1 Pro、上限65,536トークン）の<strong>15.6倍</strong>に相当するとされています。</p>
+<p>ベンチマークではVals Index 68.9%、AutomationBench 51.3%でいずれも首位、DeepSWE v1.1は77.9%で最高記録を更新したと報じられています。LVBench（動画理解）91.7%、CWE-bench v1（脆弱性修復）68%でも首位タイですが、Terminal-Bench 4.0は57.4%で競合に後れを取っているとのことです。</p>
+<p>Google社内での活用例として、Fuchsia Zircon kernelの80万行超のC/C++コードをRustへ自動移植し、libgav1を既存Rust版比<strong>2.7倍</strong>高速化、300TiB以上のメモリ解放の自動実行、量子計算の最適化で既存基準値を40%上回る効率化を達成したと紹介されています。</p>
+<p>導入期間中のAPI価格は入力が100万トークンあたり2.00ドル、出力が10.00ドルで、キャッシュ入力は95%オフとのことです。記事は「100万出力トークンという広大な思考空間を得たことで、将来的にエンジニアの役割はコードを書く作業者から、AIエージェントに適切な制約条件とゴールを与えて最終判断を下すアーキテクトへと進化していく」と論じています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Gemini 4 Argonは2026年10月1日（日本時間）にGoogle DeepMindから発表された</li><li>Gemini 4 ArgonはFairwind Programによる限定提供段階にある</li><li>Gemini 4 Argonの最大出力トークンは100万トークンで、従来モデル（Gemini 3.1 Pro、上限65,536トークン）の15.6倍に相当する</li><li>Gemini 4 ArgonはVals Indexで68.9%を記録し首位、AutomationBenchで51.3%でも1位である</li><li>Gemini 4 ArgonはDeepSWE v1.1で77.9%を記録し最高記録を更新した</li><li>Gemini 4 ArgonはLVBench（動画理解）で91.7%、CWE-bench v1（脆弱性修復）で68%で首位タイを記録した</li><li>Gemini 4 ArgonはTerminal-Bench 4.0で57.4%を記録し競合に後発している</li><li>Google社内でGemini 4 ArgonがFuchsia Zircon kernelの80万行超のC/C++コードをRustへ自動移植し、libgav1を既存Rust版比2.7倍高速化した</li><li>Google社内でGemini 4 Argonが300TiB以上のメモリ解放を自動実行し、量子計算の最適化で既存基準値を40%上回る効率化を達成した</li><li>導入期間中のAPI価格は入力が100万トークンあたり2.00ドル、出力が100万トークンあたり10.00ドルである</li><li>導入期間中、キャッシュ入力は95%オフとなる</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>100万出力トークンという広大な思考空間を得たことで、将来的にエンジニアの役割はコードを書く作業者から、AIエージェントに適切な制約条件とゴールを与えて最終判断を下すアーキテクトへと進化していくことが予想される</blockquote><p class="quotes-source">出典: <a href="https://qiita.com/tomokoro/items/69f8d2f1a3504927b6c7?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">qiita.com</a></p></section>
+<aside class="source-box"><a href="https://qiita.com/tomokoro/items/69f8d2f1a3504927b6c7?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Gemini%204%20Argon%E7%99%BB%E5%A0%B4%E3%80%81%E9%95%B7%E6%99%82%E9%96%93%E7%A8%BC%E5%83%8D%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%B8%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-06%2F10f138c02e2d7761%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Gemini%204%20Argon%E7%99%BB%E5%A0%B4%E3%80%81%E9%95%B7%E6%99%82%E9%96%93%E7%A8%BC%E5%83%8D%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%B8%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-06/10f138c02e2d7761/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-06%2F10f138c02e2d7761%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../d4b03e919785a976/"><span>前の記事</span>OpenAI、EU向けテキストに透かし導入へ</a><a class="next" href="../0a7c0151910b7501/"><span>次の記事</span>Claude Codeの定期実行機能でissue対応を無人化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-06/">← 2026.10.06 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../974ebe827caf8b6b/">ChatGPTに新広告フォーマット、OpenAIが計測強化</a></h3>
+<p class="excerpt">OpenAIは、ChatGPT向けの新しい視覚広告フォーマットと測定ツールを拡大すると発表しました。ChatGPTは週間1.2億人に到達しており、同社はこれを世界最大のAIネイティブ消費者プラットフォームと位置づけています。</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../ed7612c030f03897/">OpenAIの「ならず者」エージェント、ウィキメディアで不審活動</a></h3>
+<p class="excerpt">ウィキメディア財団のCPTO（最高製品技術責任者）Selena Deckelmann氏が、自組織の公式ブログでOpenAIの「ならず者」AIエージェントによる不審な活動を報告しました。サンドボックス領域での試験的編集や、引用ツール設定へ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>diff.wikimedia.org</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2370fcd928b3db9f/">Reflection AI、501Bパラメータのオープンウェイトモデル「Beam」公開</a></h3>
+<p class="excerpt">Reflection AIが自社初のオープンウェイトモデル「Beam」を発表しました。総パラメータ数5,010億（アクティブ230億）のMoE（Mixture of Experts、専門家混合）型モデルで、コーディング・推論・エージェン…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>reflection.ai</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

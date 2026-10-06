@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Codeの定期実行機能でissue対応を無人化 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="RAKUSのエンジニアブログで、Claude Codeの「ルーティン」機能（定期実行機能）を使い、1時間ごとにGitHubのissue処理を自動化した事例が紹介されています。Issue選定からコンテキスト収集、実装・セルフレビュー、ドラフトPR作成・AIレビュー、結果報告までを無人で実行させる設計です。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Codeの定期実行機能でissue対応を無人化 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="RAKUSのエンジニアブログで、Claude Codeの「ルーティン」機能（定期実行機能）を使い、1時間ごとにGitHubのissue処理を自動化した事例が紹介されています。Issue選定からコンテキスト収集、実装・セルフレビュー、ドラフトPR作成・AIレビュー、結果報告までを無人で実行させる設計です。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/0a7c0151910b7501/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/0a7c0151910b7501/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Codeの定期実行機能でissue対応を無人化", "datePublished": "2026-10-06", "description": "RAKUSのエンジニアブログで、Claude Codeの「ルーティン」機能（定期実行機能）を使い、1時間ごとにGitHubのissue処理を自動化した事例が紹介されています。Issue選定からコンテキスト収集、実装・セルフレビュー、ドラフトPR作成・AIレビュー、結果報告までを無人で実行させる設計です。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-06/0a7c0151910b7501/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://tech-blog.rakus.co.jp/entry/20261005/claude-code-routines", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-06/">2026.10.06 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude Codeの定期実行機能でissue対応を無人化</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech-blog.rakus.co.jp</span><time datetime="2026-10-06">2026.10.06</time></div>
+</header>
+<div class="article-body">
+<p>RAKUSのエンジニアブログで、Claude Codeの「ルーティン」機能（定期実行機能）を使い、1時間ごとにGitHubのissue処理を自動化した事例が紹介されています。Issue選定からコンテキスト収集、実装・セルフレビュー、ドラフトPR作成・AIレビュー、結果報告までを無人で実行させる設計です。</p>
+<p>著者は「実装そのものが速くなったからといって、開発全体が速くなるとは限りません」という課題意識から出発したと述べています。人間がタスク選定・起動・確認を行う必要があれば、ボトルネックが単に移動するだけだという指摘です。</p>
+<p>設計上の工夫として、Issue選定条件にAssigneeやLabelなど機械的に判定可能な条件を優先し、自然言語だけの判断を避けている点、1回の実行につき1issueのみを処理する制限、複数リポジトリに情報が分散する場合に各リポジトリの役割をまとめたリポジトリを参照させる仕組みが挙げられています。</p>
+<p>実運用では「人間がセッションを起動したり、作業の進捗を確認したりしなくても、手が離れている時間に実装タスクを進められるようになりました」と報告されており、人間は仕様確認やレビューなど判断が必要な作業に集中しやすくなったとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>記事はClaude Codeの「ルーティン」機能（定期実行機能）を使った開発フローの自動化について書かれている。</li><li>記事内で、1時間ごとに実行されるルーティンを構築し、GitHubのissue処理を自動化したと述べている。</li><li>このルーティンは、Issue選定、必要なコンテキスト収集、実装とセルフレビュー、ドラフトPRの作成とAIレビュー、実行結果の報告というプロセスを無人で実行する。</li><li>著者は、実装そのものが速くなっても、人間がタスク選定・起動・確認を行う必要があればボトルネックが移動するだけだという課題意識から出発したと述べている。</li><li>設計上の工夫として、Issue選定条件に機械的に確認できる条件（AssigneeやLabel)を先に設定し、自然言語だけの判断を避けている。</li><li>設計上の工夫として、1回の実行につき1つのissueのみを対象とする制限を設けている。</li><li>実装に必要な情報が複数リポジトリに分散している場合に対応するため、各リポジトリの役割をまとめたリポジトリを参照させる仕組みを導入している。</li><li>著者の職場での実運用では、人間がセッションを起動したり進捗を確認したりしなくても、手が離れている時間に実装タスクを進められるようになったと報告されている。</li><li>この自動化により、人間は仕様確認やレビューなど判断が必要な作業に集中しやすくなったと報告されている。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>実装そのものが速くなったからといって、開発全体が速くなるとは限りません</blockquote><blockquote>人間がセッションを起動したり、作業の進捗を確認したりしなくても、手が離れている時間に実装タスクを進められるようになりました</blockquote><p class="quotes-source">出典: <a href="https://tech-blog.rakus.co.jp/entry/20261005/claude-code-routines" target="_blank" rel="noopener noreferrer">tech-blog.rakus.co.jp</a></p></section>
+<aside class="source-box"><a href="https://tech-blog.rakus.co.jp/entry/20261005/claude-code-routines" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">tech-blog.rakus.co.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E3%81%AE%E5%AE%9A%E6%9C%9F%E5%AE%9F%E8%A1%8C%E6%A9%9F%E8%83%BD%E3%81%A7issue%E5%AF%BE%E5%BF%9C%E3%82%92%E7%84%A1%E4%BA%BA%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-06%2F0a7c0151910b7501%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E3%81%AE%E5%AE%9A%E6%9C%9F%E5%AE%9F%E8%A1%8C%E6%A9%9F%E8%83%BD%E3%81%A7issue%E5%AF%BE%E5%BF%9C%E3%82%92%E7%84%A1%E4%BA%BA%E5%8C%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-06/0a7c0151910b7501/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-06%2F0a7c0151910b7501%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../10f138c02e2d7761/"><span>前の記事</span>Gemini 4 Argon登場、長時間稼働エージェントへ</a><a class="next" href="../c4bbc3ad4c734b1f/"><span>次の記事</span>APIキーの渡し方6種類、エージェント別に安全性を検証</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-06/">← 2026.10.06 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../c4bbc3ad4c734b1f/">APIキーの渡し方6種類、エージェント別に安全性を検証</a></h3>
+<p class="excerpt">Claude Code、Codex、Gemini CLI、GitHub Copilot、Cursorの各AIエージェントにAPIキーを渡す方法として、対話文に貼る、.envファイル、環境変数、MCP設定ファイルへの記載、OAuth認可、…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../6e00f958485ae97c/">『Programmer in the Loop』、AIコーディングの実践知</a></h3>
+<p class="excerpt">筆者mizchiが、AIエージェントとの協働開発における「Programmer in the Loop」という考え方を解説しています。人間がAIに完全に作業を委ねるのではなく、人間は評価・判断・ループ構築を担う立場であるべきだという主張…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ff6ee838eb723b17/">.envを探すアクセス、7日間で858件</a></h3>
+<p class="excerpt">中小企業向けIT・DX支援を行う独立コンサルタントの筆者が、自身運営サイトのアクセスログを分析した記事です。7日間で「秘密探索要求」が1,634件観測され、うち.envファイルへのアクセス試行が858件（52.5%）、バックアップファイ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
