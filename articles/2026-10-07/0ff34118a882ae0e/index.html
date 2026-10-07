@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude CodeのWebFetch、10万字より後ろを読まずに誤答していた — 1年目向けエンジニア新聞</title>
+<meta name="description" content="筆者はClaude CodeのWebFetch機能を、Claude Code自身のCHANGELOG.md（93万字超のプレーンテキスト）に対して検証しました。バージョン2.1.289では、ページの10万字以降が黙って切り捨てられ、その部分の内容を聞くと6回とも「No（書いていない）」と誤答することを発見したとしていま…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude CodeのWebFetch、10万字より後ろを読まずに誤答していた — 1年目向けエンジニア新聞">
+<meta property="og:description" content="筆者はClaude CodeのWebFetch機能を、Claude Code自身のCHANGELOG.md（93万字超のプレーンテキスト）に対して検証しました。バージョン2.1.289では、ページの10万字以降が黙って切り捨てられ、その部分の内容を聞くと6回とも「No（書いていない）」と誤答することを発見したとしていま…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-07/0ff34118a882ae0e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-07/0ff34118a882ae0e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude CodeのWebFetch、10万字より後ろを読まずに誤答していた", "datePublished": "2026-10-07", "description": "筆者はClaude CodeのWebFetch機能を、Claude Code自身のCHANGELOG.md（93万字超のプレーンテキスト）に対して検証しました。バージョン2.1.289では、ページの10万字以降が黙って切り捨てられ、その部分の内容を聞くと6回とも「No（書いていない）」と誤答することを発見したとしています。削除されたことはユーザーに通知されま…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-07/0ff34118a882ae0e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/suwa_nobu/items/35a1824f5b1d41caa10f?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-07/">2026.10.07 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude CodeのWebFetch、10万字より後ろを読まずに誤答していた</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-10-07">2026.10.07</time></div>
+</header>
+<div class="article-body">
+<p>筆者はClaude CodeのWebFetch機能を、Claude Code自身のCHANGELOG.md（93万字超のプレーンテキスト）に対して検証しました。バージョン2.1.289では、ページの10万字以降が黙って切り捨てられ、その部分の内容を聞くと6回とも「No（書いていない）」と誤答することを発見したとしています。削除されたことはユーザーに通知されませんでした。</p>
+<p>後継のバージョン2.1.290ではこの切り捨てが通知されるようになり、<strong>offsetパラメータ</strong>で続きを取得し直す機能が実装され、正確に答えられるようになりました。</p>
+<p>ただし正確さにはコストが伴い、2.1.289では取得回数1〜2回・費用0.051ドル・所要時間7.7秒だったのに対し、2.1.290では取得回数10〜11回・費用0.314ドル・所要時間29.2秒と、費用は約6倍、時間は約3.8倍に増加したとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>検証対象のバージョンはClaude Code 2.1.289および2.1.290である</li><li>テスト対象ファイルはClaude Code自身のCHANGELOG.mdで、930,527字のプレーンテキストである</li><li>テストでは86,000字目、125,000字目、301,000字目の内容について「〇〇は書いてある？」という質問形式で確認した</li><li>バージョン2.1.289では、10万字より後ろにある語について6回の質問すべてで「No」(書いていない)と誤答した</li><li>バージョン2.1.289のWebFetchは、10万字より後ろの内容を削除したことをユーザーに通知しなかった</li><li>バージョン2.1.289では、削除された内容について要約モデルが「見つからない」と返答した</li><li>バージョン2.1.290では10万字以降の削除が通知されるようになった</li><li>バージョン2.1.290ではoffsetパラメータを使って続きを読み直す機能が実装された</li><li>バージョン2.1.290は正確な答えを返すが、コストが増加する</li><li>2.1.289(誤った回答)でのWebFetch取得回数は1〜2回、費用は0.051ドル、所要時間は7.7秒だった</li><li>2.1.290(正確な回答)でのWebFetch取得回数は10〜11回、費用は0.314ドル、所要時間は29.2秒だった</li><li>2.1.290は2.1.289に比べて費用が約6倍、時間が約3.8倍に増加した</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>「〇〇は書いてある？」と聞くと、10万字より後ろにある語を6回とも「No」と答えた</blockquote><p class="quotes-source">出典: <a href="https://qiita.com/suwa_nobu/items/35a1824f5b1d41caa10f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">qiita.com</a></p></section>
+<aside class="source-box"><a href="https://qiita.com/suwa_nobu/items/35a1824f5b1d41caa10f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E3%81%AEWebFetch%E3%80%8110%E4%B8%87%E5%AD%97%E3%82%88%E3%82%8A%E5%BE%8C%E3%82%8D%E3%82%92%E8%AA%AD%E3%81%BE%E3%81%9A%E3%81%AB%E8%AA%A4%E7%AD%94%E3%81%97%E3%81%A6%E3%81%84%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-07%2F0ff34118a882ae0e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E3%81%AEWebFetch%E3%80%8110%E4%B8%87%E5%AD%97%E3%82%88%E3%82%8A%E5%BE%8C%E3%82%8D%E3%82%92%E8%AA%AD%E3%81%BE%E3%81%9A%E3%81%AB%E8%AA%A4%E7%AD%94%E3%81%97%E3%81%A6%E3%81%84%E3%81%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-07/0ff34118a882ae0e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-07%2F0ff34118a882ae0e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2aef122873a00a7d/"><span>前の記事</span>Goの「//go:」ディレクティブ7種を実践解説</a><a class="next" href="../9525a42c5a6e9548/"><span>次の記事</span>ベクトルDB不要の階層インデックス型RAG「PageIndex」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-07/">← 2026.10.07 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f6d211496355627b/">ゴルーチンとチャネルで学ぶ「終了を伝える」設計</a></h3>
+<p class="excerpt">筆者はGo言語のゴルーチン（Goの軽量スレッド）とチャネルを使い、標準入力を受け取って表示する簡易CLIアプリを作成した体験を記事にまとめています。アプリは標準入力を待つゴルーチン、入力を表示するゴルーチン、強制終了シグナルを待つメイン…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../3066d7c9053b7524/">AIレビューの「全ファイル読み」を防ぐコンテキスト圧縮ツール</a></h3>
+<p class="excerpt">AIレビューエージェントがコードレビュー時に不要なファイルまで読み込み、トークンを浪費してしまう問題への対策として、OSSツール「code-review-graph」（tirth8205作、v2.3.6、MITライセンス）を使う実装手順…</p>
+<div class="article-meta"><span class="badge rumor">噂</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../97667d5ee380c1d5/">URLを貼るだけでWebページを視覚解析する個人開発ツール</a></h3>
+<p class="excerpt">個人開発者「コッシー」が、URLを貼るだけでWebページを視覚的に要約・解析できるツール「PageLens」を紹介しています。ChatGPTやClaudeに要約させる際のプロンプト入力の手間や、テキストコピペでは表組みなどのデザイン文脈…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

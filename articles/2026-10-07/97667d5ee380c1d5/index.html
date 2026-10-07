@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>URLを貼るだけでWebページを視覚解析する個人開発ツール — 1年目向けエンジニア新聞</title>
+<meta name="description" content="個人開発者「コッシー」が、URLを貼るだけでWebページを視覚的に要約・解析できるツール「PageLens」を紹介しています。ChatGPTやClaudeに要約させる際のプロンプト入力の手間や、テキストコピペでは表組みなどのデザイン文脈が失われるという課題を解決するために開発したとしています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="URLを貼るだけでWebページを視覚解析する個人開発ツール — 1年目向けエンジニア新聞">
+<meta property="og:description" content="個人開発者「コッシー」が、URLを貼るだけでWebページを視覚的に要約・解析できるツール「PageLens」を紹介しています。ChatGPTやClaudeに要約させる際のプロンプト入力の手間や、テキストコピペでは表組みなどのデザイン文脈が失われるという課題を解決するために開発したとしています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-07/97667d5ee380c1d5/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-07/97667d5ee380c1d5/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "URLを貼るだけでWebページを視覚解析する個人開発ツール", "datePublished": "2026-10-07", "description": "個人開発者「コッシー」が、URLを貼るだけでWebページを視覚的に要約・解析できるツール「PageLens」を紹介しています。ChatGPTやClaudeに要約させる際のプロンプト入力の手間や、テキストコピペでは表組みなどのデザイン文脈が失われるという課題を解決するために開発したとしています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-07/97667d5ee380c1d5/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/kossy_hub/articles/956b927776c353", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-07/">2026.10.07 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>URLを貼るだけでWebページを視覚解析する個人開発ツール</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</header>
+<div class="article-body">
+<p>個人開発者「コッシー」が、URLを貼るだけでWebページを視覚的に要約・解析できるツール「PageLens」を紹介しています。ChatGPTやClaudeに要約させる際のプロンプト入力の手間や、テキストコピペでは表組みなどのデザイン文脈が失われるという課題を解決するために開発したとしています。</p>
+<p>特徴はPlaywright（ブラウザ自動操作ライブラリ）でページをレンダリングしてスクリーンショットを撮り、Google GeminiのマルチモーダルAPIで「人間の目で見たままのレイアウト」を解析する点です。指示文不要で概要・重要ポイント・注意点をカード形式に自動構造化する「ゼロプロンプト解析」機能も備えています。</p>
+<p>フロントエンドはNext.js・TypeScript・Tailwind CSSでVercelにホスティングし、バックエンドはPython・FastAPIでRenderにホスティングする構成です。筆者は「極限まで摩擦を削ぎ落とし、1つの目的に特化したUIの快適さ」を追求したと述べています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者は「コッシー」というWeb開発者（個人開発者）である</li><li>著者は「PageLens」という個人開発ツールを開発した</li><li>PageLensはURLを貼ってボタンを押すだけでWebページの要約・解析が完結するツールである</li><li>PageLensはゼロプロンプト解析機能を持ち、指示文不要で概要・重要ポイント・注意点をカード形式で自動構造化する</li><li>PageLensはPlaywrightでページをレンダリングした後、スクリーンショットをGeminiのマルチモーダル機能で解析する「視覚的解析」を行う</li><li>PageLensはURLのドメインを判定して動的にパーソナライズした情報を出し分ける機能を持つ</li><li>PageLensのフロントエンドはNext.js、TypeScript、Tailwind CSSで構築され、Vercelでホスティングされている</li><li>PageLensのバックエンドはPython、FastAPIで構築され、Renderでホスティングされている</li><li>PageLensはブラウザ自動化にPlaywrightを使用している</li><li>PageLensの解析AIにはGoogle Gemini APIを使用している</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>URLを貼ってボタンを押すだけで秒速完結する専用ツール</blockquote><blockquote>極限まで摩擦を削ぎ落とし、1つの目的に特化したUIの快適さ</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/kossy_hub/articles/956b927776c353" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/kossy_hub/articles/956b927776c353" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=URL%E3%82%92%E8%B2%BC%E3%82%8B%E3%81%A0%E3%81%91%E3%81%A7Web%E3%83%9A%E3%83%BC%E3%82%B8%E3%82%92%E8%A6%96%E8%A6%9A%E8%A7%A3%E6%9E%90%E3%81%99%E3%82%8B%E5%80%8B%E4%BA%BA%E9%96%8B%E7%99%BA%E3%83%84%E3%83%BC%E3%83%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-07%2F97667d5ee380c1d5%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=URL%E3%82%92%E8%B2%BC%E3%82%8B%E3%81%A0%E3%81%91%E3%81%A7Web%E3%83%9A%E3%83%BC%E3%82%B8%E3%82%92%E8%A6%96%E8%A6%9A%E8%A7%A3%E6%9E%90%E3%81%99%E3%82%8B%E5%80%8B%E4%BA%BA%E9%96%8B%E7%99%BA%E3%83%84%E3%83%BC%E3%83%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-07/97667d5ee380c1d5/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-07%2F97667d5ee380c1d5%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../3066d7c9053b7524/"><span>前の記事</span>AIレビューの「全ファイル読み」を防ぐコンテキスト圧縮ツール</a><a class="next" href="../2aef122873a00a7d/"><span>次の記事</span>Goの「//go:」ディレクティブ7種を実践解説</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-07/">← 2026.10.07 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f6d211496355627b/">ゴルーチンとチャネルで学ぶ「終了を伝える」設計</a></h3>
+<p class="excerpt">筆者はGo言語のゴルーチン（Goの軽量スレッド）とチャネルを使い、標準入力を受け取って表示する簡易CLIアプリを作成した体験を記事にまとめています。アプリは標準入力を待つゴルーチン、入力を表示するゴルーチン、強制終了シグナルを待つメイン…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../3066d7c9053b7524/">AIレビューの「全ファイル読み」を防ぐコンテキスト圧縮ツール</a></h3>
+<p class="excerpt">AIレビューエージェントがコードレビュー時に不要なファイルまで読み込み、トークンを浪費してしまう問題への対策として、OSSツール「code-review-graph」（tirth8205作、v2.3.6、MITライセンス）を使う実装手順…</p>
+<div class="article-meta"><span class="badge rumor">噂</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2aef122873a00a7d/">Goの「//go:」ディレクティブ7種を実践解説</a></h3>
+<p class="excerpt">Go言語の「//go:」で始まるコンパイラ／ツール向けディレクティブ7種（go:generate、go:build、go:embed、go:noinline、go:noescape、go:linkname、go:nosplit）を実践的…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
