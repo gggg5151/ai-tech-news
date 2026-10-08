@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026.10.08 の号 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026.10.08の号: GPT-6が全ユーザーへ展開開始、応答にボタンや図表を組み込む「Intelligent UI」も登場 / Claude Haiku 5.5が運用コスト75%減・最速モデルとして登場 / Mistral Large 4「le Chonk」で欧州発1兆パラメータモデルが公開プレビュー / OpenAIがフロンティアモデルの数学的成果をGitHubで一挙公開 / Claude…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="2026.10.08 の号 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026.10.08の号: GPT-6が全ユーザーへ展開開始、応答にボタンや図表を組み込む「Intelligent UI」も登場 / Claude Haiku 5.5が運用コスト75%減・最速モデルとして登場 / Mistral Large 4「le Chonk」で欧州発1兆パラメータモデルが公開プレビュー / OpenAIがフロンティアモデルの数学的成果をGitHubで一挙公開 / Claude…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-10-08/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-10-08/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="active" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-08">2026年10月8日（木）</time><span class="edition-count">16記事・読了まで約13分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>GPT-6が全ユーザーへ展開開始、応答にボタンや図表を組み込む「Intelligent UI」も登場</li><li>Claude Haiku 5.5が運用コスト75%減・最速モデルとして登場</li><li>Mistral Large 4「le Chonk」で欧州発1兆パラメータモデルが公開プレビュー</li><li>OpenAIがフロンティアモデルの数学的成果をGitHubで一挙公開</li><li>Claude CodeのExploreサブエージェント、実はHaikuじゃなくなっていた問題を実測検証</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-8b11168e21e078a5">ChatGPTにGPT-6展開開始、応答はテキストだけでなく操作可能なUIに</a></li><li><a href="#a-c860c2d04b1b883c">Claude Haiku 5.5、コスト75%減で「現時点で最速」のモデルに</a></li><li><a href="#a-aec9722fc5e48ba5">Mistral Large 4「le Chonk」、欧州発1兆パラメータモデルが公開プレビューに</a></li><li><a href="#a-e09f9a818ff15274">OpenAI、フロンティアモデルの数学的成果をGitHubで公開</a></li><li><a href="#a-23cc4d1c9a903b4d">OpenAI、型付き判断を高速に返す「Decisions API」を公開ベータに</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-1b18014fa84ed0da">手動テストを渡すだけでE2Eが完成、kickflowの自動化基盤</a></li><li><a href="#a-9d3b62201f47b2db">レビューの口伝を40ルールに棚卸ししてAIレビューに実装</a></li><li><a href="#a-bc6c3707e921eac6">Claude CodeのExplore、いつの間にかHaikuから本体モデルに変更されていた</a></li><li><a href="#a-767e3d0f8541ad34">英語メッセージそのものをキーにするGo向けi18nライブラリ</a></li><li><a href="#a-b378a50b737ab240">Server ActionでDB更新しても画面が変わらない理由</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-e18b5aa3645c4e1b">Go製セキュリティスキャナーtrivy、38kスターの実績</a></li><li><a href="#a-d779ef0d00f2c5a9">AIが設計したAIアクセラレータ「OpenTPU」</a></li><li><a href="#a-e971dc45e76a5aad">PS5バイナリをエミュなしでPCに移植する「AnyPS5」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-e55240fa84567780">プロンプトインジェクションに強いWebエージェントを育てる訓練法</a></li><li><a href="#a-e4060516b407ef0b">コーディングエージェントは静的解析チェッカーを作れるか</a></li><li><a href="#a-dd3709c675274f65">LLMに「教え方」を学ばせる適応的チュータリング「Sherpa」</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-8b11168e21e078a5">
+<h3><a href="../../articles/2026-10-08/8b11168e21e078a5/">ChatGPTにGPT-6展開開始、応答はテキストだけでなく操作可能なUIに</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIは10月7日、ChatGPTの無料・有料ユーザー全員に向けてGPT-6の展開を開始したと発表しました。週間ユーザー数が12億人以上というプロダクト規模での切り替えで、展開はPlus/Pro/Business/Enterprise層から始まり、Free/Go層には翌日から順次届く予定です。</p>
+<p>今回の目玉は「Intelligent UI」と呼ばれる新機能です。AIの応答が対話テキストだけでなく、グラフ・ボタン・フォーム・インタラクティブな図表などを組み合わせた視覚的・操作的な形式で返せるようになりました。公式の言葉を借りれば「人がソフトウェアに合わせるのではなく、ソフトウェアが人に合わせる」方向への転換だとしています。</p>
+<p>性能面では、GPT-6が<strong>思考（thinking）と回答（answering）を並行して処理</strong>する設計を採用しており、より高速かつ高品質な応答を実現するとされています。実際にGPT-6 InstantのWeb検索応答の開始時間は、前モデルのGPT-5.6 Instantより平均44%高速化したと報告されています。</p>
+<p>なお上位層ではGPT-6 Solモデル、Free/Go層ではGPT-6 Lunaモデルという使い分けがされており、同じ「GPT-6」でも提供層によって中身のモデルが異なる点は留意しておきたいところです。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/gpt-6-for-everyone" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/8b11168e21e078a5/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c860c2d04b1b883c">
+<h3><a href="../../articles/2026-10-08/c860c2d04b1b883c/">Claude Haiku 5.5、コスト75%減で「現時点で最速」のモデルに</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span></div>
+<div class="paper-body"><p>Anthropicは10月7日、新モデル「Claude Haiku 5.5」（モデルID: claude-haiku-5-5）を発表しました。従来のHaiku 4.5と比べ運用コストを平均約75%削減しながら各種ベンチマークで高い性能を示す、同社の現時点で最速のモデルと位置付けられています。</p>
+<p>価格は100kトークン以下の場合、入力$0.10・出力$0.50（百万トークンあたり）。100kトークン超では入力$0.50・出力$2.50となります。リクエストの90%は10万トークン以下に収まるとされており、大半の利用シーンではHaiku 4.5比で90%低価格になる計算です。</p>
+<p>ベンチマークではOSWorld 2.1（オフラインサブセット）で72.4%、Humanity&#x27;s Last Exam（ツールなし）で45.9%を記録。調整可能な努力設定（effort setting）に対応し、コンピュータ操作やブラウザ操作にも対応します。導入企業のAsanaはレイテンシが30%減少し、推論が最大2.5倍高速化したと報告しています。</p>
+<p>あわせてSonnet 5.5のキャッシュ読込価格も50%引き下げられ$0.10/百万トークンになったほか、Max・TeamサブスクライバーにはAPIクレジットが新たに導入されました。モデル更新と同時に周辺の価格体系も動いた形です。</p></div>
+<p class="paper-source"><a href="https://www.anthropic.com/claude-haiku-5-5" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/c860c2d04b1b883c/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-aec9722fc5e48ba5">
+<h3><a href="../../articles/2026-10-08/aec9722fc5e48ba5/">Mistral Large 4「le Chonk」、欧州発1兆パラメータモデルが公開プレビューに</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>mistral.ai</span></div>
+<div class="paper-body"><p>Mistralが新フラッグシップモデル「Mistral Large 4」（通称「le Chonk」）を発表しました。1兆パラメータのネイティブマルチモーダルモデルで、実際に動く（アクティブ）パラメータは520億。10月6日からMistral Studio経由で公開プレビューが利用可能になり、月末までにはモデルの<strong>重み（パラメータ本体）も公開予定</strong>です。</p>
+<p>コーディングやエージェント的ワークフロー、マルチモーダル理解で高い性能を発揮するとされ、オープンソース部門でもトップクラスの成果を達成しているとのことです。サイバーセキュリティ領域のベンチマークでも、脆弱性発見・パッチ作成で82%、Cybenchで93%というスコアを記録し、160以上の言語に対応します。</p>
+<p>学習にはヨーロッパの自社データセンターでNVIDIA Grace Blackwell GPU 3,800基が使われました。同社が調達した30億ユーロのシリーズD資金によるロードマップの最初のマイルストーンと位置付けられており、米国勢に対する欧州発モデルの存在感を示す発表といえそうです。</p></div>
+<p class="paper-source"><a href="https://mistral.ai/news/mistral-large-4/\" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/aec9722fc5e48ba5/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e09f9a818ff15274">
+<h3><a href="../../articles/2026-10-08/e09f9a818ff15274/">OpenAI、フロンティアモデルの数学的成果をGitHubで公開</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIは、自社のフロンティアAIモデルが生み出した広範な数学的成果をGitHubリポジトリで公開しました。外部の有識者グループ「Independent Advisory Group on Mathematics and Artificial Intelligence」と協力してベストプラクティスを策定し、論文改訂や引用に関するプロトコルも合わせて公開しています。</p>
+<p>公開された証明の多くは<strong>Lean（数学的証明をコンピュータで検証できるプログラミング言語）</strong>を用いて形式化されており、モデルの推論過程の要約10個を含む詳細情報も確認できます。平均的な結果の生成には、ChatGPT Proの約3時間分の思考に相当する計算量が使われたとのことです。</p>
+<p>OpenAIは今後、AIが生成した重要な数学的成果の理解に関する研究会やカンファレンスへの資金提供を予定しており、コミュニティからのフィードバックを受けて基準を継続的に改善していくとしています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/sharing-ai-progress-in-mathematics" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/e09f9a818ff15274/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-23cc4d1c9a903b4d">
+<h3><a href="../../articles/2026-10-08/23cc4d1c9a903b4d/">OpenAI、型付き判断を高速に返す「Decisions API」を公開ベータに</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>developers.openai.com</span></div>
+<div class="paper-body"><p>OpenAIの新API「Decisions API」がパブリックベータとして公開されました。テキストや画像を評価し、真偽確率・選択・スコアといった型付けされた回答を返すAPIで、既存のResponses APIより約10倍高速とされています。数週間以内にGA（一般提供）される予定です。</p>
+<p>サポートする質問タイプは3種類です。条件の真偽確率（0〜1）を返す「述語型」（例: 製品の損傷検出）、固定選択肢から最適な値を選ぶ「選択型」（例: 顧客苦情の部門ルーティング）、順序付きレベルに対する確率加重平均スコアを返す「スコア型」（例: 問題の重大度評価）です。</p>
+<p>利用できるモデルはgpt-6-lunaのみで、専用エンドポイントPOST /v1/decisionsを使用します。価格は入力トークン1Mあたり$0.10で出力・キャッシュの追加費用はなし。ZDR（データを保持しない運用）やHIPAA対応など、エンタープライズ向け機能も備えています。</p></div>
+<p class="paper-source"><a href="https://developers.openai.com/api/docs/guides/decisions" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/23cc4d1c9a903b4d/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-1b18014fa84ed0da">
+<h3><a href="../../articles/2026-10-08/1b18014fa84ed0da/">手動テストを渡すだけでE2Eが完成、kickflowの自動化基盤</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.kickflow.co.jp</span></div>
+<div class="paper-body"><p>kickflowのQAチームが、テストケース管理ツール「KickRail」に登録した手動テストケースから、Claude Codeを使ってPlaywrightのE2E（End to End）テストを自動生成し、PRを出すところまでを自動化する仕組みを構築しました。</p>
+<p>テストランURLを入力すると、ケース取得→E2E化すべきかの判断→既存テストとの重複確認→デプロイ確認→実行時間見積もり→テナント自動割り当て→承認→実装、という段階が進みます。Sandbox環境にはE2Eテスト専用のテナントが100個用意されており、「未使用優先、次にシナリオ数が最も少ないテナントを選択」というロジックで<strong>自動割り当て</strong>することで、テストデータの破損などの問題を防いでいます。</p>
+<p>導入効果は顕著で、8月中旬には7機能・63テストだったものが9月末には20機能・116ファイル・346テストに拡大しました。テストラン完了からE2EのPRが出るまでの時間の中央値は2.5日に短縮され、テスト自体も並列実行により1〜4分で完了するとのことです。</p></div>
+<p class="paper-source"><a href="https://tech.kickflow.co.jp/entry/2026/10/06/105939" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/1b18014fa84ed0da/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-9d3b62201f47b2db">
+<h3><a href="../../articles/2026-10-08/9d3b62201f47b2db/">レビューの口伝を40ルールに棚卸ししてAIレビューに実装</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>e-dash社のエンジニアKezuka氏が、バックエンドレビューで口頭伝承されていた暗黙のルールを明文化し、AIレビューツールに組み込んだ取り組みを報告しています。半年分のマージ済みPR1,135件から「.goファイルへのインラインコメント」1,105件を抽出し、発言者名を削除したうえでClaudeを使ってクラスタリング。週次会議でルールの採否を判定し、採用36件・不採用2件・保留2件、合計40ルールにまとめました。</p>
+<p>実装面では、40ルールのうち39件はドキュメント参照形式とし、スキル本体に直接含めたのは3件のみという設計にしています。運用中にスキルは33回改訂され、サイズは約8KBから19KBに拡大しました。</p>
+<p>導入前後の変化として、1PRあたりのレビューコメント数自体は1.32件で変わりませんでしたが、<strong>指摘なしで承認されたPRの割合は64.5%から71.2%に増加</strong>しました。一方でPRサイズの中央値は5ファイルから7ファイルに増加し、レビューの往復回数も2.73回から3.75回に増加するという、期待通りではない副作用も報告されています。実際、1-2ファイルのPRでは0.44件だったコメント数が、21-50ファイルのPRでは3.04件に増えるなど、PR規模とコメント数の比例関係も確認されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/edash_tech_blog/articles/c52409a3d6fa12" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/9d3b62201f47b2db/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-bc6c3707e921eac6">
+<h3><a href="../../articles/2026-10-08/bc6c3707e921eac6/">Claude CodeのExplore、いつの間にかHaikuから本体モデルに変更されていた</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span></div>
+<div class="paper-body"><p>株式会社JQITのエンジニアが、Claude Codeの調べもの専用サブエージェント「Explore」のデフォルトモデルを独自に検証した記事です。バージョン2.0.17（2025年10月15日リリース）では「Haiku」モデルで動作していたExploreが、バージョン2.1.198（2026年7月1日リリース）からは本体と同じモデル（上限Opus）で動作する仕様に変わっていたことが分かったといいます。</p>
+<p>著者はOpus 5.5を本体モデルとして27回の実行で検証を実施。Exploreを明示的にHaikuに戻すことで、重い調べもの（6,656ファイル対象）では費用が35%削減され時間は変わらず、軽い調べもの（検索2つ）では費用が21%削減された一方で時間は約2.2倍に増加したと報告しています。</p>
+<p>設定は環境変数だけでは変更できず、<strong>.claude/agents/Explore.mdファイルに「model: haiku」と記述する必要がある</strong>とのことです。アップデートで気づかぬうちにコストが変わっているケースがあるという、Claude Codeを日常的に使っている人には実利のある知見です。</p></div>
+<p class="paper-source"><a href="https://qiita.com/suwa_nobu/items/be41c19295ef0e58e7f2?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/bc6c3707e921eac6/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-767e3d0f8541ad34">
+<h3><a href="../../articles/2026-10-08/767e3d0f8541ad34/">英語メッセージそのものをキーにするGo向けi18nライブラリ</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>アイデアマンズ株式会社代表取締役のmiyanaga氏が、自身が開発したGo言語用i18n（多言語化対応）ライブラリ「go-l10n」の設計思想を解説しています。社内ツールを多言語化する過程で生まれたライブラリです。</p>
+<p>一般的なi18nライブラリは翻訳キーを別途用意する方式を取りますが、筆者はこの方式が自分には認知的な負荷が高く感じられたと述べています。そこでgo-l10nでは、&quot;Hello, World!&quot;のような<strong>英語メッセージ文字列自体を辞書のキーとして使う</strong>設計を採用しました。</p>
+<p>この設計により、コードを読むだけで表示文言が明確になる、メッセージ変更時に辞書内の対応箇所を探し直す手間が不要になる、未翻訳メッセージは英語のまま出力され実装を中断せずに進められる、といった利点があるといいます。一方で照合速度や複数形対応面でのトレードオフもあると筆者は認めています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/miyanaga/articles/zenn-2026-10-06" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/767e3d0f8541ad34/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b378a50b737ab240">
+<h3><a href="../../articles/2026-10-08/b378a50b737ab240/">Server ActionでDB更新しても画面が変わらない理由</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Next.jsのServer Actionを使ってDBを更新しても画面が再レンダリングされない現象について、著者が自身のポートフォリオプロジェクト「Hubpin」の実装中に経験した内容を記録しています。</p>
+<p>原因は、Next.jsがServer Action内部でDBが実際に変更されたかどうかを自動的には検知できないことにあります。著者は「中でSupabaseを呼んだのか、ログを吐いただけなのかを区別できません」と説明しており、キャッシュの再検証を明示的に指示しない限り画面は更新されません。</p>
+<p>解決策はシンプルで、Server Actionに<strong>revalidatePath(&#x27;/dashboard&#x27;)</strong>を追加すること。これにより該当パスのキャッシュが古くなったことがフレームワークに通知され、POSTレスポンスに更新後のコンポーネント（RSCペイロード）が同梱されて画面が更新されます。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/matsutake_prgrm/articles/next-did-not-know-the-db-changed" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/b378a50b737ab240/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-e18b5aa3645c4e1b">
+<h3><a href="../../articles/2026-10-08/e18b5aa3645c4e1b/">Go製セキュリティスキャナーtrivy、38kスターの実績</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>aquasecurity製の「Trivy」は、コンテナイメージ、ファイルシステム、Gitリポジトリ、仮想マシンイメージ、Kubernetesなど多様なターゲットをスキャンできる包括的なセキュリティスキャナーです。</p>
+<p>OSパッケージやソフトウェア依存関係（SBOM）、既知の脆弱性（CVE）、IaC（インフラをコードで管理する仕組み）の設定ミス、機密情報（シークレット）、ソフトウェアライセンスといった幅広い課題を検出できます。Homebrew・Docker・バイナリ配布など複数の入手方法があり、GitHub Actions・Kubernetesオペレータ・VS Code拡張など各種エコシステムとの統合も可能です。</p>
+<p>Apache-2.0ライセンスで公開されており、38.3kスター、743フォーク、4,268コミットという実績あるプロジェクトです。</p></div>
+<p class="paper-source"><a href="https://github.com/aquasecurity/trivy" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/e18b5aa3645c4e1b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-d779ef0d00f2c5a9">
+<h3><a href="../../articles/2026-10-08/d779ef0d00f2c5a9/">AIが設計したAIアクセラレータ「OpenTPU」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
+<div class="paper-body"><p>OpenTPUは、AIエージェントによって開発されたオープンソースのAIアクセラレータプロジェクトです。RTL（SystemVerilog）、命令セット、シミュレータ、コンパイラ、プロファイラ、ホストソフトウェアを単一のモノレポにまとめ、Xilinx Kintex-7 FPGA上で実際にLLM推論を動かすことを目標にしています。</p>
+<p>LFM2.5、Qwen3系、Gemma 4など複数の現代的なモデルに対応し、int8および4ビット量子化にも対応。LFM2.5-230Mモデルはint8でデコード速度52.3トークン/秒を実現し、複数のモデルが実機FPGA上での動作検証済みで、シミュレータの結果とも一致しているとのことです。</p>
+<p>AIエージェントがハードウェア設計にどこまで到達できるか、自身の推論を実行するチップを構築できるかを探求する実験的プロジェクトと位置づけられています。Apache License 2.0で公開中です。</p></div>
+<p class="paper-source"><a href="https://github.com/FeSens/openTPU" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/d779ef0d00f2c5a9/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e971dc45e76a5aad">
+<h3><a href="../../articles/2026-10-08/e971dc45e76a5aad/">PS5バイナリをエミュなしでPCに移植する「AnyPS5」</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
+<div class="paper-body"><p>「AnyPS5」は、PS5用実行可能ファイルをエミュレーションなしでLinuxおよびWindowsにネイティブ移植するプロジェクトです。実行ファイルをターゲットのネイティブフォーマットに変換するリンカー、動的リンク用のシステムライブラリ（PRX）実装、SPIR-V出力に対応したシェーダー再コンパイラという3つの主要コンポーネントで構成されます。</p>
+<p>READMEにはシステムライブラリとシェーダー対応の進捗バッジがありますが、これは全PS5システム関数に対する割合ではなく、現時点で宣言済みの関数のうちの割合とのことです。ゲーム互換性リストも整備されており、例としてDreaming Sarah（2Dプラットフォーマー）がGTX 1050 Ti/i5-7500環境で60fps安定動作したと記載されています。</p>
+<p>作者は相互運用性・研究・保存・互換性目的であることを明記し、著作権物の配布や暗号鍵・ライブラリは含まないとした上で、法令遵守はユーザー責任としています。</p></div>
+<p class="paper-source"><a href="https://github.com/boykopovar/AnyPS5" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/e971dc45e76a5aad/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-e55240fa84567780">
+<h3><a href="../../articles/2026-10-08/e55240fa84567780/">プロンプトインジェクションに強いWebエージェントを育てる訓練法</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>Webエージェント（LLMを使って自律的にWeb操作を行うエージェント）が第三者作成のWebページを読む際、ページに埋め込まれたプロンプトインジェクション（悪意ある指示文の埋め込み）によってユーザーの目標から逸脱させられるリスクがあります。既存の防御は訓練時に固定されたインジェクション例にしか対応できず、訓練後に変化する攻撃には弱いという課題がありました。</p>
+<p>本研究が提案する「AdvSim2Real」は、凍結済みのWeb world model（ウェブ世界モデル）シミュレータ内で、タスクを出すカリキュラム、インジェクションを仕掛ける敵対者、そしてWebエージェント自身を同時に共進化させて訓練する手法です。カリキュラムは成功率が約50%程度のタスクに報酬を与え、敵対者はエージェントのタスク成功を失敗に変えられたインジェクションにのみ報酬を与える仕組みになっています。</p>
+<p>4Bパラメータのエージェントで訓練した結果、通常のタスク遂行能力とインジェクション耐性を両立し、訓練時に使っていない最先端モデルによる未知の敵対的インジェクションに対しても頑健性を保てたとのこと。150件のWebタスクでの評価で、未知の敵対者条件下での完了率がベースエージェントに比べ<strong>33.6%相対的に向上</strong>したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.08773" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/e55240fa84567780/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e4060516b407ef0b">
+<h3><a href="../../articles/2026-10-08/e4060516b407ef0b/">コーディングエージェントは静的解析チェッカーを作れるか</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>「CheckerBench」は、長期的なタスクを遂行するAIコーディングエージェントが、脆弱性仕様を解釈し対象リポジトリを調査してアナライザー固有のロジックを実装し、コンパイルや分析結果のフィードバックを通じて静的解析用のチェッカー（検出ロジック）を改善・合成できるかを評価するベンチマークです。297個のCVEから導出された300タスクで構成され、167のリポジトリ、85種類のCWE（共通脆弱性タイプの分類）、5つのプログラミング言語エコシステムをカバーしています。</p>
+<p>21種類のモデル構成で評価した結果、平均Pass@1（1回の試行での正解率）は32.30%、最良構成でも45.33%にとどまりました。信頼性の高い再利用可能なチェッカーの開発は、現在のコーディングエージェントにとって依然難しい課題だと結論づけています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.07557" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/e4060516b407ef0b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-dd3709c675274f65">
+<h3><a href="../../articles/2026-10-08/dd3709c675274f65/">LLMに「教え方」を学ばせる適応的チュータリング「Sherpa」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>「Sherpa」は、LLMを「適応的に教える教師」として訓練するフレームワークです。従来は固定的な教授戦略だったのに対し、Sherpaは学生モデル（LLMで実装された複数の学習嗜好アーキタイプ）の実際の学習成果を最大化するよう、多段階の強化学習で教師モデルを訓練する点が特徴です。</p>
+<p>訓練済み教師モデルは複数の学生アーキタイプに対して性能を平均20.5ポイント向上させ、教育ベンチマークMathTutorBenchでのスコアも52.5%から79.2%に上昇。人間評価でもベースモデルより79.6%の確率で選好されたと報告されています。コードはGitHubで公開されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.08778" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-08/dd3709c675274f65/">要点と引用を見る</a></p>
+</article></section>
+<section class="code-teaser" id="code">
+<h2><span class="category-dot"></span>今日のコード</h2>
+<p class="code-teaser-repo"><span class="mono">aquasecurity/trivy</span> / <code>pkg/dependency/parser/golang/sum/parse.go</code></p>
+<p>Trivyはコンテナイメージやコードリポジトリの脆弱性・設定ミスを検出するスキャナーです。依存関係を正しく把握するために、様々な言語のロックファイルを解析するパーサーを言語ごとに持っています。今回読むのはGoのgo.sumファイル(依存パッケージのハッシュ値一覧)を解析する部分です。ファイルをテキストとして読み、必要な情報だけ抜き出して構造体のスライスに変換する、実務でよくある「パーサーを書く」パターンがコンパクトに詰まっています。</p>
+<a class="button-link" href="../../code/2026-10-08/">コードを読む</a>
+</section><nav class="neighbors issue-neighbors" aria-label="前後の号"><a class="prev" href="../2026-10-07/"><span>前の号</span>2026.10.07</a><span></span></nav>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

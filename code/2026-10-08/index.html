@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aquasecurity/trivy の pkg/dependency/parser/golang/sum/parse.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Trivyはコンテナイメージやコードリポジトリの脆弱性・設定ミスを検出するスキャナーです。依存関係を正しく把握するために、様々な言語のロックファイルを解析するパーサーを言語ごとに持っています。今回読むのはGoのgo.sumファイル(依存パッケージのハッシュ値一覧)を解析する部分です。ファイルをテキストとして読み、必要な…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="aquasecurity/trivy の pkg/dependency/parser/golang/sum/parse.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Trivyはコンテナイメージやコードリポジトリの脆弱性・設定ミスを検出するスキャナーです。依存関係を正しく把握するために、様々な言語のロックファイルを解析するパーサーを言語ごとに持っています。今回読むのはGoのgo.sumファイル(依存パッケージのハッシュ値一覧)を解析する部分です。ファイルをテキストとして読み、必要な…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-08/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-08/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.08</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>aquasecurity/trivy の <code>pkg/dependency/parser/golang/sum/parse.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/aquasecurity/trivy/blob/HEAD/pkg/dependency/parser/golang/sum/parse.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-08">2026.10.08</time></div>
+</header>
+<div class="article-body">
+<p>Trivyはコンテナイメージやコードリポジトリの脆弱性・設定ミスを検出するスキャナーです。依存関係を正しく把握するために、様々な言語のロックファイルを解析するパーサーを言語ごとに持っています。今回読むのはGoの`go.sum`ファイル(依存パッケージのハッシュ値一覧)を解析する部分です。ファイルをテキストとして読み、必要な情報だけ抜き出して構造体のスライスに変換する、実務でよくある「パーサーを書く」パターンがコンパクトに詰まっています。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// Parse parses a go.sum file
+func (p *Parser) Parse(_ context.Context, r xio.ReadSeekerAt) ([]ftypes.Package, []ftypes.Dependency, error) {
+	var pkgs []ftypes.Package
+	uniquePkgs := make(map[string]string)
+
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		s := strings.Fields(line)
+		if len(s) &lt; 2 {
+			continue
+		}
+
+		// go.sum records and sorts all non-major versions
+		// with the latest version as last entry
+		uniquePkgs[s[0]] = strings.TrimSuffix(s[1], &quot;/go.mod&quot;)
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, nil, xerrors.Errorf(&quot;scan error: %w&quot;, err)
+	}
+
+	for k, v := range uniquePkgs {
+		pkgs = append(pkgs, ftypes.Package{
+			ID:      dependency.ID(ftypes.GoModule, k, v),
+			Name:    k,
+			Version: v,
+		})
+	}
+
+	return pkgs, nil, nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func (p *Parser) Parse(_ context.Context, r xio.ReadSeekerAt) ([]ftypes.Package, []ftypes.Dependency, error) {</code></pre><p>`(p *Parser)`はメソッドのレシーバです。`Parser`という構造体に`Parse`というメソッドを紐付けています。`*Parser`の`*`は「ポインタ型」を意味し、構造体のコピーではなく元のデータへの参照を受け取ります。引数`_ context.Context`の`_`はGoのブランク識別子で、「この引数は受け取るが使わない」ことを明示する書き方です(キャンセル処理など他の実装では使うため型だけ揃えている)。戻り値は`()`で囲んで3つ並べており、Goの関数は複数の値を同時に返せます。ここでは「パッケージ一覧」「依存関係一覧」「エラー」の3つです。</p></div><div class="walk-step"><pre class="walk-quote"><code>var pkgs []ftypes.Package</code></pre><p>`var 変数名 型`という宣言文です。`[]ftypes.Package`は`ftypes.Package`型の要素を持つスライス(可変長配列)を表します。初期値を書いていないので`pkgs`はまだ要素のない`nil`スライスとして始まります。Goでは`nil`スライスに対して後述の`append`を呼んでも安全に動きます。</p></div><div class="walk-step"><pre class="walk-quote"><code>uniquePkgs := make(map[string]string)</code></pre><p>`:=`は「型を明示せず、右辺の値から型を推論して新しい変数を作る」代入です。`make(map[string]string)`は空のmap(辞書)を作る組み込み関数で、キーと値がどちらも`string`型のmapを生成します。この後、パッケージ名をキー、バージョンを値として使い、同じパッケージ名の重複を自然に防ぐための入れ物として使われます。</p></div><div class="walk-step"><pre class="walk-quote"><code>scanner := bufio.NewScanner(r)
+	for scanner.Scan() {</code></pre><p>`bufio.NewScanner(r)`は、ファイルの中身を1行ずつ読み進めるための`Scanner`を作ります。`r`は関数の引数で受け取ったファイルのようなもの(読み取り可能なデータ源)です。`for scanner.Scan() { ... }`は「次の行があるかぎり繰り返す」ループです。`Scan()`は次の行を読み込めたら`true`、ファイルの終わりに達したら`false`を返すので、これがそのままループの継続条件になっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>line := strings.TrimSpace(scanner.Text())</code></pre><p>`scanner.Text()`は直前に`Scan()`で読み込んだ1行分の文字列を返します。`strings.TrimSpace(...)`はその文字列の先頭と末尾にある空白文字(スペースや改行など)を取り除きます。go.sumのファイルは行末に余分な空白が入ることがあるため、このひと手間で以降の処理を安定させています。</p></div><div class="walk-step"><pre class="walk-quote"><code>s := strings.Fields(line)</code></pre><p>`strings.Fields(line)`は、文字列を空白(スペースやタブ)で区切って単語ごとの`[]string`(文字列のスライス)に分割します。go.sumの1行は`モジュール名 バージョン ハッシュ値`のようにスペース区切りになっているので、これで`s[0]`がモジュール名、`s[1]`がバージョン情報として取り出せるようになります。</p></div><div class="walk-step"><pre class="walk-quote"><code>if len(s) &lt; 2 {
+			continue
+		}</code></pre><p>`len(s)`はスライス`s`の要素数を返します。分割した結果が2つ未満(つまりモジュール名とバージョンの両方が揃っていない)なら、その行は想定外のフォーマットとして無視します。`continue`はループの残りの処理をスキップして次の繰り返しに進む文です。こうした「異常値はスキップして先に進む」防御的な書き方は、外部ファイルを読むパーサーでは定番です。</p></div><div class="walk-step"><pre class="walk-quote"><code>// go.sum records and sorts all non-major versions
+		// with the latest version as last entry
+		uniquePkgs[s[0]] = strings.TrimSuffix(s[1], &quot;/go.mod&quot;)</code></pre><p>コメントは「go.sumは同じモジュールの複数バージョンを記録し、最新バージョンを最後に並べている」という事実を説明しています。`strings.TrimSuffix(s[1], &quot;/go.mod&quot;)`はバージョン文字列の末尾に`/go.mod`が付いていれば取り除く処理です(go.sumにはバージョンそのものと、そのgo.modファイルのハッシュの2種類の行があるため)。`uniquePkgs[s[0]] = ...`はmapへの書き込みで、同じキー(モジュール名)に対して複数回書き込むと後の値で上書きされます。go.sumが古いバージョンから新しいバージョンの順に並んでいることを利用し、ループを最後まで回すと自然に「各モジュールの最新バージョンだけが残る」仕組みになっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>if err := scanner.Err(); err != nil {
+		return nil, nil, xerrors.Errorf(&quot;scan error: %w&quot;, err)
+	}</code></pre><p>`if err := scanner.Err(); err != nil { ... }`は、Goで非常によく使われる書き方です。`if`文の中で`:=`を使って変数`err`を宣言しつつ、その直後にセミコロンで区切って条件式`err != nil`を書いています。`scanner.Err()`はループ中に読み込みエラーが起きていたかを確認するメソッドで、ループを抜けた後に呼ぶのが定石です。エラーがあれば`xerrors.Errorf(&quot;scan error: %w&quot;, err)`で元のエラーを`%w`でラップ(包んで)し、「どこでどんなエラーが起きたか」の情報を保ったまま呼び出し元に返します。3つの戻り値のうち使わない`pkgs`と`dependencies`には`nil`を入れています。</p></div><div class="walk-step"><pre class="walk-quote"><code>for k, v := range uniquePkgs {</code></pre><p>`range`はスライスやmapなどの「コレクション」を順番に取り出すための構文です。mapに対して使うと、1回のループで「キー」と「値」の2つを同時に受け取れます。ここでは`k`にモジュール名、`v`にバージョンが入ります。mapの反復順序はGoの仕様上保証されていない(実行するたびに順番が変わりうる)ため、ここでの順序は結果に影響しません。</p></div><div class="walk-step"><pre class="walk-quote"><code>pkgs = append(pkgs, ftypes.Package{
+			ID:      dependency.ID(ftypes.GoModule, k, v),
+			Name:    k,
+			Version: v,
+		})</code></pre><p>`ftypes.Package{ ID: ..., Name: ..., Version: ... }`は構造体リテラルで、フィールド名を指定しながらその場で値を詰めた構造体を作る書き方です。`append(pkgs, ...)`はスライス`pkgs`の末尾に新しい要素を追加した「新しいスライス」を返す組み込み関数で、`pkgs = append(...)`のように元の変数に再代入するのが決まった使い方です。これをmapの全要素についてループで繰り返すことで、mapの中身を最終的なスライス形式に変換しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>dependency.ID(ftypes.GoModule, k, v)</code></pre><p>`dependency.ID`は別パッケージ(`dependency`)にある関数の呼び出しです。パッケージ種別(`ftypes.GoModule`)、モジュール名`k`、バージョン`v`の3つから、Trivy内部で一意に識別するためのID文字列を組み立てています。パーサー自身はID生成ロジックの詳細を知らなくても、専用の関数に委譲することで責務を分離している例です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return pkgs, nil, nil</code></pre><p>関数の最後で3つの戻り値をまとめて返しています。1つ目は組み立てた`pkgs`、2つ目の依存関係リストはgo.sumからは「どのパッケージが何に依存しているか」という親子関係までは分からないため`nil`(空)、3つ目のエラーも正常終了なので`nil`です。呼び出し元はこの3つを順番に受け取って処理を続けます。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは「mapに書き込んで重複を自然に消し、range+appendでスライスに変換する」という組み合わせが、ユニークな集合を作る定番パターンです。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-07/"><span>前の日</span>rakyll/hey</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-08/">← 2026.10.08 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>レビューの口伝を40ルールに棚卸ししてAIレビューに実装 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="e-dash社のエンジニアKezuka氏が、バックエンドレビューで口頭伝承されていた暗黙のルールを明文化し、AIレビューツールに組み込んだ取り組みを報告しています。半年分のマージ済みPR1,135件から「.goファイルへのインラインコメント」1,105件を抽出し、発言者名を削除したうえでClaudeを使ってクラスタリン…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="レビューの口伝を40ルールに棚卸ししてAIレビューに実装 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="e-dash社のエンジニアKezuka氏が、バックエンドレビューで口頭伝承されていた暗黙のルールを明文化し、AIレビューツールに組み込んだ取り組みを報告しています。半年分のマージ済みPR1,135件から「.goファイルへのインラインコメント」1,105件を抽出し、発言者名を削除したうえでClaudeを使ってクラスタリン…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-08/9d3b62201f47b2db/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-08/9d3b62201f47b2db/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "レビューの口伝を40ルールに棚卸ししてAIレビューに実装", "datePublished": "2026-10-08", "description": "e-dash社のエンジニアKezuka氏が、バックエンドレビューで口頭伝承されていた暗黙のルールを明文化し、AIレビューツールに組み込んだ取り組みを報告しています。半年分のマージ済みPR1,135件から「.goファイルへのインラインコメント」1,105件を抽出し、発言者名を削除したうえでClaudeを使ってクラスタリング。週次会議でルールの採否を判定し、採用…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-08/9d3b62201f47b2db/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/edash_tech_blog/articles/c52409a3d6fa12", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-08/">2026.10.08 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>レビューの口伝を40ルールに棚卸ししてAIレビューに実装</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-08">2026.10.08</time></div>
+</header>
+<div class="article-body">
+<p>e-dash社のエンジニアKezuka氏が、バックエンドレビューで口頭伝承されていた暗黙のルールを明文化し、AIレビューツールに組み込んだ取り組みを報告しています。半年分のマージ済みPR1,135件から「.goファイルへのインラインコメント」1,105件を抽出し、発言者名を削除したうえでClaudeを使ってクラスタリング。週次会議でルールの採否を判定し、採用36件・不採用2件・保留2件、合計40ルールにまとめました。</p>
+<p>実装面では、40ルールのうち39件はドキュメント参照形式とし、スキル本体に直接含めたのは3件のみという設計にしています。運用中にスキルは33回改訂され、サイズは約8KBから19KBに拡大しました。</p>
+<p>導入前後の変化として、1PRあたりのレビューコメント数自体は1.32件で変わりませんでしたが、<strong>指摘なしで承認されたPRの割合は64.5%から71.2%に増加</strong>しました。一方でPRサイズの中央値は5ファイルから7ファイルに増加し、レビューの往復回数も2.73回から3.75回に増加するという、期待通りではない副作用も報告されています。実際、1-2ファイルのPRでは0.44件だったコメント数が、21-50ファイルのPRでは3.04件に増えるなど、PR規模とコメント数の比例関係も確認されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>e-dash社のエンジニア(Kezuka氏)がバックエンドレビューの口頭伝承ルールを明文化してAI審査ツールに組み込んだ</li><li>半年分のマージ済みPR1,135件から「.goファイルへのインラインコメント」1,105件を抽出した</li><li>発言者名を削除したうえでClaudeを使ってコメントをクラスタリングした</li><li>週次会議でルールの採否を判定した</li><li>判定結果は採用36件・不採用2件・保留2件で、合計40ルールとなった</li><li>40ルールのうち39件はドキュメント参照形式、スキル本体に直接含まれるのは3件のみという設計にした</li><li>運用中にスキルは33回改訂され、サイズは約8KBから19KBに拡大した</li><li>導入前後で1PRあたりのレビューコメント数は1.32件で変化がなかった</li><li>導入後、PRサイズの中央値は5ファイルから7ファイルに増加した</li><li>指摘なしで承認されたPRの割合は64.5%から71.2%に増加した</li><li>レビュー回数(往復数)は2.73回から3.75回に増加した</li><li>PR規模とコメント数には比例関係があり、1-2ファイルのPRでは0.44件、21-50ファイルのPRでは3.04件のコメントがついた</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/edash_tech_blog/articles/c52409a3d6fa12" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%81%AE%E5%8F%A3%E4%BC%9D%E3%82%9240%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AB%E6%A3%9A%E5%8D%B8%E3%81%97%E3%81%97%E3%81%A6AI%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%81%AB%E5%AE%9F%E8%A3%85%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-08%2F9d3b62201f47b2db%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%81%AE%E5%8F%A3%E4%BC%9D%E3%82%9240%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AB%E6%A3%9A%E5%8D%B8%E3%81%97%E3%81%97%E3%81%A6AI%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%81%AB%E5%AE%9F%E8%A3%85%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-08/9d3b62201f47b2db/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-08%2F9d3b62201f47b2db%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1b18014fa84ed0da/"><span>前の記事</span>手動テストを渡すだけでE2Eが完成、kickflowの自動化基盤</a><a class="next" href="../bc6c3707e921eac6/"><span>次の記事</span>Claude CodeのExplore、いつの間にかHaikuから本体モデルに変更されていた</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-08/">← 2026.10.08 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../1b18014fa84ed0da/">手動テストを渡すだけでE2Eが完成、kickflowの自動化基盤</a></h3>
+<p class="excerpt">kickflowのQAチームが、テストケース管理ツール「KickRail」に登録した手動テストケースから、Claude Codeを使ってPlaywrightのE2E（End to End）テストを自動生成し、PRを出すところまでを自動化…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>tech.kickflow.co.jp</span><time datetime="2026-10-08">2026.10.08</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../bc6c3707e921eac6/">Claude CodeのExplore、いつの間にかHaikuから本体モデルに変更されていた</a></h3>
+<p class="excerpt">株式会社JQITのエンジニアが、Claude Codeの調べもの専用サブエージェント「Explore」のデフォルトモデルを独自に検証した記事です。バージョン2.0.17（2025年10月15日リリース）では「Haiku」モデルで動作して…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-08">2026.10.08</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../767e3d0f8541ad34/">英語メッセージそのものをキーにするGo向けi18nライブラリ</a></h3>
+<p class="excerpt">アイデアマンズ株式会社代表取締役のmiyanaga氏が、自身が開発したGo言語用i18n（多言語化対応）ライブラリ「go-l10n」の設計思想を解説しています。社内ツールを多言語化する過程で生まれたライブラリです。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-08">2026.10.08</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>コーディングエージェントは静的解析チェッカーを作れるか — 1年目向けエンジニア新聞</title>
+<meta name="description" content="「CheckerBench」は、長期的なタスクを遂行するAIコーディングエージェントが、脆弱性仕様を解釈し対象リポジトリを調査してアナライザー固有のロジックを実装し、コンパイルや分析結果のフィードバックを通じて静的解析用のチェッカー（検出ロジック）を改善・合成できるかを評価するベンチマークです。297個のCVEから導出…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="コーディングエージェントは静的解析チェッカーを作れるか — 1年目向けエンジニア新聞">
+<meta property="og:description" content="「CheckerBench」は、長期的なタスクを遂行するAIコーディングエージェントが、脆弱性仕様を解釈し対象リポジトリを調査してアナライザー固有のロジックを実装し、コンパイルや分析結果のフィードバックを通じて静的解析用のチェッカー（検出ロジック）を改善・合成できるかを評価するベンチマークです。297個のCVEから導出…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-08/e4060516b407ef0b/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-08/e4060516b407ef0b/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "コーディングエージェントは静的解析チェッカーを作れるか", "datePublished": "2026-10-08", "description": "「CheckerBench」は、長期的なタスクを遂行するAIコーディングエージェントが、脆弱性仕様を解釈し対象リポジトリを調査してアナライザー固有のロジックを実装し、コンパイルや分析結果のフィードバックを通じて静的解析用のチェッカー（検出ロジック）を改善・合成できるかを評価するベンチマークです。297個のCVEから導出された300タスクで構成され、167のリ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-08/e4060516b407ef0b/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.07557", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-08/">2026.10.08 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>コーディングエージェントは静的解析チェッカーを作れるか</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-08">2026.10.08</time></div>
+</header>
+<div class="article-body">
+<p>「CheckerBench」は、長期的なタスクを遂行するAIコーディングエージェントが、脆弱性仕様を解釈し対象リポジトリを調査してアナライザー固有のロジックを実装し、コンパイルや分析結果のフィードバックを通じて静的解析用のチェッカー（検出ロジック）を改善・合成できるかを評価するベンチマークです。297個のCVEから導出された300タスクで構成され、167のリポジトリ、85種類のCWE（共通脆弱性タイプの分類）、5つのプログラミング言語エコシステムをカバーしています。</p>
+<p>21種類のモデル構成で評価した結果、平均Pass@1（1回の試行での正解率）は32.30%、最良構成でも45.33%にとどまりました。信頼性の高い再利用可能なチェッカーの開発は、現在のコーディングエージェントにとって依然難しい課題だと結論づけています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文のタイトルは「CheckerBench: Can Long-Horizon Agents Synthesize Static-Analysis Checkers?」である。</li><li>論文はHang Heを含む12名の著者による共著である。</li><li>論文は2026年10月6日に投稿された。</li><li>論文の分類はソフトウェアエンジニアリング、人工知能、暗号とセキュリティである。</li><li>CheckerBenchは297個のCVEから導出された300のタスクで構成される。</li><li>CheckerBenchは167のリポジトリをカバーしている。</li><li>CheckerBenchは85種類のCWE(Common Weakness Enumeration)をカバーしている。</li><li>CheckerBenchは5つのプログラミング言語エコシステムをカバーしている。</li><li>CheckerBenchの各タスクには脆弱版と修正版のコード、固定の分析環境、チェッカースキャフォルドが含まれる。</li><li>論文では21のモデル構成を評価した。</li><li>21のモデル構成における平均Pass@1は32.30%であった。</li><li>最も良いモデル構成のPass@1は45.33%であった。</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.07557" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AF%E9%9D%99%E7%9A%84%E8%A7%A3%E6%9E%90%E3%83%81%E3%82%A7%E3%83%83%E3%82%AB%E3%83%BC%E3%82%92%E4%BD%9C%E3%82%8C%E3%82%8B%E3%81%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-08%2Fe4060516b407ef0b%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AF%E9%9D%99%E7%9A%84%E8%A7%A3%E6%9E%90%E3%83%81%E3%82%A7%E3%83%83%E3%82%AB%E3%83%BC%E3%82%92%E4%BD%9C%E3%82%8C%E3%82%8B%E3%81%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-08/e4060516b407ef0b/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-08%2Fe4060516b407ef0b%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../e55240fa84567780/"><span>前の記事</span>プロンプトインジェクションに強いWebエージェントを育てる訓練法</a><a class="next" href="../dd3709c675274f65/"><span>次の記事</span>LLMに「教え方」を学ばせる適応的チュータリング「Sherpa」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-08/">← 2026.10.08 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../e55240fa84567780/">プロンプトインジェクションに強いWebエージェントを育てる訓練法</a></h3>
+<p class="excerpt">Webエージェント（LLMを使って自律的にWeb操作を行うエージェント）が第三者作成のWebページを読む際、ページに埋め込まれたプロンプトインジェクション（悪意ある指示文の埋め込み）によってユーザーの目標から逸脱させられるリスクがありま…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-08">2026.10.08</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../dd3709c675274f65/">LLMに「教え方」を学ばせる適応的チュータリング「Sherpa」</a></h3>
+<p class="excerpt">「Sherpa」は、LLMを「適応的に教える教師」として訓練するフレームワークです。従来は固定的な教授戦略だったのに対し、Sherpaは学生モデル（LLMで実装された複数の学習嗜好アーキタイプ）の実際の学習成果を最大化するよう、多段階の…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-08">2026.10.08</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-07/457e1d745390c67d/">エージェント的検索、精度は上がるがコストは160倍</a></h3>
+<p class="excerpt">NVIDIAなど11名の研究者による論文「Beyond Semantic Similarity: Performance and Costs of Agentic Retrieval for Complex Tasks」は、密検索（de…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-07">2026.10.07</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

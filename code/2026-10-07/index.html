@@ -85,7 +85,7 @@
 		}()
 	}</code></pre><p>Goの基本的なforループ（初期化; 条件; 更新）で `b.C` 回繰り返します。ループの中の `go func() { ... }()` が今日のポイントです。`func() { ... }` は名前のない関数（無名関数）をその場で定義しており、末尾の `()` はその関数をすぐに呼び出すという意味です。その呼び出しの前に `go` を付けることで、「この関数呼び出しを新しいgoroutineとして並行に実行し、呼び出し元はその終了を待たずに次のループへ進む」という指示になります。つまりこのループは `b.C` 本のgoroutineを次々に起動するだけで、ループ自体はすぐ終わります。各goroutineの中では `b.runWorker(client, b.N/b.C)` を呼んで実際のリクエスト送信を1ワーカー分（全リクエスト数 `b.N` を並列数 `b.C` で割った本数）行い、終わったら `wg.Done()` でWaitGroupのカウンターを1減らします。無名関数は外側の `client`、`b`、`wg` をそのまま参照できます（これを「クロージャ」と呼びます）。</p></div><div class="walk-step"><pre class="walk-quote"><code>wg.Wait()</code></pre><p>最後に `wg.Wait()` を呼ぶと、WaitGroupのカウンターが0になるまで（＝さきほど起動した `b.C` 本のgoroutineすべてが `wg.Done()` を呼び終わるまで）この行で処理がブロックされます。これにより `runWorkers` 関数は「全ワーカーが仕事を終えてから」初めてreturnします。goroutineを立てっぱなしにして関数が先に終わってしまう、という事故を防ぐ典型的な書き方です。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「goroutineを複数立ち上げて、全員の終了を `sync.WaitGroup` の `Add` → `go func(){...; wg.Done()}()` → `Wait()` という3点セットで待つ」のがGoで並行処理をする時の基本形。この形を覚えておけば、自分でワーカープールを書くときにまず迷わなくなります。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-06/"><span>前の日</span>yorukot/superfile</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-06/"><span>前の日</span>yorukot/superfile</a><a class="next" href="../2026-10-08/"><span>次の日</span>aquasecurity/trivy</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-07/">← 2026.10.07 の号を読む</a>
 </div>
 </article>
