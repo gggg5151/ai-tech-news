@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>p10node/k10s の internal/update/semver.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="k10sはKubernetesクラスタをマウスでも操作できるTUI（ターミナルUI）ツールで、Bubble Teaという非同期UIフレームワーク上に作られています。今回読むinternal/update/semver.goは、アプリの自動アップデート機能が「今のバージョンより新しいリリースが出ているか」を判定するために…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="p10node/k10s の internal/update/semver.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="k10sはKubernetesクラスタをマウスでも操作できるTUI（ターミナルUI）ツールで、Bubble Teaという非同期UIフレームワーク上に作られています。今回読むinternal/update/semver.goは、アプリの自動アップデート機能が「今のバージョンより新しいリリースが出ているか」を判定するために…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-09/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-09/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.09</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>p10node/k10s の <code>internal/update/semver.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/p10node/k10s/blob/HEAD/internal/update/semver.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-09">2026.10.09</time></div>
+</header>
+<div class="article-body">
+<p>k10sはKubernetesクラスタをマウスでも操作できるTUI（ターミナルUI）ツールで、Bubble Teaという非同期UIフレームワーク上に作られています。今回読むinternal/update/semver.goは、アプリの自動アップデート機能が「今のバージョンより新しいリリースが出ているか」を判定するために使うバージョン比較ロジックです。GitHubのリリースタグという実データを相手にする、教科書には出てこない泥臭い分岐（devビルドやビルドメタデータの扱い）が詰まっていて、Goの基本構文が実務でどう組み合わさるかを学ぶのにちょうど良い題材です。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// Compare orders two versions: -1 if a sorts before b, +1 if after, 0 if
+// they are the same release.
+func Compare(a, b string) int {
+	an, bn := Normalize(a), Normalize(b)
+	if an == bn {
+		return 0
+	}
+
+	aNum, aPre, aOK := split(an)
+	bNum, bPre, bOK := split(bn)
+
+	// An unparseable version (&quot;dev&quot;, &quot;main&quot;, a branch name) is older than
+	// any real one; two of them fall back to a stable string order so the
+	// comparison is still total.
+	switch {
+	case !aOK &amp;&amp; !bOK:
+		return strings.Compare(an, bn)
+	case !aOK:
+		return -1
+	case !bOK:
+		return 1
+	}
+
+	if c := compareNums(aNum, bNum); c != 0 {
+		return c
+	}
+	return comparePre(aPre, bPre)
+}
+
+// …略…
+
+// split separates &quot;1.4.0-rc.1&quot; into its numeric parts and its prerelease
+// tail. ok is false when the numeric head isn&#x27;t numeric at all.
+func split(v string) (nums []int, pre string, ok bool) {
+	head := v
+	if i := strings.IndexByte(v, &#x27;-&#x27;); i &gt;= 0 {
+		head, pre = v[:i], v[i+1:]
+	}
+	if head == &quot;&quot; {
+		return nil, &quot;&quot;, false
+	}
+	for _, p := range strings.Split(head, &quot;.&quot;) {
+		n, err := strconv.Atoi(p)
+		if err != nil || n &lt; 0 {
+			return nil, &quot;&quot;, false
+		}
+		nums = append(nums, n)
+	}
+	return nums, pre, true
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func Compare(a, b string) int {</code></pre><p>関数宣言です。funcがキーワード、Compareが関数名、(a, b string)は引数a, bが両方string型であることを示します（同じ型が続くときはまとめて最後に1回だけ書けます）。戻り値はint型ひとつ。コメントにある通り「aがbより小さければ-1、大きければ+1、同じなら0を返す」という、ソート処理でよく使われる比較関数の型（コンパレータ）です。</p></div><div class="walk-step"><pre class="walk-quote"><code>an, bn := Normalize(a), Normalize(b)</code></pre><p>:=は「型を書かずに変数を宣言して値を代入する」短縮記法です。右辺でNormalize(a)とNormalize(b)という2つの関数呼び出しの結果を、左辺のan, bnにそれぞれ対応させて同時代入しています。Normalizeは別の関数で、先頭の&quot;v&quot;やビルド番号などの飾りを取り除く処理です（このファイルの前半に定義があります）。</p></div><div class="walk-step"><pre class="walk-quote"><code>if an == bn {
+		return 0
+	}</code></pre><p>正規化した文字列同士が完全に一致すれば、それ以上の処理をせずに即座にreturn 0で抜けます。こうした「早期リターン」は、本題（数値部分の比較）に入る前に簡単なケースを先に片付けておく、Goでよく見るパターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>aNum, aPre, aOK := split(an)
+	bNum, bPre, bOK := split(bn)</code></pre><p>Goの関数はタプルのように複数の値を一度に返せます。split(an)は下で定義されているsplit関数を呼び、「数値部分のスライス」「プレリリース文字列（例: rc.1）」「パースに成功したかどうかのbool」の3つを返します。それを3つの変数aNum, aPre, aOKに一度に受け取っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>switch {
+	case !aOK &amp;&amp; !bOK:
+		return strings.Compare(an, bn)
+	case !aOK:
+		return -1
+	case !bOK:
+		return 1
+	}</code></pre><p>switchの直後に条件式がなく{}がいきなり始まっています。これはif-else ifの連鎖と同じ意味で、各caseに書いた真偽値の式を上から順に評価し、最初にtrueになったcaseだけを実行します。!はbool値を反転させる否定演算子で、!aOKは「aOKがfalseなら」という意味。つまり「aもbもパース失敗」「aだけ失敗」「bだけ失敗」の3パターンを順に判定しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>if c := compareNums(aNum, bNum); c != 0 {
+		return c
+	}</code></pre><p>ifの中に「;」で区切られた2つの部分があります。前半のc := compareNums(aNum, bNum)はif専用のローカル変数cを宣言してcompareNumsの結果を代入する初期化文、後半のc != 0が実際の条件式です。このcはif文のブロック内でしか使えません。数値部分の比較結果が0でなければ（＝優劣がつけば）そのまま返し、同じならこの下の行に処理が進みます。</p></div><div class="walk-step"><pre class="walk-quote"><code>return comparePre(aPre, bPre)</code></pre><p>数値部分が完全に同じだった場合、最後にプレリリース文字列（rc.1など）同士を比較する関数comparePreに処理を委ね、その戻り値をそのままCompareの戻り値として返しています。関数の最後の処理を別関数の呼び出し結果にそのまま委譲する、よくある書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func split(v string) (nums []int, pre string, ok bool) {</code></pre><p>戻り値の()の中に型だけでなく名前（nums, pre, ok）まで書かれています。これは「名前付き戻り値」という機能で、関数本体の中でnums, pre, okという変数がすでに宣言されているかのように使えます。[]intはint型の要素を持つスライス（可変長配列のようなもの）です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if i := strings.IndexByte(v, &#x27;-&#x27;); i &gt;= 0 {
+		head, pre = v[:i], v[i+1:]
+	}</code></pre><p>strings.IndexByte(v, &#x27;-&#x27;)は文字列vの中からハイフンを探し、見つかった位置（インデックス）を返します。見つからなければ-1です。i &gt;= 0で「見つかった場合」を判定し、v[:i]（先頭からi文字目の手前まで）とv[i+1:]（i+1文字目から末尾まで）というスライス構文で、ハイフンの前後を切り分けています。例えば&quot;1.4.0-rc.1&quot;なら、head=&quot;1.4.0&quot;、pre=&quot;rc.1&quot;になります。</p></div><div class="walk-step"><pre class="walk-quote"><code>for _, p := range strings.Split(head, &quot;.&quot;) {</code></pre><p>strings.Split(head, &quot;.&quot;)は文字列headをピリオドで分割し、文字列のスライスを作ります。range はスライスを先頭から順に走査するためのキーワードで、本来は「インデックス, 値」の2つを返しますが、インデックスが不要なのでアンダースコア_で明示的に捨て、値だけをpで受け取っています。</p></div><div class="walk-step"><pre class="walk-quote"><code>n, err := strconv.Atoi(p)
+		if err != nil || n &lt; 0 {
+			return nil, &quot;&quot;, false
+		}</code></pre><p>strconv.Atoi(p)は文字列pを整数に変換しようとする関数で、「変換結果」と「エラー（失敗していればnilではない値）」の2つを返します。Goには例外機構がなく、こうして戻り値のerrを毎回if err != nilでチェックするのが基本の作法です。ここでは変換失敗（err != nil）または負の数（n &lt; 0）なら、パース失敗を表す(nil, &quot;&quot;, false)を即座に返しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>nums = append(nums, n)</code></pre><p>append(スライス, 追加する値)は、スライスの末尾に値を加えた新しいスライスを返す組み込み関数です。forループが1周するたびにnに変換後の数値が入り、それをnumsの末尾に積み上げていくことで、&quot;1.4.0&quot;のようなドット区切りの各数字をひとつの[]intにまとめています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return nums, pre, true</code></pre><p>ここまでで集めたnums（数値のスライス）とpre（プレリリース文字列）、そしてパース成功を示すtrueの3つを一度に返します。名前付き戻り値なのでnums, preはそのまま使えますが、分かりやすさのためにここでは明示的に書かれています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goの比較ロジックは「早期リターンで簡単なケースを先に処理し、switchやif-with-initで条件を段階的に絞り込み、複数の戻り値＋errチェックで失敗を表現する」という型で書くと、分岐が多くても読みやすくなる——この組み合わせを覚えて帰ってください。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-08/"><span>前の日</span>aquasecurity/trivy</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-09/">← 2026.10.09 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

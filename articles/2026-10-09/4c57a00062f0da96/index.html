@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Lightning v1.0、3500行の軽量エージェントRLフレームワーク — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Microsoft Researchは2026年10月7日、強化学習（RL）でAIエージェントを訓練するための軽量フレームワーク「Agent Lightning v1.0」を発表しました。コード規模は約3,500行で、「Harnessed Agentic RL」という新しい学習パラダイムを導入しています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Agent Lightning v1.0、3500行の軽量エージェントRLフレームワーク — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Microsoft Researchは2026年10月7日、強化学習（RL）でAIエージェントを訓練するための軽量フレームワーク「Agent Lightning v1.0」を発表しました。コード規模は約3,500行で、「Harnessed Agentic RL」という新しい学習パラダイムを導入しています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/4c57a00062f0da96/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/4c57a00062f0da96/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Agent Lightning v1.0、3500行の軽量エージェントRLフレームワーク", "datePublished": "2026-10-09", "description": "Microsoft Researchは2026年10月7日、強化学習（RL）でAIエージェントを訓練するための軽量フレームワーク「Agent Lightning v1.0」を発表しました。コード規模は約3,500行で、「Harnessed Agentic RL」という新しい学習パラダイムを導入しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/4c57a00062f0da96/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-09/">2026.10.09 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Agent Lightning v1.0、3500行の軽量エージェントRLフレームワーク</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>microsoft.com</span><time datetime="2026-10-09">2026.10.09</time></div>
+</header>
+<div class="article-body">
+<p>Microsoft Researchは2026年10月7日、強化学習（RL）でAIエージェントを訓練するための軽量フレームワーク「Agent Lightning v1.0」を発表しました。コード規模は約3,500行で、「Harnessed Agentic RL」という新しい学習パラダイムを導入しています。</p>
+<p>最大の特徴は、既存のエージェントの実行環境（harness）をそのまま強化学習に参加させられる点です。学習用に別途エージェントを作り直す必要がなく、エージェントとLLMの間にLLMプロキシを挿入するだけで、学習時と本番運用時の挙動を一致させられます。「本番で使うハーネスが、そのまま学習中の強化学習に直接参加する」と説明されています。</p>
+<p>Qwen3.5-9Bを用いた検証では、AIエージェントのコード修正能力を測るベンチマーク<strong>SWE-bench Verified</strong>のPass@1（1回の試行で正解できた割合）が41.8%から56.4%まで改善しました。学習データは約6,000サンプル、Collocated Async RLという手法により同期型のRLより約2倍の速度向上も達成しています。商用サンドボックスに依存せず、標準的なKubernetesジョブとして動作する点も実用上の利点です。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Microsoft Researchがフレームワーク「Agent Lightning v1.0」を発表した</li><li>Agent Lightning v1.0は「Harnessed Agentic RL」という学習パラダイムを導入している</li><li>フレームワークのコード規模は約3,500行である</li><li>記事の公開日は2026年10月7日である</li><li>記事の著者はZhiyuan He(Research SDE II)とYuqing Yang(Principal Research SDE Manager)である</li><li>検証にはQwen3.5-9Bモデルが使用された</li><li>この手法によりSWE-bench VerifiedでのPass@1が41.8%から56.4%に改善した(14.6ポイント向上)</li><li>学習データセットの規模は約6,000サンプルである</li><li>Collocated Async RLは同期RLに比べて約2倍の速度向上を達成した</li><li>本フレームワークは商用サンドボックスに依存せず標準的なKubernetesジョブとして動作する</li><li>主要コンポーネントはAPI Gateway、Rollout Controller、Customized Trainerである</li><li>この手法ではエージェントのharnessとLLMの間にLLMプロキシを挿入する方式を採用している</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Whichever agent harness is used in deployment is the harness that takes part directly in reinforcement learning during training.</blockquote><p class="quotes-source">出典: <a href="https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/" target="_blank" rel="noopener noreferrer">microsoft.com</a></p></section>
+<aside class="source-box"><a href="https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">microsoft.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Agent%20Lightning%20v1.0%E3%80%813500%E8%A1%8C%E3%81%AE%E8%BB%BD%E9%87%8F%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88RL%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2F4c57a00062f0da96%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Agent%20Lightning%20v1.0%E3%80%813500%E8%A1%8C%E3%81%AE%E8%BB%BD%E9%87%8F%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88RL%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-09/4c57a00062f0da96/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2F4c57a00062f0da96%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2fd548fa66883aa8/"><span>前の記事</span>Claude Haiku 5.5登場、前モデル比75%安で性能向上</a><a class="next" href="../1457d9c5fec56ef6/"><span>次の記事</span>Claude Max/Teamに毎月APIクレジットを無償配布</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-09/">← 2026.10.09 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2fd548fa66883aa8/">Claude Haiku 5.5登場、前モデル比75%安で性能向上</a></h3>
+<p class="excerpt">Anthropicは2026年10月7日、Haikuシリーズとして1年ぶりとなる新モデル「Claude Haiku 5.5」を発表しました。ベンチマークではGPT-6 Lunaを上回るスコアを記録し、総合的なAI性能を測るArtific…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../1457d9c5fec56ef6/">Claude Max/Teamに毎月APIクレジットを無償配布</a></h3>
+<p class="excerpt">Anthropicは、Claudeの有料プラン（Max、Team）利用者に対し、毎月のAPI利用クレジットを無償配布することを発表しました。Claude Max 5x（月額100ドル）には100ドル分、Max 20x（月額200ドル）に…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>pc.watch.impress.co.jp</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../e1154604960e08fe/">ローカル動作の意思決定モデルd1-3B、OpenAI製APIより高速</a></h3>
+<p class="excerpt">Liquid AIは2026年10月8日、ローカル環境で動作する意思決定モデル「d1-3B」と「d1-omni-600M」を発表しました。d1-3Bは31億2000万パラメータでテキストと画像入力に対応し、LFM2.5-VL-3Bをベー…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

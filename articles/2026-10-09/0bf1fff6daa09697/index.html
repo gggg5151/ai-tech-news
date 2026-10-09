@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Go製Kubernetes TUI「k10s」、マウス操作に対応 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="k10sは、Kubernetesクラスタを管理するための対話型ターミナルユーザーインターフェース（TUI）ツールです。マウスとキーボードの両方の操作に対応し、「クリック可能なKubernetes TUI」を謳っています。Go言語とCharm社のBubble Tea等のライブラリで実装されており、既存ツールk9sの進化形…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Go製Kubernetes TUI「k10s」、マウス操作に対応 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="k10sは、Kubernetesクラスタを管理するための対話型ターミナルユーザーインターフェース（TUI）ツールです。マウスとキーボードの両方の操作に対応し、「クリック可能なKubernetes TUI」を謳っています。Go言語とCharm社のBubble Tea等のライブラリで実装されており、既存ツールk9sの進化形…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/0bf1fff6daa09697/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/0bf1fff6daa09697/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Go製Kubernetes TUI「k10s」、マウス操作に対応", "datePublished": "2026-10-09", "description": "k10sは、Kubernetesクラスタを管理するための対話型ターミナルユーザーインターフェース（TUI）ツールです。マウスとキーボードの両方の操作に対応し、「クリック可能なKubernetes TUI」を謳っています。Go言語とCharm社のBubble Tea等のライブラリで実装されており、既存ツールk9sの進化形として、起動の速さと学習コストの低さを重…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/0bf1fff6daa09697/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/p10node/k10s", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-09/">2026.10.09 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>Go製Kubernetes TUI「k10s」、マウス操作に対応</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-09">2026.10.09</time></div>
+</header>
+<div class="article-body">
+<p>k10sは、Kubernetesクラスタを管理するための対話型ターミナルユーザーインターフェース（TUI）ツールです。マウスとキーボードの両方の操作に対応し、「クリック可能なKubernetes TUI」を謳っています。Go言語とCharm社のBubble Tea等のライブラリで実装されており、既存ツールk9sの進化形として、起動の速さと学習コストの低さを重視した設計がされています。</p>
+<p>Ctrl+Pによる単一の検索ボックスでリソース種別とオブジェクトを同時に検索できるほか、ログ表示（フォローモード対応）、対話型シェルの実行、ポートフォワード、リソースの編集・削除などKubernetes操作一式を備えます。OpenAI互換またはAnthropicのAPIに対応したAIアシスタント機能もあり、現在のコンテキストやnamespace、選択中のオブジェクトが自動的に注入される仕組みです。</p>
+<p>起動時にゼロ個のwatchを登録し、必要な情報種別から順にlazy loadingで取得するアーキテクチャにより高速化を実現しているとされています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>k10sはKubernetesクラスタ管理用の対話型ターミナルユーザーインターフェース(TUI)ツールである</li><li>k10sはマウス操作とキーボード操作の両方に対応している</li><li>Ctrl+Pによる単一の検索ボックスで、リソース種別とオブジェクトを同時に検索できる</li><li>アクション一覧を画面に表示し、選択して実行できる</li><li>ログ表示機能があり、フォローモードに対応している</li><li>対話型シェルの実行機能がある</li><li>ポートフォワードの設定機能がある</li><li>リソースの説明表示、YAML確認、編集、スケーリング、削除の機能がある</li><li>AIアシスタント機能を搭載しており、現在のコンテキスト・namespace・選択オブジェクトが自動的に注入される</li><li>AIアシスタントはOpenAI互換またはAnthropicのAPIに対応している</li><li>8つの組み込みテーマがあり、カスタムテーマにも対応している</li><li>Go 1.26以上で実装されており、Charm社のBubble Tea、Lip Gloss、Bubblesというライブラリを使用し、ライセンスはApache 2.0である</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>起動時にゼロ個のwatchを登録し、lazy loadingで必要な情報種別から順に取得するアーキテクチャを採用し、高速化を実現している</blockquote><p class="quotes-source">出典: <a href="https://github.com/p10node/k10s" target="_blank" rel="noopener noreferrer">github.com</a></p></section>
+<aside class="source-box"><a href="https://github.com/p10node/k10s" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Go%E8%A3%BDKubernetes%20TUI%E3%80%8Ck10s%E3%80%8D%E3%80%81%E3%83%9E%E3%82%A6%E3%82%B9%E6%93%8D%E4%BD%9C%E3%81%AB%E5%AF%BE%E5%BF%9C%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2F0bf1fff6daa09697%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Go%E8%A3%BDKubernetes%20TUI%E3%80%8Ck10s%E3%80%8D%E3%80%81%E3%83%9E%E3%82%A6%E3%82%B9%E6%93%8D%E4%BD%9C%E3%81%AB%E5%AF%BE%E5%BF%9C%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-09/0bf1fff6daa09697/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2F0bf1fff6daa09697%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../84ba48e6e7cd1c82/"><span>前の記事</span>Samsung製LittleBit、LLMを1ビット未満に圧縮</a><a class="next" href="../ec68c7657fd95094/"><span>次の記事</span>Docker公式、YAMLでAIエージェントを作る「Docker Agent」公開</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-09/">← 2026.10.09 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../84ba48e6e7cd1c82/">Samsung製LittleBit、LLMを1ビット未満に圧縮</a></h3>
+<p class="excerpt">Samsung Labsが、大規模言語モデルを極端な低ビットまで圧縮する手法「LittleBit」のGitHub実装を公開しています。NeurIPS 2025で発表されたLittleBitと、ICML 2026で発表された改良版Litt…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../ec68c7657fd95094/">Docker公式、YAMLでAIエージェントを作る「Docker Agent」公開</a></h3>
+<p class="excerpt">Docker社がGitHubで「Docker Agent」を公開しています。YAMLの宣言的設定によりコードを書かずにAIエージェントを構築・実行・共有できるツールで、OpenAI、Anthropic、Geminiなど複数のAIプロバイ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-10-08/e18b5aa3645c4e1b/">Go製セキュリティスキャナーtrivy、38kスターの実績</a></h3>
+<p class="excerpt">aquasecurity製の「Trivy」は、コンテナイメージ、ファイルシステム、Gitリポジトリ、仮想マシンイメージ、Kubernetesなど多様なターゲットをスキャンできる包括的なセキュリティスキャナーです。</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-08">2026.10.08</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

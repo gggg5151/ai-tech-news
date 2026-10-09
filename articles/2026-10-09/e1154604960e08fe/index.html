@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ローカル動作の意思決定モデルd1-3B、OpenAI製APIより高速 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Liquid AIは2026年10月8日、ローカル環境で動作する意思決定モデル「d1-3B」と「d1-omni-600M」を発表しました。d1-3Bは31億2000万パラメータでテキストと画像入力に対応し、LFM2.5-VL-3Bをベースにしています。d1-omni-600Mは5億8700万パラメータで、テキスト・画像…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="ローカル動作の意思決定モデルd1-3B、OpenAI製APIより高速 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Liquid AIは2026年10月8日、ローカル環境で動作する意思決定モデル「d1-3B」と「d1-omni-600M」を発表しました。d1-3Bは31億2000万パラメータでテキストと画像入力に対応し、LFM2.5-VL-3Bをベースにしています。d1-omni-600Mは5億8700万パラメータで、テキスト・画像…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/e1154604960e08fe/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/e1154604960e08fe/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "ローカル動作の意思決定モデルd1-3B、OpenAI製APIより高速", "datePublished": "2026-10-09", "description": "Liquid AIは2026年10月8日、ローカル環境で動作する意思決定モデル「d1-3B」と「d1-omni-600M」を発表しました。d1-3Bは31億2000万パラメータでテキストと画像入力に対応し、LFM2.5-VL-3Bをベースにしています。d1-omni-600Mは5億8700万パラメータで、テキスト・画像・音声の入力に対応し、LFM2.5-En…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/e1154604960e08fe/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://gigazine.net/news/20261008-d1-3b-omni-600m/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-09/">2026.10.09 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>ローカル動作の意思決定モデルd1-3B、OpenAI製APIより高速</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-09">2026.10.09</time></div>
+</header>
+<div class="article-body">
+<p>Liquid AIは2026年10月8日、ローカル環境で動作する意思決定モデル「d1-3B」と「d1-omni-600M」を発表しました。d1-3Bは31億2000万パラメータでテキストと画像入力に対応し、LFM2.5-VL-3Bをベースにしています。d1-omni-600Mは5億8700万パラメータで、テキスト・画像・音声の入力に対応し、LFM2.5-Encoder-350Mがベースです。いずれも無料でダウンロードでき、Hugging Faceで公開されています。</p>
+<p>実測では、GeForce RTX 3060でd1-3Bが1回の決定処理を25ミリ秒、RTX 3090では8ミリ秒で処理できました。Snakeゲームでの比較テストでは、Liquid d1が毎秒82回の判断を行ったのに対し、OpenAIのDecisions APIは毎秒約3回にとどまったとされ、<strong>d1-3BがOpenAIのDecisions APIより高速に動作する</strong>ことが示されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Liquid AIが意思決定モデル「d1-3B」と「d1-omni-600M」を2026年10月8日に発表した</li><li>d1-3Bは31億2000万パラメータで、テキストと画像入力に対応する</li><li>d1-3BはLFM2.5-VL-3Bをベースにしている</li><li>d1-omni-600Mは5億8700万パラメータで、テキスト・画像・音声入力に対応する</li><li>d1-omni-600MはLFM2.5-Encoder-350Mをベースにしている</li><li>両モデルとも無料でダウンロード可能でローカル実行できる</li><li>両モデルはHugging Faceで公開されている</li><li>GeForce RTX 3060でd1-3Bを実行した場合、1回の決定処理が25ミリ秒、3個の質問の処理が38ミリ秒だった</li><li>GeForce RTX 3090では処理速度が8ミリ秒だった</li><li>Snakeゲームのテストで、Liquid d1は毎秒82回の判断を行ったのに対し、OpenAIのDecisions APIは毎秒約3回の判断にとどまった</li><li>記事はd1-3BがOpenAIのDecisions APIより高速に処理できるとしている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Liquid d1は毎秒82回の判断に対し、OpenAI APIは毎秒約3回の判断にとどまりました</blockquote><p class="quotes-source">出典: <a href="https://gigazine.net/news/20261008-d1-3b-omni-600m/" target="_blank" rel="noopener noreferrer">gigazine.net</a></p></section>
+<aside class="source-box"><a href="https://gigazine.net/news/20261008-d1-3b-omni-600m/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">gigazine.net</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E5%8B%95%E4%BD%9C%E3%81%AE%E6%84%8F%E6%80%9D%E6%B1%BA%E5%AE%9A%E3%83%A2%E3%83%87%E3%83%ABd1-3B%E3%80%81OpenAI%E8%A3%BDAPI%E3%82%88%E3%82%8A%E9%AB%98%E9%80%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2Fe1154604960e08fe%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E5%8B%95%E4%BD%9C%E3%81%AE%E6%84%8F%E6%80%9D%E6%B1%BA%E5%AE%9A%E3%83%A2%E3%83%87%E3%83%ABd1-3B%E3%80%81OpenAI%E8%A3%BDAPI%E3%82%88%E3%82%8A%E9%AB%98%E9%80%9F%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-09/e1154604960e08fe/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2Fe1154604960e08fe%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1457d9c5fec56ef6/"><span>前の記事</span>Claude Max/Teamに毎月APIクレジットを無償配布</a><a class="next" href="../2b479ca975c45c74/"><span>次の記事</span>OpenAI、数学論文3本を撤回</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-09/">← 2026.10.09 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2fd548fa66883aa8/">Claude Haiku 5.5登場、前モデル比75%安で性能向上</a></h3>
+<p class="excerpt">Anthropicは2026年10月7日、Haikuシリーズとして1年ぶりとなる新モデル「Claude Haiku 5.5」を発表しました。ベンチマークではGPT-6 Lunaを上回るスコアを記録し、総合的なAI性能を測るArtific…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../4c57a00062f0da96/">Agent Lightning v1.0、3500行の軽量エージェントRLフレームワーク</a></h3>
+<p class="excerpt">Microsoft Researchは2026年10月7日、強化学習（RL）でAIエージェントを訓練するための軽量フレームワーク「Agent Lightning v1.0」を発表しました。コード規模は約3,500行で、「Harnesse…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>microsoft.com</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../1457d9c5fec56ef6/">Claude Max/Teamに毎月APIクレジットを無償配布</a></h3>
+<p class="excerpt">Anthropicは、Claudeの有料プラン（Max、Team）利用者に対し、毎月のAPI利用クレジットを無償配布することを発表しました。Claude Max 5x（月額100ドル）には100ドル分、Max 20x（月額200ドル）に…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>pc.watch.impress.co.jp</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

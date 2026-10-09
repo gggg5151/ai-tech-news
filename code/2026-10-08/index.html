@@ -81,7 +81,7 @@ func (p *Parser) Parse(_ context.Context, r xio.ReadSeekerAt) ([]ftypes.Package,
 			Version: v,
 		})</code></pre><p>`ftypes.Package{ ID: ..., Name: ..., Version: ... }`は構造体リテラルで、フィールド名を指定しながらその場で値を詰めた構造体を作る書き方です。`append(pkgs, ...)`はスライス`pkgs`の末尾に新しい要素を追加した「新しいスライス」を返す組み込み関数で、`pkgs = append(...)`のように元の変数に再代入するのが決まった使い方です。これをmapの全要素についてループで繰り返すことで、mapの中身を最終的なスライス形式に変換しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>dependency.ID(ftypes.GoModule, k, v)</code></pre><p>`dependency.ID`は別パッケージ(`dependency`)にある関数の呼び出しです。パッケージ種別(`ftypes.GoModule`)、モジュール名`k`、バージョン`v`の3つから、Trivy内部で一意に識別するためのID文字列を組み立てています。パーサー自身はID生成ロジックの詳細を知らなくても、専用の関数に委譲することで責務を分離している例です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return pkgs, nil, nil</code></pre><p>関数の最後で3つの戻り値をまとめて返しています。1つ目は組み立てた`pkgs`、2つ目の依存関係リストはgo.sumからは「どのパッケージが何に依存しているか」という親子関係までは分からないため`nil`(空)、3つ目のエラーも正常終了なので`nil`です。呼び出し元はこの3つを順番に受け取って処理を続けます。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>Goでは「mapに書き込んで重複を自然に消し、range+appendでスライスに変換する」という組み合わせが、ユニークな集合を作る定番パターンです。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-07/"><span>前の日</span>rakyll/hey</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-07/"><span>前の日</span>rakyll/hey</a><a class="next" href="../2026-10-09/"><span>次の日</span>p10node/k10s</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-08/">← 2026.10.08 の号を読む</a>
 </div>
 </article>

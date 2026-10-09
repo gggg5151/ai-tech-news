@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>初期JSを2割削減、必要になるまで送らない設計 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Next.jsアプリの初期JavaScriptを削減する手法を紹介する記事です。筆者は「必要になるまでブラウザにJSを送らない」という方針のもと、会話ログ一覧画面のJSサイズを1,223,409バイトから967,092バイトへ、約21%削減しました。マニュアル関連ページではgzip換算で約99KB、40〜46%の削減を…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="初期JSを2割削減、必要になるまで送らない設計 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Next.jsアプリの初期JavaScriptを削減する手法を紹介する記事です。筆者は「必要になるまでブラウザにJSを送らない」という方針のもと、会話ログ一覧画面のJSサイズを1,223,409バイトから967,092バイトへ、約21%削減しました。マニュアル関連ページではgzip換算で約99KB、40〜46%の削減を…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/a67c646975a1e39d/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/a67c646975a1e39d/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "初期JSを2割削減、必要になるまで送らない設計", "datePublished": "2026-10-09", "description": "Next.jsアプリの初期JavaScriptを削減する手法を紹介する記事です。筆者は「必要になるまでブラウザにJSを送らない」という方針のもと、会話ログ一覧画面のJSサイズを1,223,409バイトから967,092バイトへ、約21%削減しました。マニュアル関連ページではgzip換算で約99KB、40〜46%の削減を達成したといいます（削減前は1.22MB…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-09/a67c646975a1e39d/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/manay_kozokaai/articles/eab31670b285a7", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-09/">2026.10.09 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>初期JSを2割削減、必要になるまで送らない設計</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
+</header>
+<div class="article-body">
+<p>Next.jsアプリの初期JavaScriptを削減する手法を紹介する記事です。筆者は「必要になるまでブラウザにJSを送らない」という方針のもと、会話ログ一覧画面のJSサイズを1,223,409バイトから967,092バイトへ、約21%削減しました。マニュアル関連ページではgzip換算で約99KB、40〜46%の削減を達成したといいます（削減前は1.22MB、gzip換算374KB）。</p>
+<p>削減の過程で、react-markdown関連ライブラリ（合計226,647バイト）や、384言語分の定義を抱えるhighlight.js（170,339バイト）といった、サイズの大きい不要ライブラリが見つかったと報告されています。</p>
+<p>動的インポートの落とし穴も指摘されています。ダイアログを<code>dynamic()</code>化しても、<strong><code>open</code>プロパティで表示を制御するだけでは常にマウントされ続け</strong>、初期バンドルから外れても効果がありません。筆者は<code>useMountAfterFirstOpen</code>という独自フックを使い、初回オープンまでマウントを遅延させる実装パターンを紹介しており、閉じる際のアニメーションが途中で飛ぶ問題も防ぐ設計になっています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者は会話ログ一覧画面のJSサイズを1,223,409 Bから967,092 Bへ削減した（約21%削減）</li><li>筆者はマニュアル関連ページでgzip換算約99KBの削減を達成し、削減率は40〜46%だったとしている</li><li>削減前の初期JSサイズは1.22MB（gzip換算374KB）だったとしている</li><li>react-markdown・remark・micromarkの合計サイズは226,647 B（非圧縮）だったとしている</li><li>highlight.jsのサイズは170,339 B（非圧縮）で、384言語分の定義を保持していたとしている</li><li>筆者は、ダイアログをdynamic()化しても、openプロパティで表示を制御しているだけでは常にマウントされたままになり、初期バンドルから外れても効果がないという問題を指摘している</li><li>筆者はuseMountAfterFirstOpenという独自のフックを使い、初回オープンまでコンポーネントのマウントを遅延させる実装パターンを紹介している</li><li>このフックは閉じる際のアニメーションが途中で飛ぶ問題を防止する設計になっているとしている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>必要になるまでブラウザにJSを送らない。サーバーで処理を終わらせて、そもそも送らないか、必要になったらはじめて用意する</blockquote><blockquote>ダイアログを `dynamic()` 化しても、`open` propで制御しているだけでは常にマウントされていて、初期バンドルから外れるが意味がない</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/manay_kozokaai/articles/eab31670b285a7" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/manay_kozokaai/articles/eab31670b285a7" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E5%88%9D%E6%9C%9FJS%E3%82%922%E5%89%B2%E5%89%8A%E6%B8%9B%E3%80%81%E5%BF%85%E8%A6%81%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%BE%E3%81%A7%E9%80%81%E3%82%89%E3%81%AA%E3%81%84%E8%A8%AD%E8%A8%88%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2Fa67c646975a1e39d%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E5%88%9D%E6%9C%9FJS%E3%82%922%E5%89%B2%E5%89%8A%E6%B8%9B%E3%80%81%E5%BF%85%E8%A6%81%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%BE%E3%81%A7%E9%80%81%E3%82%89%E3%81%AA%E3%81%84%E8%A8%AD%E8%A8%88%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-09/a67c646975a1e39d/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-09%2Fa67c646975a1e39d%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../1f82e8692d5b91fe/"><span>前の記事</span>AIエージェント向けCLI設計の6原則</a><a class="next" href="../df7bac8f96d3111a/"><span>次の記事</span>手書きzodスキーマをsatisfiesでOpenAPI型に縛る</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-09/">← 2026.10.09 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../c1bcd4faca3195a5/">Claude CodeとOpenCode、許可設定の評価順の違い</a></h3>
+<p class="excerpt">AIコーディングエージェントのClaude CodeとOpenCodeには、ファイル操作などを許可・確認・拒否する設定（allow/ask/deny）がありますが、ルールの評価順に大きな違いがあると報告されています。筆者は練習用リポジト…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f8f9820ccf7517e6/">AI生成コードのレビュー、工場の品質検査に学ぶ</a></h3>
+<p class="excerpt">パーティーハード株式会社の望月涼太氏は、AIツールの普及で開発速度は上がった一方、コードレビューの工程が滞留し開発責任者が疲弊しているという課題を指摘しています。原因は、人間が書いたコード向けのレビュー手法を、そのままAI生成コードに適…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>ptyhard.co.jp</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../1f82e8692d5b91fe/">AIエージェント向けCLI設計の6原則</a></h3>
+<p class="excerpt">AIエージェントが使いやすいCLIツールを作るための設計指針を紹介する記事です。筆者が自ら構築したdevtools-workspaceとdevtools-commonというツール群を題材に、6つの設計原則を実装例とともに解説しています。</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
