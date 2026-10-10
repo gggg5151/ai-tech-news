@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Claude Codeのサブエージェント「Explore」に使われるモデルをHaiku（軽量モデル）に切り替える設定について、著者が実測検証した記事です。Claude Codeをバージョン2.1.293に上げるだけでExploreの既定モデルがHaiku 5.5になり、.claude/agents/Explore.md…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Claude Codeのサブエージェント「Explore」に使われるモデルをHaiku（軽量モデル）に切り替える設定について、著者が実測検証した記事です。Claude Codeをバージョン2.1.293に上げるだけでExploreの既定モデルがHaiku 5.5になり、.claude/agents/Explore.md…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/0a6b29e700d72480/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/0a6b29e700d72480/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに", "datePublished": "2026-10-10", "description": "Claude Codeのサブエージェント「Explore」に使われるモデルをHaiku（軽量モデル）に切り替える設定について、著者が実測検証した記事です。Claude Codeをバージョン2.1.293に上げるだけでExploreの既定モデルがHaiku 5.5になり、.claude/agents/Explore.mdに「model: haiku」と書くだけ…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/0a6b29e700d72480/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/suwa_nobu/items/837c03e66ba03ee636ea?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-10/">2026.10.10 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-10">2026.10.10</time></div>
+</header>
+<div class="article-body">
+<p>Claude Codeのサブエージェント「Explore」に使われるモデルをHaiku（軽量モデル）に切り替える設定について、著者が実測検証した記事です。Claude Codeをバージョン2.1.293に上げるだけでExploreの既定モデルがHaiku 5.5になり、.claude/agents/Explore.mdに「model: haiku」と書くだけでも明示的に有効化できます。</p>
+<p>軽い調べものと重い調べものの2パターンで費用を計測した結果、全体費用はそれぞれ<strong>34%・43%</strong>減ったと報告されています。ただし、全体費用の約99%はメインのOpusモデルが占めており、Explore部分の最適化だけでは効果が限定的である点も著者は指摘しています。本人はこれをベンチマークではないと注記しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Claude Code バージョン2.1.293(2026-10-07リリース)からExploreサブエージェントの標準モデルがClaude Haiku 5.5になった</li><li>設定は .claude/agents/Explore.md に「model: haiku」と記述するだけで有効になる</li><li>記事の計測によれば、全体費用は既定(Opus使用時)比で34〜43%削減された</li><li>Haiku 4.5との比較では、軽い調べもので13%、重い調べものでは37%のコスト削減があった</li><li>Explore自体の費用は1セント未満まで下がり、既定比で14分の1〜28分の1になった</li><li>計測は各パターン5回の中央値を使用している</li><li>軽い調べものの費用は$0.114で、既定から34%削減</li><li>重い調べものの費用は$0.098で、既定から43%削減</li><li>全体費用の約99%は本体(メイン)のOpusモデルが占めている</li><li>著者はこの記事がベンチマークではないと明記している</li><li>著者のQiitaユーザー名は suwa_nobu、所属は株式会社JQIT</li><li>検証環境はWindows 10で、隔離導入を行ったと記載されている</li></ul></section>
+
+<aside class="source-box"><a href="https://qiita.com/suwa_nobu/items/837c03e66ba03ee636ea?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E6%9B%B4%E6%96%B0%E3%81%A0%E3%81%91%E3%81%A7%E3%82%B3%E3%82%B9%E3%83%8834%E3%80%9C43%25%E6%B8%9B%E3%80%81Explore%E6%8B%85%E5%BD%93%E3%82%92Haiku%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-10%2F0a6b29e700d72480%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E6%9B%B4%E6%96%B0%E3%81%A0%E3%81%91%E3%81%A7%E3%82%B3%E3%82%B9%E3%83%8834%E3%80%9C43%25%E6%B8%9B%E3%80%81Explore%E6%8B%85%E5%BD%93%E3%82%92Haiku%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-10/0a6b29e700d72480/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-10%2F0a6b29e700d72480%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../ea8d459cd8810280/"><span>前の記事</span>NotionとSlackからClaude Codeに仕事を依頼、サブスク枠で運用した話</a><a class="next" href="../f003b323ed763d4b/"><span>次の記事</span>Goのインターフェース1つでTCPもWebSocketも動かすRPC生成ツール「irpc」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-10/">← 2026.10.10 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../e38fbd796d4d5a7a/">Tera Termマクロ運用に限界、Go+WailsでNW一括ログインツールを自作</a></h3>
+<p class="excerpt">ネットワーク保守業務に携わる筆者が、Tera Termマクロによる複数ネットワーク機器への一括ログイン運用の限界を解消するため、Go言語とWails（GoでネイティブGUIアプリを作れるフレームワーク）で一括ログイン・コマンド実行・ログ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2f075427c7c43fc7/">Drizzle ORM、スキーマを正にマイグレーションとバリデーションを一貫管理</a></h3>
+<p class="excerpt">Next.js学習中の筆者が、Drizzle ORMを試して便利だった点を備忘録としてまとめた記事です。TypeScriptでスキーマを定義すると、書き込み用の型と読み込み用の型を自動で推出できます。マイグレーションは、DBに直接スキー…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ea8d459cd8810280/">NotionとSlackからClaude Codeに仕事を依頼、サブスク枠で運用した話</a></h3>
+<p class="excerpt">筆者が、NotionやSlackからClaude Codeに仕事を依頼できる仕組みを「Claude Code Routines」で自作した体験談です。目的はAPIの従量課金を避けつつ、サブスクリプションの枠内でClaudeを運用し、かつ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

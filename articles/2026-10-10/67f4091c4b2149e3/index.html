@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropicが、インフラやユーザーセキュリティに重大な影響を与えるOSS（オープンソースソフトウェア）プロジェクト向けに、無料のAIセキュリティスキャンサービス「OSS Scanner」を始めました。一般向けの「Claude Security」とは別物で、最も高性能なモデルを使ってコードを監査します。利用を希望す…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropicが、インフラやユーザーセキュリティに重大な影響を与えるOSS（オープンソースソフトウェア）プロジェクト向けに、無料のAIセキュリティスキャンサービス「OSS Scanner」を始めました。一般向けの「Claude Security」とは別物で、最も高性能なモデルを使ってコードを監査します。利用を希望す…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/67f4091c4b2149e3/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/67f4091c4b2149e3/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動", "datePublished": "2026-10-10", "description": "Anthropicが、インフラやユーザーセキュリティに重大な影響を与えるOSS（オープンソースソフトウェア）プロジェクト向けに、無料のAIセキュリティスキャンサービス「OSS Scanner」を始めました。一般向けの「Claude Security」とは別物で、最も高性能なモデルを使ってコードを監査します。利用を希望するプロジェクトの主要メンテナーが、Git…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/67f4091c4b2149e3/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://gigazine.net/news/20261009-anthropic-oss-scanner/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-10/">2026.10.10 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-10">2026.10.10</time></div>
+</header>
+<div class="article-body">
+<p>Anthropicが、インフラやユーザーセキュリティに重大な影響を与えるOSS（オープンソースソフトウェア）プロジェクト向けに、無料のAIセキュリティスキャンサービス「OSS Scanner」を始めました。一般向けの「Claude Security」とは別物で、最も高性能なモデルを使ってコードを監査します。利用を希望するプロジェクトの主要メンテナーが、GitHub上の指定リポジトリに申請用のプルリクエストを送ることで利用でき、利用可否は個別に判断されます。</p>
+<p>特徴は、スキャンが完全にAIモデルのみで行われ、人間によるレビューを一切介さない点です。迅速かつ頻繁な診断が可能になる一方で、誤検出のリスクも伴います。報告には再現手順や脆弱性の説明、二分探索、パッチ案までが含まれるとのことです。</p>
+<p>初期検証ではPostgreSQLやOpenSSLを含む48プロジェクトを対象に実施され、97件の脆弱性候補が検出されました。CVD（Coordinated Vulnerability Disclosure、協調的脆弱性開示）専門家による評価では、このうち<strong>88%に当たる85件</strong>が基準を満たすと判定されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Anthropicはオープンソースプロジェクト向けの無料AIセキュリティスキャンサービス「OSS Scanner」を開始した</li><li>OSS Scannerは「Claude Mythosを含む最も高性能なモデル」を使用してセキュリティ監査を行う</li><li>一般向けサービス「Claude Security」とは異なり、OSS Scannerはオープンソースプロジェクトに特化している</li><li>OSS Scannerの対象はインフラやユーザーセキュリティに重大な影響を与えるオープンソースプロジェクトである</li><li>利用可否の判断は個別に行われる</li><li>初期検証にはPostgreSQLとOpenSSLなどのプロジェクトが参加した</li><li>利用方法は、プロジェクトの主要メンテナーが指定リポジトリ(GitHub上のanthropics/oss-scanner)に所定テンプレートのプルリクエストを送信して申請する形式である</li><li>スキャンは全てAIモデルが行い、人間によるレビューは一切行われない</li><li>迅速かつ頻繁なスキャンが可能である一方、誤検出の可能性もある</li><li>報告には再現手順、脆弱性の説明、二分探索、パッチ案が含まれる</li><li>初期段階の検証では48プロジェクトで97件の脆弱性候補が検出された</li><li>CVD専門家による評価では97件中85件(88%)が基準を満たすとされた</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>スキャンは全てAIモデルが行い、人間によるレビューは一切行われません</blockquote><p class="quotes-source">出典: <a href="https://gigazine.net/news/20261009-anthropic-oss-scanner/" target="_blank" rel="noopener noreferrer">gigazine.net</a></p></section>
+<aside class="source-box"><a href="https://gigazine.net/news/20261009-anthropic-oss-scanner/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">gigazine.net</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Anthropic%E3%80%81OSS%E5%90%91%E3%81%91%E7%84%A1%E6%96%99%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E8%A8%BA%E6%96%AD%E3%80%8COSS%20Scanner%E3%80%8D%E5%A7%8B%E5%8B%95%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-10%2F67f4091c4b2149e3%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Anthropic%E3%80%81OSS%E5%90%91%E3%81%91%E7%84%A1%E6%96%99%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E8%A8%BA%E6%96%AD%E3%80%8COSS%20Scanner%E3%80%8D%E5%A7%8B%E5%8B%95%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-10/67f4091c4b2149e3/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-10%2F67f4091c4b2149e3%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><span></span><a class="next" href="../c7e9d2a62bacaef1/"><span>次の記事</span>OpenAIの年換算売上、従来発表より180億ドル少ないと判明</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-10/">← 2026.10.10 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../c7e9d2a62bacaef1/">OpenAIの年換算売上、従来発表より180億ドル少ないと判明</a></h3>
+<p class="excerpt">OpenAIの実際の年換算売上高が、これまで報じられていた金額より大幅に低かったことが分かりました。9月末時点の年換算売上高は約500億ドルで、従来報じられていた680億ドルとの差は180億ドルに及びます。差額の原因は、680億ドルとい…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>cnbc.com</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../b265a6192b6dc50b/">GoogleのGemini Agent、Claudeも選べるマルチエージェント基盤に</a></h3>
+<p class="excerpt">Google Cloudが10月9日、クラウドで動作するマルチエージェントツール「Gemini Agent」を発表しました。単一モデルにロックインされず、タスクごとに最適なモデルを使い分けられる点が特徴です。現時点ではGoogle自社の…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../36830894226bace8/">Claude、データからダッシュボード・アイデアから動画を自動生成</a></h3>
+<p class="excerpt">Anthropicは、Claudeの新機能「Dashboards」と「Motion」を発表しました。Dashboardsは自然言語で社内データを分析し、更新されるダッシュボードを作成できる機能で、有償プラン向けのベータ版として提供されま…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>forest.watch.impress.co.jp</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

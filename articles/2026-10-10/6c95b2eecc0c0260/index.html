@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Microsoft製サンドボックス実行システム「MXC」、信頼できないコードを多層分離 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Microsoftが公開するサンドボックス型コード実行システム「MXC（Microsoft eXecution Container）」です。モデルの出力やプラグイン、ツールなど信頼されていないコードを、Windows・Linux・macOS上で安全に実行するための、ポリシー駆動型の多層分離・封じ込め機構を提供します。P…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Microsoft製サンドボックス実行システム「MXC」、信頼できないコードを多層分離 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Microsoftが公開するサンドボックス型コード実行システム「MXC（Microsoft eXecution Container）」です。モデルの出力やプラグイン、ツールなど信頼されていないコードを、Windows・Linux・macOS上で安全に実行するための、ポリシー駆動型の多層分離・封じ込め機構を提供します。P…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/6c95b2eecc0c0260/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/6c95b2eecc0c0260/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Microsoft製サンドボックス実行システム「MXC」、信頼できないコードを多層分離", "datePublished": "2026-10-10", "description": "Microsoftが公開するサンドボックス型コード実行システム「MXC（Microsoft eXecution Container）」です。モデルの出力やプラグイン、ツールなど信頼されていないコードを、Windows・Linux・macOS上で安全に実行するための、ポリシー駆動型の多層分離・封じ込め機構を提供します。ProcessContainerやWind…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-10/6c95b2eecc0c0260/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/microsoft/mxc", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-10/">2026.10.10 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>Microsoft製サンドボックス実行システム「MXC」、信頼できないコードを多層分離</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-10">2026.10.10</time></div>
+</header>
+<div class="article-body">
+<p>Microsoftが公開するサンドボックス型コード実行システム「MXC（Microsoft eXecution Container）」です。モデルの出力やプラグイン、ツールなど信頼されていないコードを、Windows・Linux・macOS上で安全に実行するための、ポリシー駆動型の多層分離・封じ込め機構を提供します。ProcessContainerやWindows Sandbox、LXC、Bubblewrapなど8種類以上のバックエンドに対応し、ファイルシステムやネットワーク、UIアクセスを細かく制御できます。</p>
+<p>Rust・.NET・Node.js向けのSDKを備え、アクセス拒否の原因を特定できる診断ツールも用意されています。MITライセンスで公開され、GitHub上で<strong>2.4K超のスター</strong>を獲得しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>MXC(Microsoft eXecution Container)はMicrosoftが開発・保守するサンドボックス型コード実行システムである</li><li>MXCは「Policy-driven, layered isolation and containment」を標榜している</li><li>MXCはWindows、Linux、macOSの複数OS上で動作する</li><li>MXCは信頼されていないコード(モデル出力、プラグイン、ツール)を安全に実行するための仕組みを提供する</li><li>MXCはProcessContainer、Windows Sandbox、LXC、Bubblewrap、Sealbeltなど8種類以上のバックエンドを備える</li><li>MXCはファイルシステム、ネットワーク、UIアクセスを細かく制御するポリシー駆動型のサンドボックス機能を持つ</li><li>MXCはRust、.NET、Node.js向けのSDKを提供する</li><li>MXCにはアクセス拒否の原因を特定できる診断ツールが含まれる</li><li>MXCのSDKはRustはcrates.io、.NETはNuGet、Nodeはnpmのパッケージマネージャーからインストールできる</li><li>MXCはMITライセンスで公開されている</li><li>MXCのGitHubリポジトリは2.4K以上のスターと120以上のフォークを獲得している</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>Policy-driven, layered isolation and containment</blockquote><p class="quotes-source">出典: <a href="https://github.com/microsoft/mxc" target="_blank" rel="noopener noreferrer">github.com</a></p></section>
+<aside class="source-box"><a href="https://github.com/microsoft/mxc" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Microsoft%E8%A3%BD%E3%82%B5%E3%83%B3%E3%83%89%E3%83%9C%E3%83%83%E3%82%AF%E3%82%B9%E5%AE%9F%E8%A1%8C%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%80%8CMXC%E3%80%8D%E3%80%81%E4%BF%A1%E9%A0%BC%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E5%A4%9A%E5%B1%A4%E5%88%86%E9%9B%A2%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-10%2F6c95b2eecc0c0260%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Microsoft%E8%A3%BD%E3%82%B5%E3%83%B3%E3%83%89%E3%83%9C%E3%83%83%E3%82%AF%E3%82%B9%E5%AE%9F%E8%A1%8C%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%80%8CMXC%E3%80%8D%E3%80%81%E4%BF%A1%E9%A0%BC%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E5%A4%9A%E5%B1%A4%E5%88%86%E9%9B%A2%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-10/6c95b2eecc0c0260/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-10%2F6c95b2eecc0c0260%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../f003b323ed763d4b/"><span>前の記事</span>Goのインターフェース1つでTCPもWebSocketも動かすRPC生成ツール「irpc」</a><a class="next" href="../252fe49db42082af/"><span>次の記事</span>パスキー専用のシンプルなOIDCプロバイダー「Pocket ID」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-10/">← 2026.10.10 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../252fe49db42082af/">パスキー専用のシンプルなOIDCプロバイダー「Pocket ID」</a></h3>
+<p class="excerpt">Pocket IDは、パスキー（WebAuthn）専用のOpenID Connect/OAuth 2.0プロバイダーです。KeycloakやORY Hydraといった既存の複雑な代替製品に対し、パスワードを使わずYubikeyなどのセキ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../d99c00e197a479dd/">100以上のLLMを統一フォーマットで呼べるAIゲートウェイ「LiteLLM」</a></h3>
+<p class="excerpt">LiteLLMは、OpenAIやAnthropic、Google Gemini、AWS Bedrock、vLLM、Ollamaなど100以上のLLMプロバイダーを、OpenAI互換の統一フォーマットで呼び出せるオープンソースのAIゲート…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-10-09/84ba48e6e7cd1c82/">Samsung製LittleBit、LLMを1ビット未満に圧縮</a></h3>
+<p class="excerpt">Samsung Labsが、大規模言語モデルを極端な低ビットまで圧縮する手法「LittleBit」のGitHub実装を公開しています。NeurIPS 2025で発表されたLittleBitと、ICML 2026で発表された改良版Litt…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-09">2026.10.09</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

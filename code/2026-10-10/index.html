@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pocket-id/pocket-id の backend/internal/utils/crypto/crypto.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="pocket-idは、パスキー（指紋認証や顔認証などでログインできる仕組み）を使ったOIDC/OAuth2認証サーバをGoとNext.jsで実装したOSSです。ユーザーの秘密情報（APIキーやOIDCクライアントのシークレットなど）をデータベースに保存する前に暗号化する必要があり、このファイルはその暗号化・復号のコア部…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="pocket-id/pocket-id の backend/internal/utils/crypto/crypto.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="pocket-idは、パスキー（指紋認証や顔認証などでログインできる仕組み）を使ったOIDC/OAuth2認証サーバをGoとNext.jsで実装したOSSです。ユーザーの秘密情報（APIキーやOIDCクライアントのシークレットなど）をデータベースに保存する前に暗号化する必要があり、このファイルはその暗号化・復号のコア部…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-10/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-10/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.10</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>pocket-id/pocket-id の <code>backend/internal/utils/crypto/crypto.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/pocket-id/pocket-id/blob/HEAD/backend/internal/utils/crypto/crypto.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-10">2026.10.10</time></div>
+</header>
+<div class="article-body">
+<p>pocket-idは、パスキー（指紋認証や顔認証などでログインできる仕組み）を使ったOIDC/OAuth2認証サーバをGoとNext.jsで実装したOSSです。ユーザーの秘密情報（APIキーやOIDCクライアントのシークレットなど）をデータベースに保存する前に暗号化する必要があり、このファイルはその暗号化・復号のコア部分を担っています。教科書で「AESで暗号化する」と読んでも、実際にnonce（毎回変える使い捨ての値）をどう生成し、どこに保存し、復号時にどう取り出すかまで書いてあるコードは意外と少ないので、実務コードとして読む価値が高いと判断しました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// Encrypt a byte slice using AES-GCM and a random nonce
+// Important: do not encrypt more than ~4 billion messages with the same key!
+func Encrypt(key []byte, plaintext []byte, associatedData []byte) (ciphertext []byte, err error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to create block cipher: %w&quot;, err)
+	}
+	aead, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to create AEAD cipher: %w&quot;, err)
+	}
+
+	// Generate a random nonce
+	nonce := make([]byte, aead.NonceSize())
+	_, err = io.ReadFull(rand.Reader, nonce)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to generate random nonce: %w&quot;, err)
+	}
+
+	// Allocate the slice for the result, with additional space for the nonce and overhead
+	ciphertext = make([]byte, 0, len(plaintext)+aead.NonceSize()+aead.Overhead())
+	ciphertext = append(ciphertext, nonce...)
+
+	// Encrypt the plaintext
+	// Tag is automatically added at the end
+	ciphertext = aead.Seal(ciphertext, nonce, plaintext, associatedData)
+
+	return ciphertext, nil
+}
+
+// Decrypt a byte slice using AES-GCM
+func Decrypt(key []byte, ciphertext []byte, associatedData []byte) (plaintext []byte, err error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to create block cipher: %w&quot;, err)
+	}
+	aead, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to create AEAD cipher: %w&quot;, err)
+	}
+
+	// Extract the nonce
+	if len(ciphertext) &lt; (aead.NonceSize() + aead.Overhead()) {
+		return nil, ErrDecrypt
+	}
+
+	// Decrypt the data
+	plaintext, err = aead.Open(nil, ciphertext[:aead.NonceSize()], ciphertext[aead.NonceSize():], associatedData)
+	if err != nil {
+		// Note: we do not return the exact error here, to avoid disclosing information
+		return nil, ErrDecrypt
+	}
+
+	return plaintext, nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func Encrypt(key []byte, plaintext []byte, associatedData []byte) (ciphertext []byte, err error) {</code></pre><p>関数定義です。`[]byte`は「バイトのスライス（可変長配列）」。Goでは文字列やバイナリデータをよく`[]byte`で扱います。引数は3つ：鍵、平文、そして「関連データ」(associatedData)という後で説明する補助情報。戻り値の書き方`(ciphertext []byte, err error)`は「名前付き戻り値」です。普通は`([]byte, error)`のように型だけ書きますが、ここでは`ciphertext`と`err`という名前も付けています。これにより関数本体の中でこの変数名がすでに宣言済みとして使え、`return`するときに値を省略しても（今回は省略していませんが）動きます。Goのエラー処理は例外機構を使わず、必ず戻り値の最後に`error`型を含めて呼び出し元に判断を委ねるのが規約です。</p></div><div class="walk-step"><pre class="walk-quote"><code>block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to create block cipher: %w&quot;, err)
+	}</code></pre><p>`:=`は「新しい変数を宣言しつつ代入する」演算子です。`aes.NewCipher(key)`はAES暗号の「ブロック暗号器」を作る標準ライブラリの関数で、成功した暗号器と、失敗時のエラーの2つを返します。Goの定番パターンが次の`if err != nil { ... }`です。「エラーが返ってきたら、その場で早期リターンする」という書き方で、ネストを深くしないためにほぼ全てのエラーチェック直後に使われます。`fmt.Errorf(&quot;...: %w&quot;, err)`は元のエラーを`%w`で包んで新しいエラーメッセージを作る関数です。`%w`は「wrap（包む）」の意味で、呼び出し元が`errors.Is`や`errors.Unwrap`を使えば元のエラーまで遡れるようにしつつ、人間が読むための文脈（「ブロック暗号の作成に失敗した」）を追加できます。</p></div><div class="walk-step"><pre class="walk-quote"><code>aead, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to create AEAD cipher: %w&quot;, err)
+	}</code></pre><p>AESブロック暗号そのものは「固定長16バイトのブロックしか暗号化できない」という原始的な部品です。実際に安全に使うには「モード」を組み合わせる必要があり、ここでは`cipher.NewGCM`でGCM（Galois/Counter Mode）という認証付き暗号モードを作っています。GCMは暗号化と同時に「改ざん検知用のタグ」も生成してくれるので、平文を暗号化するだけでなく、後で復号する人がデータが途中で書き換えられていないかも確認できます。この性質を持つ暗号方式全体を`AEAD`（Authenticated Encryption with Associated Data）と呼び、変数名`aead`もそこから来ています。</p></div><div class="walk-step"><pre class="walk-quote"><code>nonce := make([]byte, aead.NonceSize())
+	_, err = io.ReadFull(rand.Reader, nonce)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;failed to generate random nonce: %w&quot;, err)
+	}</code></pre><p>`make([]byte, n)`は「長さnのバイトスライスを、全部0で初期化して作る」組み込み関数です。GCMには「ノンス（nonce = number used once）」という、同じ鍵で暗号化するたびに必ず変えるべき値が必要です。同じ鍵と同じノンスの組み合わせを2回使うと暗号が破られる危険があるため、ここでは`io.ReadFull(rand.Reader, nonce)`で暗号論的に安全な乱数生成器（`crypto/rand`パッケージの`rand.Reader`）からノンスの長さ分だけランダムなバイト列を読み込んで埋めています。`io.ReadFull`は「指定した長さぴったり読み込めるまで繰り返し読む」関数で、中途半端な読み込みで処理が進んでしまう事故を防ぎます。戻り値の最初の値（読み込んだバイト数）は使わないので`_`（アンダースコア）で捨てています。Goでは使わない戻り値を`_`で明示的に無視するのが作法です。</p></div><div class="walk-step"><pre class="walk-quote"><code>ciphertext = make([]byte, 0, len(plaintext)+aead.NonceSize()+aead.Overhead())
+	ciphertext = append(ciphertext, nonce...)</code></pre><p>`make([]byte, 0, n)`は「長さは0だが、容量(キャパシティ)がnのスライス」を作ります。長さは0なのでまだ要素は入っていませんが、内部的にはn分のメモリがすでに確保されているので、この後`append`で要素を追加していっても再アロケーション（メモリの再確保）が起きにくく効率的です。容量として`len(plaintext)+aead.NonceSize()+aead.Overhead()`を指定しているのは「これから平文の長さ分＋ノンスの長さ分＋GCMが付加する認証タグの長さ分のデータを入れる予定だから」という事前の見積もりです。次の`append(ciphertext, nonce...)`で、先ほど生成したノンスを先頭に書き込んでいます。`...`はスライスを展開して要素を1つずつ渡す記法で、「ciphertextの末尾にnonceの全要素を追加する」という意味になります。</p></div><div class="walk-step"><pre class="walk-quote"><code>ciphertext = aead.Seal(ciphertext, nonce, plaintext, associatedData)</code></pre><p>`Seal`はGCM暗号化の本体です。第1引数の`ciphertext`（今はノンスだけ入っている状態）の末尾に、暗号化結果と認証タグを追記した新しいスライスを返してくれます。つまり最終的な`ciphertext`は「ノンス＋暗号文＋認証タグ」という1本のバイト列になります。こうしてノンス自体も暗号文の先頭にくっつけて保存しておくことで、復号する側は鍵さえ知っていれば、別途ノンスを管理しなくても暗号文からノンスを取り出せます。これは実務でとてもよく使われる設計パターンです。第4引数の`associatedData`は「暗号化はしないが、改ざんされていないかの検証対象には含めるデータ」で、例えばユーザーIDのような文脈情報を渡すことで、暗号文を別の文脈にコピーして使う攻撃を防げます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if len(ciphertext) &lt; (aead.NonceSize() + aead.Overhead()) {
+		return nil, ErrDecrypt
+	}</code></pre><p>`Decrypt`関数の中の安全チェックです。暗号文は最低でも「ノンスの長さ＋認証タグの長さ」以上の長さが必要なはずなので、`len(ciphertext)`（渡された暗号文の長さ）がそれより短い場合は、明らかに壊れたデータか不正なデータです。`&lt;`で比較し、満たさなければ`ErrDecrypt`という共通のエラー値をそのまま返して処理を止めます。ここで個別の詳しい理由（「短すぎる」等）をエラーメッセージに含めず、ファイル先頭で定義された共通の`ErrDecrypt`だけを返している点に注目してください。これは次の項目で説明する設計意図によるものです。</p></div><div class="walk-step"><pre class="walk-quote"><code>plaintext, err = aead.Open(nil, ciphertext[:aead.NonceSize()], ciphertext[aead.NonceSize():], associatedData)</code></pre><p>`ciphertext[:aead.NonceSize()]`は「先頭からノンスの長さ分だけ切り出す」スライス演算（コロンの前が開始位置、省略すると0）、`ciphertext[aead.NonceSize():]`は「ノンスの長さ以降を全部切り出す」スライス演算（コロンの後が省略されると末尾まで）です。`Encrypt`で「ノンス＋本体」の順でくっつけて保存したので、復号時はまず同じ位置で分割してあげる必要があります。`aead.Open`はGCMの復号で、ノンスと暗号文本体、関連データを渡すと平文を返しますが、認証タグが合わなければ（＝途中で改ざんされていれば）エラーを返します。</p></div><div class="walk-step"><pre class="walk-quote"><code>if err != nil {
+		// Note: we do not return the exact error here, to avoid disclosing information
+		return nil, ErrDecrypt
+	}</code></pre><p>ここで重要なのは、コメントにもある通り「本当のエラー内容を呼び出し元に返さない」設計です。もし詳しいエラーを返してしまうと、攻撃者が総当たりでデータを送り、エラーメッセージの違いから暗号の仕組みについての情報（サイドチャネル情報）を推測できてしまう可能性があります。そのため成功・失敗どちらの不正ケースでも、常に同じ`ErrDecrypt`という1種類のエラーだけを返すようにしています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>復号処理でエラーの詳細を握りつぶして共通のエラー値だけを返すのは、バグではなく「失敗の理由を外部に漏らさない」ための意図的なセキュリティ設計である、という視点を持つこと。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-09/"><span>前の日</span>p10node/k10s</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-10/">← 2026.10.10 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

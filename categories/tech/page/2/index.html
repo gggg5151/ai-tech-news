@@ -25,7 +25,37 @@
 </header>
 <div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../../">今日の号</a><a class=""  href="../../../ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../">開発・技術</a><a class=""  href="../../../github/">リポジトリ</a><a class=""  href="../../../papers/">論文・研究</a><a class="" href="../../../../code/">今日のコード</a><a class="archive-nav " href="../../../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全175記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全180記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-06/aaae7384781b377f/">Goのガベージコレクタ、スワップで40msの一時停止</a></h3>
+<p class="excerpt">筆者が本番環境にスワップを導入する前の実験で発見した問題です。Go言語のガベージコレクタ（GC）がメタデータをスワップ領域から読み込む際、大量のページフォルトが発生し、本来は数十マイクロ秒程度のstop-the-worldポーズ（アプリ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>frn.sh</span><time datetime="2026-10-06">2026.10.06</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-05/74befaab08a7e6ac/">ローカル環境を1コマンドで公開する「Quick Tunnels」</a></h3>
+<p class="excerpt">Cloudflareの「Quick Tunnels」機能は、ローカルホスト上の開発環境を、アカウント登録・DNS設定・ポート開放なしで、コマンド1つでインターネットに公開できるツールです。cloudflaredをインストールし、「clo…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-05/83205b6e83a2e49c/">Supabase、SQLiteの「Turso」買収。エージェント時代のDB需要に対応</a></h3>
+<p class="excerpt">Supabaseが、SQLiteベースのデータベースサービス「Turso」を買収すると発表しました。背景にはAIエージェントの普及によるデータベース需要の急増があり、Supabaseは「the database platform for…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-05/3bf00305ce785827/">Claude Codeのcompactionを52秒→0.26秒に高速化</a></h3>
+<p class="excerpt">筆者のyottaさんが自作したClaude Code用プラグイン「lossless-compaction」を紹介する記事です。会話履歴が肥大化した際にClaude Code組み込みのcompact機能（会話要約・圧縮機能）より高速かつ高…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-05/1e6cc23a544086f5/">Vercel×GCPをキーレス認証で繋ぐ実装ガイド</a></h3>
+<p class="excerpt">Next.jsアプリをVercelでホストし、GCPのCloud RunやBigQueryにアクセスする際、従来はサービスアカウントキーをVercelの環境変数に設定する方法が使われてきました。しかし長期有効なキーが漏洩すればGCPリソ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-05">2026.10.05</time></div>
+</article>
+<article class="news-card cat-tech">
 <a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
 <h3><a href="../../../../articles/2026-10-05/a433127a5e8eaba7/">JSONの「微妙な実装差異」を言語間で比較</a></h3>
 <p class="excerpt">JSONは仕様上シンプルに見えますが、実装によって解釈が異なる「曖昧な部分」が複数存在すると指摘する記事です。JavaScript、Python、Rust、Go、Ruby、PostgreSQLなどの実装比較を通じて、主に「数値の扱い」「…</p>
@@ -138,36 +168,6 @@
 <h3><a href="../../../../articles/2026-09-29/3fbf14bd0a9210cc/">Go 1.28でstring(int)の直接変換が制限へ</a></h3>
 <p class="excerpt">Go言語のProposal #3939により、整数値を文字列に直接変換するstring(int)という記法が制限される見込みです。現状のGo 1.27ではstring(65)のようなコードが書け、これは整数をUnicodeコードポイント…</p>
 <div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-29/e4b644aaebd449db/">Claude Codeの定期タスク停止、原因は前日実行の『滞留』</a></h3>
-<p class="excerpt">筆者が運用するClaude Codeの定期実行タスク2本が、2026年9月25日から27日までの3日間、まったく動作しませんでした。しかもエラーも通知も一切出ていなかったといいます。</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-29/f8ce882f7918f2a6/">Qdrant Go clientでベクトル検索を最小構成から再現</a></h3>
-<p class="excerpt">Qdrant Go client v1.19.0を使い、gRPC（高速なリモート手続き呼び出しの通信規格）経由でベクトルの登録・検索・フィルタを実装する方法を紹介する記事です。gRPC接続にはポート6334を使用し、CreateColl…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-29/174bee6dd913b3a8/">GoのFuzzy Testingでバグとセキュリティ脆弱性を掘り当てる</a></h3>
-<p class="excerpt">Go 1.18で導入されたネイティブのファジングテスト機能を解説する記事です。ファジングは自動生成したランダムな入力を使ってエッジケースやバグを発見する手法で、XSS（クロスサイトスクリプティング）のようなセキュリティ脆弱性の検出にも有…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-28/508b8b1193b2dbf5/">Honoが「Web標準API」だけに依存する設計である理由</a></h3>
-<p class="excerpt">記事では、自身をHonoの「エアプ」（実際に使い込んだ経験がない立場）と認める著者が、Honoが良いとされる理由を調べた内容がまとめられています。結論として、HonoはRequest/ResponseというWeb標準APIのみに依存し、…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-28">2026.09.28</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-28/ae948a8ad2ebbbb5/">ほぼ0円で作るページ内検索、新モデル「Jev」で二段階リランク</a></h3>
-<p class="excerpt">筆者が個人で運営するGo言語の機能追加提案まとめサイト「Go Proposal Weekly Digest」に、ページ内検索機能を実装した体験記です。記事の増加で過去記事の検索が困難になったことに加え、新モデル「Jev」（テキストを生成…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-28">2026.09.28</time></div>
 </article></div><nav class="pagination" aria-label="ページ切り替え"><a  href="../../">1</a><a aria-current="page" href="./">2</a><a  href="../3/">3</a><a  href="../4/">4</a><a  href="../5/">5</a><a  href="../6/">6</a><a  href="../7/">7</a><a  href="../8/">8</a></nav>
 </main>
 <footer class="footer wrap">
