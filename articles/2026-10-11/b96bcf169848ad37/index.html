@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Go×AWSの非同期バックエンド、設計の「判断」を学ぶ本 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Zennで公開されている書籍「実務で迷わないための非同期バックエンド設計・判断術」は、GoとAWSを用いた非同期配信システムの設計・運用を扱う一冊です。著者のKyren氏は、受託・自社開発の現場でバックエンド（Go）とクラウドインフラ（AWS/GCP）の設計から運用までを担当するSoftware Engineerです。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Go×AWSの非同期バックエンド、設計の「判断」を学ぶ本 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Zennで公開されている書籍「実務で迷わないための非同期バックエンド設計・判断術」は、GoとAWSを用いた非同期配信システムの設計・運用を扱う一冊です。著者のKyren氏は、受託・自社開発の現場でバックエンド（Go）とクラウドインフラ（AWS/GCP）の設計から運用までを担当するSoftware Engineerです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-11/b96bcf169848ad37/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-11/b96bcf169848ad37/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Go×AWSの非同期バックエンド、設計の「判断」を学ぶ本", "datePublished": "2026-10-11", "description": "Zennで公開されている書籍「実務で迷わないための非同期バックエンド設計・判断術」は、GoとAWSを用いた非同期配信システムの設計・運用を扱う一冊です。著者のKyren氏は、受託・自社開発の現場でバックエンド（Go）とクラウドインフラ（AWS/GCP）の設計から運用までを担当するSoftware Engineerです。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-11/b96bcf169848ad37/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/kyrenzk/books/backend-design-judgment", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-11/">2026.10.11 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Go×AWSの非同期バックエンド、設計の「判断」を学ぶ本</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-11">2026.10.11</time></div>
+</header>
+<div class="article-body">
+<p>Zennで公開されている書籍「実務で迷わないための非同期バックエンド設計・判断術」は、GoとAWSを用いた非同期配信システムの設計・運用を扱う一冊です。著者のKyren氏は、受託・自社開発の現場でバックエンド（Go）とクラウドインフラ（AWS/GCP）の設計から運用までを担当するSoftware Engineerです。</p>
+<p>本書の目標は、受付・配信、キュー、<strong>冪等性</strong>（同じ処理を何度実行しても結果が変わらない性質）、スケール、障害対応、コストといったテーマを、設計レビューで説明できる「判断」に落とし込むことだとされています。実装の具体的な手順よりも設計思考の習得に重点が置かれており、全12章を通じて基礎からAPI・DB設計、非同期処理の実装パターン、スケーラビリティ・可用性、運用面の考慮事項まで段階的に学べる構成になっています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>書籍のタイトルは「実務で迷わないための非同期バックエンド設計・判断術」である</li><li>著者はKyren氏である</li><li>書籍はGoとAWSを用いた非同期配信システムの設計と運用について解説している</li><li>書籍の目標は受付と配信、キュー、冪等性、スケール、障害、コストを設計レビューで説明できる判断に落とすことである</li><li>書籍は実装の具体的な手順ではなく設計思考の習得に重点を置いている</li><li>書籍は12章で構成されている</li><li>第1〜2章はバックエンド設計の基礎を扱う</li><li>第3〜4章はAPI設計とデータベース設計を扱う</li><li>第5〜7章は非同期処理の実装パターンを扱う</li><li>第8〜9章はスケーラビリティと可用性を扱う</li><li>第10〜12章は運用面での考慮事項を扱う</li><li>著者はバックエンド(Go)とクラウドインフラ(AWS/GCP)を中心に受託・自社開発の現場で設計から運用まで担当するSoftware Engineerである</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>受付と配信、キュー、冪等性、スケール、障害、コストを、設計レビューで説明できる判断に落とす</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/kyrenzk/books/backend-design-judgment" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/kyrenzk/books/backend-design-judgment" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Go%C3%97AWS%E3%81%AE%E9%9D%9E%E5%90%8C%E6%9C%9F%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%80%81%E8%A8%AD%E8%A8%88%E3%81%AE%E3%80%8C%E5%88%A4%E6%96%AD%E3%80%8D%E3%82%92%E5%AD%A6%E3%81%B6%E6%9C%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-11%2Fb96bcf169848ad37%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Go%C3%97AWS%E3%81%AE%E9%9D%9E%E5%90%8C%E6%9C%9F%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%80%81%E8%A8%AD%E8%A8%88%E3%81%AE%E3%80%8C%E5%88%A4%E6%96%AD%E3%80%8D%E3%82%92%E5%AD%A6%E3%81%B6%E6%9C%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-11/b96bcf169848ad37/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-11%2Fb96bcf169848ad37%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../c575615c0eeaacb1/"><span>前の記事</span>Cloudflare Durable Objectsのデッドループで8000円請求された話</a><a class="next" href="../dfbbbf4e7c70ad76/"><span>次の記事</span>AndroidをSMSゲートウェイ化するOSS「httpSMS」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-11/">← 2026.10.11 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../b57e881323cec86b/">AIが書くNext.jsコードに潜む9つのセキュリティの穴</a></h3>
+<p class="excerpt">筆者は、AIに書かせたNext.jsのコードを見直す中で見つかったセキュリティ上の典型的な穴を、架空のブログアプリで実際に再現・検証しました。Server Action（クライアントから関数のように直接呼び出せるサーバー側処理）やRou…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-11">2026.10.11</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../c575615c0eeaacb1/">Cloudflare Durable Objectsのデッドループで8000円請求された話</a></h3>
+<p class="excerpt">個人開発者である筆者は、Cloudflare Durable Objects（DO、状態を持つサーバーレスオブジェクト）を使った自身のサービスで、通常なら数円程度のはずの課金が約8000円の請求になる体験をしました。原因は、キュー処理失…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-11">2026.10.11</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../2026-10-10/e38fbd796d4d5a7a/">Tera Termマクロ運用に限界、Go+WailsでNW一括ログインツールを自作</a></h3>
+<p class="excerpt">ネットワーク保守業務に携わる筆者が、Tera Termマクロによる複数ネットワーク機器への一括ログイン運用の限界を解消するため、Go言語とWails（GoでネイティブGUIアプリを作れるフレームワーク）で一括ログイン・コマンド実行・ログ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-10">2026.10.10</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

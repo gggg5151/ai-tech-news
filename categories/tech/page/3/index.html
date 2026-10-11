@@ -25,7 +25,25 @@
 </header>
 <div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../../">今日の号</a><a class=""  href="../../../ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../">開発・技術</a><a class=""  href="../../../github/">リポジトリ</a><a class=""  href="../../../papers/">論文・研究</a><a class="" href="../../../../code/">今日のコード</a><a class="archive-nav " href="../../../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全180記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全183記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-01/cc5ffe1a8f9c9830/">wranglerから新CLI「cf」へ、移行の勘所</a></h3>
+<p class="excerpt">Cloudflareの新しいCLIツール「cf」（v1.0.0-beta）への移行方法を、個人開発者が実際に手を動かしながら解説した記事です。従来の「wrangler」から、cloudflare.config.tsベースの設定を使う新C…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-01">2026.10.01</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-09-29/1e248637cc3a069c/">Next.js 16のmiddleware移行、codemodが拾えない落とし穴</a></h3>
+<p class="excerpt">個人開発者の「こそあど」氏が、自身が同一リポジトリから運用する3つのマッチングアプリ（SparMate、NetaPair、BoardLink、いずれもVercel運用）でNext.js 16のmiddleware→Proxy API移行…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-09-29/3fbf14bd0a9210cc/">Go 1.28でstring(int)の直接変換が制限へ</a></h3>
+<p class="excerpt">Go言語のProposal #3939により、整数値を文字列に直接変換するstring(int)という記法が制限される見込みです。現状のGo 1.27ではstring(65)のようなコードが書け、これは整数をUnicodeコードポイント…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-29">2026.09.29</time></div>
+</article>
+<article class="news-card cat-tech">
 <a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
 <h3><a href="../../../../articles/2026-09-29/e4b644aaebd449db/">Claude Codeの定期タスク停止、原因は前日実行の『滞留』</a></h3>
 <p class="excerpt">筆者が運用するClaude Codeの定期実行タスク2本が、2026年9月25日から27日までの3日間、まったく動作しませんでした。しかもエラーも通知も一切出ていなかったといいます。</p>
@@ -150,24 +168,6 @@
 <h3><a href="../../../../articles/2026-09-24/0b1d1d6766ca9d76/">MCP接続はなぜ危険になりうるか　4パターンと確認すべき7項目</a></h3>
 <p class="excerpt">MCP（Model Context Protocol）の仕様は、認可（authorization）を「任意」、人による確認（Human in the Loop）を「推奨」にとどめています。この記事は、接続しただけで即座に情報が漏洩するわ…</p>
 <div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-09-24">2026.09.24</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-24/7cb9497b92e9d40c/">静的書き出しで4,710個の無駄ファイルを発見した話</a></h3>
-<p class="excerpt">小学生向けニュースサイト「こどもニュース」を運営する筆者が、Cloudflare Pages無料プラン（ファイル数上限20,000）の上限に近づいていた原因を調べたところ、Next.jsの静的書き出しで生成される、クライアント側遷移用の…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-24/d213379e61d93cf1/">標準net/httpの薄いラッパー、GoのWebフレームワーク「Mach」</a></h3>
-<p class="excerpt">Go 1.22以降で導入された標準net/http.ServeMuxのルーティング機能を土台に、薄い便利機能を追加したWebフレームワーク「Mach」を紹介する記事です。GinやEchoほどの大規模フレームワークは不要だが、素のnet/…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-09-24/9af8d266b3274abd/">ORM選定に迷ったらPoEAAの設計パターンに立ち返る</a></h3>
-<p class="excerpt">TypeScript案件でORM（Object-Relational Mapper）を選ぶ際、Martin FowlerのPoEAA（Patterns of Enterprise Application Architecture）で紹介…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-09-24">2026.09.24</time></div>
 </article></div><nav class="pagination" aria-label="ページ切り替え"><a  href="../../">1</a><a  href="../2/">2</a><a aria-current="page" href="./">3</a><a  href="../4/">4</a><a  href="../5/">5</a><a  href="../6/">6</a><a  href="../7/">7</a><a  href="../8/">8</a></nav>
 </main>
 <footer class="footer wrap">

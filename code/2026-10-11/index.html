@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>charmbracelet/bubbletea の commands.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="bubbletea は、Webフロントエンドで有名な「Elmアーキテクチャ」（状態 + メッセージ + 更新関数、というループ）をターミナルUIに持ち込んだGoのフレームワークです。アプリは「副作用（HTTP通信やタイマーなど）をどう起こすか」を Cmd（コマンド。型は func() Msg、つまり「実行すると何かメッ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="charmbracelet/bubbletea の commands.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="bubbletea は、Webフロントエンドで有名な「Elmアーキテクチャ」（状態 + メッセージ + 更新関数、というループ）をターミナルUIに持ち込んだGoのフレームワークです。アプリは「副作用（HTTP通信やタイマーなど）をどう起こすか」を Cmd（コマンド。型は func() Msg、つまり「実行すると何かメッ…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-11/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-11/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.11</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・Go</span>
+<h1>charmbracelet/bubbletea の <code>commands.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/charmbracelet/bubbletea/blob/HEAD/commands.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-11">2026.10.11</time></div>
+</header>
+<div class="article-body">
+<p>bubbletea は、Webフロントエンドで有名な「Elmアーキテクチャ」（状態 + メッセージ + 更新関数、というループ）をターミナルUIに持ち込んだGoのフレームワークです。アプリは「副作用（HTTP通信やタイマーなど）をどう起こすか」を `Cmd`（コマンド。型は `func() Msg`、つまり「実行すると何かメッセージを返す関数」）という値で表現し、フレームワーク側がそれを実行して結果の `Msg` をアプリに届けます。commands.go はその `Cmd` を組み合わせるための部品（複数のコマンドを同時に走らせる `Batch`、順番に走らせる `Sequence` など）を定義しているファイルで、ほぼ全てのbubbletea製アプリが使うコードです。今回選んだ範囲は、似た機能を持つ2つの公開関数が、ジェネリクスを使った1つの内部関数に処理を委譲している部分で、「重複を減らすGoらしい書き方」が詰まっています。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// Batch performs a bunch of commands concurrently with no ordering guarantees
+// about the results. Use a Batch to return several commands.
+//
+// Example:
+//
+//	func (m model) Init() tea.Cmd {
+//	    return tea.Batch(someCommand, someOtherCommand)
+//	}
+func Batch(cmds ...Cmd) Cmd {
+	return compactCmds[BatchMsg](cmds)
+}
+
+// BatchMsg is a message used to perform a bunch of commands concurrently with
+// no ordering guarantees. You can send a BatchMsg with Batch.
+type BatchMsg []Cmd
+
+// Sequence runs the given commands one at a time, in order. Contrast this with
+// Batch, which runs commands concurrently.
+func Sequence(cmds ...Cmd) Cmd {
+	return compactCmds[sequenceMsg](cmds)
+}
+
+// sequenceMsg is used internally to run the given commands in order.
+type sequenceMsg []Cmd
+
+// compactCmds ignores any nil commands in cmds, and returns the most direct
+// command possible. That is, considering the non-nil commands, if there are
+// none it returns nil, if there is exactly one it returns that command
+// directly, else it returns the non-nil commands as type T.
+func compactCmds[T ~[]Cmd](cmds []Cmd) Cmd {
+	var validCmds []Cmd
+	for _, c := range cmds {
+		if c == nil {
+			continue
+		}
+		validCmds = append(validCmds, c)
+	}
+	switch len(validCmds) {
+	case 0:
+		return nil
+	case 1:
+		return validCmds[0]
+	default:
+		return func() Msg {
+			return T(validCmds)
+		}
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>// Batch performs a bunch of commands concurrently with no ordering guarantees
+// about the results. Use a Batch to return several commands.</code></pre><p>Goでは関数の直前に `//` で書いたコメントが、その関数の「公式な説明書（doc comment）」として扱われます。go docコマンドやエディタのホバー表示はこのコメントを拾って見せます。『複数のコマンドを並行実行する、順序は保証しない』と書かれており、これだけで `Batch` が何をする関数かが分かるようになっています。</p></div><div class="walk-step"><pre class="walk-quote"><code>func Batch(cmds ...Cmd) Cmd {
+	return compactCmds[BatchMsg](cmds)
+}</code></pre><p>`cmds ...Cmd` は可変長引数です。`...` を型の前につけると「この型の値を0個以上、好きな数だけ渡せる」引数になり、関数の中では `cmds` は `[]Cmd`（Cmdのスライス、つまり可変長の配列）として扱えます。つまり `Batch(cmd1, cmd2, cmd3)` のように好きな数のコマンドを渡せます。戻り値の型は `Cmd` で、これは中身を見ると『実行すると `Msg` を1つ返す関数』です。関数本体はたった1行で、`compactCmds` という別の関数に処理を丸ごと渡しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return compactCmds[BatchMsg](cmds)</code></pre><p>`compactCmds[BatchMsg](cmds)` という書き方のうち `[BatchMsg]` の部分が「型引数」です。`compactCmds` は後で見るようにジェネリック関数（型をパラメータとして受け取れる関数）として定義されていて、ここでは『このコンテキストでは `BatchMsg` という型を使って処理してね』と指定しています。関数の丸括弧 `(cmds)` はいつも通りの引数渡しです。</p></div><div class="walk-step"><pre class="walk-quote"><code>type BatchMsg []Cmd</code></pre><p>`type 名前 既存の型` は、既存の型に新しい名前（名前付き型）をつける構文です。ここでは『`Cmd` のスライス（`[]Cmd`）』に `BatchMsg` という名前を与えています。見た目は `[]Cmd` と同じですが、`BatchMsg` という独立した型として扱われるため、『このメッセージはBatchによって作られた、まとめて実行すべきコマンド集合だ』という意味をGoの型システム上で表現できます。</p></div><div class="walk-step"><pre class="walk-quote"><code>func Sequence(cmds ...Cmd) Cmd {
+	return compactCmds[sequenceMsg](cmds)
+}</code></pre><p>`Sequence` は `Batch` とほぼ同じ形をしています。違いは渡す型引数が `BatchMsg` ではなく `sequenceMsg` になっている点だけです。同じ `compactCmds` という処理に『今回は `sequenceMsg` として組み立てて』と指示を変えるだけで、『並行実行用のコマンドまとめ』と『順次実行用のコマンドまとめ』という別の意味を持つ値を作り分けています。</p></div><div class="walk-step"><pre class="walk-quote"><code>type sequenceMsg []Cmd</code></pre><p>`BatchMsg` が大文字始まりだったのに対し、こちらは小文字始まりの `sequenceMsg` です。Goでは識別子（型名・関数名・変数名など）が大文字で始まると他のパッケージからも見える「公開（exported）」、小文字で始まるとそのパッケージの中だけで使える「非公開」になります。`sequenceMsg` はbubbletea内部の実装の都合で使う型なので、利用者（アプリを書く側）には見せない設計です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func compactCmds[T ~[]Cmd](cmds []Cmd) Cmd {</code></pre><p>これがジェネリック関数の定義です。関数名の直後の `[T ~[]Cmd]` が型パラメータの宣言で、`T` が『この関数を呼ぶときに決める型』の名前、`~[]Cmd` がその `T` に許される制約（constraint）です。`~[]Cmd` は『`[]Cmd` そのもの、または `[]Cmd` を元にして `type` で定義された型』という意味で、チルダ `~` が『元の形がこれと同じならOK』を表します。`BatchMsg` も `sequenceMsg` も実体が `[]Cmd` なので、どちらもこの制約を満たし `T` に指定できるわけです。</p></div><div class="walk-step"><pre class="walk-quote"><code>var validCmds []Cmd
+	for _, c := range cmds {
+		if c == nil {
+			continue
+		}
+		validCmds = append(validCmds, c)
+	}</code></pre><p>`var validCmds []Cmd` は『まだ要素が1つもない `Cmd` のスライス』を用意する宣言です（Goでは `nil` スライスも空スライスとして安全に使えます）。`for _, c := range cmds` は `cmds` を先頭から1つずつ取り出すループで、インデックスは使わないので `_` で捨て、値だけ `c` に入れています。`if c == nil { continue }` は『`c` が `nil`（何も指していない、無効なコマンド）だったら、このループの残りをスキップして次の要素へ進む』という意味です。`continue` は『このループの以降をやめて次の繰り返しへ』というキーワードです。有効な `c` だけが `append(validCmds, c)` でスライスの末尾に追加されていき、結果として『nilを除いたコマンドだけのリスト』が `validCmds` に残ります。</p></div><div class="walk-step"><pre class="walk-quote"><code>switch len(validCmds) {
+	case 0:
+		return nil
+	case 1:
+		return validCmds[0]
+	default:
+		return func() Msg {
+			return T(validCmds)
+		}
+	}</code></pre><p>`len(validCmds)` はスライスの要素数を返す組み込み関数です。この `switch` はその個数によって3通りの挙動を分けています。要素が0個なら『何も実行するものがない』ので `nil` を返します。1個だけなら、わざわざまとめ直さずその1個のコマンド `validCmds[0]`（スライスの添字0番目の要素）をそのまま返します。これは『1個しかないならラップせず直接返す』という最適化で、コメント中の『もし1つだけならそのコマンドを直接返す』という説明と対応しています。2個以上（`default`、どのcaseにも当たらない場合）のときだけ、まとめ処理を行う `func() Msg {...}` を新しく作って返します。</p></div><div class="walk-step"><pre class="walk-quote"><code>return func() Msg {
+			return T(validCmds)
+		}</code></pre><p>`func() Msg { ... }` は名前のない関数（クロージャ）をその場で作る式です。`Cmd` という型は『引数なしで `Msg` を1つ返す関数』だったので、この無名関数自体がまさに `Cmd` 型の値になります。中の `T(validCmds)` は型変換で、『スライス `validCmds`（型は `[]Cmd`）を、型パラメータで指定された `T`（実際には `BatchMsg` か `sequenceMsg`）に変換する』という処理です。こうして出来上がった `Cmd` を実行すると、『複数のコマンドをまとめたメッセージ（BatchMsgまたはsequenceMsg）』が1つ返る、という仕組みになっています。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「返したい結果の型だけが違う」似た関数が2つ以上あるときは、共通処理を1つのジェネリック関数に切り出し、型パラメータ（`[T ~既存の型]`）で差分だけを注入すると、コードの重複を避けつつそれぞれの型の意味（BatchMsg/sequenceMsgなど）を保てる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-10/"><span>前の日</span>pocket-id/pocket-id</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-11/">← 2026.10.11 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

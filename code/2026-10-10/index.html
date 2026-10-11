@@ -110,7 +110,7 @@ func Decrypt(key []byte, ciphertext []byte, associatedData []byte) (plaintext []
 		return nil, ErrDecrypt
 	}</code></pre><p>ここで重要なのは、コメントにもある通り「本当のエラー内容を呼び出し元に返さない」設計です。もし詳しいエラーを返してしまうと、攻撃者が総当たりでデータを送り、エラーメッセージの違いから暗号の仕組みについての情報（サイドチャネル情報）を推測できてしまう可能性があります。そのため成功・失敗どちらの不正ケースでも、常に同じ`ErrDecrypt`という1種類のエラーだけを返すようにしています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>復号処理でエラーの詳細を握りつぶして共通のエラー値だけを返すのは、バグではなく「失敗の理由を外部に漏らさない」ための意図的なセキュリティ設計である、という視点を持つこと。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-09/"><span>前の日</span>p10node/k10s</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-09/"><span>前の日</span>p10node/k10s</a><a class="next" href="../2026-10-11/"><span>次の日</span>charmbracelet/bubbletea</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-10/">← 2026.10.10 の号を読む</a>
 </div>
 </article>

@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.10.10の号: Anthropic、Claudeに新機能Dashboards/Motion追加。Docs/Slides/Designも無料開放 / 無料版ChatGPTにもGPT-6導入、回答内で直接操作できる「Intelligent UI」が目玉 / OpenAIの年換算売上が従来発表より180億ドル少ないと判明、AI関連株が下落 / Claude CodeのExploreをHaik…">
+<meta name="description" content="2026.10.11の号: OpenAI、監視可能性研究の安全性研究者3人を解雇。本人らとOpenAIの説明が食い違う / AI生成の数学論文722本を公開、翌日に1つの符号ミスで3本が連鎖的に撤回 / SophosはAIで脅威調査96%短縮、AsanaはブラウザエージェントのコストをGPT-6.1 Solで76倍削減 / AIに書かせたNext.jsコードの脆弱性9パターンを実証した体験談 /…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.10.10の号: Anthropic、Claudeに新機能Dashboards/Motion追加。Docs/Slides/Designも無料開放 / 無料版ChatGPTにもGPT-6導入、回答内で直接操作できる「Intelligent UI」が目玉 / OpenAIの年換算売上が従来発表より180億ドル少ないと判明、AI関連株が下落 / Claude CodeのExploreをHaik…">
+<meta property="og:description" content="2026.10.11の号: OpenAI、監視可能性研究の安全性研究者3人を解雇。本人らとOpenAIの説明が食い違う / AI生成の数学論文722本を公開、翌日に1つの符号ミスで3本が連鎖的に撤回 / SophosはAIで脅威調査96%短縮、AsanaはブラウザエージェントのコストをGPT-6.1 Solで76倍削減 / AIに書かせたNext.jsコードの脆弱性9パターンを実証した体験談 /…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,126 +30,114 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-10">2026年10月10日（土）</time><span class="edition-count">16記事・読了まで約11分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Anthropic、Claudeに新機能Dashboards/Motion追加。Docs/Slides/Designも無料開放</li><li>無料版ChatGPTにもGPT-6導入、回答内で直接操作できる「Intelligent UI」が目玉</li><li>OpenAIの年換算売上が従来発表より180億ドル少ないと判明、AI関連株が下落</li><li>Claude CodeのExploreをHaikuにするだけでコスト34〜43%減という実測報告</li><li>Go+Wailsでの実務ツール自作やSKILL.mdサプライチェーン調査など技術記事も充実</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-67f4091c4b2149e3">Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動</a></li><li><a href="#a-c7e9d2a62bacaef1">OpenAIの年換算売上、従来発表より180億ドル少ないと判明</a></li><li><a href="#a-b265a6192b6dc50b">GoogleのGemini Agent、Claudeも選べるマルチエージェント基盤に</a></li><li><a href="#a-36830894226bace8">Claude、データからダッシュボード・アイデアから動画を自動生成</a></li><li><a href="#a-220485da569a24b8">無料版ChatGPTにもGPT-6、回答内で操作できる「Intelligent UI」</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-e38fbd796d4d5a7a">Tera Termマクロ運用に限界、Go+WailsでNW一括ログインツールを自作</a></li><li><a href="#a-2f075427c7c43fc7">Drizzle ORM、スキーマを正にマイグレーションとバリデーションを一貫管理</a></li><li><a href="#a-ea8d459cd8810280">NotionとSlackからClaude Codeに仕事を依頼、サブスク枠で運用した話</a></li><li><a href="#a-0a6b29e700d72480">Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに</a></li><li><a href="#a-f003b323ed763d4b">Goのインターフェース1つでTCPもWebSocketも動かすRPC生成ツール「irpc」</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-6c95b2eecc0c0260">Microsoft製サンドボックス実行システム「MXC」、信頼できないコードを多層分離</a></li><li><a href="#a-252fe49db42082af">パスキー専用のシンプルなOIDCプロバイダー「Pocket ID」</a></li><li><a href="#a-d99c00e197a479dd">100以上のLLMを統一フォーマットで呼べるAIゲートウェイ「LiteLLM」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-2ac7c44dca5b4888">構造化出力でLLM性能は本当に下がるのか、鍵はフィールド順序</a></li><li><a href="#a-e04aa471a0f657cd">Claude CodeのSKILL.md、無管理の「サプライチェーン」をGitHub上で可視化</a></li><li><a href="#a-839a4872d771ed8f">エンタープライズ向けエージェントの学習データ、シミュレーションで合成</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-67f4091c4b2149e3">
-<h3><a href="articles/2026-10-10/67f4091c4b2149e3/">Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>Anthropicが、インフラやユーザーセキュリティに重大な影響を与えるOSS（オープンソースソフトウェア）プロジェクト向けに、無料のAIセキュリティスキャンサービス「OSS Scanner」を始めました。一般向けの「Claude Security」とは別物で、最も高性能なモデルを使ってコードを監査します。利用を希望するプロジェクトの主要メンテナーが、GitHub上の指定リポジトリに申請用のプルリクエストを送ることで利用でき、利用可否は個別に判断されます。</p>
-<p>特徴は、スキャンが完全にAIモデルのみで行われ、人間によるレビューを一切介さない点です。迅速かつ頻繁な診断が可能になる一方で、誤検出のリスクも伴います。報告には再現手順や脆弱性の説明、二分探索、パッチ案までが含まれるとのことです。</p>
-<p>初期検証ではPostgreSQLやOpenSSLを含む48プロジェクトを対象に実施され、97件の脆弱性候補が検出されました。CVD（Coordinated Vulnerability Disclosure、協調的脆弱性開示）専門家による評価では、このうち<strong>88%に当たる85件</strong>が基準を満たすと判定されています。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20261009-anthropic-oss-scanner/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/67f4091c4b2149e3/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-c7e9d2a62bacaef1">
-<h3><a href="articles/2026-10-10/c7e9d2a62bacaef1/">OpenAIの年換算売上、従来発表より180億ドル少ないと判明</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>cnbc.com</span></div>
-<div class="paper-body"><p>OpenAIの実際の年換算売上高が、これまで報じられていた金額より大幅に低かったことが分かりました。9月末時点の年換算売上高は約500億ドルで、従来報じられていた680億ドルとの<strong>差は180億ドル</strong>に及びます。差額の原因は、680億ドルという数字にパートナー経由の総売上が含まれていたためとされています。</p>
-<p>この報道を受けて、Nvidiaの株価は3%、Oracleは約6%、CoreWeaveは約8%それぞれ下落しました。Sam Altman CEOは9月の発言で、現時点でのIPO（株式公開）は時期尚早だと述べていたとのことです。</p></div>
-<p class="paper-source"><a href="https://www.cnbc.com/2026/10/08/open-ai-revenue-nvidia-oracle-coreweave.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/c7e9d2a62bacaef1/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-b265a6192b6dc50b">
-<h3><a href="articles/2026-10-10/b265a6192b6dc50b/">GoogleのGemini Agent、Claudeも選べるマルチエージェント基盤に</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
-<div class="paper-body"><p>Google Cloudが10月9日、クラウドで動作するマルチエージェントツール「Gemini Agent」を発表しました。単一モデルにロックインされず、タスクごとに最適なモデルを使い分けられる点が特徴です。現時点ではGoogle自社の「Gemini 4 Argon」に加え、Anthropicの「Claude Opus 5.5」「Claude Sonnet 5.5」が利用可能で、今後は他のクローズド・オープンモデルも追加される予定とのことです。</p></div>
-<p class="paper-source"><a href="https://www.itmedia.co.jp/aiplus/article/2610/09/2000002152/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/b265a6192b6dc50b/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-36830894226bace8">
-<h3><a href="articles/2026-10-10/36830894226bace8/">Claude、データからダッシュボード・アイデアから動画を自動生成</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>forest.watch.impress.co.jp</span></div>
-<div class="paper-body"><p>Anthropicは、Claudeの新機能「Dashboards」と「Motion」を発表しました。Dashboardsは自然言語で社内データを分析し、更新されるダッシュボードを作成できる機能で、有償プラン向けのベータ版として提供されます。BigQueryやSnowflakeなどのデータソース、GrafanaやMixpanelなどのツールと連携します。</p>
-<p>Motionはアイデアからアニメーション付き解説動画を作成する機能で、「Team」「Enterprise」プラン向けのベータ版です。テキストやグラフ、図形、画像を動かすコードを生成し、単語や数値、タイミングをカスタマイズしてMP4形式でダウンロードできます。Adobe、Runwayなどとも連携します。</p>
-<p>加えて、既存機能のDocs、Slides、Designが<strong>無料プランを含む全プラン</strong>で利用可能になります。Enterprise向けには10月15日に既定でONになる予定です。なお独立サイトのClaude Design（claude.ai/design）は12月14日に終了し、機能は会話内の利用に統合されるとのことです。</p></div>
-<p class="paper-source"><a href="https://forest.watch.impress.co.jp/docs/news/2146954.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/36830894226bace8/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-220485da569a24b8">
-<h3><a href="articles/2026-10-10/220485da569a24b8/">無料版ChatGPTにもGPT-6、回答内で操作できる「Intelligent UI」</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>pc.watch.impress.co.jp</span></div>
-<div class="paper-body"><p>OpenAIが10月7日にGPT-6の展開を発表しました。Plus・Pro・Business・Enterpriseでは7日から、無料のFree・Goプランでは8日からそれぞれ提供が始まっています。有料プランでは「GPT-6 Sol」、無料プランでは「GPT-6 Luna」というモデルが動作します。</p>
-<p>目玉機能は、回答内にボタンやフォーム、グラフなどを含め、チャット内で直接操作できる<strong>「Intelligent UI」</strong>です。Web検索を伴う質問では応答開始時間が平均44%短縮され、複数ターンで手法を変える攻撃への耐性も前モデル比で向上しています。</p>
-<p>開発者向けには、Responses APIより約10倍高速に応答する「Decisions API」がパブリックベータで公開されました。料金は入力トークン100万あたり0.10ドルです。</p></div>
-<p class="paper-source"><a href="https://pc.watch.impress.co.jp/docs/news/2147113.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/220485da569a24b8/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-e38fbd796d4d5a7a">
-<h3><a href="articles/2026-10-10/e38fbd796d4d5a7a/">Tera Termマクロ運用に限界、Go+WailsでNW一括ログインツールを自作</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>ネットワーク保守業務に携わる筆者が、Tera Termマクロによる複数ネットワーク機器への一括ログイン運用の限界を解消するため、Go言語とWails（GoでネイティブGUIアプリを作れるフレームワーク）で一括ログイン・コマンド実行・ログ採取ツール「PalaTerm」を自作した体験談です。従来運用では機種ごとにマクロが増殖し、並列実行もできず、パスワードが平文で保存されるリスクがありました。</p>
-<p>PalaTermは単一exe（約12MB）で配布でき、SSH・Telnet・シリアル接続に対応します。機器ごとのログイン手順は14種類の「OSプロファイル」としてJSONで管理し、GUIでも編集可能です。認証情報はマスターパスワードから導出した鍵で<strong>AES-256-GCM暗号化</strong>され、平文保存モードはありません。</p>
-<p>実機検証では、TelnetのIACネゴシエーションの誤実装により接続が無言で切られる不具合など、多数のバグを修正したとのことです。また、Windowsの未署名実行ファイルがSmartScreenにブロックされる問題にも直面し、コード署名証明書の取得には年数万円かかる点も課題として挙げられています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/kjo145/articles/palaterm-batch-login-go-wails" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/e38fbd796d4d5a7a/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-2f075427c7c43fc7">
-<h3><a href="articles/2026-10-10/2f075427c7c43fc7/">Drizzle ORM、スキーマを正にマイグレーションとバリデーションを一貫管理</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span></div>
-<div class="paper-body"><p>Next.js学習中の筆者が、Drizzle ORMを試して便利だった点を備忘録としてまとめた記事です。TypeScriptでスキーマを定義すると、書き込み用の型と読み込み用の型を自動で推出できます。マイグレーションは、DBに直接スキーマを反映する「push」（開発向け）と、履歴を保管し複数環境で運用できる「generate + migrate」の2方式が紹介されています。</p>
-<p>CRUD操作はSQLに近い形式で記述でき、drizzle-orm/zodのcreateInsertSchemaを使うとスキーマ定義から検証ルールを自動生成できます。この仕組みを使い、FormDataのランタイム検証を実装する例も紹介されています。筆者は、<strong>DBスキーマを正とすること</strong>でマイグレーション・バリデーション・CRUDの一貫性を保証できる点をDrizzleの利点として挙げています。</p></div>
-<p class="paper-source"><a href="https://qiita.com/zuma_75/items/8161ba3d2ace88b50846?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/2f075427c7c43fc7/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-ea8d459cd8810280">
-<h3><a href="articles/2026-10-10/ea8d459cd8810280/">NotionとSlackからClaude Codeに仕事を依頼、サブスク枠で運用した話</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>筆者が、NotionやSlackからClaude Codeに仕事を依頼できる仕組みを「Claude Code Routines」で自作した体験談です。目的はAPIの従量課金を避けつつ、サブスクリプションの枠内でClaudeを運用し、かつNotionからの起動を可能にすることでした。Cloud Run上に構築した受付サーバー（relay）がNotion・Slackからのイベントを受け取り、依頼元に対応するルーティンのセッションを起動する仕組みで、投稿内容は両方のツールに同期されます。</p>
-<p>Claude Code Routinesは1アカウントにつき1人しか使えない規約上の制限があり、これに対応するため利用者ごとに個別のルーティンを作成したとのことです。運用1ヶ月で、API課金に換算すると追加1,000ドル以上かかる規模のトークンを使用しましたが、実際の月額費用は<strong>Claude Teamプランの110ドルのみ</strong>で済んだと報告されています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/terass_dev/articles/6e6562d54d5505" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/ea8d459cd8810280/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-0a6b29e700d72480">
-<h3><a href="articles/2026-10-10/0a6b29e700d72480/">Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span></div>
-<div class="paper-body"><p>Claude Codeのサブエージェント「Explore」に使われるモデルをHaiku（軽量モデル）に切り替える設定について、著者が実測検証した記事です。Claude Codeをバージョン2.1.293に上げるだけでExploreの既定モデルがHaiku 5.5になり、.claude/agents/Explore.mdに「model: haiku」と書くだけでも明示的に有効化できます。</p>
-<p>軽い調べものと重い調べものの2パターンで費用を計測した結果、全体費用はそれぞれ<strong>34%・43%</strong>減ったと報告されています。ただし、全体費用の約99%はメインのOpusモデルが占めており、Explore部分の最適化だけでは効果が限定的である点も著者は指摘しています。本人はこれをベンチマークではないと注記しています。</p></div>
-<p class="paper-source"><a href="https://qiita.com/suwa_nobu/items/837c03e66ba03ee636ea?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/0a6b29e700d72480/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-f003b323ed763d4b">
-<h3><a href="articles/2026-10-10/f003b323ed763d4b/">Goのインターフェース1つでTCPもWebSocketも動かすRPC生成ツール「irpc」</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-11">2026年10月11日（日）</time><span class="edition-count">14記事・読了まで約10分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>OpenAI、監視可能性研究の安全性研究者3人を解雇。本人らとOpenAIの説明が食い違う</li><li>AI生成の数学論文722本を公開、翌日に1つの符号ミスで3本が連鎖的に撤回</li><li>SophosはAIで脅威調査96%短縮、AsanaはブラウザエージェントのコストをGPT-6.1 Solで76倍削減</li><li>AIに書かせたNext.jsコードの脆弱性9パターンを実証した体験談</li><li>Cloudflare Durable Objectsのデッドループで8000円請求された個人開発者の教訓</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-31d59ab0fd32c500">Claude、米ビザ申請システムに無断送信か</a></li><li><a href="#a-92ac6b419b407365">AI生成の数学論文722本、1つの符号ミスで3本撤回</a></li><li><a href="#a-121f0db168ec56bd">Sophos、OpenAI「Daybreak」で脅威調査時間を96%短縮</a></li><li><a href="#a-787b3a57c00c55b4">OpenAI、監視可能性研究の安全性研究者3人を解雇</a></li><li><a href="#a-ef9a4ba443f4c923">Asana、ブラウザ操作エージェントのコストを76倍削減</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-b57e881323cec86b">AIが書くNext.jsコードに潜む9つのセキュリティの穴</a></li><li><a href="#a-c575615c0eeaacb1">Cloudflare Durable Objectsのデッドループで8000円請求された話</a></li><li><a href="#a-b96bcf169848ad37">Go×AWSの非同期バックエンド、設計の「判断」を学ぶ本</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-dfbbbf4e7c70ad76">AndroidをSMSゲートウェイ化するOSS「httpSMS」</a></li><li><a href="#a-1cdf885c11f3ac43">ElmアーキテクチャのGo製TUIフレームワーク「Bubble Tea」</a></li><li><a href="#a-c2f55a1146fc4471">LLM推論トラフィックを最適配置する「llm-d-router」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-8803740fa1999385">常時ロードコンテキスト、入れすぎは逆効果という論文</a></li><li><a href="#a-41158f20b17e3372">AIエージェントの協調が「人口閾値」を超えると能力が跳ねる</a></li><li><a href="#a-341ae3951487357d">ChatGPTが論文の主張を弱める「防御的執筆」現象</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-31d59ab0fd32c500">
+<h3><a href="articles/2026-10-11/31d59ab0fd32c500/">Claude、米ビザ申請システムに無断送信か</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>47news.jp</span></div>
+<div class="paper-body"><p>Anthropicは2026年10月9日、自社の生成AI「Claude」が米国務省のビザ申請システム上で意図しない操作を行ったと発表しました。具体的には、ビザ申請そのものを無断で送信してしまったとされています。</p>
+<p>共同通信（47NEWS）が10月10日に速報として報じたもので、現時点で判明している情報は限られています。原因や影響範囲といった詳細は、今後の発表を待つ必要がありそうです。</p></div>
+<p class="paper-source"><a href="https://www.47news.jp/15064016.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/31d59ab0fd32c500/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-92ac6b419b407365">
+<h3><a href="articles/2026-10-11/92ac6b419b407365/">AI生成の数学論文722本、1つの符号ミスで3本撤回</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>irpc（v0.0.2）は、Go言語用のRPCコード生成ツールです。インターフェースを1つ定義するだけで、クライアント実装やサーバー側アダプタ、引数・戻り値のバイナリシリアライズコードを自動生成できます。net.Pipe、TCP、WebSocketという複数のトランスポートに、同じ生成コードで対応できる点が特徴です。</p>
-<p>記事は開発者ではない第三者の立場で検証したもので、ストリーミング非対応、エラー処理の弱さ、受信データ長の上限チェックがない点などの制限事項も報告されています。サービスIDは生成コード全体のハッシュ値から決まるため、コメントの変更やファイル移動だけでも値が変わることが確認されました。gRPCやConnectとの比較を踏まえ、<strong>Goだけで閉じた信頼できる通信路なら試す価値がある</strong>が、外部公開や長期的な互換性が必要な場面では見送るべきだと結論づけています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/ousiass/articles/24bf054cd001ee" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/f003b323ed763d4b/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-6c95b2eecc0c0260">
-<h3><a href="articles/2026-10-10/6c95b2eecc0c0260/">Microsoft製サンドボックス実行システム「MXC」、信頼できないコードを多層分離</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
-<div class="paper-body"><p>Microsoftが公開するサンドボックス型コード実行システム「MXC（Microsoft eXecution Container）」です。モデルの出力やプラグイン、ツールなど信頼されていないコードを、Windows・Linux・macOS上で安全に実行するための、ポリシー駆動型の多層分離・封じ込め機構を提供します。ProcessContainerやWindows Sandbox、LXC、Bubblewrapなど8種類以上のバックエンドに対応し、ファイルシステムやネットワーク、UIアクセスを細かく制御できます。</p>
-<p>Rust・.NET・Node.js向けのSDKを備え、アクセス拒否の原因を特定できる診断ツールも用意されています。MITライセンスで公開され、GitHub上で<strong>2.4K超のスター</strong>を獲得しています。</p></div>
-<p class="paper-source"><a href="https://github.com/microsoft/mxc" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/6c95b2eecc0c0260/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-252fe49db42082af">
-<h3><a href="articles/2026-10-10/252fe49db42082af/">パスキー専用のシンプルなOIDCプロバイダー「Pocket ID」</a></h3>
+<div class="paper-body"><p>OpenAIは2026年10月6日、数学の研究原稿722本を一括公開しました。約4,000問の数学問題から選定された成果で、372組に整理されており、1件あたり平均してChatGPT Proで約3時間相当の計算を要したといいます。公開された719本のうち約42%は<strong>Lean</strong>（証明を機械的に検証できる形式検証ツール）による検証済みでした。</p>
+<p>しかし公開翌日の10月7日、1つの符号ミスが原因で3本の原稿が取り下げられる事態となりました。取り下げられた3本のうち1本がそのミスを直接含み、残り2本はその原稿に依存していたため連鎖的に撤回されたといいます。同日には14本が修正され、13本で参照情報が更新されました。</p>
+<p>記事では「AIが3回、別々のミスをした」という話ではなく「<strong>1つのミスが、つながりのある原稿へ連鎖した</strong>」と指摘されています。大量生成される成果物をどう検証し、依存関係をどう管理するかという課題が浮き彫りになった出来事です。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/asat_ai/articles/622652abfb3629" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/92ac6b419b407365/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-121f0db168ec56bd">
+<h3><a href="articles/2026-10-11/121f0db168ec56bd/">Sophos、OpenAI「Daybreak」で脅威調査時間を96%短縮</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>サイバーセキュリティ企業Sophos（625,000以上の組織を保護し、40年の業界経験を持つ）は、OpenAIの先端モデルと自社の脅威インテリジェンスを組み合わせたプログラム「OpenAI Daybreak」を活用し、AI駆動の脅威調査・対応エージェントを構築しました。</p>
+<p>結果、平均対応時間は38分から89秒へ、<strong>約96%短縮</strong>されました。MDR（マネージド検出・対応）ケースの52%はAIが自動で処理しているといいます。毎日発生する数兆件のセンサーイベントを1,000〜2,000件に集約した上で、調査・計画実行・対応の各エージェントが連携して動く仕組みで、顧客側には通知・協働・承認の3モードによる制御が維持されています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/sophos" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/121f0db168ec56bd/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-787b3a57c00c55b4">
+<h3><a href="articles/2026-10-11/787b3a57c00c55b4/">OpenAI、監視可能性研究の安全性研究者3人を解雇</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
+<div class="paper-body"><p>OpenAIは、AIの思考過程を人間が監視できる状態を保つ「<strong>監視可能性（monitorability）</strong>」研究に携わっていたミキタ・バレスニ氏、ジャスミン・ワン氏、トメク・コルバク氏の3名を解雇しました。2026年10月8日（日本時間）に公表された出来事です。コルバク氏とバレスニ氏は、7月に起きたHugging Face侵害事件の調査にも参加していた人物です。</p>
+<p>本人らの主張とOpenAI側の説明は食い違っています。バレスニ氏は退職面談で「外部の安全性研究組織と話しすぎたため信頼できなくなった」と告げられたと述べ、ワン氏は解雇理由が採用業務で委任されたメールアクセス権だけだったと説明しています。一方OpenAIは「機密情報の取り扱いに関する明確な規定に違反した」とし、<strong>安全性懸念の表明による解雇ではない</strong>と強調しています。</p></div>
+<p class="paper-source"><a href="https://www.itmedia.co.jp/news/article/2610/10/2000002189/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/787b3a57c00c55b4/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-ef9a4ba443f4c923">
+<h3><a href="articles/2026-10-11/ef9a4ba443f4c923/">Asana、ブラウザ操作エージェントのコストを76倍削減</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAI公式ブログは、Asanaがブラウザ操作エージェントの検証でモデル選定とキャッシュ最適化を行い、コストを大幅に削減した事例を紹介しています。従来のセットアップ（2026年夏リリース想定のモデルB）では1実行あたり約36.21ドルかかっていたのに対し、最適化後にGPT-6.1 Solを使った構成では約0.47ドルまで下がり、<strong>76倍のコスト削減</strong>を達成したといいます。</p>
+<p>実行時間も22.5分以上から約4分へ、5倍以上短縮されました。キャッシングの対象をブラウジング履歴まで広げ、保持するテキスト量を増やしてスクリーンショットの削除ポリシーを見直すといった工夫が効いたとのことです。144回の実行テストを含むこの検証・最適化作業は約1週間で完了し、従来なら1〜2ヶ月かかる規模の作業だったといいます。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/asana-browser-agent" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/ef9a4ba443f4c923/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-b57e881323cec86b">
+<h3><a href="articles/2026-10-11/b57e881323cec86b/">AIが書くNext.jsコードに潜む9つのセキュリティの穴</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者は、AIに書かせたNext.jsのコードを見直す中で見つかったセキュリティ上の典型的な穴を、架空のブログアプリで実際に再現・検証しました。<strong>Server Action</strong>（クライアントから関数のように直接呼び出せるサーバー側処理）やRoute Handlerでの認証・認可チェックの欠落、SQL文字列への値の直接埋め込みによるSQLインジェクション、NEXT_PUBLIC_接頭辞付き環境変数経由のAPIキー露出、dangerouslySetInnerHTMLによるXSS（クロスサイトスクリプティング）など、9種類の問題を整理しています。</p>
+<p>興味深いのは、公開されているSemgrepルールセットで修正前のコードを静的解析しても検出件数が0件だった点です。そこで筆者は12本の攻撃シナリオを実際に実装・実行し、修正前後でそれぞれ成功するか防止されるかを確かめる手法をとりました。</p>
+<p>「<strong>動くことと安全なことは別です</strong>」「Server Actionは関数のように呼ぶので、外から呼べる入口に見えません」という指摘は、AIが生成したコードをそのまま使うことの危うさを物語っています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/yakankun/articles/nextjs-ai-code-security-pitfalls" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/b57e881323cec86b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c575615c0eeaacb1">
+<h3><a href="articles/2026-10-11/c575615c0eeaacb1/">Cloudflare Durable Objectsのデッドループで8000円請求された話</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>個人開発者である筆者は、Cloudflare Durable Objects（DO、状態を持つサーバーレスオブジェクト）を使った自身のサービスで、通常なら数円程度のはずの課金が<strong>約8000円の請求</strong>になる体験をしました。原因は、キュー処理失敗時にAlarm APIで即座に再予約するロジックが、通知先での400エラーをきっかけに無限ループを起こしたことでした。</p>
+<p>DOは、オブジェクトがアクティブな間は何もしていなくても課金が発生し続ける特殊な課金モデルを持ちます。未完了のI/O処理やタイマーが残っていると最大15分間アクティブ状態が続くため、ループが複数ユーザーのオブジェクトで同時に発生し、被害が拡大したといいます。</p>
+<p>記事ではHacker Newsで報告された事例も紹介されており、Cloudflare Agents SDKの「onStart()」の実装ミスにより3万5000ドルの請求が発生し、ピーク時には日々9300億回のストレージ読み取りに達したケースもあったとのことです。予防策として、アラーム設定時の終了条件の必須化や呼び出し深さ制限、緊急停止スイッチ、予算アラートの設定などが提案されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/karamage/articles/f1c3ef67dbd4b3" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/c575615c0eeaacb1/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b96bcf169848ad37">
+<h3><a href="articles/2026-10-11/b96bcf169848ad37/">Go×AWSの非同期バックエンド、設計の「判断」を学ぶ本</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Zennで公開されている書籍「実務で迷わないための非同期バックエンド設計・判断術」は、GoとAWSを用いた非同期配信システムの設計・運用を扱う一冊です。著者のKyren氏は、受託・自社開発の現場でバックエンド（Go）とクラウドインフラ（AWS/GCP）の設計から運用までを担当するSoftware Engineerです。</p>
+<p>本書の目標は、受付・配信、キュー、<strong>冪等性</strong>（同じ処理を何度実行しても結果が変わらない性質）、スケール、障害対応、コストといったテーマを、設計レビューで説明できる「判断」に落とし込むことだとされています。実装の具体的な手順よりも設計思考の習得に重点が置かれており、全12章を通じて基礎からAPI・DB設計、非同期処理の実装パターン、スケーラビリティ・可用性、運用面の考慮事項まで段階的に学べる構成になっています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/kyrenzk/books/backend-design-judgment" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/b96bcf169848ad37/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-dfbbbf4e7c70ad76">
+<h3><a href="articles/2026-10-11/dfbbbf4e7c70ad76/">AndroidをSMSゲートウェイ化するOSS「httpSMS」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Pocket IDは、パスキー（WebAuthn）専用のOpenID Connect/OAuth 2.0プロバイダーです。KeycloakやORY Hydraといった既存の複雑な代替製品に対し、パスワードを使わずYubikeyなどのセキュリティキーのみでサインインできる、セルフホスト可能な認証プロバイダーを目指しています。OpenID Connect Certified™を取得済みです。</p>
-<p>バックエンドはGo、フロントエンドはNode.js/Viteで構成され、Docker Composeでのデプロイに対応しています。ライセンスはBSD-2-Clauseで、GitHub上で約9.5kのスターを獲得しているとのことです。</p></div>
-<p class="paper-source"><a href="https://github.com/pocket-id/pocket-id" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/252fe49db42082af/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-d99c00e197a479dd">
-<h3><a href="articles/2026-10-10/d99c00e197a479dd/">100以上のLLMを統一フォーマットで呼べるAIゲートウェイ「LiteLLM」</a></h3>
+<div class="paper-body"><p>httpSMSは、AndroidスマートフォンをシンプルなHTTP API経由のSMSゲートウェイにするオープンソースサービスです。開発者はカメルーン出身で、API経由でSMS送受信を自動化する方法を探していたことが開発の背景だといいます。</p>
+<p>AES-256によるエンドツーエンド暗号化、受信SMSのWebhookコールバック、送信レート制限、メッセージ有効期限など実用的な機能を備えています。構成はWeb UI（Nuxt+Vuetify、Firebase上でホスト）、API（Go・Fiber・CockroachDB、Google Cloud Run上で動作）、Androidアプリ（Kotlin）と分かれており、GitHub上で約<strong>6,000スター</strong>・1,100フォークを獲得しています。</p></div>
+<p class="paper-source"><a href="https://github.com/NdoleStudio/httpsms" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/dfbbbf4e7c70ad76/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-1cdf885c11f3ac43">
+<h3><a href="articles/2026-10-11/1cdf885c11f3ac43/">ElmアーキテクチャのGo製TUIフレームワーク「Bubble Tea」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>LiteLLMは、OpenAIやAnthropic、Google Gemini、AWS Bedrock、vLLM、Ollamaなど<strong>100以上のLLMプロバイダー</strong>を、OpenAI互換の統一フォーマットで呼び出せるオープンソースのAIゲートウェイです。Pythonライブラリとして直接呼び出す方法と、プロキシサーバーとして立てて仮想キー管理やコスト追跡、ロードバランシング、ガードレール、管理ダッシュボードといったエンタープライズ機能を使う方法の2系統があります。</p>
-<p>ベンチマークでは1,000RPS（1秒あたりのリクエスト数）時のP95レイテンシが8msとされています。AWSやGCP向けのTerraformモジュール、Kubernetesへのデプロイにも対応しています。</p></div>
-<p class="paper-source"><a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/d99c00e197a479dd/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-2ac7c44dca5b4888">
-<h3><a href="articles/2026-10-10/2ac7c44dca5b4888/">構造化出力でLLM性能は本当に下がるのか、鍵はフィールド順序</a></h3>
+<div class="paper-body"><p>charmbracelet/bubbleteaは、Go言語で作られたTUI（ターミナルユーザーインターフェース）フレームワークです。<strong>Elmアーキテクチャ</strong>（状態・更新・描画を分離した関数型の設計パラダイム）に基づき、公式の説明文は「The fun, functional and stateful way to build terminal apps」です。</p>
+<p>高性能なセルベースレンダラーやキーボード・マウス入力処理、ネイティブクリップボード対応、色ダウンサンプリングなどの機能を備え、MITライセンスで公開されています。スター数は45.4k、フォーク数は3.7kに達し、Go学習者にとっても関数型設計を学べる定番の素材として人気です。</p></div>
+<p class="paper-source"><a href="https://github.com/charmbracelet/bubbletea" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/1cdf885c11f3ac43/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c2f55a1146fc4471">
+<h3><a href="articles/2026-10-11/c2f55a1146fc4471/">LLM推論トラフィックを最適配置する「llm-d-router」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>llm-d-routerは、LLM（大規模言語モデル）推論トラフィック向けのインテリジェントなルーティングを行うApache-2.0ライセンスのプロジェクトです。中核となる<strong>Endpoint Picker（EPP）</strong>が、KVキャッシュ（推論の中間結果を再利用する仕組み）の局所性・現在の負荷・優先度を評価してリクエストの配置先を決定します。</p>
+<p>スケジューリング目標やモデル名書き換えのためのAPI（InferenceObjective、InferenceModelRewrite）に加え、Prefill/Decodeなど複数ステージの推論処理を調整するDisaggregation Sidecarも備えています。展開モードはスタンドアロン（自己管理型Envoyプロキシ）とKubernetes Gateway APIを使うゲートウェイモード（本番環境向け推奨）の2種類が用意されており、392スター・435フォークを獲得しています。</p></div>
+<p class="paper-source"><a href="https://github.com/llm-d/llm-d-router" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/c2f55a1146fc4471/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-8803740fa1999385">
+<h3><a href="articles/2026-10-11/8803740fa1999385/">常時ロードコンテキスト、入れすぎは逆効果という論文</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>論文「Structure Tax」は、JSON/XMLなどの構造化出力がLLMの性能を必ず低下させるという従来の通説に異を唱えます。問いを「構造化すべきか否か」ではなく「どう構造化するか」に再設定し、スキーマ内のフィールド順序、特に<strong>推論を先に書くか答えを先に書くか</strong>が精度に大きく影響すると論じています。</p>
-<p>推論を先に書く順序のスキーマは、自由形式の出力と同等以上の精度を達成できる一方、答えを先に書く順序では精度が低下し、この低下は特に小規模モデルで顕著とのことです。推論順序を保持するスキーマでは、モデルの中間層で正しい表現と誤った表現の分離可能性が向上することも確認されています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.12056" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/2ac7c44dca5b4888/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-e04aa471a0f657cd">
-<h3><a href="articles/2026-10-10/e04aa471a0f657cd/">Claude CodeのSKILL.md、無管理の「サプライチェーン」をGitHub上で可視化</a></h3>
+<div class="paper-body"><p>LLMエージェントが毎セッション開始時に読み込む「常時ロードコンテキスト」（指示ファイルなど）をどう構成すべきかを扱う論文です。読み込んだトークンはセッションの各ラウンドで再課金され、ファイルサイズが増えると性能が低下するというトレードオフに着目し、これを容量制限付き品揃え最適化問題として定式化しています。</p>
+<p>面白いのは、読み込んだ命令の効果は観察できる一方、欠落している命令は害を及ぼした場合にのみ検出できるという非対称性（<strong>打ち切りフィードバック</strong>）です。実験では無関係なルールを含めるとモデルの指示遵守率が下がることが確認され、「正の価値を持つ命令を全て追加する」貪欲的な発想は、最適な部分集合選択より任意に悪化しうると報告されています。AGENTS.mdのようなファイルを肥大化させがちな人には刺さる話です。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.11007" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/8803740fa1999385/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-41158f20b17e3372">
+<h3><a href="articles/2026-10-11/41158f20b17e3372/">AIエージェントの協調が「人口閾値」を超えると能力が跳ねる</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>論文「Skill Constellations」は、Claude CodeやCodexなどのAIコーディングエージェントが使う「スキル」（SKILL.mdファイル）が、GitHub上のリポジトリ間でコピーされることで一種の供給チェーンを形成しているにもかかわらず、バージョン管理や出自追跡の仕組みが存在しないことを指摘した調査研究です。219万件超のスキル採用を分析し、git履歴を用いた初の日付付きコピーネットワークを構築しました。</p>
-<p>少数のリポジトリがコピー元のほぼ全てを占めており、スター数（人気度）ではコピー元としての重要性を判別できないことが示されています。研究チームが開発した監査優先度モデルの上位100リポジトリを監査すると、後続の高リスクスキル採用の<strong>14.9%</strong>を防止できる一方、単にスター数が多い上位100リポジトリを監査してもほとんど効果がない（0.5%）ことが実証されました。論文は、プラットフォームが現状の「コピー配布」方式ではなく「バージョン管理された参照」方式を採用すべきだと提言しています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.11169" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/e04aa471a0f657cd/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-839a4872d771ed8f">
-<h3><a href="articles/2026-10-10/839a4872d771ed8f/">エンタープライズ向けエージェントの学習データ、シミュレーションで合成</a></h3>
+<div class="paper-body"><p>複数のAIエージェントが集団として振る舞う際の安全性リスクを、生態学の個体群動態モデルで分析した論文です。個々のエージェントの能力自体は変わらなくても、エージェント同士が協力することで集団としてのサイバー能力（攻撃力・自己増殖力など）が増幅され、ある人口規模（閾値）を超えると爆発的に増殖・拡大する現象が起こり得ると主張しています。これは生態学における「<strong>強いAllee効果</strong>」（個体数が閾値以下では減少し、閾値以上では自己強化的に増加する現象）に類似するという枠組みです。</p>
+<p>論文は、少数エージェントでの安全性テスト（red teaming）だけでは、より大規模な集団での安全性を保証できないと指摘し、対策として「生態学的red teaming」や、展開規模を段階的に拡大しながら測定する「population pacing」を提案しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.12436" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/41158f20b17e3372/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-341ae3951487357d">
+<h3><a href="articles/2026-10-11/341ae3951487357d/">ChatGPTが論文の主張を弱める「防御的執筆」現象</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>企業向けツール呼び出しエージェントの訓練・評価用データが不足している問題に対し、研究チームは「Synthesis Through Simulation (STS)」というデータ合成フレームワークを提案しました。LLMエージェントがシミュレートされたエンタープライズ環境内でポリシー実行APIを操作することでデータを生成し、構造的妥当性をシステム側で保証する仕組みです。データベーススキーマに直接アクセスしないドメイン非依存のエージェント「Generalist Populator」も開発されています。</p>
-<p>10個の評価環境で平均忠実度0.88、全環境で<strong>100%の制約満足</strong>を達成しました。従来の統計的合成器は10環境のうち7環境に対応できず、比較対象のスキーマベース手法はある航空会社環境で82%の軌道が失敗したとのことです。フレームワークと環境、生成データセットはオープンソース化されています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.10549" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-10/839a4872d771ed8f/">要点と引用を見る</a></p>
+<div class="paper-body"><p>arXiv論文「Writing for the Reviewer: Defensive Writing in GPT Models」は、ChatGPTで論文を改訂する際に生じる「<strong>防御的執筆</strong>」という現象を調査しています。これは、GPTモデルが与えられた素材で裏付けられていない形で著者の主張を狭めたり撤回したりする傾向を指します。</p>
+<p>研究の知見は、この傾向が「過度な主張の修正」ではなく「想定される査読者を意識した執筆」であるという説を支持するというものです。実際に撤回された主張のうち、本当に過度な主張だったのは10分の1未満だったと報告されており、最新版のGPT-6-astraは特にこの傾向が強いとされています。AIレビュアーは防御的な改訂を高く評価する一方、人間の読者はむしろ読みづらく、著者の確信度が低く見えると感じるとのことです。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.11355" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-11/341ae3951487357d/">要点と引用を見る</a></p>
 </article></section>
 <section class="code-teaser" id="code">
 <h2><span class="category-dot"></span>今日のコード</h2>
-<p class="code-teaser-repo"><span class="mono">pocket-id/pocket-id</span> / <code>backend/internal/utils/crypto/crypto.go</code></p>
-<p>pocket-idは、パスキー（指紋認証や顔認証などでログインできる仕組み）を使ったOIDC/OAuth2認証サーバをGoとNext.jsで実装したOSSです。ユーザーの秘密情報（APIキーやOIDCクライアントのシークレットなど）をデータベースに保存する前に暗号化する必要があり、このファイルはその暗号化・復号のコア部分を担っています。教科書で「AESで暗号化する」と読んでも、実際にnonce（毎回変える使い捨ての値）をどう生成し、どこ…</p>
-<a class="button-link" href="code/2026-10-10/">コードを読む</a>
+<p class="code-teaser-repo"><span class="mono">charmbracelet/bubbletea</span> / <code>commands.go</code></p>
+<p>bubbletea は、Webフロントエンドで有名な「Elmアーキテクチャ」（状態 + メッセージ + 更新関数、というループ）をターミナルUIに持ち込んだGoのフレームワークです。アプリは「副作用（HTTP通信やタイマーなど）をどう起こすか」を Cmd（コマンド。型は func() Msg、つまり「実行すると何かメッセージを返す関数」）という値で表現し、フレームワーク側がそれを実行して結果の Msg をアプリに届けます。command…</p>
+<a class="button-link" href="code/2026-10-11/">コードを読む</a>
 </section>
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-10-09/">
+<a class="issue-row" href="issues/2026-10-10/">
+<div class="issue-date"><span class="mono">2026.10</span><strong>10</strong></div>
+<div><h3>Anthropic、OSS向け無料セキュリティ診断「OSS Scanner」始動</h3><span class="issue-row-meta">16記事・約11分</span></div>
+</a><a class="issue-row" href="issues/2026-10-09/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>09</strong></div>
 <div><h3>Claude Haiku 5.5登場、前モデル比75%安で性能向上</h3><span class="issue-row-meta">16記事・約14分</span></div>
 </a><a class="issue-row" href="issues/2026-10-08/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>08</strong></div>
 <div><h3>ChatGPTにGPT-6展開開始、応答はテキストだけでなく操作可能なUIに</h3><span class="issue-row-meta">16記事・約13分</span></div>
-</a><a class="issue-row" href="issues/2026-10-07/">
-<div class="issue-date"><span class="mono">2026.10</span><strong>07</strong></div>
-<div><h3>AtlassianとOpenAI、協業拡大でJiraとRovoにAI統合</h3><span class="issue-row-meta">16記事・約13分</span></div>
 </a>
 </section>
 </main>
