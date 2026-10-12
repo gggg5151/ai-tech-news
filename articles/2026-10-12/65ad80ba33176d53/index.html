@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub Actionsでバイナリに証明書、サプライチェーンを固める — 1年目向けエンジニア新聞</title>
+<meta name="description" content="筆者（songmu）が、配布するバイナリやパッケージが「どのソースからどの環境でビルドされたか」を証明できるようにするため、GitHub Actions上でサプライチェーンの信頼性を構築する取り組みを解説した記事です。公式のactions/attestアクションで証明書（attestation）を付与し、gh atte…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="GitHub Actionsでバイナリに証明書、サプライチェーンを固める — 1年目向けエンジニア新聞">
+<meta property="og:description" content="筆者（songmu）が、配布するバイナリやパッケージが「どのソースからどの環境でビルドされたか」を証明できるようにするため、GitHub Actions上でサプライチェーンの信頼性を構築する取り組みを解説した記事です。公式のactions/attestアクションで証明書（attestation）を付与し、gh atte…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-12/65ad80ba33176d53/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-12/65ad80ba33176d53/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "GitHub Actionsでバイナリに証明書、サプライチェーンを固める", "datePublished": "2026-10-12", "description": "筆者（songmu）が、配布するバイナリやパッケージが「どのソースからどの環境でビルドされたか」を証明できるようにするため、GitHub Actions上でサプライチェーンの信頼性を構築する取り組みを解説した記事です。公式のactions/attestアクションで証明書（attestation）を付与し、gh attestation verifyで検証できる…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-12/65ad80ba33176d53/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://songmu.jp/riji/entry/2026-10-11-github-actions-artifact-attestations.html", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-12/">2026.10.12 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>GitHub Actionsでバイナリに証明書、サプライチェーンを固める</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>songmu.jp</span><time datetime="2026-10-12">2026.10.12</time></div>
+</header>
+<div class="article-body">
+<p>筆者（songmu）が、配布するバイナリやパッケージが「どのソースからどの環境でビルドされたか」を証明できるようにするため、GitHub Actions上でサプライチェーンの信頼性を構築する取り組みを解説した記事です。公式の<code>actions/attest</code>アクションで<strong>証明書（attestation）</strong>を付与し、<code>gh attestation verify</code>で検証できる仕組みを作り、SLSA（ソフトウェア供給網の完全性に関する標準枠組み）のBuild Track Level 3達成を目指しています。</p>
+<p>方針としては、Gitリポジトリのrefやタグでソースを明確化し、独立したreusable workflowをパブリックなGitHub Actions環境でビルドすること、immutable releasesの有効化などを挙げています。Goバイナリのクロスプラットフォームビルドには自作のカスタムアクション「Songmu/goxz」を使用しています。</p>
+<p><code>gh attestation verify</code>により「指定したリポジトリの特定コミットから意図したワークフローを使ってビルドされたことを検証」できるとのことです。再現性向上のため、言語・ライブラリのバージョンロックやOS・runnerバージョンの指定、アーカイブ作成方式の固定といった工夫も行っています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者は配布するバイナリやパッケージの成果物がどのソースからどの環境でビルドされたかを証明したいと考えている</li><li>筆者はGitリポジトリのrefやタグでソースを明確化する方針を立てている</li><li>筆者は独立したreusable workflowを作成する方針を立てている</li><li>筆者はパブリックなGitHub Actions環境でビルドする方針を立てている</li><li>筆者は公式の actions/attest アクションで成果物に証明書を付与する方針を立てている</li><li>筆者はimmutable releasesを有効化する方針を立てている</li><li>筆者はGoバイナリのクロスプラットフォーム構築用に Songmu/goxz というカスタムアクションを使用している</li><li>gh attestation verify により、指定したリポジトリの特定コミットから意図したワークフローでビルドされたことを検証できる</li><li>筆者はSLSAのBuild Track Level 3の達成を目指している</li><li>筆者は再現性向上のため言語・ライブラリのバージョンロック、OS・runnerバージョン指定、アーカイブ作成方式の固定などの工夫を行っている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>指定したリポジトリの特定コミットから意図したワークフローを使ってビルドされたことを検証</blockquote><p class="quotes-source">出典: <a href="https://songmu.jp/riji/entry/2026-10-11-github-actions-artifact-attestations.html" target="_blank" rel="noopener noreferrer">songmu.jp</a></p></section>
+<aside class="source-box"><a href="https://songmu.jp/riji/entry/2026-10-11-github-actions-artifact-attestations.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">songmu.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=GitHub%20Actions%E3%81%A7%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA%E3%81%AB%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%80%81%E3%82%B5%E3%83%97%E3%83%A9%E3%82%A4%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E3%82%92%E5%9B%BA%E3%82%81%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-12%2F65ad80ba33176d53%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=GitHub%20Actions%E3%81%A7%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA%E3%81%AB%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%80%81%E3%82%B5%E3%83%97%E3%83%A9%E3%82%A4%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E3%82%92%E5%9B%BA%E3%82%81%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-12/65ad80ba33176d53/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-12%2F65ad80ba33176d53%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../ddae5a7c62b2f84e/"><span>前の記事</span>AIが書いたRailsを全部読まない、契約設計で絞るレビュー</a><a class="next" href="../ad6ffa9ce4f81ce1/"><span>次の記事</span>CPUのみ・メモリ2GB未満で動くリアルタイム多言語音声認識「早耳」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-12/">← 2026.10.12 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ddae5a7c62b2f84e/">AIが書いたRailsを全部読まない、契約設計で絞るレビュー</a></h3>
+<p class="excerpt">筆者（okamyuji）は、AIが生成する大量のRailsコードを人間が全部レビューするのは非現実的だとして、レビュー対象を絞り込む手法を在庫引当システムを題材に検証した記事です。人間が「契約による設計」（事前条件・事後条件・不変条件を…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ad6ffa9ce4f81ce1/">CPUのみ・メモリ2GB未満で動くリアルタイム多言語音声認識「早耳」</a></h3>
+<p class="excerpt">CPUのみで動作するリアルタイム多言語音声認識ツール「早耳（Hayamimi）」がGitHubで公開されました。GPUやクラウドAPIを使わず、メモリ2GB未満（最小構成では1.1GB）で動作し、ライブ字幕表示・ブラウザ表示・話者ラベル…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../63e95d2da39689e4/">AIエージェントのコミット整理を助ける「git-surgeon」</a></h3>
+<p class="excerpt">Rust製CLIツール「git-surgeon」（GitHub: raine/git-surgeon）を紹介する記事です。AIコーディングエージェントはgit add -pのような対話的なGit操作をうまく使えず、変更をまとめてステージ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>kawarimidoll.com</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

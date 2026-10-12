@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CPUのみ・メモリ2GB未満で動くリアルタイム多言語音声認識「早耳」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="CPUのみで動作するリアルタイム多言語音声認識ツール「早耳（Hayamimi）」がGitHubで公開されました。GPUやクラウドAPIを使わず、メモリ2GB未満（最小構成では1.1GB）で動作し、ライブ字幕表示・ブラウザ表示・話者ラベル付け・翻訳字幕まで可能な軽量システムです。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="CPUのみ・メモリ2GB未満で動くリアルタイム多言語音声認識「早耳」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="CPUのみで動作するリアルタイム多言語音声認識ツール「早耳（Hayamimi）」がGitHubで公開されました。GPUやクラウドAPIを使わず、メモリ2GB未満（最小構成では1.1GB）で動作し、ライブ字幕表示・ブラウザ表示・話者ラベル付け・翻訳字幕まで可能な軽量システムです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-12/ad6ffa9ce4f81ce1/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-12/ad6ffa9ce4f81ce1/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "CPUのみ・メモリ2GB未満で動くリアルタイム多言語音声認識「早耳」", "datePublished": "2026-10-12", "description": "CPUのみで動作するリアルタイム多言語音声認識ツール「早耳（Hayamimi）」がGitHubで公開されました。GPUやクラウドAPIを使わず、メモリ2GB未満（最小構成では1.1GB）で動作し、ライブ字幕表示・ブラウザ表示・話者ラベル付け・翻訳字幕まで可能な軽量システムです。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-12/ad6ffa9ce4f81ce1/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://gigazine.net/news/20261011-hayamimi/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-12/">2026.10.12 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>CPUのみ・メモリ2GB未満で動くリアルタイム多言語音声認識「早耳」</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-12">2026.10.12</time></div>
+</header>
+<div class="article-body">
+<p>CPUのみで動作するリアルタイム多言語音声認識ツール「早耳（Hayamimi）」がGitHubで公開されました。GPUやクラウドAPIを使わず、<strong>メモリ2GB未満（最小構成では1.1GB）</strong>で動作し、ライブ字幕表示・ブラウザ表示・話者ラベル付け・翻訳字幕まで可能な軽量システムです。</p>
+<p>発話中から字幕を表示し、話し終えてから約100msで確定表示、ドラフト字幕は0.5秒ごとに更新されます。日本語テレビ放送音声での文字誤り率（CER）は3.8%、6コアCPUで実時間の10〜50倍の速度で処理できるとのことです。対応言語は日本語・中国語・韓国語・広東語・英語など主要言語に加え欧州24言語、Meta Omnilingual ASR経由で約1600言語に対応します。</p>
+<p>INT8量子化ONNX（機械学習モデルの共通形式）モデルとsherpa-onnx基盤を採用し、PyTorchやCUDAは不要です。「発話ごとに言語を判定して最適な専用モデルに振り分ける独自のアプローチ」が特徴として紹介されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>「早耳(Hayamimi)」はCPUのみで動作するリアルタイム多言語音声認識ツールである</li><li>GPUもクラウドAPIも使用しない</li><li>メモリ使用量は2GB未満(上限管理あり)で、最小構成では1.1GB</li><li>発話中から字幕を表示し、話し終えてから約100msで確定表示する</li><li>日本語テレビ放送音声での文字誤り率(CER)は3.8%</li><li>6コアCPUで実時間の10~50倍の速度で処理できる</li><li>ドラフト字幕は発話中0.5秒ごとに更新される</li><li>対応言語は日本語・中国語・韓国語・広東語・英語など主要言語と欧州24言語、Meta Omnilingual ASR経由で約1600言語に対応</li><li>INT8量子化ONNX形式モデルとsherpa-onnx基盤を採用し、PyTorchやCUDAは不要</li><li>話者タグ付けにCAM++、話者分離にpyannote/segmentation-3.0を使用している</li><li>話者識別・翻訳字幕・OBSオーバーレイ・ダッシュボード機能を搭載している</li><li>GitHubの「oboroge0/hayamimi」リポジトリでオープンソース公開されている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>発話ごとに言語を判定して最適な専用モデルに振り分ける独自のアプローチ</blockquote><p class="quotes-source">出典: <a href="https://gigazine.net/news/20261011-hayamimi/" target="_blank" rel="noopener noreferrer">gigazine.net</a></p></section>
+<aside class="source-box"><a href="https://gigazine.net/news/20261011-hayamimi/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">gigazine.net</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=CPU%E3%81%AE%E3%81%BF%E3%83%BB%E3%83%A1%E3%83%A2%E3%83%AA2GB%E6%9C%AA%E6%BA%80%E3%81%A7%E5%8B%95%E3%81%8F%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E5%A4%9A%E8%A8%80%E8%AA%9E%E9%9F%B3%E5%A3%B0%E8%AA%8D%E8%AD%98%E3%80%8C%E6%97%A9%E8%80%B3%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-12%2Fad6ffa9ce4f81ce1%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=CPU%E3%81%AE%E3%81%BF%E3%83%BB%E3%83%A1%E3%83%A2%E3%83%AA2GB%E6%9C%AA%E6%BA%80%E3%81%A7%E5%8B%95%E3%81%8F%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E5%A4%9A%E8%A8%80%E8%AA%9E%E9%9F%B3%E5%A3%B0%E8%AA%8D%E8%AD%98%E3%80%8C%E6%97%A9%E8%80%B3%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-12/ad6ffa9ce4f81ce1/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-12%2Fad6ffa9ce4f81ce1%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../65ad80ba33176d53/"><span>前の記事</span>GitHub Actionsでバイナリに証明書、サプライチェーンを固める</a><a class="next" href="../63e95d2da39689e4/"><span>次の記事</span>AIエージェントのコミット整理を助ける「git-surgeon」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-12/">← 2026.10.12 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ddae5a7c62b2f84e/">AIが書いたRailsを全部読まない、契約設計で絞るレビュー</a></h3>
+<p class="excerpt">筆者（okamyuji）は、AIが生成する大量のRailsコードを人間が全部レビューするのは非現実的だとして、レビュー対象を絞り込む手法を在庫引当システムを題材に検証した記事です。人間が「契約による設計」（事前条件・事後条件・不変条件を…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../65ad80ba33176d53/">GitHub Actionsでバイナリに証明書、サプライチェーンを固める</a></h3>
+<p class="excerpt">筆者（songmu）が、配布するバイナリやパッケージが「どのソースからどの環境でビルドされたか」を証明できるようにするため、GitHub Actions上でサプライチェーンの信頼性を構築する取り組みを解説した記事です。公式のaction…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>songmu.jp</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../63e95d2da39689e4/">AIエージェントのコミット整理を助ける「git-surgeon」</a></h3>
+<p class="excerpt">Rust製CLIツール「git-surgeon」（GitHub: raine/git-surgeon）を紹介する記事です。AIコーディングエージェントはgit add -pのような対話的なGit操作をうまく使えず、変更をまとめてステージ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>kawarimidoll.com</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

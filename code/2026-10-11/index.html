@@ -109,7 +109,7 @@ func compactCmds[T ~[]Cmd](cmds []Cmd) Cmd {
 			return T(validCmds)
 		}</code></pre><p>`func() Msg { ... }` は名前のない関数（クロージャ）をその場で作る式です。`Cmd` という型は『引数なしで `Msg` を1つ返す関数』だったので、この無名関数自体がまさに `Cmd` 型の値になります。中の `T(validCmds)` は型変換で、『スライス `validCmds`（型は `[]Cmd`）を、型パラメータで指定された `T`（実際には `BatchMsg` か `sequenceMsg`）に変換する』という処理です。こうして出来上がった `Cmd` を実行すると、『複数のコマンドをまとめたメッセージ（BatchMsgまたはsequenceMsg）』が1つ返る、という仕組みになっています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「返したい結果の型だけが違う」似た関数が2つ以上あるときは、共通処理を1つのジェネリック関数に切り出し、型パラメータ（`[T ~既存の型]`）で差分だけを注入すると、コードの重複を避けつつそれぞれの型の意味（BatchMsg/sequenceMsgなど）を保てる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-10/"><span>前の日</span>pocket-id/pocket-id</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-10/"><span>前の日</span>pocket-id/pocket-id</a><a class="next" href="../2026-10-12/"><span>次の日</span>oauth2-proxy/oauth2-proxy</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-11/">← 2026.10.11 の号を読む</a>
 </div>
 </article>
