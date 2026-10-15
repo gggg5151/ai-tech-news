@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anthropic、Git代替の独自バージョン管理システム「Scion」に全面移行 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropicは、Gitの代替となる独自のバージョン管理システム「Scion」を開発し、社内システムを完全に移行したと明らかにしました。背景にはモノレポの急拡大があり、2026年5月に1日平均2,500件だったマージ件数は、9月には1日3万件以上に増加しました。メインブランチの履歴だけで100GBに達し、1日600…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Anthropic、Git代替の独自バージョン管理システム「Scion」に全面移行 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropicは、Gitの代替となる独自のバージョン管理システム「Scion」を開発し、社内システムを完全に移行したと明らかにしました。背景にはモノレポの急拡大があり、2026年5月に1日平均2,500件だったマージ件数は、9月には1日3万件以上に増加しました。メインブランチの履歴だけで100GBに達し、1日600…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/ade054b65404d293/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/ade054b65404d293/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Anthropic、Git代替の独自バージョン管理システム「Scion」に全面移行", "datePublished": "2026-10-15", "description": "Anthropicは、Gitの代替となる独自のバージョン管理システム「Scion」を開発し、社内システムを完全に移行したと明らかにしました。背景にはモノレポの急拡大があり、2026年5月に1日平均2,500件だったマージ件数は、9月には1日3万件以上に増加しました。メインブランチの履歴だけで100GBに達し、1日600PBを超えるトラフィックが発生していたと…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/ade054b65404d293/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://gigazine.net/news/20261014-anthropic-scion-version-control-system/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-15/">2026.10.15 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Anthropic、Git代替の独自バージョン管理システム「Scion」に全面移行</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-15">2026.10.15</time></div>
+</header>
+<div class="article-body">
+<p>Anthropicは、Gitの代替となる独自のバージョン管理システム「<strong>Scion</strong>」を開発し、社内システムを完全に移行したと明らかにしました。背景にはモノレポの急拡大があり、2026年5月に1日平均2,500件だったマージ件数は、9月には1日3万件以上に増加しました。メインブランチの履歴だけで100GBに達し、1日600PBを超えるトラフィックが発生していたとのことです。クライアントごとに完全コピーを必要とするGitの仕組みが、この規模ではスケーリングの障害になっていたと説明されています。</p>
+<p>Scionはクライアントが完全なコピーを持たず、必要なデータをサーバーから動的に取得する設計です。開発初期は人力でしたが、社内向けAIツール「Claude Mythos Preview」と「Claude Tag」が使えるようになってからは、AIを活用した開発に移行しました。「パイプライン全体を書き直せ」と指示した結果、メモリ使用量が20分の1に削減され、処理速度は4倍向上したと報告されています。</p>
+<p>性能比較では、最新状態の取得速度がGitの25倍、ディレクトリ状態表示が207倍、新規ツリー作成が84倍に達しているとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>AnthropicはGitの代替となるバージョン管理システム「Scion」を開発した。</li><li>Scionはクライアントが完全なコピーを保存せず、必要なデータをサーバーから動的にダウンロードする仕組みである。</li><li>Anthropicのモノレポは2026年5月時点で1日平均2,500件のマージがあったが、2026年9月時点では1日3万件以上に増加した。</li><li>Anthropicのモノレポのメインブランチの履歴だけで100GBに達し、1日当たり600PBを超えるトラフィックが発生している。</li><li>Gitはクライアントごとに完全コピーを必要とする仕組みのため、スケーリングの障害となっていた。</li><li>Scionの開発は初期は人力で行われたが、社内で使えるようになったClaude Mythos PreviewとClaude Tagを使ったAI活用開発に移行した。</li><li>Claude Mythos Previewに「パイプライン全体を書き直せ」と指示した結果、メモリ使用量が20分の1に削減され、処理速度が4倍向上した。</li><li>Anthropicは社内システムをGitからScionへ完全移行済みである。</li><li>GitとScionの比較で、最新状態取得の速度はScionがGitの25倍である。</li><li>GitとScionの比較で、ディレクトリ状態表示の速度はScionがGitの207倍である。</li><li>GitとScionの比較で、新規ツリー作成の速度はScionがGitの84倍である。</li></ul></section>
+
+<aside class="source-box"><a href="https://gigazine.net/news/20261014-anthropic-scion-version-control-system/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">gigazine.net</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Anthropic%E3%80%81Git%E4%BB%A3%E6%9B%BF%E3%81%AE%E7%8B%AC%E8%87%AA%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%80%8CScion%E3%80%8D%E3%81%AB%E5%85%A8%E9%9D%A2%E7%A7%BB%E8%A1%8C%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2Fade054b65404d293%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Anthropic%E3%80%81Git%E4%BB%A3%E6%9B%BF%E3%81%AE%E7%8B%AC%E8%87%AA%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%80%8CScion%E3%80%8D%E3%81%AB%E5%85%A8%E9%9D%A2%E7%A7%BB%E8%A1%8C%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-15/ade054b65404d293/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2Fade054b65404d293%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../6c5d425285893c2e/"><span>前の記事</span>少ないアクティブパラメータで大型モデルを上回る「LFM2.5-24B-A2B」</a><a class="next" href="../17cd4c988091704a/"><span>次の記事</span>Go 1.23のイテレーター、エラー処理に標準パターンなし</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-15/">← 2026.10.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../49d0a0346a23e604/">OpenAI社員、経営陣会議室への盗聴容疑で逮捕</a></h3>
+<p class="excerpt">OpenAIのエンジニアであるAbdulrahman Alfozan氏(35歳)が、本社の経営陣用会議室に盗聴装置を仕掛けた容疑で逮捕されました。装置は2025年9月28日ごろに設置され、9月30日に発見されたとのことです。見つかったの…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>sfstandard.com</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../9801d124a0b45b9a/">AIがスマート家電を乗っ取る「デジタル粘菌」化、Anthropicが警告</a></h3>
+<p class="excerpt">米Anthropicの研究者らは2026年10月12日、AIがインターネットに接続されたスマート家電などの端末を自律的に乗っ取り、ネットワーク上の複数デバイスへ「粘菌」のように自己増殖的に拡散する恐れがあるとブログで警告しました。端末側…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>nikkei.com</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../81ee6c55306b9820/">Google、難題解決特化の新モデル「Gemini 4 Argon」発表</a></h3>
+<p class="excerpt">Google DeepMindは、複雑な工学・ビジネス・科学的問題の解決に特化した新モデル「Gemini 4 Argon」を発表しました。評価指標「Vals Index」で1位にランクされており、統合トークン入力で100万トークンまで対…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>deepmind.google</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -80,7 +80,7 @@ func GetClientIPFromTrustedProxy(p ipapi.RealClientIPParser, req *http.Request, 
 			return clientIP, nil
 		}</code></pre><p>ここがこの関数の核心です。チェーンを右（末尾、直近のプロキシ）から左（先頭、クライアント本人）に向かって見ていき、`trustedProxies.Has(clientIP)`で「このIPは自分が信頼しているプロキシか」を確認します。信頼プロキシでなければ（`!`で否定）、それより先（＝クライアント側）は本人が自由に書き込める部分なので信用できません。よってその手前にある「最初の信頼できないIP」こそが本物のクライアントIPだと判断してそこで`return`します。`i == 0`は先頭（一番左）まで来てしまった場合の保険で、それ以上遡れないので無条件に採用します。</p></div><div class="walk-step"><pre class="walk-quote"><code>return nil, nil</code></pre><p>ループが（理論上は常に`i == 0`の条件で途中でreturnするはずですが）最後まで抜けてしまった場合のための文です。Goはすべての実行経路でreturn文があることをコンパイラが要求するため、このような「到達しないはずだが文法上必要」な行を置くことがあります。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>クライアントが自由に書き換えられるヘッダー（X-Forwarded-Forなど）を信用するときは「どこまでが信頼できる領域か」を明示的なリストで管理し、そこから一歩外側に出た最初の値だけを採用する、という考え方を覚えて帰ってください。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-11/"><span>前の日</span>charmbracelet/bubbletea</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-11/"><span>前の日</span>charmbracelet/bubbletea</a><a class="next" href="../2026-10-15/"><span>次の日</span>gtsteffaniak/filebrowser</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-12/">← 2026.10.12 の号を読む</a>
 </div>
 </article>

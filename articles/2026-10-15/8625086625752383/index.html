@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIエージェントによる自動攻撃、国内サイトで観測 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="WAF(Webアプリケーションファイアウォール、Webサイトへの攻撃を検知・防御する仕組み)の開発者である金床氏が、2026年9月頃から日本のウェブサイトで多発していた情報漏洩事件を調査し、その攻撃がAIエージェントによるものであることを確認したと報告した記事です。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AIエージェントによる自動攻撃、国内サイトで観測 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="WAF(Webアプリケーションファイアウォール、Webサイトへの攻撃を検知・防御する仕組み)の開発者である金床氏が、2026年9月頃から日本のウェブサイトで多発していた情報漏洩事件を調査し、その攻撃がAIエージェントによるものであることを確認したと報告した記事です。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/8625086625752383/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/8625086625752383/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "AIエージェントによる自動攻撃、国内サイトで観測", "datePublished": "2026-10-15", "description": "WAF(Webアプリケーションファイアウォール、Webサイトへの攻撃を検知・防御する仕組み)の開発者である金床氏が、2026年9月頃から日本のウェブサイトで多発していた情報漏洩事件を調査し、その攻撃がAIエージェントによるものであることを確認したと報告した記事です。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/8625086625752383/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.scutum.jp/information/waf_tech_blog/2026/10/waf-blog-085.html", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-15/">2026.10.15 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>AIエージェントによる自動攻撃、国内サイトで観測</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>scutum.jp</span><time datetime="2026-10-15">2026.10.15</time></div>
+</header>
+<div class="article-body">
+<p>WAF(<strong>Webアプリケーションファイアウォール</strong>、Webサイトへの攻撃を検知・防御する仕組み)の開発者である金床氏が、2026年9月頃から日本のウェブサイトで多発していた情報漏洩事件を調査し、その攻撃がAIエージェントによるものであることを確認したと報告した記事です。</p>
+<p>10月10日夜から14日までの観測期間に、3つのIPアドレスから特徴的な攻撃パターンが検出されました。あるIPからは約8時間で約12,410件のアクセスがあり、低速スキャンから毎分2,100件の高速スキャン、既知脆弱性攻撃、ブルートフォース攻撃まで10のフェーズに分かれていたとのことです。著者は8種類のAIモデル全てでこの攻撃パターンの検出に成功したとしています。</p>
+<p>「漏れなく検知はできないが、検知できれば間違いなくAIエージェントである」という検知コンセプトが示されており、著者は「攻撃者が使わないわけがない」として、今後ほぼすべての攻撃者がAIエージェントを使うようになると予測しています。10月23日のSecurityDays 2026秋での講演も予定されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>2026年9月頃から日本のウェブサイトで情報漏洩事件が多発していた。</li><li>著者はこれらの事件がAIエージェントによる攻撃であることを確認したと主張している。</li><li>観測期間は10月10日夜から10月14日。</li><li>攻撃に関与したとされるIPアドレスは38.54.56.121、185.196.220.130、192.236.229.229の3つ。</li><li>38.54.56.121からは約1,000件のアクセスがあり、主に404エラーで、セキュリティファイル・管理画面・Gitディレクトリの探索が行われた。</li><li>185.196.220.130からは合計約1,410件のアクセスがあり、複数の波に分かれたスキャン(XSS・SQLインジェクション・パストラバーサル検査、Range付きスキャン、約800パスの網羅スキャン、SQLi、フォーム連投)が行われた。</li><li>192.236.229.229からは約8時間にわたり約12,410件のアクセスがあり、低速スキャン、毎秒35件・毎分2,100件の高速スキャン、既知脆弱性攻撃、ブルートフォース攻撃など10のフェーズに分かれていた。</li><li>著者はテストにおいてQwen 3.8 Flash NextやGLM-5.3 Flash Netxなど8種類のモデル全てで検出に成功したと述べている。</li><li>著者はマクニカセキュリティ、JPCERT/CC、NICTの情報を参照したとしている。</li><li>著者は2026年10月23日に東京で開催されるSecurityDays 2026秋で講演予定であるとしている。</li><li>著者の金床氏はScutumの開発者で、株式会社ビットフォレストの取締役である。</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>「AIエージェントはあまりにも便利で優秀なので、攻撃者が使わないわけがない」と言えるでしょう。今後はほぼすべての攻撃者がAIエージェントを使うようになると推測できます。</blockquote><blockquote>「漏れなくAIエージェントを列挙することはできないが、もし検知した場合は間違いなくAIエージェントである」という性質の仕組みです。</blockquote><p class="quotes-source">出典: <a href="https://www.scutum.jp/information/waf_tech_blog/2026/10/waf-blog-085.html" target="_blank" rel="noopener noreferrer">scutum.jp</a></p></section>
+<aside class="source-box"><a href="https://www.scutum.jp/information/waf_tech_blog/2026/10/waf-blog-085.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">scutum.jp</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AB%E3%82%88%E3%82%8B%E8%87%AA%E5%8B%95%E6%94%BB%E6%92%83%E3%80%81%E5%9B%BD%E5%86%85%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E8%A6%B3%E6%B8%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2F8625086625752383%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AB%E3%82%88%E3%82%8B%E8%87%AA%E5%8B%95%E6%94%BB%E6%92%83%E3%80%81%E5%9B%BD%E5%86%85%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E8%A6%B3%E6%B8%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-15/8625086625752383/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2F8625086625752383%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2333e9cb60d26b8f/"><span>前の記事</span>.gitignoreだけでは防げない.env漏洩、5か所の点検手順</a><a class="next" href="../754ae74c5ed3ca9d/"><span>次の記事</span>下流障害時に全停止させない、Go製ロードシェディングを実測</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-15/">← 2026.10.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../17cd4c988091704a/">Go 1.23のイテレーター、エラー処理に標準パターンなし</a></h3>
+<p class="excerpt">Go 1.23で導入されたイテレーター(range-over-func、forループで直接呼び出せる関数型)には、エラー処理に関する公式な推奨パターンが存在しないという課題を扱った記事です。著者はAIエージェント「TOKIUM」の開発チ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ef1a8fe9444abe9a/">Next.js本番ビルドが真っ白、react-router更新が原因だった</a></h3>
+<p class="excerpt">Next.js 13.2.1の環境でreact-routerを6.14.1から6.15.0以降にアップグレードしたところ、開発環境では再現せず本番ビルドでのみ画面が真っ白になる不具合に遭遇した筆者の体験談です。発生したエラーは「Refe…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2333e9cb60d26b8f/">.gitignoreだけでは防げない.env漏洩、5か所の点検手順</a></h3>
+<p class="excerpt">.gitignoreに.envを追加していても、以前からGitに追跡されていたファイルは対象外になるため、実際には複数の経路で秘密鍵やAPIキーが漏洩しうると指摘し、約30分で確認できる5か所の点検手順を示した記事です。</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MCPのツール選択を左右するのはスキーマ設計 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="MCP(Model Context Protocol、AIがツールを呼び出す際の標準規格)環境で、LLMがどのツールを選ぶかは実装内容ではなく付随するメタデータに強く影響されるという研究です。著者らは367,174個のMCPツールを分析し、機能的に似たツールでもパラメータスキーマが大きく異なる現象を発見しました。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="MCPのツール選択を左右するのはスキーマ設計 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="MCP(Model Context Protocol、AIがツールを呼び出す際の標準規格)環境で、LLMがどのツールを選ぶかは実装内容ではなく付随するメタデータに強く影響されるという研究です。著者らは367,174個のMCPツールを分析し、機能的に似たツールでもパラメータスキーマが大きく異なる現象を発見しました。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/f1de8f5c2f3e476b/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/f1de8f5c2f3e476b/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "MCPのツール選択を左右するのはスキーマ設計", "datePublished": "2026-10-15", "description": "MCP(Model Context Protocol、AIがツールを呼び出す際の標準規格)環境で、LLMがどのツールを選ぶかは実装内容ではなく付随するメタデータに強く影響されるという研究です。著者らは367,174個のMCPツールを分析し、機能的に似たツールでもパラメータスキーマが大きく異なる現象を発見しました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/f1de8f5c2f3e476b/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.14334", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-15/">2026.10.15 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>MCPのツール選択を左右するのはスキーマ設計</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-15">2026.10.15</time></div>
+</header>
+<div class="article-body">
+<p><strong>MCP(Model Context Protocol、AIがツールを呼び出す際の標準規格)</strong>環境で、LLMがどのツールを選ぶかは実装内容ではなく付随するメタデータに強く影響されるという研究です。著者らは367,174個のMCPツールを分析し、機能的に似たツールでもパラメータスキーマが大きく異なる現象を発見しました。</p>
+<p>5つのLLMと5つのタスクを使い、1回の比較で1つのメタデータ要素だけを変える制御実験を実施しました。ツール位置によるバイアスは条件付きロジスティック回帰で補正されました。結果、パラメータスキーマの変更が最大かつ最も一貫した選択シフトを生むことが分かりました。モデルは分割された複合形式より単一のトップレベルパラメータを好み、パラメータの説明文は選択を増やす一方、パラメータ名の効果は弱く一貫性がないとのことです。明示的な要件を満たすスキーマは、5モデル全てで位置の好みを上回って選択されました。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文のタイトルは&quot;Which Metadata Matters for LLM Tool Selection in MCP? Evidence from Controlled Factor-Level Interventions&quot;である</li><li>著者はXiaofan Li、Fengchun Qiao、Xing Gaoの3名である</li><li>arXiv IDは2610.14334である</li><li>著者らは367,174個のMCPツールを分析した</li><li>分析の結果、機能的には似ているツールでもパラメータスキーマが大きく異なるという現象が発見された</li><li>研究では5つのLLMと5つのタスクを対象に制御されたメタデータ介入実験を実施した</li><li>各比較では正確に1つのメタデータ要素のみを変更し、他は固定した</li><li>ツール位置のバイアスを調整するために条件付きロジスティック回帰が使用された</li><li>パラメータスキーマの変更がテストされた介入の中で最大かつ最も一貫性のある選択シフトを生み出した</li><li>モデルは分割された複合形式のパラメータより単一トップレベルパラメータを優先する</li><li>パラメータを説明する記述は選択を増加させる一方、パラメータ名の効果はより弱く一貫性がない</li><li>明示的な要件を満たすスキーマは、テストされた5モデル全てで位置の好みにもかかわらず選択される</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>スキーマ設計とツール順序は機能が不変でも実装の呼び出しに影響を与える</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2610.14334" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.14334" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=MCP%E3%81%AE%E3%83%84%E3%83%BC%E3%83%AB%E9%81%B8%E6%8A%9E%E3%82%92%E5%B7%A6%E5%8F%B3%E3%81%99%E3%82%8B%E3%81%AE%E3%81%AF%E3%82%B9%E3%82%AD%E3%83%BC%E3%83%9E%E8%A8%AD%E8%A8%88%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2Ff1de8f5c2f3e476b%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=MCP%E3%81%AE%E3%83%84%E3%83%BC%E3%83%AB%E9%81%B8%E6%8A%9E%E3%82%92%E5%B7%A6%E5%8F%B3%E3%81%99%E3%82%8B%E3%81%AE%E3%81%AF%E3%82%B9%E3%82%AD%E3%83%BC%E3%83%9E%E8%A8%AD%E8%A8%88%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-15/f1de8f5c2f3e476b/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2Ff1de8f5c2f3e476b%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../58839d70b6ad2b51/"><span>前の記事</span>AIエージェント向けDevOpsプラグイン「Neckbeard」</a><a class="next" href="../bc8a5fa5d9f6ab2e/"><span>次の記事</span>コード判定に根拠を示すAI検証モデル「ARBITER」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-15/">← 2026.10.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../bc8a5fa5d9f6ab2e/">コード判定に根拠を示すAI検証モデル「ARBITER」</a></h3>
+<p class="excerpt">競技プログラミングの公式審査システムは合否のみを示し理由を明かさないという課題を解決するため、問題文とソースコードのみから判定を行う35BパラメータのMoE検証モデル「ARBITER」を提案した論文です。強化学習と実行サンドボックスを用…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../a725454ff720d762/">状態理解は正しいのに行動を誤るAIエージェントの失敗パターン</a></h3>
+<p class="excerpt">高速・直感的な「System One」型のAIモデルが、エージェントのループの中で起こす意思決定の失敗の根本原因を診断した論文です。17個の高速モデルおよび推論モデルを固定ベンチマーク上で評価し、各意思決定の質問に対して同じ状態について…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-12/1385444245e3c14d/">Valen言語、新しい借用チェック「グループボロー」を提案</a></h3>
+<p class="excerpt">Valen言語の開発者Evan Ovadia本人による解説記事です。Valenが実装する新しいメモリ安全機構「グループボロー（Group Borrowing）」を紹介しています。コンパイラが各参照の指し先データパスを記憶・追跡し、オブジ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>verdagon.dev</span><time datetime="2026-10-12">2026.10.12</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

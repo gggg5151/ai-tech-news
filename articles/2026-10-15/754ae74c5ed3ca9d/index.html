@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>下流障害時に全停止させない、Go製ロードシェディングを実測 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Go言語向けライブラリ「go-backpressure」は、下流サービス(Redisや外部APIなど)が劣化した際に全トラフィックを止めるのではなく一部だけを自動的に絞って通す「適応型ロードシェディング」を実装するものです。作者ではない筆者がv0.1.1のコードを読み、シミュレーション環境で負荷試験を行い挙動を実測した…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="下流障害時に全停止させない、Go製ロードシェディングを実測 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Go言語向けライブラリ「go-backpressure」は、下流サービス(Redisや外部APIなど)が劣化した際に全トラフィックを止めるのではなく一部だけを自動的に絞って通す「適応型ロードシェディング」を実装するものです。作者ではない筆者がv0.1.1のコードを読み、シミュレーション環境で負荷試験を行い挙動を実測した…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/754ae74c5ed3ca9d/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/754ae74c5ed3ca9d/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "下流障害時に全停止させない、Go製ロードシェディングを実測", "datePublished": "2026-10-15", "description": "Go言語向けライブラリ「go-backpressure」は、下流サービス(Redisや外部APIなど)が劣化した際に全トラフィックを止めるのではなく一部だけを自動的に絞って通す「適応型ロードシェディング」を実装するものです。作者ではない筆者がv0.1.1のコードを読み、シミュレーション環境で負荷試験を行い挙動を実測した記事です。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-15/754ae74c5ed3ca9d/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/nonejp/articles/ee58fdb042ceef", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-15/">2026.10.15 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>下流障害時に全停止させない、Go製ロードシェディングを実測</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-15">2026.10.15</time></div>
+</header>
+<div class="article-body">
+<p>Go言語向けライブラリ「<strong>go-backpressure</strong>」は、下流サービス(Redisや外部APIなど)が劣化した際に全トラフィックを止めるのではなく一部だけを自動的に絞って通す「適応型ロードシェディング」を実装するものです。作者ではない筆者がv0.1.1のコードを読み、シミュレーション環境で負荷試験を行い挙動を実測した記事です。</p>
+<p>ライブラリはAcquire→ダウンストリーム呼び出し→Reportという3ステップのワークフローを持ち、結果はSuccess・Failure・Neutral・Overloadの4種類に分類されます。デフォルトの<strong>SRE Strategy</strong>(Googleが提唱する適応的スロットリング方式)は2分間のローリングウィンドウを使い、容量500rpsの下流に2000rpsの負荷をかけるテストで約746rps(37.5%)に安定したとのことです。</p>
+<p>もう一つの<strong>Pressure Strategy</strong>は失敗や過負荷でスコアを累積する方式で、反応速度は約0.1秒と高速な一方、流量を約150rps(7.5%)まで強く絞り込みました。ウィンドウを2秒に短縮すると障害からの回復に6.4秒で済みますが、既定の2分間ウィンドウでは約446秒かかったとのことです。Neutral判定が全体の33%を超えると、設定次第で健全な下流までスロットリングされてしまう落とし穴も指摘されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>go-backpressureはGoアプリケーション向けの適応型ロードシェディングを実装するライブラリである</li><li>ライブラリはAcquire→ダウンストリーム呼び出し→Reportという3ステップのワークフローを持つ</li><li>Reportで分類される結果はSuccess・Failure・Neutral・Overloadの4種類である</li><li>デフォルト戦略はGoogleのSRE本に基づく適応的スロットリング方式(SRE Strategy)で、2分間のローリングウィンドウを使いK×capacity(Kのデフォルトは1.5)で通過率を調整する</li><li>Pressure Strategyは失敗で+100、過負荷(Overload)で+300、成功で-1のスコアを累積して圧力を計算する</li><li>記事の著者はgo-backpressureの作者本人ではなく、VeriCerts Tech Blogの『ousiass』氏による独立した検証記事である</li><li>検証対象はv0.1.1で、2026年7月31日にリリースされたバージョンである</li><li>シミュレーションでは容量500rpsの下流に対し2000rpsの負荷をかけるテストを行い、SRE Strategyは約746rps(37.5%)に安定した(理論予測値750rpsに近い)</li><li>ウィンドウを2秒に短縮した場合、全面障害からの回復に6.4秒かかるが、既定の2分間ウィンドウでは約446秒かかった</li><li>Pressure Strategyは約0.1秒という高速な反応を示したが、流量を約150rps(7.5%)まで強く制限した</li><li>NeutralがけとなるリクエストがReportの約33%を超えると、NeutralCountsSuccessの設定を使わない限り健全な下流でもスロットリングされてしまう問題がある</li><li>go-backpressureはプロセスローカルな状態のみを持ち、インスタンス間の協調機能は無い</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/nonejp/articles/ee58fdb042ceef" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E4%B8%8B%E6%B5%81%E9%9A%9C%E5%AE%B3%E6%99%82%E3%81%AB%E5%85%A8%E5%81%9C%E6%AD%A2%E3%81%95%E3%81%9B%E3%81%AA%E3%81%84%E3%80%81Go%E8%A3%BD%E3%83%AD%E3%83%BC%E3%83%89%E3%82%B7%E3%82%A7%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%92%E5%AE%9F%E6%B8%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2F754ae74c5ed3ca9d%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E4%B8%8B%E6%B5%81%E9%9A%9C%E5%AE%B3%E6%99%82%E3%81%AB%E5%85%A8%E5%81%9C%E6%AD%A2%E3%81%95%E3%81%9B%E3%81%AA%E3%81%84%E3%80%81Go%E8%A3%BD%E3%83%AD%E3%83%BC%E3%83%89%E3%82%B7%E3%82%A7%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%92%E5%AE%9F%E6%B8%AC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-15/754ae74c5ed3ca9d/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-15%2F754ae74c5ed3ca9d%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../8625086625752383/"><span>前の記事</span>AIエージェントによる自動攻撃、国内サイトで観測</a><a class="next" href="../838b7986836dc7ce/"><span>次の記事</span>自ホスト型Webファイルマネージャー「FileBrowser Quantum」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-15/">← 2026.10.15 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../17cd4c988091704a/">Go 1.23のイテレーター、エラー処理に標準パターンなし</a></h3>
+<p class="excerpt">Go 1.23で導入されたイテレーター(range-over-func、forループで直接呼び出せる関数型)には、エラー処理に関する公式な推奨パターンが存在しないという課題を扱った記事です。著者はAIエージェント「TOKIUM」の開発チ…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ef1a8fe9444abe9a/">Next.js本番ビルドが真っ白、react-router更新が原因だった</a></h3>
+<p class="excerpt">Next.js 13.2.1の環境でreact-routerを6.14.1から6.15.0以降にアップグレードしたところ、開発環境では再現せず本番ビルドでのみ画面が真っ白になる不具合に遭遇した筆者の体験談です。発生したエラーは「Refe…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../2333e9cb60d26b8f/">.gitignoreだけでは防げない.env漏洩、5か所の点検手順</a></h3>
+<p class="excerpt">.gitignoreに.envを追加していても、以前からGitに追跡されていたファイルは対象外になるため、実際には複数の経路で秘密鍵やAPIキーが漏洩しうると指摘し、約30分で確認できる5か所の点検手順を示した記事です。</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gtsteffaniak/filebrowser の backend/internal/utils/crypto.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="filebrowserはGoで書かれたWeb版ファイラーで、スター8,700超の実運用プロダクトです。backend/internal/utils/crypto.goにはパスワードハッシュやトークン署名などの暗号系ユーティリティが集まっています。その中からHMACで「改ざんされていないか検証できる文字列トークン」を作る…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="gtsteffaniak/filebrowser の backend/internal/utils/crypto.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="filebrowserはGoで書かれたWeb版ファイラーで、スター8,700超の実運用プロダクトです。backend/internal/utils/crypto.goにはパスワードハッシュやトークン署名などの暗号系ユーティリティが集まっています。その中からHMACで「改ざんされていないか検証できる文字列トークン」を作る…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-15/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-15/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.15</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>gtsteffaniak/filebrowser の <code>backend/internal/utils/crypto.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/gtsteffaniak/filebrowser/blob/HEAD/backend/internal/utils/crypto.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-15">2026.10.15</time></div>
+</header>
+<div class="article-body">
+<p>filebrowserはGoで書かれたWeb版ファイラーで、スター8,700超の実運用プロダクトです。backend/internal/utils/crypto.goにはパスワードハッシュやトークン署名などの暗号系ユーティリティが集まっています。その中からHMACで「改ざんされていないか検証できる文字列トークン」を作る2つの関数を選びました。Cookieやメール内の確認リンクなどで、サーバーが発行した値を後から検証したい場面でよく使われるパターンで、1年目でもすぐ応用できる実務的なコードです。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>func HashSHA256(data string) string {
+	bytes := sha256.Sum256([]byte(data))
+	return hex.EncodeToString(bytes[:])
+}
+
+// SignHMACSHA256Base64URL returns base64url(payload).base64url(hmac-sha256 signature).
+func SignHMACSHA256Base64URL(key, payload []byte) string {
+	payloadB64 := base64.RawURLEncoding.EncodeToString(payload)
+	mac := hmac.New(sha256.New, key)
+	mac.Write([]byte(payloadB64))
+	signature := base64.RawURLEncoding.EncodeToString(mac.Sum(nil))
+	return payloadB64 + &quot;.&quot; + signature
+}
+
+// VerifyHMACSHA256Base64URL validates token form and returns the decoded payload.
+func VerifyHMACSHA256Base64URL(key []byte, token string) ([]byte, bool) {
+	parts := strings.Split(token, &quot;.&quot;)
+	if len(parts) != 2 {
+		return nil, false
+	}
+	payloadB64, signature := parts[0], parts[1]
+
+	mac := hmac.New(sha256.New, key)
+	mac.Write([]byte(payloadB64))
+	expectedSignature := base64.RawURLEncoding.EncodeToString(mac.Sum(nil))
+	if !hmac.Equal([]byte(signature), []byte(expectedSignature)) {
+		return nil, false
+	}
+
+	payload, err := base64.RawURLEncoding.DecodeString(payloadB64)
+	if err != nil {
+		return nil, false
+	}
+	return payload, true
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func HashSHA256(data string) string {</code></pre><p>関数定義です。func の後に関数名HashSHA256、カッコの中に引数（data string、つまりstring型の変数data）、その後ろの戻り値の型（string）が続きます。Goでは「引数の型は変数名の後」という順序で書くのが特徴です。</p></div><div class="walk-step"><pre class="walk-quote"><code>bytes := sha256.Sum256([]byte(data))</code></pre><p>`:=`は「新しい変数を宣言しつつ代入する」演算子です。`[]byte(data)`はstring型のdataをbyteのスライス（可変長配列のようなもの）に変換しています。暗号処理の関数はほとんどbyte列を要求するので、文字列→byte列の変換はGoの暗号コードで非常によく出てくる定型句です。sha256.Sum256はSHA-256ハッシュ値を計算し、32バイト固定長の配列（[32]byte）を返します。</p></div><div class="walk-step"><pre class="walk-quote"><code>return hex.EncodeToString(bytes[:])</code></pre><p>`bytes[:]`は配列をスライスに変換する書き方です（先頭から末尾までを指定しないスライス式）。hex.EncodeToStringはbyte列を16進数文字列（0-9, a-f）に変換します。つまりこの関数は「文字列を受け取り、そのSHA-256ハッシュを16進数文字列として返す」処理をしています。</p></div><div class="walk-step"><pre class="walk-quote"><code>func SignHMACSHA256Base64URL(key, payload []byte) string {</code></pre><p>引数が2つ(key, payload)とも同じ型[]byteの場合、Goでは型名を最後にまとめて1回だけ書けます。これは「key []byte, payload []byte」と書くのと全く同じ意味です。「鍵（key）とデータ（payload）を受け取り、署名付きトークン文字列を返す」関数です。</p></div><div class="walk-step"><pre class="walk-quote"><code>payloadB64 := base64.RawURLEncoding.EncodeToString(payload)</code></pre><p>RawURLEncodingは、URLやファイル名に安全に使える文字（+や/の代わりに-や_を使う）でBase64エンコードし、さらに末尾の `=` パディングを付けないエンコード方式です。CookieやURLクエリに値を埋め込むときにこの方式が好まれます。</p></div><div class="walk-step"><pre class="walk-quote"><code>mac := hmac.New(sha256.New, key)</code></pre><p>HMACとは「秘密鍵を使ってハッシュ値を計算する」改ざん検知の仕組みです。hmac.Newはハッシュ計算オブジェクト（Go用語でhash.Hashというインターフェース）を作るための関数で、第一引数には「どのハッシュ関数を使うか」を渡します。sha256.New自体は関数ですが、ここでは呼び出さずに関数そのもの（関数値）として渡している点に注目してください。</p></div><div class="walk-step"><pre class="walk-quote"><code>mac.Write([]byte(payloadB64))</code></pre><p>Writeメソッドは、macの内部状態にbyte列を取り込みます。戻り値を使っていないので無視していますが、実際は書き込んだバイト数とエラーを返せる設計です（ここでは常に成功するため無視しても問題ありません）。この行の後、macの中には「key + payloadB64」から計算中のハッシュ状態が保持されています。</p></div><div class="walk-step"><pre class="walk-quote"><code>signature := base64.RawURLEncoding.EncodeToString(mac.Sum(nil))</code></pre><p>mac.Sum(nil)は、これまで書き込んだデータに対する最終的なHMAC値（byte列）を計算して返します。引数にnilを渡すと「新しいスライスを作ってそこに結果を入れて返す」という意味になります（既存のスライスの末尾に追記したい場合はnil以外を渡せます）。その結果をまたURL安全なBase64文字列に変換しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>return payloadB64 + &quot;.&quot; + signature</code></pre><p>Goの文字列は `+` でそのまま連結できます。ここでは「データ部分」と「署名部分」をピリオドで区切った1本の文字列（例: `abc123.xyz789`）を作って返しています。この形式がトークン全体になります。</p></div><div class="walk-step"><pre class="walk-quote"><code>func VerifyHMACSHA256Base64URL(key []byte, token string) ([]byte, bool) {</code></pre><p>Goの関数は複数の値を同時に返せます。ここでは「復号したpayload（[]byte）」と「検証が成功したか（bool）」の2つをカッコで囲んで返り値リストとして宣言しています。呼び出し側は `payload, ok := VerifyHMACSHA256Base64URL(...)` のように2つ同時に受け取ります。</p></div><div class="walk-step"><pre class="walk-quote"><code>parts := strings.Split(token, &quot;.&quot;)
+	if len(parts) != 2 {
+		return nil, false
+	}</code></pre><p>strings.Splitは文字列をピリオドで分割し、文字列のスライスを返します。「ピリオドで区切った2つの部分があるはずだ」という前提をlen(parts) != 2でチェックし、形式が壊れていたら即座に失敗（nilとfalse）を返しています。Goでは早期リターンで異常系を先に処理するのが一般的な書き方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>payloadB64, signature := parts[0], parts[1]</code></pre><p>1行で2つの変数に同時に値を代入しています。右辺もカンマで区切って複数の値を並べれば、左辺の変数にそれぞれ順番に対応づけられます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if !hmac.Equal([]byte(signature), []byte(expectedSignature)) {
+		return nil, false
+	}</code></pre><p>受け取った署名(signature)と、自分で鍵を使って再計算した署名(expectedSignature)を比較しています。ここで単純な `==` ではなくhmac.Equalを使うのが重要なポイントです。`==` だと文字が一致しない箇所で比較が早く終わるため、攻撃者が応答速度の差から正しい署名を推測できてしまう可能性があります（タイミング攻撃）。hmac.Equalは常に同じ時間がかかる「定数時間比較」で、これを防ぎます。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>署名付きトークンを検証するときは文字列の `==` ではなく、常に `hmac.Equal`（定数時間比較）を使うこと。比較にかかる時間の差から答えを推測される「タイミング攻撃」を防ぐためです。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-12/"><span>前の日</span>oauth2-proxy/oauth2-proxy</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-15/">← 2026.10.15 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
