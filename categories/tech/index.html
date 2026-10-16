@@ -25,7 +25,37 @@
 </header>
 <div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../ai_news/">AIニュース</a><a class="active" aria-current="page" href="./">開発・技術</a><a class=""  href="../github/">リポジトリ</a><a class=""  href="../papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全193記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全198記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../articles/2026-10-16/e0791302d5a6ae1f/">Go 1.27、HTTP/1接続再利用が大幅改善</a></h3>
+<p class="excerpt">Go公式ブログが、Go 1.27でnet/httpのHTTP/1接続再利用の挙動が改善されたと報告しています。これまではレスポンスボディ（resp.Body）を最後まで読み切らずにClose()を呼ぶと、Transportは接続を再利用…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>go.dev</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../articles/2026-10-16/dd5f1899b38fa3c1/">自宅k3sのself-hosted runnerでGoのCIを半分の時間に</a></h3>
+<p class="excerpt">個人開発者のnowex35氏が、B.LEAGUE試合予想アプリ「SIXTYZERO」のGo 1.26製APIサーバー（DBはPostgreSQL 17）のCIを、自宅に構築したk3s（軽量版Kubernetes）クラスタ上のGitHub…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../articles/2026-10-16/a6b3aa331794966e/">Next.js middlewareが本番だけ404になった落とし穴、原因はVercel環境変数</a></h3>
+<p class="excerpt">個人開発エンジニアのミケ氏が、Next.js App Router + Vercelで内部API認証のmiddlewareを実装した際に遭遇した体験を公開しています。ローカル環境では「x-internal-key」ヘッダー付きのPOST…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../articles/2026-10-16/bda4cbdd70ae529a/">有名企業・著名開発者のノウハウを持ち込めるClaude Codeスキル11選</a></h3>
+<p class="excerpt">「くるしば」氏が、Claude Code向けに有名企業や著名な開発者が公開している「スキル」11個を紹介する記事を公開しています。Sentry社による「getsentry/skills」はDjango向けのセキュリティ脆弱性やパフォーマ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>note.com</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../articles/2026-10-16/0896d3f238429694/">AnthropicのBun、Go実装の新TypeScript型チェッカーでTypeScript 7より3倍以上高速化</a></h3>
+<p class="excerpt">Anthropicが開発するJavaScriptランタイム「Bun」が2026年10月10日、バージョン1.4.3をリリースしました。最大の特徴は、Go言語で実装された新しいTypeScript型チェッカーで、TypeScript 7と…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>publickey1.jp</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-tech">
 <a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
 <h3><a href="../../articles/2026-10-15/17cd4c988091704a/">Go 1.23のイテレーター、エラー処理に標準パターンなし</a></h3>
 <p class="excerpt">Go 1.23で導入されたイテレーター(range-over-func、forループで直接呼び出せる関数型)には、エラー処理に関する公式な推奨パターンが存在しないという課題を扱った記事です。著者はAIエージェント「TOKIUM」の開発チ…</p>
@@ -138,36 +168,6 @@
 <h3><a href="../../articles/2026-10-09/c1bcd4faca3195a5/">Claude CodeとOpenCode、許可設定の評価順の違い</a></h3>
 <p class="excerpt">AIコーディングエージェントのClaude CodeとOpenCodeには、ファイル操作などを許可・確認・拒否する設定（allow/ask/deny）がありますが、ルールの評価順に大きな違いがあると報告されています。筆者は練習用リポジト…</p>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../articles/2026-10-09/f8f9820ccf7517e6/">AI生成コードのレビュー、工場の品質検査に学ぶ</a></h3>
-<p class="excerpt">パーティーハード株式会社の望月涼太氏は、AIツールの普及で開発速度は上がった一方、コードレビューの工程が滞留し開発責任者が疲弊しているという課題を指摘しています。原因は、人間が書いたコード向けのレビュー手法を、そのままAI生成コードに適…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>ptyhard.co.jp</span><time datetime="2026-10-09">2026.10.09</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../articles/2026-10-09/1f82e8692d5b91fe/">AIエージェント向けCLI設計の6原則</a></h3>
-<p class="excerpt">AIエージェントが使いやすいCLIツールを作るための設計指針を紹介する記事です。筆者が自ら構築したdevtools-workspaceとdevtools-commonというツール群を題材に、6つの設計原則を実装例とともに解説しています。</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../articles/2026-10-09/a67c646975a1e39d/">初期JSを2割削減、必要になるまで送らない設計</a></h3>
-<p class="excerpt">Next.jsアプリの初期JavaScriptを削減する手法を紹介する記事です。筆者は「必要になるまでブラウザにJSを送らない」という方針のもと、会話ログ一覧画面のJSサイズを1,223,409バイトから967,092バイトへ、約21%…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../articles/2026-10-09/df7bac8f96d3111a/">手書きzodスキーマをsatisfiesでOpenAPI型に縛る</a></h3>
-<p class="excerpt">筆者はAPI仕様の変更が手書きのzod（TypeScript用のスキーマ検証ライブラリ）スキーマに反映されず、未知キーが黙って削除される問題に遭遇しました。「保存しました」と表示されるのに実際には保存されていない、という事象が発生したと…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-09">2026.10.09</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="./"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../articles/2026-10-08/1b18014fa84ed0da/">手動テストを渡すだけでE2Eが完成、kickflowの自動化基盤</a></h3>
-<p class="excerpt">kickflowのQAチームが、テストケース管理ツール「KickRail」に登録した手動テストケースから、Claude Codeを使ってPlaywrightのE2E（End to End）テストを自動生成し、PRを出すところまでを自動化…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>tech.kickflow.co.jp</span><time datetime="2026-10-08">2026.10.08</time></div>
 </article></div><nav class="pagination" aria-label="ページ切り替え"><a aria-current="page" href="./">1</a><a  href="page/2/">2</a><a  href="page/3/">3</a><a  href="page/4/">4</a><a  href="page/5/">5</a><a  href="page/6/">6</a><a  href="page/7/">7</a><a  href="page/8/">8</a><a  href="page/9/">9</a></nav>
 </main>
 <footer class="footer wrap">

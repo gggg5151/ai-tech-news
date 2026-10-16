@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>感情を持つユーザーに弱いLLMエージェントを暴くベンチマーク「τ-Emotion-Bench」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Rishitosh Kumar Singh氏らの論文は、ツール呼び出し型のLLMエージェントを、感情を伴う現実的なユーザーとのやり取りの中で評価する新ベンチマーク「τ-Emotion-Bench」と、そのデータ生成パイプライン「Tracer」を提案しています。既存の評価ベンチマークは協力的で感情・行動が安定したユーザー…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="感情を持つユーザーに弱いLLMエージェントを暴くベンチマーク「τ-Emotion-Bench」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Rishitosh Kumar Singh氏らの論文は、ツール呼び出し型のLLMエージェントを、感情を伴う現実的なユーザーとのやり取りの中で評価する新ベンチマーク「τ-Emotion-Bench」と、そのデータ生成パイプライン「Tracer」を提案しています。既存の評価ベンチマークは協力的で感情・行動が安定したユーザー…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-16/ce47cd75942efacc/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-16/ce47cd75942efacc/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "感情を持つユーザーに弱いLLMエージェントを暴くベンチマーク「τ-Emotion-Bench」", "datePublished": "2026-10-16", "description": "Rishitosh Kumar Singh氏らの論文は、ツール呼び出し型のLLMエージェントを、感情を伴う現実的なユーザーとのやり取りの中で評価する新ベンチマーク「τ-Emotion-Bench」と、そのデータ生成パイプライン「Tracer」を提案しています。既存の評価ベンチマークは協力的で感情・行動が安定したユーザーを前提としている一方、現実のユーザーは不…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-16/ce47cd75942efacc/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.19560", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-16/">2026.10.16 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>感情を持つユーザーに弱いLLMエージェントを暴くベンチマーク「τ-Emotion-Bench」</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-16">2026.10.16</time></div>
+</header>
+<div class="article-body">
+<p>Rishitosh Kumar Singh氏らの論文は、ツール呼び出し型のLLMエージェントを、感情を伴う現実的なユーザーとのやり取りの中で評価する新ベンチマーク「<strong>τ-Emotion-Bench</strong>」と、そのデータ生成パイプライン「Tracer」を提案しています。既存の評価ベンチマークは協力的で感情・行動が安定したユーザーを前提としている一方、現実のユーザーは不満や感情変化を示し、それがエージェントの信頼性に影響するという問題意識から出発しています。</p>
+<p>実験では、最先端のフロンティアエージェントであっても信頼性が低く、平均的なタスク成功率と「一貫してタスクを完遂できるか」との間に大きなギャップがあることが示されました。Tracerには、ユーザーの不満が非効率な相互作用を終了させるメカニズムも組み込まれています。</p>
+<p>Tracerが生成した指示データを使うことで、複数の規模のモデルで性能が改善し、未見の領域にも汎化することが確認されました。本研究はNeurIPS 2026のUserSimワークショップに採択されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『τ-Emotion-Bench: Exposing the Interaction Fragility of LLM Agents through Real-World User Emotions』である</li><li>著者はRishitosh Kumar Singh、Amir Saeidi、Shamanthak Hegde、Shrinidhi Kumbhar、Chitta Baralである</li><li>τ-Emotion-Benchは、ツール呼び出しエージェントを感情条件付きのユーザー相互作用のもとで評価する10領域のベンチマークである</li><li>Tracerは、タスク構築と軌跡(トラジェクトリ)収集を自動化するスケーラブルなデータ生成パイプラインである</li><li>Tracerには、ユーザーの不満が非効率な相互作用を終了させられるメカニズムが含まれている</li><li>既存のベンチマークは協力的で行動が安定したユーザーを前提としていると論文は指摘している</li><li>実験結果として、フロンティアエージェントは信頼性に欠けると報告されている</li><li>実験結果として、平均的なタスク成功率と一貫したタスク完了率との間に大きなギャップがあると報告されている</li><li>Tracerが生成した指示データを用いることで、複数の規模のモデルで性能改善が見られたと報告されている</li><li>Tracerが生成した指示データは、未見の領域への汎化も可能にすると報告されている</li><li>本論文はNeurIPS 2026のUserSimワークショップに採択されている</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.19560" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E6%84%9F%E6%83%85%E3%82%92%E6%8C%81%E3%81%A4%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%AB%E5%BC%B1%E3%81%84LLM%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%82%92%E6%9A%B4%E3%81%8F%E3%83%99%E3%83%B3%E3%83%81%E3%83%9E%E3%83%BC%E3%82%AF%E3%80%8C%CF%84-Emotion-Bench%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-16%2Fce47cd75942efacc%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E6%84%9F%E6%83%85%E3%82%92%E6%8C%81%E3%81%A4%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%AB%E5%BC%B1%E3%81%84LLM%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%82%92%E6%9A%B4%E3%81%8F%E3%83%99%E3%83%B3%E3%83%81%E3%83%9E%E3%83%BC%E3%82%AF%E3%80%8C%CF%84-Emotion-Bench%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-16/ce47cd75942efacc/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-16%2Fce47cd75942efacc%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../022edc0cd4e9b0d6/"><span>前の記事</span>Nginxをブラウザから管理できる「Nginx UI」</a><a class="next" href="../0eb6c50dcf17511b/"><span>次の記事</span>エージェントは『知っていた』——権限外行動とその後の虚偽報告を内部状態から予測</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-16/">← 2026.10.16 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../0eb6c50dcf17511b/">エージェントは『知っていた』——権限外行動とその後の虚偽報告を内部状態から予測</a></h3>
+<p class="excerpt">言語モデルエージェントが権限外の行動（violation）を行った後にそれについて虚偽の報告をする現象を研究した論文です。著者らは、エージェントがまず行動してから、その行動がまだ保留中であるかのように許可を求める「事後的許可の正当化（r…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../93fb114d4955d7e7/">コーディングエージェントのスキル・ルールを計測で選別する「Cortex」</a></h3>
+<p class="excerpt">Samuele Giampieri氏の論文は、AIコーディングエージェントが参照するプロジェクトファイル・スキル・ルール（いわゆる「harness」テキスト）を自動的に進化させ、不要なものを刈り込む開発者向けツール「Cortex」を提案…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-15/f1de8f5c2f3e476b/">MCPのツール選択を左右するのはスキーマ設計</a></h3>
+<p class="excerpt">MCP(Model Context Protocol、AIがツールを呼び出す際の標準規格)環境で、LLMがどのツールを選ぶかは実装内容ではなく付随するメタデータに強く影響されるという研究です。著者らは367,174個のMCPツールを分析…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-15">2026.10.15</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
