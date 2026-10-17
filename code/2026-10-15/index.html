@@ -79,7 +79,7 @@ func VerifyHMACSHA256Base64URL(key []byte, token string) ([]byte, bool) {
 		return nil, false
 	}</code></pre><p>受け取った署名(signature)と、自分で鍵を使って再計算した署名(expectedSignature)を比較しています。ここで単純な `==` ではなくhmac.Equalを使うのが重要なポイントです。`==` だと文字が一致しない箇所で比較が早く終わるため、攻撃者が応答速度の差から正しい署名を推測できてしまう可能性があります（タイミング攻撃）。hmac.Equalは常に同じ時間がかかる「定数時間比較」で、これを防ぎます。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>署名付きトークンを検証するときは文字列の `==` ではなく、常に `hmac.Equal`（定数時間比較）を使うこと。比較にかかる時間の差から答えを推測される「タイミング攻撃」を防ぐためです。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-12/"><span>前の日</span>oauth2-proxy/oauth2-proxy</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-12/"><span>前の日</span>oauth2-proxy/oauth2-proxy</a><a class="next" href="../2026-10-17/"><span>次の日</span>evanw/esbuild</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-15/">← 2026.10.15 の号を読む</a>
 </div>
 </article>

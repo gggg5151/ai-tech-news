@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026.10.17 の号 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="2026.10.17の号: Liquid AIの新型意思決定モデル「d1-ultra」、競合Jev 1.14を全8分野で上回る / OpenRouterがAIエージェントの危険操作をAIで検出・ブロックする「Armor」をリリース / Claude Codeチーム、PR急増に対応する「7層防御」のコードレビュー体制を公開 / LaravelのAI処理を7MBのGoゲートウェイに移し同時実行数を1→…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="2026.10.17 の号 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="2026.10.17の号: Liquid AIの新型意思決定モデル「d1-ultra」、競合Jev 1.14を全8分野で上回る / OpenRouterがAIエージェントの危険操作をAIで検出・ブロックする「Armor」をリリース / Claude Codeチーム、PR急増に対応する「7層防御」のコードレビュー体制を公開 / LaravelのAI処理を7MBのGoゲートウェイに移し同時実行数を1→…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/issues/2026-10-17/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/issues/2026-10-17/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="active" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="" href="../../code/">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-17">2026年10月17日（土）</time><span class="edition-count">16記事・読了まで約15分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Liquid AIの新型意思決定モデル「d1-ultra」、競合Jev 1.14を全8分野で上回る</li><li>OpenRouterがAIエージェントの危険操作をAIで検出・ブロックする「Armor」をリリース</li><li>Claude Codeチーム、PR急増に対応する「7層防御」のコードレビュー体制を公開</li><li>LaravelのAI処理を7MBのGoゲートウェイに移し同時実行数を1→50へ拡大した実践記</li><li>Anthropicの研究用モデルが25年来のECDSA暗号の謎を30分以内で解明</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-eece0af3a3004243">意思決定モデル「d1-ultra」登場、全8分野でJev 1.14を上回る</a></li><li><a href="#a-fc339c7152692e37">LLMにStarCraftボットを書かせたら、1位はGPT-6 Astra</a></li><li><a href="#a-fe79619e118c1dc1">Claude Codeチームのコードレビュー、7層防御で急増するPRを捌く</a></li><li><a href="#a-89eea79c5ded16fd">危険な操作をAIが検出してブロックする「Armor」、OpenRouterがリリース</a></li><li><a href="#a-85ca38bdab49c5c2">Stack Overflow、ChatGPTプラグインで登録者数が3倍に</a></li><li><a href="#a-38cce82f54ce07cb">25年来の暗号の謎、Claudeが30分以内で解明</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-74d139e70682eb6b">AIが書いたTypeScriptの「雑さ」をOxlintで機械的に弾く</a></li><li><a href="#a-7e81fea2e7b3ce9d">Claude CodeのAPIキーを1Password CLIで平文のまま持たない運用法</a></li><li><a href="#a-fedb6900c64d2a0b">AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話</a></li><li><a href="#a-94e20bddb8cfa742">chiの脆弱性修正をきっかけに個人開発の棚卸しで見つかった5つの穴</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-4a2e192eeb7da311">Go製の高速バンドラー「esbuild」</a></li><li><a href="#a-b8f94aabe6d6e160">Tencent Cloud、AIエージェント向け「チームの記憶」基盤を公開</a></li><li><a href="#a-4007668b5b2c0d04">Anthropic公式、Claude API活用のサンプル集「claude-quickstarts」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-0162f27845a19b55">疎オートエンコーダの特徴は「足し算」では効かない</a></li><li><a href="#a-a56e34e6eedaabbf">弱いモデルと強いモデルを使い分けるPC操作エージェントの監視手法「LEASH」</a></li><li><a href="#a-5bd27839fb193fab">モデルはいつ能力を「獲得」するのか、出力層の学習過程を追う</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="../../categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-eece0af3a3004243">
+<h3><a href="../../articles/2026-10-17/eece0af3a3004243/">意思決定モデル「d1-ultra」登場、全8分野でJev 1.14を上回る</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
+<div class="paper-body"><p>Liquid AIが2026年10月15日、意思決定モデル「<strong>d1-ultra</strong>」を発表しました。従来モデル「d1」の改良版で、競合モデル「Jev 1.14」とのベンチマーク比較で全8分野において上回る成績を記録したとされています。平均スコアはd1-ultraが76.7ポイント、Jev 1.14が69.4ポイントで、差は7.3ポイントです。</p>
+<p>細かく見ると、回答評価能力のスコアは53.3から65.5に、知識と推論のスコアは47.8から56.0に向上しました。モデルの判断の信頼性を測るArtificial Analysis Decision Indexではd1-ultraが65ポイント、Jev 1.14が57ポイントを獲得し、出力確率の誤差もd1-ultraの1.5ポイントに対しJev 1.14は2.7ポイントと、<strong>判断の自信の正確さ</strong>でも差がついています。</p>
+<p>d1-ultraは各選択肢が正しい確率を直接出力する方式を採用しており、文章を生成する処理を介さないため高速かつ低コストで判断を下せることが特徴です。マルチモーダル対応で44言語をサポートし、料金は入力100万トークンあたり0.042ドル（約6円）、出力トークンの課金はありません。1024×1024ピクセルの画像1枚は1536トークンとして計算されます。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20261016-d1-ultra/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/eece0af3a3004243/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-fc339c7152692e37">
+<h3><a href="../../articles/2026-10-17/fc339c7152692e37/">LLMにStarCraftボットを書かせたら、1位はGPT-6 Astra</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>starskirmish.com</span></div>
+<div class="paper-body"><p>StarSkirmishは、LLMがStarCraft: Brood War用のボット（C++、BWAPI経由）を書く能力を競うベンチマークです。筆者Kai McPhetersが2026年10月15日に公開したv0.2の結果では、各LLMに1時間でProtossボットを書かせ、BWAPI 4.4.0とOpenBW上で対戦させています。評価にはBASIL LadderやFAP、BWEMといったツールと、Heartbreak Ridgeなどのマップが使われました。</p>
+<p>結果は<strong>GPT-6 Astra</strong>が総合最高スコアで1位、GPT-6.1 Solが2位でコストパフォーマンスが最も良かったとのことです。Gemini 4 Argon、Claude Opus 5.5、Claude Fable 5.1は37〜39点で互いに同程度のスコアでした。ただし人間が書いた最強のボット（Stardust、PurpleWave、BananaBrainなど）は依然すべてのLLM製ボットを大きく上回っており、最高スコアのGPT-6 Astraでも勝率は約7%にとどまったと報告されています。</p></div>
+<p class="paper-source"><a href="https://starskirmish.com/bench/v0-2/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/fc339c7152692e37/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-fe79619e118c1dc1">
+<h3><a href="../../articles/2026-10-17/fe79619e118c1dc1/">Claude Codeチームのコードレビュー、7層防御で急増するPRを捌く</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>claude.dev</span></div>
+<div class="paper-body"><p>Anthropic社内ブログの記事で、Addy Osmani、Morgan Westlee Lunt、Qing Wangの3名が、Claudeがコードの大部分を書く環境下で従来のライン単位コードレビューが機能しなくなった課題にどう対応したかを解説しています。Anthropicの単一リポジトリでの1日あたりの変更件数は5月時点で約2,500件でしたが、9月には30,000件以上に増加しました。記事はレビューの役割を「問題を出荷前に発見・修正すること」と「チーム全体の共有理解を構築すること」の2つに整理しています。</p>
+<p>対応として構築されたのが<strong>7層の防御</strong>です。PR前の自動テスト・linter実行、全PRへのAI自動レビュー、セキュリティレビュー、必須CI（lint・型チェック・テスト）、リスク分類（低/中/高）による人間承認、マージキュー、そしてフラグ機能と迅速なロールバックという構成で、人間はビルド判断やリスクの高い領域（課金・自動更新など）、アーキテクチャ決定など重要な判断にのみ関与するようにしています。</p>
+<p>6月から9月の間にマージされたPRの数は2倍以上に増加した一方、リバートが必要な割合は40%以上低下しました。レビュー精度を高めるため、Review.mdやClaude.mdには「ファイルと行を指摘し、名前での推測をしない」というガイダンスが記載されているそうです。</p></div>
+<p class="paper-source"><a href="https://claude.dev/blog/solving-code-review-at-anthropic/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/fe79619e118c1dc1/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-89eea79c5ded16fd">
+<h3><a href="../../articles/2026-10-17/89eea79c5ded16fd/">危険な操作をAIが検出してブロックする「Armor」、OpenRouterがリリース</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
+<div class="paper-body"><p>OpenRouterが2026年10月15日、AIエージェントの危険な操作を事前にブロックする安全機能「<strong>Armor</strong>」をベータ版でリリースしました。Armorは別のAIモデルを使い、エージェントが実行しようとする操作・会話履歴・設定されたルールを照合して違反可能性を評価し、検出した操作を自動的にブロックする仕組みです。判定にはTypeSafeが開発した「Jev」というモデルが使われています。</p>
+<p>処理時間は中央値279ミリ秒、90%が334ミリ秒以内と高速で、ユーザーに毎回承認を求めずに危険操作の防止と利便性を両立させることを狙っています。ルールは「絶対に禁止する操作」「原則として禁止する操作」「例外的に許可する操作」の3段階で設定可能で、Claude CodeのAuto modeと互換性があり、OpenRouterのAI実行環境「Ori」とも連携します。ベータ期間中はArmorの利用に追加料金はかかりません。</p></div>
+<p class="paper-source"><a href="https://gigazine.net/news/20261016-openrouter-armor/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/89eea79c5ded16fd/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-85ca38bdab49c5c2">
+<h3><a href="../../articles/2026-10-17/85ca38bdab49c5c2/">Stack Overflow、ChatGPTプラグインで登録者数が3倍に</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAI公式ブログの事例紹介によると、Stack Overflowが「Stack Overflow for Agents」というAIエージェント向けプラットフォームにChatGPTプラグインを実装したところ、「登録数が一夜にして3倍になった」（VP of Product Alexandra Lato氏）とのことです。エージェント作成数も最大10倍に増加したと報告されています。</p>
+<p>開発面では、コネクター開発にかかる時間が従来の3〜6週間から4日（最速で1日）に短縮され、製品の市場投入までの期間は1年から3ヶ月に圧縮されました。Stack Overflow for Agentsは2名のエンジニアによって数週間で構築され、開発にはGPT-6 AstraとGPT-6 Solを使ったモデルルーティングと、コーディング支援のCodexが活用されています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/stack-overflow-chatgpt-plugin" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/85ca38bdab49c5c2/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-38cce82f54ce07cb">
+<h3><a href="../../articles/2026-10-17/38cce82f54ce07cb/">25年来の暗号の謎、Claudeが30分以内で解明</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span></div>
+<div class="paper-body"><p>Anthropicの研究記事によれば、NIST楕円曲線（ECDSA：デジタル署名に広く使われる暗号方式）の種子パラメータの出自という25年来の暗号界の謎を、Anthropic内部の研究用モデルが30分以内に解明したとのことです。種子は複雑なハッシュアルゴリズムではなく、<strong>Unixタイムスタンプで初期化したC言語のlrand48疑似乱数生成器</strong>から生成されたことが判明しました。使われたのは1997年5月から1998年4月のタイムスタンプです。</p>
+<p>これによりNIST P-192、P-224、P-256、P-384、P-521の各曲線の種子の起源が復元され、一部の基点（P-192などを含む）はFreeLIPライブラリの乱数生成器から生成されたことも分かりました。記事は「これは暗号破りや新たな攻撃手法、脆弱性ではない」と明記しており、この発見はバックドアの証拠ではなく、むしろ意図的な弱点がないことを示す証拠だと位置づけています。</p></div>
+<p class="paper-source"><a href="https://www.anthropic.com/research/ecdsa-curve-origins" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/38cce82f54ce07cb/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="../../categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-74d139e70682eb6b">
+<h3><a href="../../articles/2026-10-17/74d139e70682eb6b/">AIが書いたTypeScriptの「雑さ」をOxlintで機械的に弾く</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>ai-deslopは、AIが生成しがちな「根拠の薄い」コードパターン（二重の型アサーションや広すぎる引数の型など）を検出する、<strong>Oxlint</strong>（Rust製のリンター）向けのJSプラグインです。2026年10月14日にShow HNで公開された新しいツールで、本記事はその日本語での初の解説記事とされています。筆者はai-deslopの開発者ではなく、第三者として実際に試し検証した結果をレポートしています。</p>
+<p>推奨設定では21個のdeslop用ルールと5個の標準ルールを全てerrorレベルで有効化します。筆者がAIが書いたような問題パターンを含むサンプルコードを自作して実行したところ、初回スキャンで16種類のルールにわたり合計25件のエラーが検出され、修正後はエラー0件になったとのことです。3つのディレクトリに対する実行時間は約0.7秒でした。検出ルールの例としてno-chained-type-assertions、no-unknown-parameters、no-floating-promises、no-array-filter-mapなどが挙げられています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/daichi01278/articles/oxlint-ai-deslop-ja" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/74d139e70682eb6b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-7e81fea2e7b3ce9d">
+<h3><a href="../../articles/2026-10-17/7e81fea2e7b3ce9d/">Claude CodeのAPIキーを1Password CLIで平文のまま持たない運用法</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>NOT A HOTELのソフトウェアチームに所属するkajinari氏が、Claude Code利用時にディスクへ平文で保存されがちなAI APIキーの漏洩リスクを排除するため、<strong>1Password CLI</strong>と連携させる実装方法を解説しています。1Passwordのデベロッパー機能（CLI統合）を有効化した上で、<code>op://vault_name/item_name/field_name</code>というURI形式でキーを参照する仕組みです。</p>
+<p>この方式では、ファイルに残るのは「どのVaultのどの項目か」という場所の情報だけで、実際の値は実行時に解決されプロセスのメモリ上にのみ存在します。<code>.mcp.json</code>ではcommandを<code>op</code>に変更し<code>[&quot;run&quot;, &quot;--&quot;, 元のコマンド]</code>という形式でラップし、シェル環境では<code>export SLACK_BOT_TOKEN=$(op read &quot;op://...&quot;)</code>のように<code>op read</code>コマンドで環境変数を設定します。著者はNOT A HOTELで実際にこの運用方法を使用しているとのことです。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/notahotel/articles/e85b2cdf9a5833" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/7e81fea2e7b3ce9d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-fedb6900c64d2a0b">
+<h3><a href="../../articles/2026-10-17/fedb6900c64d2a0b/">AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がありますが、1回のLLM呼び出しには2〜30秒かかります。既存のPHPキューワーカー方式はタスクを1つずつ処理し待機中もプロセスを占有するため、同時実行数は1（応急処置後5）に限られていました。筆者の試算では、10人が同時アクセスした場合10人目は約4分待たされる計算になったそうです。</p>
+<p>そこでLaravel側はプロンプト構築・クォータ管理・バリデーション・結果保存を担当し、実際のLLM呼び出し・ストリーミング処理・リトライは新規開発した<strong>7MBの軽量Goゲートウェイ</strong>に担わせる役割分離アーキテクチャに移行しました。通信はLaravel→SQS（AWSのメッセージキューサービス）→Goでタスクを配信し、Go→HTTPS（HMAC-SHA256：共有鍵でリクエストの改ざんを検知する署名方式）→Laravelで結果を返却・確定（settle）する構成です。</p>
+<p>実装上の工夫として、クォータの二重消費を防ぐため「リクエスト受付時に予約しておき、settle処理は行ロックのもとで予約がまだ有効な間だけ動作するようにする」設計を採用しました。レビューではリプレイ攻撃やハートビートリーク、ストリーム強制終了、再配信時のコスト無限ループといった脆弱性が見つかり、タスクIDをパスに含めるなどの修正を行ったとのことです。</p>
+<p>結果、同時実行数は50に拡大し、メモリ使用量は変更前の約330MB（5ワーカー）からアイドル時約7MBに削減されました。10件同時にメールを作成した場合の最後の処理時間は約250秒から約25秒に短縮されています。開発中にはRedisのallkeys-lru設定やDockerの<code>--env-file</code>のクォート非除去、ストリーム中のエラーがHTTPステータス200で返る問題などにも遭遇したそうです。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/doublecheck/articles/e026f86282e181" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/fedb6900c64d2a0b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-94e20bddb8cfa742">
+<h3><a href="../../articles/2026-10-17/94e20bddb8cfa742/">chiの脆弱性修正をきっかけに個人開発の棚卸しで見つかった5つの穴</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者はGoとCloud Runを用いた個人開発サービス群を運用しています。chiフレームワークのv5.4.0（10月12日リリース、ClientIPFromXFFの偽装に関する脆弱性修正）とv5.5.0（10月14日リリース、SuppressNotFoundのルーティングに関する脆弱性修正）をきっかけに、「今は問題が起きていない」ことと「問題がない」ことは違うという考えのもと、1日かけてセキュリティ監査を行いました。</p>
+<p>監査の結果、CIのスキャンは通過していたものの本番環境のGoのバージョンがGo 1.27.0でCIが参照するバージョン（Go 1.27.2）より古かったこと、公開リポジトリ28本のうち13本で<strong>シークレットスキャン</strong>が無効になっていたこと、エラーログに署名付きURLやAPIキーがそのまま出力されていたこと、Cloud Tasksのリトライ動作についての誤解、そしてFirestoreのトランザクションを使用しておらず再実行ガードが機能しない状態になっていたことの、計5つの問題を発見・修正したと報告しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/snknsk/articles/security-inventory-from-chi-advisory" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/94e20bddb8cfa742/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="../../categories/github/">過去の記事</a></h2><article class="paper-article" id="a-4a2e192eeb7da311">
+<h3><a href="../../articles/2026-10-17/4a2e192eeb7da311/">Go製の高速バンドラー「esbuild」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p><strong>esbuild</strong>はEvan Wallace氏が開発したJavaScript・TypeScript・JSX・CSS向けの高速バンドラー・ビルドツールで、既存のビルドツールが「10〜100倍遅い」という課題の解決を目標としています。JavaScriptとCSS、TypeScript、JSXをネイティブサポートし、ESMとCommonJSの両方のモジュール形式に対応します。ツリーシェイキング（使われないコードの除去）や最小化、ソースマップ生成、ローカルサーバー、ウォッチモード、プラグイン機能を備えています。</p>
+<p>CLI、JavaScript、Goの3種類のAPIインターフェースを提供し、主にGo言語で実装、MITライセンスで公開されています。GitHub上で40.1kスター、1.4kフォークを獲得している人気プロジェクトです。</p></div>
+<p class="paper-source"><a href="https://github.com/evanw/esbuild" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/4a2e192eeb7da311/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b8f94aabe6d6e160">
+<h3><a href="../../articles/2026-10-17/b8f94aabe6d6e160/">Tencent Cloud、AIエージェント向け「チームの記憶」基盤を公開</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>TencentDB Agent MemoryはTencent Cloudが開発・公開しているOSS（MITライセンス）で、AIエージェントのための「チームレベルのメモリハブ」です。会話・ドキュメント・コードからChat Memory、Skill、Wiki、CodeGraphという4種類の再利用可能なメモリ資産を生成し、複数のAgentやフレームワーク間で統治・共有・活用できる仕組みを提供します。</p>
+<p>管理用のMemory Hubパネルでチーム・Agentの作成やアクセス権限（private/team/restricted/agentの4段階）、資産の所有者・バージョン・使用統計を管理できます。検索はBM25とベクトル検索、RRF（Reciprocal Rank Fusion）を組み合わせたハイブリッド方式です。Node.js 22.16以上とTypeScriptで実装され、DeepSeek Harness、Claude Code、Codexなど複数のエージェントフレームワークに対応する統一プロキシを備えています。PersonaMem指標ではメモリ機能導入なしの48%から導入時76%へと改善したとのことです。</p></div>
+<p class="paper-source"><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/b8f94aabe6d6e160/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-4007668b5b2c0d04">
+<h3><a href="../../articles/2026-10-17/4007668b5b2c0d04/">Anthropic公式、Claude API活用のサンプル集「claude-quickstarts」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>Anthropic公式のGitHubリポジトリ「claude-quickstarts」は、Claude APIを使ったアプリケーション構築をすぐに始められるデベロッパー向けサンプルプロジェクト集です。MITライセンスで公開され、スター18.0k、フォーク3.1kと人気が高く、顧客サポートAI、金融データ分析、PCやブラウザの自動操作（Computer Use/Browser Use）、自律型コーディングエージェント、Slack・Linear・Sentry・GitHubなど外部サービス連携のManaged Agentsまで、計17種類のサンプルを収録しています。</p>
+<p>Computer Use DemoはClaudeによるデスクトップ操作を実現し、Browser Use DemoはPlaywrightと連携したブラウザ自動化でDOM操作・フォーム入力・コンテンツ抽出が可能です。Autonomous Coding AgentはClaude Agent SDKを搭載し、複数セッション間でGit経由の進捗保存を行います。各プロジェクトはディレクトリごとに分かれ、クローン後に依存関係をインストールしAPIキーを設定して実行する共通の流れになっています。</p></div>
+<p class="paper-source"><a href="https://github.com/anthropics/claude-quickstarts" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/4007668b5b2c0d04/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="../../categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-0162f27845a19b55">
+<h3><a href="../../articles/2026-10-17/0162f27845a19b55/">疎オートエンコーダの特徴は「足し算」では効かない</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>著者はHaotian Ma、Ziye Mei、Frederic Sala。<strong>疎オートエンコーダ</strong>（SAE：モデル内部の表現を人が解釈しやすい特徴に分解する手法）が学習する特徴表現が、下流の計算（モデルの振る舞い）に対してどの程度「加法的」に組み合わさるかを調べた研究です。「SAE Additivity Residuals（SAR）」という新たな測定指標を提案し、特徴間の相互作用を考慮しないと振る舞いの変動を説明しきれないことを示しています。</p>
+<p>学習済みSAE座標は、全18設定においてランダムな回転による座標より1次残差（単独の特徴だけで説明しきれない度合い）が低く、加法性が高いことが確認されました。しかしそれでも1次だけでは不十分で、2次（ペアワイズ）の相互作用項を加えることで全設定において説明力・予測精度が向上しています。ステアリング（モデルの出力操作）実験でも、ペアワイズ項を考慮したモデリングによりランク忠実度が0.5874から0.7790に向上し、順序付けエラーが0.1444から0.0606に削減されました。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.21261" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/0162f27845a19b55/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-a56e34e6eedaabbf">
+<h3><a href="../../articles/2026-10-17/a56e34e6eedaabbf/">弱いモデルと強いモデルを使い分けるPC操作エージェントの監視手法「LEASH」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>Computer-use agent（PC操作エージェント）による長期タスクでは、毎ステップでフロンティア級の強いモデルを使うとコストが高く、逆に小型のオープンウェイトモデル単体では失敗しがちという課題があります。本論文は、弱いモデルをデフォルトで動かし必要な時だけ強いモデルに制御を引き渡す「weak-to-strong escalation」という枠組み「<strong>LEASH</strong>」を提案しています。</p>
+<p>LEASHは、タスク開始時の不確実性による初期ルーティング、実行中のステップ単位の不確実性によるエスカレーション判断、強いモデルに切り替えた後もその挙動を監視する「シャドウオブザーバー」という3層構成を持ちます。不確実性の推定は、弱いモデルの隠れ状態を過去の成功・失敗軌跡と比較することで行われます。OSWorldベンチマークでの評価では、LEASHは単体の弱いエージェントより一貫して性能が改善し、ランダムなエスカレーション戦略より6.55〜11.94ポイント上回りました。Qwen3.5-35B-A3Bを用いた場合の成功率は73.66%で、常時Claude Opus 5を使う場合（72.90%）と同等の性能を19.2%の推論コスト削減で達成しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.22280" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/a56e34e6eedaabbf/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-5bd27839fb193fab">
+<h3><a href="../../articles/2026-10-17/5bd27839fb193fab/">モデルはいつ能力を「獲得」するのか、出力層の学習過程を追う</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
+<div class="paper-body"><p>著者はMatteo He、William F. Shen、Alex Iacob、Andrej Jovanovic、Xinchi Qiu、Nicholas D. Lane。言語モデルの事前学習中に「いつ能力が獲得されるか」を調べる従来の分析は出力トークン（挙動）だけを追跡していましたが、本論文は<strong>アンエンベッディング</strong>（unembedding：モデル内部の表現を出力トークンに変換する行列）自体も学習中に変化している点に着目し、「パラメータ軌跡クロスコーディング」という新手法を導入しました。</p>
+<p>Pythiaの事前学習を分析した結果、学習の早期段階（0.4〜1.1%の時点）でreadout（出力への変換部分）が再編成されることが判明し、この期間中、モデルの隠れ状態はモデル自身の出力には表れていないタスク情報を既にエンコードしていました。readoutの学習率を上げるとこの発展がより早期化し、情報表現と出力への反映のギャップが縮まることも確認されています。著者らは、モデルの挙動上の変化のタイミングは、モデルが情報を学習した時点ではなく、readoutがその情報を出力として表現できるようになった時点を反映している可能性があると結論づけています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.21025" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="../../articles/2026-10-17/5bd27839fb193fab/">要点と引用を見る</a></p>
+</article></section>
+<section class="code-teaser" id="code">
+<h2><span class="category-dot"></span>今日のコード</h2>
+<p class="code-teaser-repo"><span class="mono">evanw/esbuild</span> / <code>internal/helpers/waitgroup.go</code></p>
+<p>esbuildはGoで書かれた超高速なJS/CSSバンドラーで、内部で並行処理（goroutine）を多用しています。今回選んだwaitgroup.goは、標準ライブラリのsync.WaitGroupが持つ「AddとWaitを同時に呼ぶと危険」という制約を回避するために、わずか30行ほどで自作した代替実装です。標準ライブラリの弱点をどう正確に理解し、どう最小限の道具（atomicとchannel）で安全に回避するかという、実務でよく出て…</p>
+<a class="button-link" href="../../code/2026-10-17/">コードを読む</a>
+</section><nav class="neighbors issue-neighbors" aria-label="前後の号"><a class="prev" href="../2026-10-16/"><span>前の号</span>2026.10.16</a><span></span></nav>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

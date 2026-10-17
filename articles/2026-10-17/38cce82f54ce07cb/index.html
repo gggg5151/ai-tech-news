@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>25年来の暗号の謎、Claudeが30分以内で解明 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropicの研究記事によれば、NIST楕円曲線（ECDSA：デジタル署名に広く使われる暗号方式）の種子パラメータの出自という25年来の暗号界の謎を、Anthropic内部の研究用モデルが30分以内に解明したとのことです。種子は複雑なハッシュアルゴリズムではなく、Unixタイムスタンプで初期化したC言語のlran…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="25年来の暗号の謎、Claudeが30分以内で解明 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropicの研究記事によれば、NIST楕円曲線（ECDSA：デジタル署名に広く使われる暗号方式）の種子パラメータの出自という25年来の暗号界の謎を、Anthropic内部の研究用モデルが30分以内に解明したとのことです。種子は複雑なハッシュアルゴリズムではなく、Unixタイムスタンプで初期化したC言語のlran…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/38cce82f54ce07cb/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/38cce82f54ce07cb/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "25年来の暗号の謎、Claudeが30分以内で解明", "datePublished": "2026-10-17", "description": "Anthropicの研究記事によれば、NIST楕円曲線（ECDSA：デジタル署名に広く使われる暗号方式）の種子パラメータの出自という25年来の暗号界の謎を、Anthropic内部の研究用モデルが30分以内に解明したとのことです。種子は複雑なハッシュアルゴリズムではなく、Unixタイムスタンプで初期化したC言語のlrand48疑似乱数生成器から生成されたことが…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/38cce82f54ce07cb/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://www.anthropic.com/research/ecdsa-curve-origins", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-17/">2026.10.17 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>25年来の暗号の謎、Claudeが30分以内で解明</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span><time datetime="2026-10-17">2026.10.17</time></div>
+</header>
+<div class="article-body">
+<p>Anthropicの研究記事によれば、NIST楕円曲線（ECDSA：デジタル署名に広く使われる暗号方式）の種子パラメータの出自という25年来の暗号界の謎を、Anthropic内部の研究用モデルが30分以内に解明したとのことです。種子は複雑なハッシュアルゴリズムではなく、<strong>Unixタイムスタンプで初期化したC言語のlrand48疑似乱数生成器</strong>から生成されたことが判明しました。使われたのは1997年5月から1998年4月のタイムスタンプです。</p>
+<p>これによりNIST P-192、P-224、P-256、P-384、P-521の各曲線の種子の起源が復元され、一部の基点（P-192などを含む）はFreeLIPライブラリの乱数生成器から生成されたことも分かりました。記事は「これは暗号破りや新たな攻撃手法、脆弱性ではない」と明記しており、この発見はバックドアの証拠ではなく、むしろ意図的な弱点がないことを示す証拠だと位置づけています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>NIST楕円曲線の種子パラメータの起源は25年間謎だった</li><li>Anthropicの内部研究モデルがこの謎を30分以内に解明した</li><li>種子は複雑なハッシュアルゴリズムではなく、C言語のlrand48疑似乱数生成器をUnixタイムスタンプで初期化して生成された</li><li>種子は1997年5月から1998年4月のタイムスタンプから生成された</li><li>NIST P-192、P-224、P-256、P-384、P-521の曲線の種子の起源が復元された</li><li>記事は、この発見はECDSA曲線の暗号破りや新たな攻撃手法、脆弱性ではないと述べている</li><li>記事は、この発見がバックドアの証拠ではなく、意図的な弱点がないことを示唆する証拠だとしている</li><li>一部の基点(P-192などを含む)は、FreeLIPライブラリの乱数生成器から生成されたことも判明した</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>It&#x27;s just timestamps: the decades-old mystery of the origins of one of the most popular cryptographic standards has been explained.</blockquote><blockquote>In under half an hour, Claude discovered the origins of the NIST P-192, P-224, P-256, P-384 and P-521 seeds.</blockquote><blockquote>This is not a cryptographic break, new attack, or weakness in the ECDSA curves.</blockquote><p class="quotes-source">出典: <a href="https://www.anthropic.com/research/ecdsa-curve-origins" target="_blank" rel="noopener noreferrer">anthropic.com</a></p></section>
+<aside class="source-box"><a href="https://www.anthropic.com/research/ecdsa-curve-origins" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">anthropic.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=25%E5%B9%B4%E6%9D%A5%E3%81%AE%E6%9A%97%E5%8F%B7%E3%81%AE%E8%AC%8E%E3%80%81Claude%E3%81%8C30%E5%88%86%E4%BB%A5%E5%86%85%E3%81%A7%E8%A7%A3%E6%98%8E%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-17%2F38cce82f54ce07cb%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=25%E5%B9%B4%E6%9D%A5%E3%81%AE%E6%9A%97%E5%8F%B7%E3%81%AE%E8%AC%8E%E3%80%81Claude%E3%81%8C30%E5%88%86%E4%BB%A5%E5%86%85%E3%81%A7%E8%A7%A3%E6%98%8E%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-17/38cce82f54ce07cb/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-17%2F38cce82f54ce07cb%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../85ca38bdab49c5c2/"><span>前の記事</span>Stack Overflow、ChatGPTプラグインで登録者数が3倍に</a><a class="next" href="../74d139e70682eb6b/"><span>次の記事</span>AIが書いたTypeScriptの「雑さ」をOxlintで機械的に弾く</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-17/">← 2026.10.17 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../eece0af3a3004243/">意思決定モデル「d1-ultra」登場、全8分野でJev 1.14を上回る</a></h3>
+<p class="excerpt">Liquid AIが2026年10月15日、意思決定モデル「d1-ultra」を発表しました。従来モデル「d1」の改良版で、競合モデル「Jev 1.14」とのベンチマーク比較で全8分野において上回る成績を記録したとされています。平均スコ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../fc339c7152692e37/">LLMにStarCraftボットを書かせたら、1位はGPT-6 Astra</a></h3>
+<p class="excerpt">StarSkirmishは、LLMがStarCraft: Brood War用のボット（C++、BWAPI経由）を書く能力を競うベンチマークです。筆者Kai McPhetersが2026年10月15日に公開したv0.2の結果では、各LL…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>starskirmish.com</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../fe79619e118c1dc1/">Claude Codeチームのコードレビュー、7層防御で急増するPRを捌く</a></h3>
+<p class="excerpt">Anthropic社内ブログの記事で、Addy Osmani、Morgan Westlee Lunt、Qing Wangの3名が、Claudeがコードの大部分を書く環境下で従来のライン単位コードレビューが機能しなくなった課題にどう対応し…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>claude.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

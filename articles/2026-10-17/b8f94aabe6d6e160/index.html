@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tencent Cloud、AIエージェント向け「チームの記憶」基盤を公開 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="TencentDB Agent MemoryはTencent Cloudが開発・公開しているOSS（MITライセンス）で、AIエージェントのための「チームレベルのメモリハブ」です。会話・ドキュメント・コードからChat Memory、Skill、Wiki、CodeGraphという4種類の再利用可能なメモリ資産を生成し、…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Tencent Cloud、AIエージェント向け「チームの記憶」基盤を公開 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="TencentDB Agent MemoryはTencent Cloudが開発・公開しているOSS（MITライセンス）で、AIエージェントのための「チームレベルのメモリハブ」です。会話・ドキュメント・コードからChat Memory、Skill、Wiki、CodeGraphという4種類の再利用可能なメモリ資産を生成し、…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/b8f94aabe6d6e160/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/b8f94aabe6d6e160/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Tencent Cloud、AIエージェント向け「チームの記憶」基盤を公開", "datePublished": "2026-10-17", "description": "TencentDB Agent MemoryはTencent Cloudが開発・公開しているOSS（MITライセンス）で、AIエージェントのための「チームレベルのメモリハブ」です。会話・ドキュメント・コードからChat Memory、Skill、Wiki、CodeGraphという4種類の再利用可能なメモリ資産を生成し、複数のAgentやフレームワーク間で統治…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/b8f94aabe6d6e160/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/TencentCloud/TencentDB-Agent-Memory", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-17/">2026.10.17 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>Tencent Cloud、AIエージェント向け「チームの記憶」基盤を公開</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-17">2026.10.17</time></div>
+</header>
+<div class="article-body">
+<p>TencentDB Agent MemoryはTencent Cloudが開発・公開しているOSS（MITライセンス）で、AIエージェントのための「チームレベルのメモリハブ」です。会話・ドキュメント・コードからChat Memory、Skill、Wiki、CodeGraphという4種類の再利用可能なメモリ資産を生成し、複数のAgentやフレームワーク間で統治・共有・活用できる仕組みを提供します。</p>
+<p>管理用のMemory Hubパネルでチーム・Agentの作成やアクセス権限（private/team/restricted/agentの4段階）、資産の所有者・バージョン・使用統計を管理できます。検索はBM25とベクトル検索、RRF（Reciprocal Rank Fusion）を組み合わせたハイブリッド方式です。Node.js 22.16以上とTypeScriptで実装され、DeepSeek Harness、Claude Code、Codexなど複数のエージェントフレームワークに対応する統一プロキシを備えています。PersonaMem指標ではメモリ機能導入なしの48%から導入時76%へと改善したとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>TencentDB Agent MemoryはTencent Cloudが開発している</li><li>ライセンスはMITである</li><li>4つのメモリ資産としてChat Memory、Skill、Wiki、CodeGraphを生成する</li><li>Memory Hub管理パネルでチーム・Agentの作成、ユーザー追加、共有範囲設定ができる</li><li>アクセス制御はprivate/team/restricted/agentの4段階である</li><li>検索方式はBM25とベクトル検索とRRF(Reciprocal Rank Fusion)を組み合わせている</li><li>ストレージはデフォルトでローカル、MongoDBにも実験的に対応する</li><li>APIはOpenAPI標準に準拠したREST APIである</li><li>Node.js 22.16以上とTypeScriptで実装されている</li><li>対応するエージェントフレームワークとしてDeepSeek Harness、Claude Code、Codex、CodeBuddy、WorkBuddy、Hermes、OpenClawが挙げられている</li><li>PersonaMem指標でメモリ機能導入なしの場合48%、導入時に76%となり改善率は+59%である</li><li>セットアップはgit clone後に.envでLLM設定を行い、start-all.shで3サービスを起動し、http://localhost:8125でパネルにアクセスする</li></ul></section>
+
+<aside class="source-box"><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Tencent%20Cloud%E3%80%81AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E5%90%91%E3%81%91%E3%80%8C%E3%83%81%E3%83%BC%E3%83%A0%E3%81%AE%E8%A8%98%E6%86%B6%E3%80%8D%E5%9F%BA%E7%9B%A4%E3%82%92%E5%85%AC%E9%96%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-17%2Fb8f94aabe6d6e160%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Tencent%20Cloud%E3%80%81AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E5%90%91%E3%81%91%E3%80%8C%E3%83%81%E3%83%BC%E3%83%A0%E3%81%AE%E8%A8%98%E6%86%B6%E3%80%8D%E5%9F%BA%E7%9B%A4%E3%82%92%E5%85%AC%E9%96%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-17/b8f94aabe6d6e160/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-17%2Fb8f94aabe6d6e160%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../4a2e192eeb7da311/"><span>前の記事</span>Go製の高速バンドラー「esbuild」</a><a class="next" href="../4007668b5b2c0d04/"><span>次の記事</span>Anthropic公式、Claude API活用のサンプル集「claude-quickstarts」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-17/">← 2026.10.17 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../4a2e192eeb7da311/">Go製の高速バンドラー「esbuild」</a></h3>
+<p class="excerpt">esbuildはEvan Wallace氏が開発したJavaScript・TypeScript・JSX・CSS向けの高速バンドラー・ビルドツールで、既存のビルドツールが「10〜100倍遅い」という課題の解決を目標としています。JavaS…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../4007668b5b2c0d04/">Anthropic公式、Claude API活用のサンプル集「claude-quickstarts」</a></h3>
+<p class="excerpt">Anthropic公式のGitHubリポジトリ「claude-quickstarts」は、Claude APIを使ったアプリケーション構築をすぐに始められるデベロッパー向けサンプルプロジェクト集です。MITライセンスで公開され、スター1…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-10-16/9b4aead65fdee792/">Google発、AIエージェント向けプライベートネットワーク「Agent Mesh」</a></h3>
+<p class="excerpt">Googleが、AIエージェント同士をつなぐプライベートネットワークを構築するOSSプロジェクト「Agent Mesh」をGitHubで公開しています。各ノードはエージェントの隣で動作し、ツールやモデルの公開、他ノードが公開したサービス…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-16">2026.10.16</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

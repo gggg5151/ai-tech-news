@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がありますが、1回のLLM呼び出しには2〜30秒かかります。既存のPHPキューワーカー方式はタスクを1つずつ処理し待機中もプロセスを占有するため、同時実行数は1（応急処置後5）に限られていました。筆者の試算では、10人が同時アクセ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がありますが、1回のLLM呼び出しには2〜30秒かかります。既存のPHPキューワーカー方式はタスクを1つずつ処理し待機中もプロセスを占有するため、同時実行数は1（応急処置後5）に限られていました。筆者の試算では、10人が同時アクセ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/fedb6900c64d2a0b/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/fedb6900c64d2a0b/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話", "datePublished": "2026-10-17", "description": "筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がありますが、1回のLLM呼び出しには2〜30秒かかります。既存のPHPキューワーカー方式はタスクを1つずつ処理し待機中もプロセスを占有するため、同時実行数は1（応急処置後5）に限られていました。筆者の試算では、10人が同時アクセスした場合10人目は約4分待たされる計算…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-17/fedb6900c64d2a0b/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/doublecheck/articles/e026f86282e181", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-17/">2026.10.17 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</header>
+<div class="article-body">
+<p>筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がありますが、1回のLLM呼び出しには2〜30秒かかります。既存のPHPキューワーカー方式はタスクを1つずつ処理し待機中もプロセスを占有するため、同時実行数は1（応急処置後5）に限られていました。筆者の試算では、10人が同時アクセスした場合10人目は約4分待たされる計算になったそうです。</p>
+<p>そこでLaravel側はプロンプト構築・クォータ管理・バリデーション・結果保存を担当し、実際のLLM呼び出し・ストリーミング処理・リトライは新規開発した<strong>7MBの軽量Goゲートウェイ</strong>に担わせる役割分離アーキテクチャに移行しました。通信はLaravel→SQS（AWSのメッセージキューサービス）→Goでタスクを配信し、Go→HTTPS（HMAC-SHA256：共有鍵でリクエストの改ざんを検知する署名方式）→Laravelで結果を返却・確定（settle）する構成です。</p>
+<p>実装上の工夫として、クォータの二重消費を防ぐため「リクエスト受付時に予約しておき、settle処理は行ロックのもとで予約がまだ有効な間だけ動作するようにする」設計を採用しました。レビューではリプレイ攻撃やハートビートリーク、ストリーム強制終了、再配信時のコスト無限ループといった脆弱性が見つかり、タスクIDをパスに含めるなどの修正を行ったとのことです。</p>
+<p>結果、同時実行数は50に拡大し、メモリ使用量は変更前の約330MB（5ワーカー）からアイドル時約7MBに削減されました。10件同時にメールを作成した場合の最後の処理時間は約250秒から約25秒に短縮されています。開発中にはRedisのallkeys-lru設定やDockerの<code>--env-file</code>のクォート非除去、ストリーム中のエラーがHTTPステータス200で返る問題などにも遭遇したそうです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がある</li><li>1回のLLM呼び出しには2〜30秒かかる</li><li>筆者の計算では10人が同時アクセスした場合10人目は約4分待たされる</li><li>既存のPHPキューワーカー方式はタスクを1つずつ処理し、待機中もプロセスを占有する</li><li>新アーキテクチャでは、Laravelがプロンプト構築・クォータ管理・バリデーション・結果保存を担当する</li><li>新アーキテクチャでは、Goゲートウェイ（7MB）がLLM呼び出し・ストリーミング処理・リトライを担当する</li><li>通信はLaravel→SQS→Goでタスクが配信され、Go→HTTPS（署名付き）→Laravelで結果が返却・確定（settle）される</li><li>セキュリティ対策としてHMAC-SHA256署名（タイムスタンプ+メソッド+パス+ボディ）を導入し、レビューで発見された脆弱性を修正するためパス内にタスクIDを含めるようにした</li><li>変更後の同時実行数は50である（変更前は1、応急処置後は5）</li><li>メモリ使用量は変更前の約330MB（5ワーカー）から、変更後はアイドル時約7MBになった</li><li>10件同時メール作成時の10件目の処理時間は、変更前の約250秒から変更後は約25秒になった</li><li>開発中にRedisのallkeys-lru設定、Dockerの--env-fileのクォート非除去、ストリーム中エラーがHTTPステータス200で返る件、コネクションプール上限不足、golangci-lintのGoバージョン対応遅延などの問題に遭遇した</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>クォータをリクエスト受付時に予約しておき、settle処理は行ロックのもとで予約がまだ有効な間だけ動作するようにすること</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/doublecheck/articles/e026f86282e181" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/doublecheck/articles/e026f86282e181" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=AI%E3%81%AE%E5%90%8C%E6%99%82%E5%AE%9F%E8%A1%8C%E6%95%B0%E3%82%921%E3%81%8B%E3%82%8950%E3%81%B8%E3%80%81LLM%E5%87%A6%E7%90%86%E3%82%927MB%E3%81%AEGo%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E3%81%AB%E7%A7%BB%E3%81%97%E3%81%9F%E8%A9%B1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-17%2Ffedb6900c64d2a0b%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=AI%E3%81%AE%E5%90%8C%E6%99%82%E5%AE%9F%E8%A1%8C%E6%95%B0%E3%82%921%E3%81%8B%E3%82%8950%E3%81%B8%E3%80%81LLM%E5%87%A6%E7%90%86%E3%82%927MB%E3%81%AEGo%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E3%81%AB%E7%A7%BB%E3%81%97%E3%81%9F%E8%A9%B1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-17/fedb6900c64d2a0b/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-17%2Ffedb6900c64d2a0b%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../7e81fea2e7b3ce9d/"><span>前の記事</span>Claude CodeのAPIキーを1Password CLIで平文のまま持たない運用法</a><a class="next" href="../94e20bddb8cfa742/"><span>次の記事</span>chiの脆弱性修正をきっかけに個人開発の棚卸しで見つかった5つの穴</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-17/">← 2026.10.17 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../74d139e70682eb6b/">AIが書いたTypeScriptの「雑さ」をOxlintで機械的に弾く</a></h3>
+<p class="excerpt">ai-deslopは、AIが生成しがちな「根拠の薄い」コードパターン（二重の型アサーションや広すぎる引数の型など）を検出する、Oxlint（Rust製のリンター）向けのJSプラグインです。2026年10月14日にShow HNで公開され…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../7e81fea2e7b3ce9d/">Claude CodeのAPIキーを1Password CLIで平文のまま持たない運用法</a></h3>
+<p class="excerpt">NOT A HOTELのソフトウェアチームに所属するkajinari氏が、Claude Code利用時にディスクへ平文で保存されがちなAI APIキーの漏洩リスクを排除するため、1Password CLIと連携させる実装方法を解説してい…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../94e20bddb8cfa742/">chiの脆弱性修正をきっかけに個人開発の棚卸しで見つかった5つの穴</a></h3>
+<p class="excerpt">筆者はGoとCloud Runを用いた個人開発サービス群を運用しています。chiフレームワークのv5.4.0（10月12日リリース、ClientIPFromXFFの偽装に関する脆弱性修正）とv5.5.0（10月14日リリース、Suppr…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
