@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLMエージェントの長期記憶、削除後も情報が漏れ続ける — 1年目向けエンジニア新聞</title>
+<meta name="description" content="arXivに掲載された論文「MemCut」は、LLMエージェントの長期記憶システムが「情報を正確に検索する能力」だけでなく「ユーザーの要求に応じて機密データを確実に削除(忘却)する能力」も備えるべきだと主張し、この忘却性能を測るベンチマーク「MemCut」を提案しています。456個の手設計された秘密データを長期対話に含…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="LLMエージェントの長期記憶、削除後も情報が漏れ続ける — 1年目向けエンジニア新聞">
+<meta property="og:description" content="arXivに掲載された論文「MemCut」は、LLMエージェントの長期記憶システムが「情報を正確に検索する能力」だけでなく「ユーザーの要求に応じて機密データを確実に削除(忘却)する能力」も備えるべきだと主張し、この忘却性能を測るベンチマーク「MemCut」を提案しています。456個の手設計された秘密データを長期対話に含…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-18/50079603785d68c6/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-18/50079603785d68c6/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "LLMエージェントの長期記憶、削除後も情報が漏れ続ける", "datePublished": "2026-10-18", "description": "arXivに掲載された論文「MemCut」は、LLMエージェントの長期記憶システムが「情報を正確に検索する能力」だけでなく「ユーザーの要求に応じて機密データを確実に削除(忘却)する能力」も備えるべきだと主張し、この忘却性能を測るベンチマーク「MemCut」を提案しています。456個の手設計された秘密データを長期対話に含め、削除後の復元可否を検証する注釈付き証…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-18/50079603785d68c6/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.21405", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-18/">2026.10.18 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>LLMエージェントの長期記憶、削除後も情報が漏れ続ける</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-18">2026.10.18</time></div>
+</header>
+<div class="article-body">
+<p>arXivに掲載された論文「MemCut」は、LLMエージェントの長期記憶システムが「情報を正確に検索する能力」だけでなく「ユーザーの要求に応じて機密データを確実に削除(忘却)する能力」も備えるべきだと主張し、この忘却性能を測るベンチマーク「MemCut」を提案しています。456個の手設計された秘密データを長期対話に含め、削除後の復元可否を検証する注釈付き証跡を用意しています。</p>
+<p>評価の結果、明示的な削除操作は表面的な復元(ネイティブ復元)を大幅に減らせる一方、別経路から情報が漏れ出す「残存復元」への効果は限定的で、削除指示の実行後でも39〜76%の割合で情報が復元されてしまうことが分かりました。原因として、削除すべき候補を網羅的に見つけられていない「候補カバレッジ」の低さが既存手法のボトルネックだと指摘されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「MemCut: Every Secret Leaves a Trail in the Long-Term Memory of LLM Agents」である</li><li>著者はCheng Zhang、Xuanning Cao、Zhicheng Zheng、Hui Xiongの4名である</li><li>論文の発表日は2026年10月15日である</li><li>論文はLLMエージェントの長期記憶システムにおける機密データの「忘却」能力を評価するベンチマーク「MemCut」を提案している</li><li>MemCutには456個の手設計された秘密データが長期対話の中に含まれている</li><li>MemCutには削除後に情報が復元されるかを確認する「削除後の復元テスト」の注釈付き証跡が含まれている</li><li>MemCutは復元の度合いを測る2つの指標として「ネイティブ復元（native recall）」と「残存復元（residual recall）」を用いている</li><li>評価の結果、明示的な削除操作はネイティブ復元を大幅に削減することが分かった</li><li>評価の結果、明示的な削除操作は残存復元への効果が限定的であることが分かった</li><li>LLMによる削除指示の実行後でも、39%から76%の割合で残存復元が発生することが分かった</li><li>既存の削除手法のボトルネックとして、削除すべき情報の「候補カバレッジ」の低さが特定された</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.21405" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=LLM%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E9%95%B7%E6%9C%9F%E8%A8%98%E6%86%B6%E3%80%81%E5%89%8A%E9%99%A4%E5%BE%8C%E3%82%82%E6%83%85%E5%A0%B1%E3%81%8C%E6%BC%8F%E3%82%8C%E7%B6%9A%E3%81%91%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-18%2F50079603785d68c6%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=LLM%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E9%95%B7%E6%9C%9F%E8%A8%98%E6%86%B6%E3%80%81%E5%89%8A%E9%99%A4%E5%BE%8C%E3%82%82%E6%83%85%E5%A0%B1%E3%81%8C%E6%BC%8F%E3%82%8C%E7%B6%9A%E3%81%91%E3%82%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-18/50079603785d68c6/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-18%2F50079603785d68c6%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../5b854cde84ce0150/"><span>前の記事</span>分散トレーシングの定番Jaeger、v2登場</a><a class="next" href="../57fac3eb1b95c3ac/"><span>次の記事</span>考えている間に世界は変わる、エージェント評価の新基準</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-18/">← 2026.10.18 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../57fac3eb1b95c3ac/">考えている間に世界は変わる、エージェント評価の新基準</a></h3>
+<p class="excerpt">論文「The World Won&#x27;t Wait」は、LLMエージェントの推論・ツール呼び出しには時間がかかるため、考えている間にも環境が変化し続ける「ライブクロック」下では、判断時点で正しかった行動が実行時には有効性を失うという問題を扱…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-18">2026.10.18</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-17/0162f27845a19b55/">疎オートエンコーダの特徴は「足し算」では効かない</a></h3>
+<p class="excerpt">著者はHaotian Ma、Ziye Mei、Frederic Sala。疎オートエンコーダ（SAE：モデル内部の表現を人が解釈しやすい特徴に分解する手法）が学習する特徴表現が、下流の計算（モデルの振る舞い）に対してどの程度「加法的」に…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-17/a56e34e6eedaabbf/">弱いモデルと強いモデルを使い分けるPC操作エージェントの監視手法「LEASH」</a></h3>
+<p class="excerpt">Computer-use agent（PC操作エージェント）による長期タスクでは、毎ステップでフロンティア級の強いモデルを使うとコストが高く、逆に小型のオープンウェイトモデル単体では失敗しがちという課題があります。本論文は、弱いモデルを…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

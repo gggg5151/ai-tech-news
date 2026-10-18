@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>考えている間に世界は変わる、エージェント評価の新基準 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="論文「The World Won&#x27;t Wait」は、LLMエージェントの推論・ツール呼び出しには時間がかかるため、考えている間にも環境が変化し続ける「ライブクロック」下では、判断時点で正しかった行動が実行時には有効性を失うという問題を扱っています。著者らは6種類のゲーム・180タスクからなる評価ベンチマーク「Realt…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="考えている間に世界は変わる、エージェント評価の新基準 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="論文「The World Won&#x27;t Wait」は、LLMエージェントの推論・ツール呼び出しには時間がかかるため、考えている間にも環境が変化し続ける「ライブクロック」下では、判断時点で正しかった行動が実行時には有効性を失うという問題を扱っています。著者らは6種類のゲーム・180タスクからなる評価ベンチマーク「Realt…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-18/57fac3eb1b95c3ac/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-18/57fac3eb1b95c3ac/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "考えている間に世界は変わる、エージェント評価の新基準", "datePublished": "2026-10-18", "description": "論文「The World Won't Wait」は、LLMエージェントの推論・ツール呼び出しには時間がかかるため、考えている間にも環境が変化し続ける「ライブクロック」下では、判断時点で正しかった行動が実行時には有効性を失うという問題を扱っています。著者らは6種類のゲーム・180タスクからなる評価ベンチマーク「RealtimeBench」を導入し、高精度だが低…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-18/57fac3eb1b95c3ac/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.20665", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-18/">2026.10.18 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>考えている間に世界は変わる、エージェント評価の新基準</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-18">2026.10.18</time></div>
+</header>
+<div class="article-body">
+<p>論文「The World Won&#x27;t Wait」は、LLMエージェントの推論・ツール呼び出しには時間がかかるため、考えている間にも環境が変化し続ける「ライブクロック」下では、判断時点で正しかった行動が実行時には有効性を失うという問題を扱っています。著者らは6種類のゲーム・180タスクからなる評価ベンチマーク「RealtimeBench」を導入し、高精度だが低速なモデル「GPT-6.1-sol」が、精度は劣るが高速なモデル「Jev」にリアルタイム環境では負けることを示しました。</p>
+<p>さらに著者らは、遅い教師モデルが失敗を分析・検証し、速い生徒モデル向けに再利用可能な指示を生成する「<strong>TORSI</strong>」という二層構造の自己改善手法を提案しています。TORSIの適用によりJevの平均テストスコアは13.51から24.19に向上し、6種類すべてのゲームタイプで改善が確認され、生成された指示は他の3モデルにも転移可能だったとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『The World Won&#x27;t Wait: Evaluating and Teaching Agents Under a Live Clock』である</li><li>著者はNingxin Pan、Hanyu Li、Yeqing Shen、Ning Ding、Yehui Tang、Wentao Zhangである</li><li>著者らは6種類のゲームで構成された180タスクからなる評価ベンチマーク『RealtimeBench』を導入した</li><li>RealtimeBenchは、エージェントの推論中にも環境が継続的に変化する状況での性能を評価する</li><li>静止（一時停止）時の評価では高精度モデル『GPT-6.1-sol』が優位である</li><li>リアルタイム環境での評価では、GPT-6.1-solは高速なモデル『Jev』に後れを取るという結果が示された</li><li>著者らは『TORSI（Two-Timescale Offline Recursive Self-Improvement)』という手法を提案した</li><li>TORSIでは、遅い教師モデルが失敗を分析し、修正を検証した後、速い生徒モデル向けに再利用可能な指示を生成する</li><li>TORSIの適用によりJevの平均テストスコアは13.51から24.19に向上した</li><li>TORSIによる性能向上は6種類のゲームタイプすべてで確認された</li><li>TORSIで生成された指示は他の3つのモデルにも転移可能であった</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.20665" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E8%80%83%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E9%96%93%E3%81%AB%E4%B8%96%E7%95%8C%E3%81%AF%E5%A4%89%E3%82%8F%E3%82%8B%E3%80%81%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E8%A9%95%E4%BE%A1%E3%81%AE%E6%96%B0%E5%9F%BA%E6%BA%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-18%2F57fac3eb1b95c3ac%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E8%80%83%E3%81%88%E3%81%A6%E3%81%84%E3%82%8B%E9%96%93%E3%81%AB%E4%B8%96%E7%95%8C%E3%81%AF%E5%A4%89%E3%82%8F%E3%82%8B%E3%80%81%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E8%A9%95%E4%BE%A1%E3%81%AE%E6%96%B0%E5%9F%BA%E6%BA%96%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-18/57fac3eb1b95c3ac/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-18%2F57fac3eb1b95c3ac%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../50079603785d68c6/"><span>前の記事</span>LLMエージェントの長期記憶、削除後も情報が漏れ続ける</a><span></span></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-18/">← 2026.10.18 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../50079603785d68c6/">LLMエージェントの長期記憶、削除後も情報が漏れ続ける</a></h3>
+<p class="excerpt">arXivに掲載された論文「MemCut」は、LLMエージェントの長期記憶システムが「情報を正確に検索する能力」だけでなく「ユーザーの要求に応じて機密データを確実に削除(忘却)する能力」も備えるべきだと主張し、この忘却性能を測るベンチマ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-18">2026.10.18</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-17/0162f27845a19b55/">疎オートエンコーダの特徴は「足し算」では効かない</a></h3>
+<p class="excerpt">著者はHaotian Ma、Ziye Mei、Frederic Sala。疎オートエンコーダ（SAE：モデル内部の表現を人が解釈しやすい特徴に分解する手法）が学習する特徴表現が、下流の計算（モデルの振る舞い）に対してどの程度「加法的」に…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-17/a56e34e6eedaabbf/">弱いモデルと強いモデルを使い分けるPC操作エージェントの監視手法「LEASH」</a></h3>
+<p class="excerpt">Computer-use agent（PC操作エージェント）による長期タスクでは、毎ステップでフロンティア級の強いモデルを使うとコストが高く、逆に小型のオープンウェイトモデル単体では失敗しがちという課題があります。本論文は、弱いモデルを…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
