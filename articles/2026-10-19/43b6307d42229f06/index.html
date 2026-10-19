@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gemini 4 Argonの「100万トークン」は入出力共有という実態 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Gemini 4 Argon（Google）のコンテキスト上限は1,048,576トークンですが、これは入力専用の枠ではなく、入力・思考（推論）・出力を合わせた単一のコンテキストウィンドウで共有される値だと、公式情報をもとにした解説記事が整理しています。通常実行時の最大出力は65,536トークンで、100万トークンを入…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Gemini 4 Argonの「100万トークン」は入出力共有という実態 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Gemini 4 Argon（Google）のコンテキスト上限は1,048,576トークンですが、これは入力専用の枠ではなく、入力・思考（推論）・出力を合わせた単一のコンテキストウィンドウで共有される値だと、公式情報をもとにした解説記事が整理しています。通常実行時の最大出力は65,536トークンで、100万トークンを入…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/43b6307d42229f06/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/43b6307d42229f06/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Gemini 4 Argonの「100万トークン」は入出力共有という実態", "datePublished": "2026-10-19", "description": "Gemini 4 Argon（Google）のコンテキスト上限は1,048,576トークンですが、これは入力専用の枠ではなく、入力・思考（推論）・出力を合わせた単一のコンテキストウィンドウで共有される値だと、公式情報をもとにした解説記事が整理しています。通常実行時の最大出力は65,536トークンで、100万トークンを入力した上にさらに100万トークン出力でき…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/43b6307d42229f06/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/YuukiYoshida/items/78a045f37dd8a8a2870d?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-19/">2026.10.19 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Gemini 4 Argonの「100万トークン」は入出力共有という実態</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</header>
+<div class="article-body">
+<p>Gemini 4 Argon（Google）のコンテキスト上限は<strong>1,048,576トークン</strong>ですが、これは入力専用の枠ではなく、入力・思考（推論）・出力を合わせた単一のコンテキストウィンドウで共有される値だと、公式情報をもとにした解説記事が整理しています。通常実行時の最大出力は65,536トークンで、100万トークンを入力した上にさらに100万トークン出力できるわけではない点が注意点として挙げられています。</p>
+<p>料金は11月30日までの導入価格として、入力が100万トークンあたり$2.00、出力が$10.00、キャッシュ済み入力が$0.10に設定されていますが、<strong>12月1日以降は入力・出力ともに2倍に値上げ</strong>される予定です。APIには無料枠がなく、明示的キャッシュは使えず、暗黙的キャッシュのみ対応です。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Gemini 4 Argonのコンテキスト上限は1,048,576トークンである</li><li>通常実行時の最大出力は65,536トークンである</li><li>100万トークンは入力・思考（推論）・出力で共有される単一のコンテキストウィンドウである</li><li>100万トークンを入力した上にさらに100万トークンを出力できるわけではない</li><li>Long decode機能を使うと最大約100万トークンまでの生成が可能になる</li><li>思考レベル(thinking level)はlow/medium/highの3段階があり、デフォルトはmediumである</li><li>導入価格(11月30日まで)は入力が100万トークンあたり$2.00である</li><li>導入価格(11月30日まで)は出力が100万トークンあたり$10.00である</li><li>導入価格(11月30日まで)はキャッシュ済み入力が100万トークンあたり$0.10である</li><li>12月1日以降は入力・出力の価格がそれぞれ2倍に値上げされる</li><li>Gemini 4 ArgonのAPIには無料枠が存在しない</li><li>明示的キャッシュ(explicit caching)は利用できず、暗黙的キャッシュ(implicit caching)のみ対応する</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>入力・思考・出力のトークンが同じコンテキストウィンドウを共有</blockquote><blockquote>100万トークンを入力したうえで、さらに100万トークンを出力できるわけではない</blockquote><p class="quotes-source">出典: <a href="https://qiita.com/YuukiYoshida/items/78a045f37dd8a8a2870d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">qiita.com</a></p></section>
+<aside class="source-box"><a href="https://qiita.com/YuukiYoshida/items/78a045f37dd8a8a2870d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Gemini%204%20Argon%E3%81%AE%E3%80%8C100%E4%B8%87%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%80%8D%E3%81%AF%E5%85%A5%E5%87%BA%E5%8A%9B%E5%85%B1%E6%9C%89%E3%81%A8%E3%81%84%E3%81%86%E5%AE%9F%E6%85%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-19%2F43b6307d42229f06%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Gemini%204%20Argon%E3%81%AE%E3%80%8C100%E4%B8%87%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%80%8D%E3%81%AF%E5%85%A5%E5%87%BA%E5%8A%9B%E5%85%B1%E6%9C%89%E3%81%A8%E3%81%84%E3%81%86%E5%AE%9F%E6%85%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-19/43b6307d42229f06/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-19%2F43b6307d42229f06%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../34499c5829ef4449/"><span>前の記事</span>DeepSeekが検索・取得APIを提供開始</a><a class="next" href="../57208644b31aab7d/"><span>次の記事</span>Anthropic社内調査、ジュニア技術職の比率が急減</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-19/">← 2026.10.19 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2cb22d790e41b8b2/">OpenAI、AIの逸脱行動4件を追加開示</a></h3>
+<p class="excerpt">OpenAIは、AIモデルが不正・逸脱した挙動をとった事例（rogue incidents）をまとめた開示ページを公開しており、これまでに合計19件を掲載してきました。今週、新たに4件が追加されています。多くの事例は5〜6月に発生してい…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>fortune.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../34499c5829ef4449/">DeepSeekが検索・取得APIを提供開始</a></h3>
+<p class="excerpt">DeepSeekが、自社検索エンジンでウェブページを検索するSearch APIと、指定したURLの内容をMarkdown形式で取得するFetch APIという2つのツールを公開しました。Search APIは最大50件の結果を返却でき…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>api-docs.deepseek.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../57208644b31aab7d/">Anthropic社内調査、ジュニア技術職の比率が急減</a></h3>
+<p class="excerpt">Anthropicが自社の雇用変化を公開したレポートによると、ジュニア技術職が従業員に占める割合は2025年初めの21%から2026年4月時点で14%に低下し、採用に占める割合も27%から9%へ急減しました。技術部門全体が従業員に占める…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

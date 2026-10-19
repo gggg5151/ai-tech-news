@@ -90,7 +90,7 @@ func (wg *ThreadSafeWaitGroup) Wait() {
 	&lt;-wg.channel
 }</code></pre><p>`&lt;- チャネル変数`という書き方（送信と逆方向）はチャネルからの受信を意味し、何か値が送られてくるまでその場でブロック（待機）します。Addの中でカウンタが0になった瞬間に送信される信号を、ここで受け取ることで「全部終わるまで待つ」という動作を実現しています。複数のgoroutineが同時にAddとWaitを呼んでも、atomic.AddInt32がカウンタの操作を安全にし、チャネルが安全な待ち合わせの仕組みを提供するため、全体としてスレッドセーフになっています。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>標準ライブラリの型に「ここだけ安全でない」という制約があるとわかったら、全部を自作し直す必要はなく、atomic（安全な数値操作）とバッファ付きchannel（容量1の信号送受信）という2つの小さな部品を組み合わせるだけで、必要な部分だけpiece的に安全な代替を作れる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-15/"><span>前の日</span>gtsteffaniak/filebrowser</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-15/"><span>前の日</span>gtsteffaniak/filebrowser</a><a class="next" href="../2026-10-19/"><span>次の日</span>github/github-mcp-server</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-17/">← 2026.10.17 の号を読む</a>
 </div>
 </article>

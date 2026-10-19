@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ノーコードWebエディタ「Tsumu」をOSS公開 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="筆者（エイビー）が、IllustratorやFigmaのような操作感でWebサイトを編集できるビジュアルエディタ「Tsumu」を開発し、MITライセンスのOSS（オープンソースソフトウェア）として公開しました。レスポンシブデザインやホバー状態の編集に対応し、キャンバス上で組み立てたページはNext.jsプロジェクトとし…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="ノーコードWebエディタ「Tsumu」をOSS公開 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="筆者（エイビー）が、IllustratorやFigmaのような操作感でWebサイトを編集できるビジュアルエディタ「Tsumu」を開発し、MITライセンスのOSS（オープンソースソフトウェア）として公開しました。レスポンシブデザインやホバー状態の編集に対応し、キャンバス上で組み立てたページはNext.jsプロジェクトとし…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/7da5976958692c7d/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/7da5976958692c7d/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "ノーコードWebエディタ「Tsumu」をOSS公開", "datePublished": "2026-10-19", "description": "筆者（エイビー）が、IllustratorやFigmaのような操作感でWebサイトを編集できるビジュアルエディタ「Tsumu」を開発し、MITライセンスのOSS（オープンソースソフトウェア）として公開しました。レスポンシブデザインやホバー状態の編集に対応し、キャンバス上で組み立てたページはNext.jsプロジェクトとしてGitHubに公開される仕組みです。S…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/7da5976958692c7d/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/abshrimp/articles/a4aff4e666738d", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class="active" aria-current="page" href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-19/">2026.10.19 の号</a><span>/</span><a href="../../../categories/github/">リポジトリ</a></div>
+<article class="article-layout cat-github">
+<header class="article-header">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h1>ノーコードWebエディタ「Tsumu」をOSS公開</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-19">2026.10.19</time></div>
+</header>
+<div class="article-body">
+<p>筆者（エイビー）が、IllustratorやFigmaのような操作感でWebサイトを編集できるビジュアルエディタ「<strong>Tsumu</strong>」を開発し、MITライセンスのOSS（オープンソースソフトウェア）として公開しました。レスポンシブデザインやホバー状態の編集に対応し、キャンバス上で組み立てたページはNext.jsプロジェクトとしてGitHubに公開される仕組みです。Scratchのようなブロック配置でコード記述なしに条件分岐などのスクリプティングも行えます。</p>
+<p>Claude・Gemini・OpenAIに対応したAI支援により、テキスト指示でのページ編集も可能です。同時編集やリアルタイムコメント、外部API連携、公開前チェックといった機能も備え、内部的には全サイト情報を単一のJSON構造「SiteDoc」に統一し、エディタ・AI・コードジェネレータがこれを中心に動作する設計になっています。同時編集時の競合は「項目単位の三方向マージ」で解決するとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者（エイビー）は「Tsumu」というビジュアルエディタを開発した</li><li>Tsumuは MIT ライセンスの OSS として公開されている</li><li>Tsumuは Adobe Illustrator や Figma のような操作感でサイトを編集できる</li><li>Tsumuはレスポンシブデザインやホバー状態の編集に対応している</li><li>キャンバス上で組み立てたページは Next.js プロジェクトとして GitHub に公開される</li><li>Tsumuは Scratch のようなブロック配置で条件分岐などのスクリプティングができ、コード記述は不要</li><li>Tsumuはテキスト指示によるAI支援でのページ編集が可能で、Claude・Gemini・OpenAIに対応している</li><li>Tsumuには同時編集、リアルタイムコメント、外部APIデータ連携、公開前チェック機能がある</li><li>Tsumuはサイト情報を「SiteDoc」という単一のJSONデータ構造に統一して管理している</li><li>SiteDocを中心にエディタ・AI・コードジェネレータが動作する</li><li>Tsumuの同時編集は「項目単位の三方向マージ」で競合を解決する</li><li>TsumuのGitHubリポジトリは https://github.com/abshrimp/tsumu、デモは https://tsumu.ebii.net でログイン不要で利用できる</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/abshrimp/articles/a4aff4e666738d" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%83%8E%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89Web%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%80%8CTsumu%E3%80%8D%E3%82%92OSS%E5%85%AC%E9%96%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-19%2F7da5976958692c7d%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%83%8E%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89Web%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%80%8CTsumu%E3%80%8D%E3%82%92OSS%E5%85%AC%E9%96%8B%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-19/7da5976958692c7d/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-19%2F7da5976958692c7d%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../3c7f245d891fd959/"><span>前の記事</span>同じミスを繰り返すClaude Codeには/clearが効く</a><a class="next" href="../70875a30b7741ddf/"><span>次の記事</span>テキスト回答を操作可能なUIに変える「OpenIntelligentUI」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-19/">← 2026.10.19 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../70875a30b7741ddf/">テキスト回答を操作可能なUIに変える「OpenIntelligentUI」</a></h3>
+<p class="excerpt">CopilotKitとAG-UIをベースに構築されたオープンソースの生成UIフレームワーク「OpenIntelligentUI」が公開されました。単なるテキスト回答を、メカニズムの探索や変数変更を含む「理解」、基準や仮定を比較する「比較…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../d96426a9ecb7c23b/">GitHub公式のMCPサーバー、30以上のツールセットを提供</a></h3>
+<p class="excerpt">GitHubがMCP（Model Context Protocol、AIとツールを接続するための標準規格）に対応した公式サーバー「github-mcp-server」をGo言語で実装し公開しています。リポジトリ管理、Issue・PR自動…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article>
+<article class="news-card cat-github">
+<a class="category-name" href="../../../categories/github/"><span class="category-dot"></span>リポジトリ</a>
+<h3><a href="../../2026-10-18/b60cd354bfae809d/">Google Research、エージェントの実行環境を再帰的に最適化するharness2</a></h3>
+<p class="excerpt">Google Researchが公開したリポジトリ「harness2」は、モデルの重み自体は固定したまま、プロンプト・ツール・メモリなどエージェントの実行環境(ハーネス)側を最適化する「再帰的エージェント・ハーネッシング」フレームワーク…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-18">2026.10.18</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

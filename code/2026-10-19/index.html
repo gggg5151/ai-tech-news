@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>github/github-mcp-server の internal/requeststate/sealer.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="github-mcp-serverはGitHub公式のMCP(Model Context Protocol)サーバー実装です。AIエージェントがGitHubのIssueやPRを操作するためのツール群を提供しています。このファイルは、MCPサーバーがリクエストの状態（例えばページネーションの続き情報など）をクライアントに…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="github/github-mcp-server の internal/requeststate/sealer.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="github-mcp-serverはGitHub公式のMCP(Model Context Protocol)サーバー実装です。AIエージェントがGitHubのIssueやPRを操作するためのツール群を提供しています。このファイルは、MCPサーバーがリクエストの状態（例えばページネーションの続き情報など）をクライアントに…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-19/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-19/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.19</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>github/github-mcp-server の <code>internal/requeststate/sealer.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/github/github-mcp-server/blob/HEAD/internal/requeststate/sealer.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-19">2026.10.19</time></div>
+</header>
+<div class="article-body">
+<p>github-mcp-serverはGitHub公式のMCP(Model Context Protocol)サーバー実装です。AIエージェントがGitHubのIssueやPRを操作するためのツール群を提供しています。このファイルは、MCPサーバーがリクエストの状態（例えばページネーションの続き情報など）をクライアントに渡すとき、中身を暗号化してURLセーフな文字列にする「Sealer」という仕組みです。標準ライブラリの`crypto`パッケージだけで暗号化・復号を実装している、Goらしいコンパクトなコードなので教材に選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// Seal encrypts and authenticates plaintext into a URL-safe opaque token.
+func (s *Sealer) Seal(_ context.Context, plaintext []byte) (string, error) {
+	nonce := make([]byte, s.aead.NonceSize())
+	if _, err := rand.Read(nonce); err != nil {
+		return &quot;&quot;, fmt.Errorf(&quot;generating nonce: %w&quot;, err)
+	}
+	sealed := s.aead.Seal(nonce, nonce, plaintext, nil)
+	return base64.RawURLEncoding.EncodeToString(sealed), nil
+}
+
+// Open verifies and decrypts a token produced by Seal.
+func (s *Sealer) Open(token string) ([]byte, error) {
+	if token == &quot;&quot; {
+		return nil, errors.New(&quot;empty token&quot;)
+	}
+	sealed, err := base64.RawURLEncoding.DecodeString(token)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;decoding token: %w&quot;, err)
+	}
+	nonceSize := s.aead.NonceSize()
+	if len(sealed) &lt; nonceSize {
+		return nil, errors.New(&quot;token is too short&quot;)
+	}
+	plaintext, err := s.aead.Open(nil, sealed[:nonceSize], sealed[nonceSize:], nil)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;opening token: %w&quot;, err)
+	}
+	return plaintext, nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func (s *Sealer) Seal(_ context.Context, plaintext []byte) (string, error) {</code></pre><p>`func (s *Sealer) Seal(...)` は「メソッド」の定義です。`(s *Sealer)` の部分は「レシーバ」と呼ばれ、`Sealer`型の値に対してこのメソッドを呼べるようにしています。`*Sealer`の`*`は「ポインタ」を意味し、`s`はSealer構造体のコピーではなく元の実体そのものを指します（構造体の中身を書き換えたいとき・コピーのコストを避けたいときにポインタレシーバを使います）。引数の`_ context.Context`は、型は`context.Context`だが変数名を`_`にすることで「この引数は受け取るが中では使わない」と明示しています。戻り値は`(string, error)`の2つで、Goでは関数が複数の値を返せます。1つ目が本来の結果、2つ目がエラー（なければ`nil`）という組み合わせはGoの定番パターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>nonce := make([]byte, s.aead.NonceSize())</code></pre><p>`make([]byte, N)` は、長さNの`[]byte`（バイトのスライス、つまり可変長配列のようなもの）を生成し、全要素を0で初期化します。`s.aead.NonceSize()`は、暗号方式が要求する「ノンス（nonce: 一度しか使わない値）」の長さをバイト数で返すメソッド呼び出しです。ここではまだ空のバイト列を用意しただけです。</p></div><div class="walk-step"><pre class="walk-quote"><code>if _, err := rand.Read(nonce); err != nil {
+		return &quot;&quot;, fmt.Errorf(&quot;generating nonce: %w&quot;, err)
+	}</code></pre><p>`rand.Read(nonce)`は暗号的に安全な乱数で`nonce`のスライスを埋め、埋めたバイト数とエラーの2つを返します。`_, err :=`は1つ目の戻り値（バイト数）を使わない宣言で、`:=`は新しい変数`err`を宣言しつつ代入する記法です。`if ...; err != nil {`は「ifの条件の前に一度だけ実行する文を書く」Go特有の書き方で、ここでは関数呼び出しと同時にエラーチェックしています。エラーがあれば`fmt.Errorf(&quot;...: %w&quot;, err)`で元のエラーを文脈とともにラップして返します。`%w`は元のエラーを後で`errors.Is`や`errors.As`で検査できる形で包み込む書式指定子です。戻り値の1つ目が`&quot;&quot;`（空文字列）になっているのは、Goでは`error`以外の戻り値も必ず何かを返す必要があるためで、エラー時は「ゼロ値」を返すのが慣習です。</p></div><div class="walk-step"><pre class="walk-quote"><code>sealed := s.aead.Seal(nonce, nonce, plaintext, nil)</code></pre><p>`s.aead`は`cipher.AEAD`という暗号化・認証を同時に行うインターフェース型の値です。`Seal(dst, nonce, plaintext, additionalData)`というメソッドで、第1引数`dst`に渡したスライスの末尾に暗号文を追記して返す仕組みになっています。ここでは`dst`としても`nonce`自身を渡しているので、結果の`sealed`は「nonce本体＋暗号化された本文」が1本のバイト列として連結されたものになります。あとで復号するときにnonceが必要なので、先頭に埋め込んでおくのは暗号処理でよく使われる工夫です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return base64.RawURLEncoding.EncodeToString(sealed), nil</code></pre><p>`sealed`は生のバイト列なので、そのままではURLやJSONの文字列として扱いにくい文字（改行や`+`、`/`など）を含む可能性があります。`base64.RawURLEncoding.EncodeToString(...)`はバイト列を、URLに安全に載せられる文字だけで構成されたBase64文字列に変換します。「Raw」は末尾のパディング文字`=`を付けないことを意味し、「URL」は`+`や`/`の代わりにURLで問題を起こさない文字を使うことを意味します。これが正常時の最終的な戻り値（文字列）で、2つ目の`nil`はエラーが無いことを表します。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (s *Sealer) Open(token string) ([]byte, error) {
+	if token == &quot;&quot; {
+		return nil, errors.New(&quot;empty token&quot;)
+	}</code></pre><p>`Open`はSealで作ったトークンを元に戻す（復号する）メソッドです。最初に`token == &quot;&quot;`で空文字列かどうかを素朴にチェックし、空であれば`errors.New(&quot;empty token&quot;)`で新しいエラー値を作って即座に返します。`errors.New`は固定の文字列からエラーを作る最もシンプルな方法で、文脈を埋め込みたい`fmt.Errorf`とは使い分けます。</p></div><div class="walk-step"><pre class="walk-quote"><code>sealed, err := base64.RawURLEncoding.DecodeString(token)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;decoding token: %w&quot;, err)
+	}</code></pre><p>Sealでエンコードした文字列を、`DecodeString`で元のバイト列に戻します。ここでも「関数を呼んで結果とエラーを受け取り、すぐエラーをチェックする」というGoの定型パターンが繰り返されています。デコードに失敗する（不正な文字列が渡された）場合は、やはり`%w`でラップしたエラーを返します。</p></div><div class="walk-step"><pre class="walk-quote"><code>nonceSize := s.aead.NonceSize()
+	if len(sealed) &lt; nonceSize {
+		return nil, errors.New(&quot;token is too short&quot;)
+	}</code></pre><p>復号したバイト列の先頭`nonceSize`バイトがnonceであるはずなので、まずその長さを取得します。`len(sealed)`はスライスの長さ（要素数）を返す組み込み関数です。もしデコードされたバイト列がnonceの長さより短ければ、改ざんされたトークンか不正な入力なので、ここで早期にエラーを返して以降の処理に進まないようにしています。こうした「想定より短い・おかしい入力を早めに弾く」チェックは、バッファの範囲外アクセスを防ぐための基本的な防御的プログラミングです。</p></div><div class="walk-step"><pre class="walk-quote"><code>plaintext, err := s.aead.Open(nil, sealed[:nonceSize], sealed[nonceSize:], nil)</code></pre><p>`sealed[:nonceSize]`は「先頭からnonceSize個まで」を切り出すスライス式で、これが元のnonceです。`sealed[nonceSize:]`は「nonceSizeから末尾まで」で、これが本来の暗号文部分です。`s.aead.Open(dst, nonce, ciphertext, additionalData)`は、Sealと対になる復号・検証メソッドで、nonceと暗号文が正しく対応し、かつ改ざんされていないことを確認したうえで平文を返します。第1引数の`nil`は「結果を追記する先のバッファは特に用意しない」という意味です。</p></div><div class="walk-step"><pre class="walk-quote"><code>if err != nil {
+		return nil, fmt.Errorf(&quot;opening token: %w&quot;, err)
+	}
+	return plaintext, nil</code></pre><p>復号・検証に失敗した場合（改ざんされていた、鍵が違う、などの理由であり得ます）は、エラーをラップして返します。成功した場合は、復号できた平文のバイト列`plaintext`とエラーなし（`nil`）を返して処理を終えます。SealとOpenが対になっていて、Sealで組み立てた順序（nonce→暗号文）をOpenで同じ順序で分解している点が、このコード全体の設計の要です。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>暗号化トークンを作るときは「ノンス（nonce）を暗号文の先頭に結合してbase64エンコードする」のが定番パターン。復号側は同じ順序でスライスを切り分ければ対になる処理が書ける。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-17/"><span>前の日</span>evanw/esbuild</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-19/">← 2026.10.19 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

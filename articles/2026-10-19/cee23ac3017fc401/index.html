@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code自身のコードの9割がAI生成、レビューも7段階のAI主導に — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropic社内では、Claude Code自身のコードの約90%がClaudeによって生成されており、2026年6月から9月の間にマージ済みプルリクエスト数は2倍以上、主要モノレポの1日あたり変更数は約2,500件から3万件以上に増加しました。一方で変更を取り消すリバート率は40%以上低下しているといいます。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Code自身のコードの9割がAI生成、レビューも7段階のAI主導に — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropic社内では、Claude Code自身のコードの約90%がClaudeによって生成されており、2026年6月から9月の間にマージ済みプルリクエスト数は2倍以上、主要モノレポの1日あたり変更数は約2,500件から3万件以上に増加しました。一方で変更を取り消すリバート率は40%以上低下しているといいます。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/cee23ac3017fc401/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/cee23ac3017fc401/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Code自身のコードの9割がAI生成、レビューも7段階のAI主導に", "datePublished": "2026-10-19", "description": "Anthropic社内では、Claude Code自身のコードの約90%がClaudeによって生成されており、2026年6月から9月の間にマージ済みプルリクエスト数は2倍以上、主要モノレポの1日あたり変更数は約2,500件から3万件以上に増加しました。一方で変更を取り消すリバート率は40%以上低下しているといいます。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-19/cee23ac3017fc401/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://note.com/npaka/n/ndb4b0f424ced", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-19/">2026.10.19 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>Claude Code自身のコードの9割がAI生成、レビューも7段階のAI主導に</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>note.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</header>
+<div class="article-body">
+<p>Anthropic社内では、Claude Code自身のコードの約<strong>90%がClaudeによって生成</strong>されており、2026年6月から9月の間にマージ済みプルリクエスト数は2倍以上、主要モノレポの1日あたり変更数は約2,500件から3万件以上に増加しました。一方で変更を取り消すリバート率は40%以上低下しているといいます。</p>
+<p>この急拡大に対応するため、Anthropicは「人間がコードを読んだか」ではなく「<strong>何が壊れる可能性があり、どの検査が適切か</strong>」を基準にする方針へ転換しました。PR作成前の別AIによるレビュー、複数AIが並列で問題を探し別のAI群が指摘の妥当性を判定する段階（実質的なレビューコメントが付くPRの割合を16%から54%に向上）、セキュリティ専用レビュー、CI（継続的インテグレーション、変更ごとに自動でビルド・テストする仕組み）による自動チェックという流れで構成されています。</p>
+<p>人間の承認はリスク別に分けられ、低リスク（文言修正など）は0人、中リスク（通常の機能変更）は1人、高リスク（危険度の高い変更）は2人の承認が必要とされています。実際に50回以上の修正往復が発生したPRもあったため、3回のレビュー後は実装方針そのものを再検討し、同じ指摘の繰り返しを禁止するルールが設けられました。「AIの承認は、人間の承認として数えられません」という原則も明記されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Anthropicでは、Claude Code自身のコードの約90%がClaudeによって生成されている</li><li>2026年6月から9月にかけて、マージ済みプルリクエスト数は2倍以上に増加した</li><li>2026年6月から9月にかけて、変更を取り消すリバート率は40%以上低下した</li><li>Anthropicの主要なモノレポでは、1日あたりの変更数が約2,500件から30,000件以上に増加した</li><li>Anthropicは「人間がコードを読んだか」ではなく「その変更で何が壊れる可能性があり、どの検査方法が適切か」を重視する方針に転換した</li><li>レビュープロセスの第1段階は、PR作成前に別のサブエージェントが新しいコンテキストで差分をレビューし、バグ検出・差分簡潔化・動作確認のスキルを活用するというものである</li><li>レビュープロセスの第2段階では、複数のAIエージェントが並列で問題を探し、別のエージェント群が指摘の妥当性を判定する</li><li>このアプローチにより、実質的なレビューコメントが付いたPRの割合が16%から54%に増加した</li><li>レビュープロセスの第3段階は、通常のバグレビューとは別に実行するセキュリティ専用のAIレビューである</li><li>レビュープロセスの第4段階は、Lint・型チェック・テスト・ビルド確認を行うCI自動チェックである</li><li>人間承認はリスク別に分けられ、低リスク（ドキュメント・文言修正）は0人、中リスク（通常の機能変更）は1人、高リスク（危険度の高い変更）は2人の承認が必要とされる</li><li>実際に50回以上のレビューと修正が繰り返されたPRが発生し、対策として3回のレビュー後に実装方針そのものを再検討し、同じ指摘の繰り返しを禁止するルールを設けた</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>AI の承認は、人間の承認として数えられません。</blockquote><p class="quotes-source">出典: <a href="https://note.com/npaka/n/ndb4b0f424ced" target="_blank" rel="noopener noreferrer">note.com</a></p></section>
+<aside class="source-box"><a href="https://note.com/npaka/n/ndb4b0f424ced" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">note.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E8%87%AA%E8%BA%AB%E3%81%AE%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE9%E5%89%B2%E3%81%8CAI%E7%94%9F%E6%88%90%E3%80%81%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%82%827%E6%AE%B5%E9%9A%8E%E3%81%AEAI%E4%B8%BB%E5%B0%8E%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-19%2Fcee23ac3017fc401%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E8%87%AA%E8%BA%AB%E3%81%AE%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE9%E5%89%B2%E3%81%8CAI%E7%94%9F%E6%88%90%E3%80%81%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%82%827%E6%AE%B5%E9%9A%8E%E3%81%AEAI%E4%B8%BB%E5%B0%8E%E3%81%AB%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-19/cee23ac3017fc401/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-19%2Fcee23ac3017fc401%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../57208644b31aab7d/"><span>前の記事</span>Anthropic社内調査、ジュニア技術職の比率が急減</a><a class="next" href="../19b71cebe631e638/"><span>次の記事</span>ECサイトがAIエージェントを拒否し始めた</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-19/">← 2026.10.19 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../2cb22d790e41b8b2/">OpenAI、AIの逸脱行動4件を追加開示</a></h3>
+<p class="excerpt">OpenAIは、AIモデルが不正・逸脱した挙動をとった事例（rogue incidents）をまとめた開示ページを公開しており、これまでに合計19件を掲載してきました。今週、新たに4件が追加されています。多くの事例は5〜6月に発生してい…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>fortune.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../34499c5829ef4449/">DeepSeekが検索・取得APIを提供開始</a></h3>
+<p class="excerpt">DeepSeekが、自社検索エンジンでウェブページを検索するSearch APIと、指定したURLの内容をMarkdown形式で取得するFetch APIという2つのツールを公開しました。Search APIは最大50件の結果を返却でき…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>api-docs.deepseek.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../43b6307d42229f06/">Gemini 4 Argonの「100万トークン」は入出力共有という実態</a></h3>
+<p class="excerpt">Gemini 4 Argon（Google）のコンテキスト上限は1,048,576トークンですが、これは入力専用の枠ではなく、入力・思考（推論）・出力を合わせた単一のコンテキストウィンドウで共有される値だと、公式情報をもとにした解説記事…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
