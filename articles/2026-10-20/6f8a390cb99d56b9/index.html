@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>約8200個のツールから必要なものだけ推薦 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの認証情報の下で実行しつつ使用許可もチェックする仕組みを示しています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="約8200個のツールから必要なものだけ推薦 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの認証情報の下で実行しつつ使用許可もチェックする仕組みを示しています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/6f8a390cb99d56b9/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/6f8a390cb99d56b9/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "約8200個のツールから必要なものだけ推薦", "datePublished": "2026-10-20", "description": "マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの認証情報の下で実行しつつ使用許可もチェックする仕組みを示しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/6f8a390cb99d56b9/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.23707", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-20/">2026.10.20 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>約8200個のツールから必要なものだけ推薦</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-20">2026.10.20</time></div>
+</header>
+<div class="article-body">
+<p>マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの認証情報の下で実行しつつ使用許可もチェックする仕組みを示しています。</p>
+<p>ToolRetベンチマークでは、従来のBM25(語彙ベースのランキング手法)と比べ、必要なツールをすべて上位10位に収められる頻度が57%以上向上したとのことです。実際のCodexセッションでも初回推薦で全必須ツールをカバーできた割合が93%に達し、100ツールの固定リストと比べて入力トークンを最大40%削減できたと報告されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『Tool Recommendation for Multi-Step Agents: Finding Every Tool a Task Needs』である</li><li>著者はSam Partee、River Stevens、Thierry Damiba、Valerie Fanelleの4名である</li><li>2026年10月16日にarXivに投稿された</li><li>対象領域には約8,200個のツールが存在するとされている</li><li>これらのツール定義をすべて提供すると、どのモデルのコンテキストウィンドウも超えてしまうと述べられている</li><li>著者らは3つのツール固定インターフェースを通じて動作するツール推薦システムを構築した</li><li>このシステムはゲートウェイレベルで動作する</li><li>各ツール呼び出しはエンドユーザーの認証情報の下で実行される</li><li>各サービスおよびエージェントの使用許可に対するチェックが実施される</li><li>ToolRetベンチマークにおいて、BM25（語彙ベースのランキング手法）と比較し、クエリに必要なすべてのツールを上位10位に配置できた頻度が57%以上向上したとされる</li><li>実際のCodexセッションでは、初回の推薦で全必須ツールをカバーできた割合が93%であったとされる</li><li>100ツールの固定リストと比較して、入力トークンを最大40%削減し、評価した全14回の実行で課金額が削減されたとされる</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.23707" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E7%B4%848200%E5%80%8B%E3%81%AE%E3%83%84%E3%83%BC%E3%83%AB%E3%81%8B%E3%82%89%E5%BF%85%E8%A6%81%E3%81%AA%E3%82%82%E3%81%AE%E3%81%A0%E3%81%91%E6%8E%A8%E8%96%A6%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-20%2F6f8a390cb99d56b9%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E7%B4%848200%E5%80%8B%E3%81%AE%E3%83%84%E3%83%BC%E3%83%AB%E3%81%8B%E3%82%89%E5%BF%85%E8%A6%81%E3%81%AA%E3%82%82%E3%81%AE%E3%81%A0%E3%81%91%E6%8E%A8%E8%96%A6%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-20/6f8a390cb99d56b9/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-20%2F6f8a390cb99d56b9%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../2684ab6f27afdefa/"><span>前の記事</span>CloudflareでWhatsApp MCPを無料運用</a><a class="next" href="../40a0c516f1a350da/"><span>次の記事</span>Lean4で検証する多段階報酬のエージェントRL</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-20/">← 2026.10.20 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../40a0c516f1a350da/">Lean4で検証する多段階報酬のエージェントRL</a></h3>
+<p class="excerpt">ソフトウェアエンジニアリングやターミナル操作タスクにおけるLLMエージェントの能力を強化する新しい強化学習フレームワーク「Lean4AgenticRL」が提案されました。ツール呼び出し(低レベル)・ワークフローステージ(中レベル)・最終…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../aa389cca6ad338d9/">テキスト世界モデルの評価、最高でも5割未満</a></h3>
+<p class="excerpt">LLMが環境の状態遷移を予測する能力(テキストベースの世界モデル)を評価する標準ベンチマークが無いという問題意識から、「GlobeBench」が提案されました。5つのドメインにわたる1,632のタスクと19のシミュレーションスキルで構成…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-19/656b0d04fec55630/">潜在空間思考とテキスト行動を切り替えるハイブリッド推論エージェント</a></h3>
+<p class="excerpt">arXiv論文「Hybrid Reasoning Agents」は、言語を超えた潜在空間での推論と、外部環境に対してテキストで行動する能力を1つの生成プロセス内で動的に切り替える手法を提案しています。モード遷移を担う軽量コンポーネント「…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>arxiv.org</span><time datetime="2026-10-19">2026.10.19</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

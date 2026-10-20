@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gogs/gogs の internal/sync/exclusive_pool.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="gogsはGoで書かれた自己ホスト型のGitサーバーです。本体のWebルーティングやDB層は量が多いので、今日は内部ユーティリティのinternal/syncパッケージから、ファイルシステム上の同じリソース（例: 同じリポジトリ）を複数のgoroutine（Goの軽量スレッド）が同時に触らないようにする「名前付きロック…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="gogs/gogs の internal/sync/exclusive_pool.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="gogsはGoで書かれた自己ホスト型のGitサーバーです。本体のWebルーティングやDB層は量が多いので、今日は内部ユーティリティのinternal/syncパッケージから、ファイルシステム上の同じリソース（例: 同じリポジトリ）を複数のgoroutine（Goの軽量スレッド）が同時に触らないようにする「名前付きロック…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-20/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-20/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.20</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>gogs/gogs の <code>internal/sync/exclusive_pool.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/gogs/gogs/blob/HEAD/internal/sync/exclusive_pool.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-20">2026.10.20</time></div>
+</header>
+<div class="article-body">
+<p>gogsはGoで書かれた自己ホスト型のGitサーバーです。本体のWebルーティングやDB層は量が多いので、今日は内部ユーティリティの`internal/sync`パッケージから、ファイルシステム上の同じリソース（例: 同じリポジトリ）を複数のgoroutine（Goの軽量スレッド）が同時に触らないようにする「名前付きロック」の実装を選びました。ファイル全体が66行で完結しており、Goの並行処理の基本イディオム（mutex、map、ポインタ、defer）が一度に学べます。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>package sync
+
+import (
+	&quot;sync&quot;
+)
+
+// ExclusivePool is a pool of non-identical instances
+// that only one instance with same identity is in the pool at a time.
+// In other words, only instances with different identities can be in
+// the pool the same time. If another instance with same identity tries
+// to get into the pool, it hangs until previous instance left the pool.
+//
+// This pool is particularly useful for performing tasks on same resource
+// on the file system in different goroutines.
+type ExclusivePool struct {
+	lock sync.Mutex
+
+	// pool maintains locks for each instance in the pool.
+	pool map[string]*sync.Mutex
+
+	// count maintains the number of times an instance with same identity checks in
+	// to the pool, and should be reduced to 0 (removed from map) by checking out
+	// with same number of times.
+	// The purpose of count is to delete lock when count down to 0 and recycle memory
+	// from map object.
+	count map[string]int
+}
+
+// NewExclusivePool initializes and returns a new ExclusivePool object.
+func NewExclusivePool() *ExclusivePool {
+	return &amp;ExclusivePool{
+		pool:  make(map[string]*sync.Mutex),
+		count: make(map[string]int),
+	}
+}
+
+// CheckIn checks in an instance to the pool and hangs while instance
+// with same identity is using the lock.
+func (p *ExclusivePool) CheckIn(identity string) {
+	p.lock.Lock()
+
+	lock, has := p.pool[identity]
+	if !has {
+		lock = &amp;sync.Mutex{}
+		p.pool[identity] = lock
+	}
+	p.count[identity]++
+
+	p.lock.Unlock()
+	lock.Lock()
+}
+
+// CheckOut checks out an instance from the pool and releases the lock
+// to let other instances with same identity to grab the lock.
+func (p *ExclusivePool) CheckOut(identity string) {
+	p.lock.Lock()
+	defer p.lock.Unlock()
+
+	p.pool[identity].Unlock()
+	if p.count[identity] == 1 {
+		delete(p.pool, identity)
+		delete(p.count, identity)
+	} else {
+		p.count[identity]--
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>package sync
+
+import (
+	&quot;sync&quot;
+)</code></pre><p>1行目の`package sync`はこのファイルが属するパッケージ名の宣言です（gogs独自の`internal/sync`パッケージで、1行目は単にそのパッケージ名が`sync`だと言っているだけ）。続く`import (&quot;sync&quot;)`は標準ライブラリの`sync`パッケージを読み込んでいます。名前が同じでも、自分のパッケージ名と標準ライブラリのパッケージ名は別物として扱われ、コード中では`sync.Mutex`のように書くことで「標準ライブラリのsync」だと明示できます。</p></div><div class="walk-step"><pre class="walk-quote"><code>type ExclusivePool struct {
+	lock sync.Mutex
+
+	pool map[string]*sync.Mutex
+
+	count map[string]int
+}</code></pre><p>`type 名前 struct { ... }`は複数のフィールド（データ）をまとめた新しい型を定義する構文です。`sync.Mutex`は標準ライブラリが提供する「排他ロック」で、`Lock()`を呼ぶと誰かが使用中なら待たされ、`Unlock()`で解放します。`map[string]*sync.Mutex`は「キーが`string`、値が`*sync.Mutex`（Mutexへのポインタ）」の辞書（map）です。値がポインタなのは、Mutexを値コピーしてしまうと別々の実体になって排他の意味が壊れるため、必ず同じアドレスを指す形で共有する必要があるからです。`map[string]int`は識別子ごとの利用回数を数えるための辞書です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func NewExclusivePool() *ExclusivePool {
+	return &amp;ExclusivePool{
+		pool:  make(map[string]*sync.Mutex),
+		count: make(map[string]int),
+	}
+}</code></pre><p>Goにはクラスのコンストラクタがないので、`New型名`という名前の関数を用意するのが慣習です。`&amp;ExclusivePool{...}`は構造体リテラル（フィールドに値を入れて構造体を作る書き方）の前に`&amp;`を付けて、その構造体の「アドレス（ポインタ）」を作っています。戻り値の型`*ExclusivePool`の`*`はポインタ型であることを示します。mapはGoでは使う前に`make`で初期化しないと書き込めない（nilマップへの書き込みはパニックする）ため、`make(map[string]*sync.Mutex)`のように明示的に生成しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (p *ExclusivePool) CheckIn(identity string) {</code></pre><p>関数名の前にある`(p *ExclusivePool)`は「メソッドのレシーバ」です。これにより`CheckIn`は`ExclusivePool`型に紐づくメソッドになり、呼び出し側は`pool.CheckIn(&quot;foo&quot;)`のように書けます。レシーバがポインタ（`*ExclusivePool`）なので、メソッド内で`p`のフィールドを書き換えると呼び出し元の実体にも反映されます（値レシーバだとコピーに対する変更になり反映されません）。</p></div><div class="walk-step"><pre class="walk-quote"><code>p.lock.Lock()
+
+	lock, has := p.pool[identity]
+	if !has {
+		lock = &amp;sync.Mutex{}
+		p.pool[identity] = lock
+	}
+	p.count[identity]++
+
+	p.lock.Unlock()
+	lock.Lock()</code></pre><p>まず構造体全体を守る`p.lock`をロックし、mapを安全に読み書きできる状態にします。`lock, has := p.pool[identity]`はGoのmapアクセスの定番イディオムで、2つ目の戻り値`has`（真偽値）はそのキーが存在したかどうかを表します。存在しなければ`&amp;sync.Mutex{}`で新しいMutexを作り（ゼロ値のMutexはそのまま使える初期状態なので初期化不要）、mapに登録します。`p.count[identity]++`は、そのidentityを使っている人数（回数）をカウントアップします。mapの値が整数で、まだキーが存在しない場合は自動的にゼロ値`0`として扱われるため、初回は`0++`で`1`になります。その後`p.lock.Unlock()`で構造体全体のロックを先に解放し（他のidentityを待つgoroutineをブロックしないため）、最後に`lock.Lock()`でこのidentity専用のロックを取りに行きます。ここでブロックされるのは、同じidentityを使う別のgoroutineがまだ`CheckOut`していない場合だけです。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (p *ExclusivePool) CheckOut(identity string) {
+	p.lock.Lock()
+	defer p.lock.Unlock()</code></pre><p>`defer p.lock.Unlock()`の`defer`は「この関数がどこで終わっても、関数を抜ける直前に必ず実行する」という予約です。`Lock()`した直後に`defer Unlock()`と書くのはGoでロックを使うときの定番パターンで、途中にreturnや予期しないエラーがあってもUnlock漏れを防げます。</p></div><div class="walk-step"><pre class="walk-quote"><code>p.pool[identity].Unlock()
+	if p.count[identity] == 1 {
+		delete(p.pool, identity)
+		delete(p.count, identity)
+	} else {
+		p.count[identity]--
+	}</code></pre><p>まず`p.pool[identity].Unlock()`でこのidentity専用のロックを解放し、同じidentityを待っている次のgoroutineに権利を渡します。続いて利用者数をチェックし、残り利用者が自分だけ（カウントが1）なら`delete(map, key)`で`pool`と`count`両方からそのidentityのエントリを削除します。これをしないと、一度使われたidentityのMutexがいつまでもmapに残り続けてメモリを食い続けてしまうため、使い終わったら掃除するという設計です。利用者がまだ他にもいる（カウントが2以上）場合は削除せず、カウントを1減らすだけにします。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>複数のgoroutineから「同じキーだけ」を排他制御したいときは、グローバルな1つのMutexで全部をロックするのではなく、map[string]*sync.Mutexで識別子ごとに別のロックを持たせると、無関係なキー同士は並行して動ける。ただしmapにロックを増やし続けるとメモリが漏れるので、利用回数をカウントして0になったらdeleteで掃除する、という後始末まで含めて覚えておくと実務で使えるパターンになる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-19/"><span>前の日</span>github/github-mcp-server</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-20/">← 2026.10.20 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

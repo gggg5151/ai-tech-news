@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClaudeがECDSAの謎の数値を30分で解明 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Anthropicは2026年10月16日、暗号規格ECDSA(楕円曲線デジタル署名アルゴリズム)で25年以上謎とされていた数値の起源をClaudeが解明したと発表しました。NIST(米国立標準技術研究所)が2000年に暗号標準として採用した複数の楕円曲線には、NSA(米国家安全保障局)が説明なしに提供したシード値(初…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="ClaudeがECDSAの謎の数値を30分で解明 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Anthropicは2026年10月16日、暗号規格ECDSA(楕円曲線デジタル署名アルゴリズム)で25年以上謎とされていた数値の起源をClaudeが解明したと発表しました。NIST(米国立標準技術研究所)が2000年に暗号標準として採用した複数の楕円曲線には、NSA(米国家安全保障局)が説明なしに提供したシード値(初…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/43cd7d2cb26b8407/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/43cd7d2cb26b8407/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "ClaudeがECDSAの謎の数値を30分で解明", "datePublished": "2026-10-20", "description": "Anthropicは2026年10月16日、暗号規格ECDSA(楕円曲線デジタル署名アルゴリズム)で25年以上謎とされていた数値の起源をClaudeが解明したと発表しました。NIST(米国立標準技術研究所)が2000年に暗号標準として採用した複数の楕円曲線には、NSA(米国家安全保障局)が説明なしに提供したシード値(初期値)が使われており、その出自が長年不明…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/43cd7d2cb26b8407/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://gigazine.net/news/20261019-ecdsa-seed-origin/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-20/">2026.10.20 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>ClaudeがECDSAの謎の数値を30分で解明</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-20">2026.10.20</time></div>
+</header>
+<div class="article-body">
+<p>Anthropicは2026年10月16日、暗号規格ECDSA(楕円曲線デジタル署名アルゴリズム)で25年以上謎とされていた数値の起源をClaudeが解明したと発表しました。NIST(米国立標準技術研究所)が2000年に暗号標準として採用した複数の楕円曲線には、NSA(米国家安全保障局)が説明なしに提供したシード値(初期値)が使われており、その出自が長年不明のままでした。</p>
+<p>ClaudeはP-256など5種類の楕円曲線のシード値の起源を<strong>30分足らず</strong>で解明し、1990年代の疑似乱数生成器「lrand48」の特徴・規則性と一致することを突き止めました。P-256のシード値は1997年8月16日1時52分34秒(UTC)を初期値として生成されたものだったといいます。</p>
+<p>この結果について、「シード値が一般的な乱数生成器から作られていたことが確認されたことで、むしろ意図的な弱点が仕込まれている可能性が以前より低くなった」と評されています。暗号技術者フィリッポ・バルソルダ氏がこの謎を解くための賞金制度を設けており、研究チームは受け取った約550万円をInternet Security Research Groupに寄付したとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>Anthropicが2026年10月16日にこの解明結果を発表した</li><li>ECDSAは楕円曲線デジタル署名アルゴリズムの略称である</li><li>NISTは2000年に複数の楕円曲線を暗号標準として採用した</li><li>これらの楕円曲線のシード値はNSAが説明なしに提供したものだった</li><li>シード値の起源は25年以上謎とされていた</li><li>ClaudeはP-256など5種類の楕円曲線のシード値の起源を30分足らずで解明した</li><li>解明されたシード値は乱数生成器「lrand48」の特徴・規則性と一致していた</li><li>P-256のシード値は1997年8月16日1時52分34秒(UTC)を初期値として生成されたものだった</li><li>暗号技術者フィリッポ・バルソルダ氏がこの謎を解明するための賞金制度を実施していた</li><li>研究チームはこの賞金制度により3万6864ドル(約550万円)を受け取った</li><li>研究チームは受け取った賞金をInternet Security Research Groupに寄付した</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>シード値が一般的な乱数生成器から作られていたことが確認されたことで、むしろ意図的な弱点が仕込まれている可能性が以前より低くなった</blockquote><p class="quotes-source">出典: <a href="https://gigazine.net/news/20261019-ecdsa-seed-origin/" target="_blank" rel="noopener noreferrer">gigazine.net</a></p></section>
+<aside class="source-box"><a href="https://gigazine.net/news/20261019-ecdsa-seed-origin/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">gigazine.net</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%E3%81%8CECDSA%E3%81%AE%E8%AC%8E%E3%81%AE%E6%95%B0%E5%80%A4%E3%82%9230%E5%88%86%E3%81%A7%E8%A7%A3%E6%98%8E%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-20%2F43cd7d2cb26b8407%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%E3%81%8CECDSA%E3%81%AE%E8%AC%8E%E3%81%AE%E6%95%B0%E5%80%A4%E3%82%9230%E5%88%86%E3%81%A7%E8%A7%A3%E6%98%8E%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-20/43cd7d2cb26b8407/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-20%2F43cd7d2cb26b8407%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../7ba90302f156b2f3/"><span>前の記事</span>Anthropic社内、AIエージェント稼働6倍で新卒採用9%に</a><a class="next" href="../4847a5179c6f0cab/"><span>次の記事</span>OpenCodeでAPIキー流出、利用残高が不正消費</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-20/">← 2026.10.20 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../7ba90302f156b2f3/">Anthropic社内、AIエージェント稼働6倍で新卒採用9%に</a></h3>
+<p class="excerpt">Anthropicが2026年10月16日に発表した社内調査レポート「How employment is changing at Anthropic」などによると、社内でClaudeなどの対話型AIエージェントの稼働時間が2026年3月…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../4847a5179c6f0cab/">OpenCodeでAPIキー流出、利用残高が不正消費</a></h3>
+<p class="excerpt">AIプログラミングツール「OpenCode」を運営するAnomaly Innovationsで2026年10月17日、廃止予定だった旧システム経由の不正アクセスが発生し、OpenCode Consoleユーザーの1.4%でAPIキーが流…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../a2e7810fb7d84c12/">Meta、薄いオーケストレータでエージェント精度向上</a></h3>
+<p class="excerpt">Metaのエンジニアリングブログが、データパイプライン運用向けAIエージェントの設計知見を公開しました。単一の高機能エージェントに全ドメイン知識を詰め込むとコンテキスト過多となり、サブシステム間で概念を混同して誤った命名規則やコード生成…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>engineering.fb.com</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

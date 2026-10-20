@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Codeの.env保護、48回検証した結果 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Claude Codeに.envファイルを読ませない設定が実際どこまで効くのかを、筆者がClaude Sonnet 5.5を使って48回のテストで検証した体験記です。permissions.denyのみの設定、deny+サンドボックス有効、無設定の3条件で、CANARY文字列を含む偽の認証情報を使って漏洩を検出していま…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Claude Codeの.env保護、48回検証した結果 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Claude Codeに.envファイルを読ませない設定が実際どこまで効くのかを、筆者がClaude Sonnet 5.5を使って48回のテストで検証した体験記です。permissions.denyのみの設定、deny+サンドボックス有効、無設定の3条件で、CANARY文字列を含む偽の認証情報を使って漏洩を検出していま…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/e6662e4edd42a788/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/e6662e4edd42a788/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Claude Codeの.env保護、48回検証した結果", "datePublished": "2026-10-20", "description": "Claude Codeに.envファイルを読ませない設定が実際どこまで効くのかを、筆者がClaude Sonnet 5.5を使って48回のテストで検証した体験記です。permissions.denyのみの設定、deny+サンドボックス有効、無設定の3条件で、CANARY文字列を含む偽の認証情報を使って漏洩を検出しています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-20/e6662e4edd42a788/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://qiita.com/yakumo_09/items/5a86ca330b449db0e6bc?utm_campaign=popular_items&utm_medium=feed&utm_source=popular_items", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-20/">2026.10.20 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Claude Codeの.env保護、48回検証した結果</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-10-20">2026.10.20</time></div>
+</header>
+<div class="article-body">
+<p>Claude Codeに.envファイルを読ませない設定が実際どこまで効くのかを、筆者がClaude Sonnet 5.5を使って<strong>48回のテスト</strong>で検証した体験記です。permissions.denyのみの設定、deny+サンドボックス有効、無設定の3条件で、CANARY文字列を含む偽の認証情報を使って漏洩を検出しています。</p>
+<p>無設定では24回すべてで.envの値が漏洩しましたが、denyのみの設定でも12回中4回漏洩しました。「grep -r pattern .」のようなファイル名を指定しないコマンドやPythonスクリプトの自動実行がdeny設定を回避してしまうケースがあったとのことです。cutコマンドのようにClaude Codeがreadツールとして認識しないコマンドも回避に使われました。</p>
+<p>deny+サンドボックスの組み合わせでは12回中0回まで漏洩を防げましたが、アプリケーションの実行自体ができなくなるというトレードオフがありました。筆者はdeny設定だけに頼らず、op run等の秘密管理ツールへ段階的に移行することを提案しています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>筆者はClaude Sonnet 5.5を使用して検証を行った</li><li>テストは合計48回実施された</li><li>検証した設定条件はC0(無設定)、C1(denyのみ設定)、C2(deny+サンドボックス有効)の3種類</li><li>4種類のプロンプト(P1~P4)で異なるファイルアクセスパターンをシミュレートした</li><li>漏洩検出にはCANARY文字列を含む偽の認証情報を使用した</li><li>C0(無設定)では24回のテストすべてで.envの値がコンテキストに送信された</li><li>C1(denyのみ)では12回のテスト中4回で値が漏洩した</li><li>C2(deny+サンドボックス)では12回のテスト中0回で漏洩したが、アプリケーションの実行ができなくなった</li><li>「grep -r pattern .」のようなファイル名を指定しないファイル読み取りコマンドはdeny設定を回避できた</li><li>Pythonスクリプトの自動実行によってもdeny設定を回避できるケースがあった</li><li>Claude Codeがreadツールとして認識するコマンドはcat、grep、sedなどであり、cutコマンドはdeny設定で回避可能だった</li><li>記事は秘密情報管理にop runなどの秘密管理ツールへの段階的移行を推奨している</li></ul></section>
+
+<aside class="source-box"><a href="https://qiita.com/yakumo_09/items/5a86ca330b449db0e6bc?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">qiita.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Claude%20Code%E3%81%AE.env%E4%BF%9D%E8%AD%B7%E3%80%8148%E5%9B%9E%E6%A4%9C%E8%A8%BC%E3%81%97%E3%81%9F%E7%B5%90%E6%9E%9C%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-20%2Fe6662e4edd42a788%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Claude%20Code%E3%81%AE.env%E4%BF%9D%E8%AD%B7%E3%80%8148%E5%9B%9E%E6%A4%9C%E8%A8%BC%E3%81%97%E3%81%9F%E7%B5%90%E6%9E%9C%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-20/e6662e4edd42a788/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-20%2Fe6662e4edd42a788%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../51ce01f7511338ff/"><span>前の記事</span>next/fontの日本語フォントでLCPが9.6秒に悪化</a><a class="next" href="../dd255292fb1a2e99/"><span>次の記事</span>Go製nibbleの日本語チャンク分割、読点で誤切断</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-20/">← 2026.10.20 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../51ce01f7511338ff/">next/fontの日本語フォントでLCPが9.6秒に悪化</a></h3>
+<p class="excerpt">筆者が自作のポートフォリオサイト「Hubpin」(Next.js App Router製)をLighthouseで計測したところ、モバイルのLCP(Largest Contentful Paint、最大コンテンツの描画完了までの時間)が…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../dd255292fb1a2e99/">Go製nibbleの日本語チャンク分割、読点で誤切断</a></h3>
+<p class="excerpt">RAG(検索拡張生成)でテキストを分割する際のチャンク(断片)境界が不適切だと検索精度が落ちます。Go言語製のテキスト分割ライブラリ「nibble v0.10.0」の日本語対応性を、著者が青空文庫の『吾輩は猫である』『羅生門』などを使っ…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../393a0a6ac74dd539/">Claude CodeでレガシーコードにテストとTS移行</a></h3>
+<p class="excerpt">筆者が2023年12月に自ら書いたレガシーコードを、2026年10月にClaude Codeを活用して改善した体験記です。「テストがないコードはレガシーコードだ」という考えのもと、テスト追加→バグ修正→リファクタリングの順で段階的に進め…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

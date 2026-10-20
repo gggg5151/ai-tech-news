@@ -82,7 +82,7 @@ func (s *Sealer) Open(token string) ([]byte, error) {
 	}
 	return plaintext, nil</code></pre><p>復号・検証に失敗した場合（改ざんされていた、鍵が違う、などの理由であり得ます）は、エラーをラップして返します。成功した場合は、復号できた平文のバイト列`plaintext`とエラーなし（`nil`）を返して処理を終えます。SealとOpenが対になっていて、Sealで組み立てた順序（nonce→暗号文）をOpenで同じ順序で分解している点が、このコード全体の設計の要です。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>暗号化トークンを作るときは「ノンス（nonce）を暗号文の先頭に結合してbase64エンコードする」のが定番パターン。復号側は同じ順序でスライスを切り分ければ対になる処理が書ける。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-17/"><span>前の日</span>evanw/esbuild</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-17/"><span>前の日</span>evanw/esbuild</a><a class="next" href="../2026-10-20/"><span>次の日</span>gogs/gogs</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-19/">← 2026.10.19 の号を読む</a>
 </div>
 </article>
