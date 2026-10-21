@@ -138,7 +138,7 @@ import (
 		p.count[identity]--
 	}</code></pre><p>まず`p.pool[identity].Unlock()`でこのidentity専用のロックを解放し、同じidentityを待っている次のgoroutineに権利を渡します。続いて利用者数をチェックし、残り利用者が自分だけ（カウントが1）なら`delete(map, key)`で`pool`と`count`両方からそのidentityのエントリを削除します。これをしないと、一度使われたidentityのMutexがいつまでもmapに残り続けてメモリを食い続けてしまうため、使い終わったら掃除するという設計です。利用者がまだ他にもいる（カウントが2以上）場合は削除せず、カウントを1減らすだけにします。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>複数のgoroutineから「同じキーだけ」を排他制御したいときは、グローバルな1つのMutexで全部をロックするのではなく、map[string]*sync.Mutexで識別子ごとに別のロックを持たせると、無関係なキー同士は並行して動ける。ただしmapにロックを増やし続けるとメモリが漏れるので、利用回数をカウントして0になったらdeleteで掃除する、という後始末まで含めて覚えておくと実務で使えるパターンになる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-19/"><span>前の日</span>github/github-mcp-server</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-19/"><span>前の日</span>github/github-mcp-server</a><a class="next" href="../2026-10-21/"><span>次の日</span>gitleaks/gitleaks</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-20/">← 2026.10.20 の号を読む</a>
 </div>
 </article>

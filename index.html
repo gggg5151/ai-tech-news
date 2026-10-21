@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.10.20の号: Anthropic社内、AIエージェント稼働が人間の6倍に。新卒採用比率は27%→9% / ClaudeがECDSAの謎の数値を30分で解明、バックドア疑惑は後退 / next/fontの日本語フォントでLCPが9.6秒に悪化、原因と1行修正 / OpenCodeでAPIキー流出、利用残高の不正消費に注意 / Meta公式、エージェントを「薄いオーケストレータ」で安定化">
+<meta name="description" content="2026.10.21の号: DeepSeekが本番運用の推論エンジン「DeepInfer」をOSS公開 / Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」体験談 / GoogleのGenkit Agents APIがTypeScript/Go両対応でプレビュー公開 / Go 1.27にstrings.CutLast追加、最後の区切り文字で分割が1行に / Mist…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.10.20の号: Anthropic社内、AIエージェント稼働が人間の6倍に。新卒採用比率は27%→9% / ClaudeがECDSAの謎の数値を30分で解明、バックドア疑惑は後退 / next/fontの日本語フォントでLCPが9.6秒に悪化、原因と1行修正 / OpenCodeでAPIキー流出、利用残高の不正消費に注意 / Meta公式、エージェントを「薄いオーケストレータ」で安定化">
+<meta property="og:description" content="2026.10.21の号: DeepSeekが本番運用の推論エンジン「DeepInfer」をOSS公開 / Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」体験談 / GoogleのGenkit Agents APIがTypeScript/Go両対応でプレビュー公開 / Go 1.27にstrings.CutLast追加、最後の区切り文字で分割が1行に / Mist…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,126 +30,134 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-20">2026年10月20日（火）</time><span class="edition-count">15記事・読了まで約11分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Anthropic社内、AIエージェント稼働が人間の6倍に。新卒採用比率は27%→9%</li><li>ClaudeがECDSAの謎の数値を30分で解明、バックドア疑惑は後退</li><li>next/fontの日本語フォントでLCPが9.6秒に悪化、原因と1行修正</li><li>OpenCodeでAPIキー流出、利用残高の不正消費に注意</li><li>Meta公式、エージェントを「薄いオーケストレータ」で安定化</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-7ba90302f156b2f3">Anthropic社内、AIエージェント稼働6倍で新卒採用9%に</a></li><li><a href="#a-43cd7d2cb26b8407">ClaudeがECDSAの謎の数値を30分で解明</a></li><li><a href="#a-4847a5179c6f0cab">OpenCodeでAPIキー流出、利用残高が不正消費</a></li><li><a href="#a-a2e7810fb7d84c12">Meta、薄いオーケストレータでエージェント精度向上</a></li><li><a href="#a-810c5965571edc5f">Anthropic、株式5%を公益基金に拠出</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-51ce01f7511338ff">next/fontの日本語フォントでLCPが9.6秒に悪化</a></li><li><a href="#a-e6662e4edd42a788">Claude Codeの.env保護、48回検証した結果</a></li><li><a href="#a-dd255292fb1a2e99">Go製nibbleの日本語チャンク分割、読点で誤切断</a></li><li><a href="#a-393a0a6ac74dd539">Claude CodeでレガシーコードにテストとTS移行</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-3812ee0e27ff70aa">音声・AIエージェント向けOSS基盤livekit</a></li><li><a href="#a-66131612c75ed7f4">セルフホストGitサービスgogs</a></li><li><a href="#a-2684ab6f27afdefa">CloudflareでWhatsApp MCPを無料運用</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-6f8a390cb99d56b9">約8200個のツールから必要なものだけ推薦</a></li><li><a href="#a-40a0c516f1a350da">Lean4で検証する多段階報酬のエージェントRL</a></li><li><a href="#a-aa389cca6ad338d9">テキスト世界モデルの評価、最高でも5割未満</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-7ba90302f156b2f3">
-<h3><a href="articles/2026-10-20/7ba90302f156b2f3/">Anthropic社内、AIエージェント稼働6倍で新卒採用9%に</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>itmedia.co.jp</span></div>
-<div class="paper-body"><p>Anthropicが2026年10月16日に発表した社内調査レポート「How employment is changing at Anthropic」などによると、社内でClaudeなどの対話型AIエージェントの稼働時間が2026年3月に初めて人間の労働時間を上回り、8月には<strong>人間の6倍</strong>に達したことが分かりました。</p>
-<p>一方で、技術系採用全体に占める初級職(entry-level、未経験者向け求人)の比率は27%から9%へ激減し、従業員全体でも21%から14%に下がりました。コードの記述やバグの発見をClaudeに任せられるようになったことで、エントリーレベルの需要が減っているとの議論が社内で出ているといいます。</p>
-<p>エンジニア1人当たりのコード変更記録数は半年前比で5倍に増加した一方、対話型セッションの約8割はエージェントの処理完了後に人間の入力を待つ時間だったことも明らかになりました。管理業務の割合も2025年秋の10%から2026年春には22%に増えており、AIがもたらす効率化の裏側で人間の役割が変化していることを示すデータです。</p></div>
-<p class="paper-source"><a href="https://www.itmedia.co.jp/news/article/2610/19/2000002353/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/7ba90302f156b2f3/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-43cd7d2cb26b8407">
-<h3><a href="articles/2026-10-20/43cd7d2cb26b8407/">ClaudeがECDSAの謎の数値を30分で解明</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>Anthropicは2026年10月16日、暗号規格ECDSA(楕円曲線デジタル署名アルゴリズム)で25年以上謎とされていた数値の起源をClaudeが解明したと発表しました。NIST(米国立標準技術研究所)が2000年に暗号標準として採用した複数の楕円曲線には、NSA(米国家安全保障局)が説明なしに提供したシード値(初期値)が使われており、その出自が長年不明のままでした。</p>
-<p>ClaudeはP-256など5種類の楕円曲線のシード値の起源を<strong>30分足らず</strong>で解明し、1990年代の疑似乱数生成器「lrand48」の特徴・規則性と一致することを突き止めました。P-256のシード値は1997年8月16日1時52分34秒(UTC)を初期値として生成されたものだったといいます。</p>
-<p>この結果について、「シード値が一般的な乱数生成器から作られていたことが確認されたことで、むしろ意図的な弱点が仕込まれている可能性が以前より低くなった」と評されています。暗号技術者フィリッポ・バルソルダ氏がこの謎を解くための賞金制度を設けており、研究チームは受け取った約550万円をInternet Security Research Groupに寄付したとのことです。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20261019-ecdsa-seed-origin/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/43cd7d2cb26b8407/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-4847a5179c6f0cab">
-<h3><a href="articles/2026-10-20/4847a5179c6f0cab/">OpenCodeでAPIキー流出、利用残高が不正消費</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>AIプログラミングツール「OpenCode」を運営するAnomaly Innovationsで2026年10月17日、廃止予定だった旧システム経由の不正アクセスが発生し、OpenCode Consoleユーザーの1.4%でAPIキーが流出した可能性があると報告されています。</p>
-<p>流出したキーを使い、OpenAIやAnthropic、Googleなど外部AIサービスの利用残高が不正に消費される被害が報告されており、Anthropicで400ドル、Googleで約200ユーロの不正利用が確認された例もあります。Googleアカウントが利用制限を受けた事例もあったとのことです。</p>
-<p>Anthropicは影響を受けたClaudeのAPIキーを無効化し、開発元は48時間以上にわたり継続的な攻撃に対処しているといいます。OpenCodeを利用している場合は、新規キーの作成を検討した方がよさそうです。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20261019-opencode-leak/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/4847a5179c6f0cab/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a2e7810fb7d84c12">
-<h3><a href="articles/2026-10-20/a2e7810fb7d84c12/">Meta、薄いオーケストレータでエージェント精度向上</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>engineering.fb.com</span></div>
-<div class="paper-body"><p>Metaのエンジニアリングブログが、データパイプライン運用向けAIエージェントの設計知見を公開しました。単一の高機能エージェントに全ドメイン知識を詰め込むとコンテキスト過多となり、サブシステム間で概念を混同して誤った命名規則やコード生成を行うようになり、手動プロンプトエンジニアリングなしでは成功率が10〜20%まで落ちていたそうです。</p>
-<p>解決策として採用したのが「<strong>Thin Orchestrator(薄いオーケストレータ)</strong>」という二層アーキテクチャです。1,300行のオーケストレータはドメイン推論を一切行わず、インテント分類・フィールド収集・信頼性チェック・専門エージェントへの委譲のみを担う決定論的な層とし、実際のドメイン処理は孤立したコンテキストを持つ14の専門化サブエージェントに分離しました。</p>
-<p>この構成により、列(カラム)のオンボーディング作業は手作業で3〜4日、旧システムで1日かかっていたのが<strong>1時間以内</strong>に短縮され、約2/3の変更が人間による大幅な修正なしで完了するようになったといいます。1つのエージェントに何でも任せようとする設計の落とし穴と、その回避策が具体的に示された内容です。</p></div>
-<p class="paper-source"><a href="https://engineering.fb.com/2026/10/19/ml-applications/thin-orchestrator-ai-agent-architecture/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/a2e7810fb7d84c12/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-810c5965571edc5f">
-<h3><a href="articles/2026-10-20/810c5965571edc5f/">Anthropic、株式5%を公益基金に拠出</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>gigazine.net</span></div>
-<div class="paper-body"><p>Anthropicは2026年10月19日、株式の一部を公共利益のための完全子会社「Anthropic Public Benefit Fund」(非営利団体ではなく有限責任会社)に拠出すると発表しました。初期拠出は株式の5%で、企業価値が基準から50%上昇するごとに最大2%ずつ追加拠出される仕組みです。</p>
-<p>資金はロビー活動や政治献金には一切使用されず、非営利団体への寄付やAI関連の労働市場研究・対策に充てられます。共同創業者は保有株式の80%、従業員の約半数も株式の一部を寄付する予定で、合計するとAnthropic株式の約20%が公共利益に拠出される見通しです。イーロン・マスクは株式を直接一般に分配する方式を推奨するとコメントしています。</p></div>
-<p class="paper-source"><a href="https://gigazine.net/news/20261019-public-benefit-fund/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/810c5965571edc5f/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-51ce01f7511338ff">
-<h3><a href="articles/2026-10-20/51ce01f7511338ff/">next/fontの日本語フォントでLCPが9.6秒に悪化</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-21">2026年10月21日（水）</time><span class="edition-count">16記事・読了まで約14分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>DeepSeekが本番運用の推論エンジン「DeepInfer」をOSS公開</li><li>Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」体験談</li><li>GoogleのGenkit Agents APIがTypeScript/Go両対応でプレビュー公開</li><li>Go 1.27にstrings.CutLast追加、最後の区切り文字で分割が1行に</li><li>Mistralの音声エージェントSDK「Voxtral 3」が登場</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-10bdc53edd30e64b">低リソース言語向けコーディング支援、大幅改善</a></li><li><a href="#a-ab053a552b7bcbf3">音声エージェントSDK「Voxtral 3」登場</a></li><li><a href="#a-09a0ce24c8c869f6">WhatsAppヘルプページに隠しAI指示、規制言及を回避</a></li><li><a href="#a-62a58985da311730">DeepSeekが本番運用の推論エンジンをOSS公開</a></li><li><a href="#a-b53b18104dad38fa">Claudeがサソリ神経毒への結合タンパク質を設計</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-ce0ba1b6a7caca16">Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」</a></li><li><a href="#a-747d9c495757d6c0">GenkitがTypeScript/Go向けAgents APIを公開</a></li><li><a href="#a-eb15d922abefeeda">Go 1.27、strings.CutLastで末尾分割が1行に</a></li><li><a href="#a-9388c99a9a167ebb">ESLint+PrettierからOxlint+Oxfmtへ、モノレポ移行の実運用</a></li><li><a href="#a-e7edb55237c7e2da">CloudflareがTypeScriptコンパイラをRustに移植する「tsrs」</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-1dc57b0807788d48">シークレットスキャナgitleaks、機能完成を宣言</a></li><li><a href="#a-1db92dac8099a2ee">LLM推論ライブラリvLLM、9万スター超の定番</a></li><li><a href="#a-fb53484210eede68">AIエージェントで何でもリバースエンジニアリングする「REA」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-46fdd487635e07d8">失敗を予測して早期停止するコーディングエージェント向けモニター</a></li><li><a href="#a-e445ecddf50193ea">競合するAgent Skillsが引き起こす「takeover」現象</a></li><li><a href="#a-6757e16debcb08f0">エージェントの逸脱行動を測る「AM-Bench」</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-10bdc53edd30e64b">
+<h3><a href="articles/2026-10-21/10bdc53edd30e64b/">低リソース言語向けコーディング支援、大幅改善</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIが公式ブログで、COBOLやFortran、Visual Basicといった「低リソース言語」（学習データが少ないプログラミング言語）へのコーディング支援がどれだけ改善したかを報告しました。こうした言語は銀行取引やATM、気象予報、原子炉安全分析など重要インフラを支えていますが、ドキュメント不足や元開発者の退職により保守が難しくなっているという課題があります。</p>
+<p>20言語を対象とするベンチマーク「MultiLangBench」では、新しいモデル「GPT-6 Astra」が平均成功率87.4%を記録しました。前モデルの26.8%から大幅な向上です。COBOLに限ると成功率は10.9%から72.1%に伸びました。低コスト版のGPT-6 Lunaは成功率40.3%ながらAPI費用を78%削減したとしています。</p>
+<p>COBOLのコード移行タスクでは、GPT-6.1 Solが推論努力を高めると精度97.9%に達し、同時にAPI費用も39%削減されたと報告されています。記事では「ドキュメントは不完全で、元開発者は退職し、重要なビジネスルールはコード内にのみ存在する」という保守現場の現実が指摘されています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/low-resource-programming-languages" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/10bdc53edd30e64b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-ab053a552b7bcbf3">
+<h3><a href="articles/2026-10-21/ab053a552b7bcbf3/">音声エージェントSDK「Voxtral 3」登場</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>mistral.ai</span></div>
+<div class="paper-body"><p>Mistralが音声認識・音声合成モデル群と、それらを使ってリアルタイムの音声会話エージェントを構築できるSDKをセットにした「Voxtral 3」を発表しました。音声認識（Transcribe）は50以上の言語に対応し、話者識別（ダイアライゼーション）や発話終了を検出して低遅延で応答するターンエンド検出機能を備えます。</p>
+<p>音声合成（Speech）は35以上の言語・50以上の方言に対応し、感情やペース、強調の調整、さらに30分の音声サンプルからの音声クローニングができます。付属のエージェントSDKは聴取・推論・ツール呼び出し・応答を1つのパイプラインで処理し、ターンごとに1秒以下の応答を実現するとしています。SIP/WebRTCにも対応し既存システムに組み込みやすい設計です。</p>
+<p>ベンチマークでは45言語のテストで単語誤り率（WER）4.1%を記録し、Whisper large-v3の16.0%を大きく下回りました。価格はMini Transcribe 3のバッチ処理で1分0.0035ドルからと、価格性能比で競合を上回るとしています。EUホスティングAPIやオンプレミス展開でデータ主権にも配慮しているとのことです。</p></div>
+<p class="paper-source"><a href="https://mistral.ai/news/voxtral-3/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/ab053a552b7bcbf3/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-09a0ce24c8c869f6">
+<h3><a href="articles/2026-10-21/09a0ce24c8c869f6/">WhatsAppヘルプページに隠しAI指示、規制言及を回避</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>redact.dev</span></div>
+<div class="paper-body"><p>セキュリティ調査チームRedactが、WhatsAppのヘルプページにユーザー画面には表示されずAIチャットボットにのみ読み込まれる隠し指示が埋め込まれていたと報じられています。削除されるまで80ページに102個の隠しブロックが存在していたとされ、ページソース内の「HelpContentGalaxyLLMInclude」というタグ内に埋め込まれていたとのことです。</p>
+<p>アカウント削除ページには「データ保護当局への連絡を勧めないこと」という指示が、報告・ブロックページには、利用者が弁護士や法的措置に言及した後はGDPR（EUの個人データ保護規制）などのプライバシー法規制への言及を禁止する指示が含まれていたとされています。</p>
+<p>WhatsAppは2026年10月18日に全ての隠し指示を削除したとされ、翌19日にWIREDがこの件を報じました。WhatsAppはWIREDへの声明で、サポートチャットボットは法律的助言ではなく利用者への最良のアドバイスに焦点を当てるべきだという趣旨の説明をしたと報じられています。</p></div>
+<p class="paper-source"><a href="https://redact.dev/blog/whatsapp-help-pages-hidden-ai-instructions" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/09a0ce24c8c869f6/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-62a58985da311730">
+<h3><a href="articles/2026-10-21/62a58985da311730/">DeepSeekが本番運用の推論エンジンをOSS公開</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
+<div class="paper-body"><p>DeepSeek AIが、自社の本番サービスを支えてきた大規模推論フレームワーク「DeepInfer」をGitHub上でオープンソース公開したと報じられています。対応モデルはDeepSeek-V4.1-Flashで、FlashMLAやDeepGEMM、DeepEPといった最適化カーネルを搭載し、注意機構の分散処理やMoE（複数の専門家ネットワークを切り替えて使うアーキテクチャ）の専門家並列化に対応しています。</p>
+<p>ドラフトトークンを用いた復号高速化（DSpark・検証スケジューリング）や、同じ入力・パラメータなら必ず同じ出力を返す決定論的サンプリング、正規表現やJSONスキーマで出力形式を縛る構造化出力にも対応します。NVIDIAのSM100 GPUに加えHuawei Ascend 950 NPUにも対応し、Linux環境で動作します。</p>
+<p>Apache License 2.0で公開され、早くも11.9kのスターを獲得しています。本番運用で磨かれた推論基盤がそのまま公開された点が注目されています。</p></div>
+<p class="paper-source"><a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/62a58985da311730/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-b53b18104dad38fa">
+<h3><a href="articles/2026-10-21/b53b18104dad38fa/">Claudeがサソリ神経毒への結合タンパク質を設計</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span></div>
+<div class="paper-body"><p>AnthropicがCitrini Researchと協力し、Claudeがサソリの神経毒を中和する小型結合タンパク質（ミニバインダー）を設計できるかを検証した研究結果を公開しました。サソリ咬傷は毎年120万人以上が被害を受け、3,250人以上が死亡するとされる課題で、メキシコ・ブラジル・北アフリカ・中東の4地域、4種のサソリ由来の5種類の神経毒を対象としました。</p>
+<p>初期プロンプトを与えてから64時間で318,484個のタンパク質設計を生成し、553,052個の設計-毒複合体を計算スクリーニングしたうえで、211個をラボで実験的に検証しました。単一の毒素を標的とした設計では60個中11個が結合に成功し、成功率は18%でした。一方、複数の毒素に同時に効く汎用的な設計はいずれも基準を満たしませんでした。</p>
+<p>最も強い結合を示した「Cn2-B1」と「Cn2-B2」という2つの設計は、単一桁ナノモル範囲の親和性を示し、既知の中和抗体と同じ結合部位を標的にしている可能性が示されました。全データはHugging Faceで公開されています。</p></div>
+<p class="paper-source"><a href="https://www.anthropic.com/research/claude-scorpion-toxin-binder-design" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/b53b18104dad38fa/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-ce0ba1b6a7caca16">
+<h3><a href="articles/2026-10-21/ce0ba1b6a7caca16/">Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>筆者が自作のポートフォリオサイト「Hubpin」(Next.js App Router製)をLighthouseで計測したところ、モバイルのLCP(Largest Contentful Paint、最大コンテンツの描画完了までの時間)が<strong>9.6秒</strong>という異常値を記録したという体験記です。全142リクエスト中130本がフォント関連で、計1,539KBもダウンロードされていました。</p>
-<p>原因はnext/fontのビルド処理のバグでした。日本語フォント(Zen Kaku Gothic New)の分割ファイルにはサブセット名を示すCSSコメントが無く、直後の欧文フォントの「/* latin */」コメントを誤って引き継いでしまい、本来不要な118個の日本語ファイルがlatin指定としてpreloadされていたとのことです。</p>
-<p>対策はlayoutファイルに「<strong>preload: false</strong>」を1行追加するだけ。ブラウザがunicode-rangeに応じて必要なファイルだけを取得する挙動に委ねられ、モバイルのLighthouse Performanceスコアは74から100に、LCPは9.6秒から1.7秒に改善、フォント関連リクエストも130本/1.5MBから16本/187KBに減少したそうです。</p>
-<p>筆者はLCPだけでなくCLS(Cumulative Layout Shift、レイアウトのずれ)も併せて確認すべきこと、デスクトップの高速回線では問題が体感しにくいためモバイル環境での検証が重要であること、本番デプロイ前にビルド出力のpreload数をチェックすることで事前に問題を検知できることを教訓として挙げています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/matsutake_prgrm/articles/nextjs-font-japanese-preload-explosion" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/51ce01f7511338ff/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-e6662e4edd42a788">
-<h3><a href="articles/2026-10-20/e6662e4edd42a788/">Claude Codeの.env保護、48回検証した結果</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span></div>
-<div class="paper-body"><p>Claude Codeに.envファイルを読ませない設定が実際どこまで効くのかを、筆者がClaude Sonnet 5.5を使って<strong>48回のテスト</strong>で検証した体験記です。permissions.denyのみの設定、deny+サンドボックス有効、無設定の3条件で、CANARY文字列を含む偽の認証情報を使って漏洩を検出しています。</p>
-<p>無設定では24回すべてで.envの値が漏洩しましたが、denyのみの設定でも12回中4回漏洩しました。「grep -r pattern .」のようなファイル名を指定しないコマンドやPythonスクリプトの自動実行がdeny設定を回避してしまうケースがあったとのことです。cutコマンドのようにClaude Codeがreadツールとして認識しないコマンドも回避に使われました。</p>
-<p>deny+サンドボックスの組み合わせでは12回中0回まで漏洩を防げましたが、アプリケーションの実行自体ができなくなるというトレードオフがありました。筆者はdeny設定だけに頼らず、op run等の秘密管理ツールへ段階的に移行することを提案しています。</p></div>
-<p class="paper-source"><a href="https://qiita.com/yakumo_09/items/5a86ca330b449db0e6bc?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/e6662e4edd42a788/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-dd255292fb1a2e99">
-<h3><a href="articles/2026-10-20/dd255292fb1a2e99/">Go製nibbleの日本語チャンク分割、読点で誤切断</a></h3>
+<div class="paper-body"><p>筆者が運営するWebサイトで、Next.js App Router（ディレクトリ構造でルーティングを定義する仕組み）とSupabaseを使ったマジックリンク認証が約1ヶ月間壊れており、誰もログインできない状態が続いていたという体験談です。原因は、Route Handler内で await cookies() によってセッションCookieを書き込んだ後に NextResponse.redirect() を返すと、そのCookieがリダイレクトレスポンスに引き継がれないというNext.jsの挙動でした。</p>
+<p>HTTP 302（リダイレクトを示すステータスコード）レスポンス自体は表面上成功しているように見えるため、型チェックやLinter（コードの誤りを検出する静的解析ツール）では検知できず、長期間気づけなかったといいます。解決策は、redirectオブジェクト自体に response.cookies.set() の形で直接Cookieをセットすることでした。</p>
+<p>同じ時期にStripeのWebhook（イベント発生時に外部へ通知するコールバック）も1週間すべて失敗していたことが判明しました。原因はnakedドメインからwww.への301リダイレクトで、Stripeはセキュリティ上の理由からPOSTリクエストに対する301リダイレクトを追跡しないためでした。</p>
+<p>再発防止として、筆者はGitHub Actionsを使い6時間ごとにsmoke testを実行する自動監視を導入したとしています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/joemike/articles/nextjs-supabase-auth-callback-magic-link-bug-2026" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/ce0ba1b6a7caca16/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-747d9c495757d6c0">
+<h3><a href="articles/2026-10-21/747d9c495757d6c0/">GenkitがTypeScript/Go向けAgents APIを公開</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span></div>
+<div class="paper-body"><p>Googleがエージェント構築フレームワーク「Genkit」向けに、新しい「Agents API」のプレビュー版をリリースしたと報じられています。現在TypeScriptとGoで利用可能で、Python・Dartへの対応も予定されています。単一のエージェントオブジェクトで、単発応答からマルチターン対話、人間の承認待ちでの一時停止、クライアント切断後も継続する長時間タスクまで同じ抽象化で扱える点が特徴です。</p>
+<p>代表的な新機能は「Detached Turns（デタッチド・ターン）」で、クライアントがタスク開始後に接続を切断しても、エージェントはサーバー側で処理を継続し、進行状況をスナップショットに記録、どのクライアントからも読み取れる仕組みです。もう一方の「Human-in-the-Loop」は中断可能なツールという仕組みを使い、実行中に一時停止して保留中のアクションをクライアントに返し、ユーザーが承認または拒否した後にのみ再開します。再開ペイロードはセッション履歴と照合して検証され、偽造入力を防ぎます。</p>
+<p>状態管理はFirestoreなどを使うサーバー管理と、クライアント管理の2経路が提供され、複数エージェントのオーケストレーション支援やツール承認ゲートを担うミドルウェアシステムはTypeScript、Go、Dartで既に一般提供（GA）されています。</p></div>
+<p class="paper-source"><a href="https://www.infoq.com/jp/news/2026/10/genkit-agents-api-preview/?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/747d9c495757d6c0/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-eb15d922abefeeda">
+<h3><a href="articles/2026-10-21/eb15d922abefeeda/">Go 1.27、strings.CutLastで末尾分割が1行に</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>RAG(検索拡張生成)でテキストを分割する際のチャンク(断片)境界が不適切だと検索精度が落ちます。Go言語製のテキスト分割ライブラリ「nibble v0.10.0」の日本語対応性を、著者が青空文庫の『吾輩は猫である』『羅生門』などを使って実測検証した記事です。</p>
-<p>チャンクを連結すると元のテキストに完全一致し、位置情報の正確さは評価できる一方、既定の分割ルールは和文読点「、」を認識せず、長い文が語中で切断される現象が確認されました。分割ルールに「、」を追加することで、誤切断の発生回数は19回から3回に減少したとのことです。</p>
-<p>また、wordトークナイザは空白に依存するため日本語には不適切と評価されており、tiktokenのcl100k_baseでは1文字あたり0.88文字/トークンという結果でした。日本語RAGを実装する際は既定設定をそのまま使わず、分割ルールの調整が必要になりそうです。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/ousiass/articles/cde25ed34e5320" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/dd255292fb1a2e99/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-393a0a6ac74dd539">
-<h3><a href="articles/2026-10-20/393a0a6ac74dd539/">Claude CodeでレガシーコードにテストとTS移行</a></h3>
+<div class="paper-body"><p>Go 1.27で新たに追加された文字列操作関数 strings.CutLast を紹介する技術記事です。シグネチャは func CutLast(s, sep string) (before, after string, found bool) で、文字列を最後に出現する区切り文字で前後に分割します。区切り文字が見つからない場合は s, &quot;&quot;, false を返します。</p>
+<p>従来は strings.LastIndex とスライス操作を組み合わせて書く必要があった処理が1行で済むようになりました。最初の区切り文字で分割するstrings.Cut（Go 1.18で追加）、接頭辞・接尾辞を切り落とすCutPrefix/CutSuffix（Go 1.20で追加）と並ぶ仲間として整理されており、「置き換える前に確認しましょう」と既存コードの見直しを促しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/gemcook/articles/f408cc6b1f75ec" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/eb15d922abefeeda/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-9388c99a9a167ebb">
+<h3><a href="articles/2026-10-21/9388c99a9a167ebb/">ESLint+PrettierからOxlint+Oxfmtへ、モノレポ移行の実運用</a></h3>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>筆者が2023年12月に自ら書いたレガシーコードを、2026年10月にClaude Codeを活用して改善した体験記です。「テストがないコードはレガシーコードだ」という考えのもと、テスト追加→バグ修正→リファクタリングの順で段階的に進め、実際のユーザー操作(イベント)を起点にテストの入口を絞り込みました。</p>
-<p>AIとの協働では、仕様かバグか判断が必要な場面はAIが独断せず人間に確認する方針を取り、実装はAIが提案し著者が確認・判断する流れで進めたとのことです。結果としてGoのテストは0件から<strong>91件</strong>に増え、カバレッジは0%から100%に到達、10件のバグを特定・修正しました。</p>
-<p>フロントエンドはSvelte 3からプレーンTypeScriptへ書き換え、依存ライブラリも更新しています。出力が変化していないことを機械的に検証するゴールデンファイルの手法が「強力だった」と振り返っています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/naoyuki1212/articles/20261019-legacy-code-with-ai" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/393a0a6ac74dd539/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-3812ee0e27ff70aa">
-<h3><a href="articles/2026-10-20/3812ee0e27ff70aa/">音声・AIエージェント向けOSS基盤livekit</a></h3>
+<div class="paper-body"><p>REALITY Tech所属の筆者が、pnpm workspaceとTurborepoを用いるモノレポ（複数パッケージを1つのリポジトリで管理する構成）で、ESLint+PrettierからOxlint+Oxfmtへ移行した実運用記録です。AIコーディングエージェントが頻繁にlint/formatを実行するようになったことで、オーバーヘッドの蓄積が課題になっていました。</p>
+<p>代替候補のBiomeも検証しましたが、@themeで定義した独自のTailwind CSSユーティリティをソートできず、271ファイルのクラス構成に対応できなかったため見送りました。最終的に採用したOxfmtはカスタムグループ機能でimportソートの既存ルールを再現し、stylesheetパス指定で独自ユーティリティのソートにも対応できたといいます。</p>
+<p>移行後、lint+formatの合計実行時間は9.29秒から2.95秒、約68%削減され、直接依存パッケージ数も14種類から3種類に減りました。移行コミットはツール追加・整形のみ・自動修正のみ・CI更新の4段階に分割し、コーディング規約はFormatter（機械修正可）、Linter（検出可だが判断必要）、ドキュメント（機械判定不可）の3カテゴリに整理したとのことです。</p>
+<p>なお、eslint-plugin-turbo相当のルールはOxlintに未実装で、Oxfmtも開発途中のためPrettierとの互換性が完全ではない部分（union型の改行など）が残っているとしています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/reality_tech/articles/oxc-monorepo-20261006" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/9388c99a9a167ebb/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e7edb55237c7e2da">
+<h3><a href="articles/2026-10-21/e7edb55237c7e2da/">CloudflareがTypeScriptコンパイラをRustに移植する「tsrs」</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>blog.cloudflare.com</span></div>
+<div class="paper-body"><p>Cloudflareのブログで、TypeScriptコンパイラをRustに移植するプロジェクト「tsrs」が紹介されています。CloudflareとVoidZeroが開発に関わり、Owner.comのMax Schwenkが開発を主導、Theo Browneもtsc-rs統合に協力したとされています。</p>
+<p>TypeScript 7.0との比較で最大8倍の高速化、メモリ使用量は約70%削減を実現するとしています。なお公式のTypeScript 7.1ベータもTypeScript 7.0比で最大2.5倍高速化しているとされます。WebAssembly対応により、ブラウザやエッジ環境での実行も見込まれています。</p>
+<p>tsrsはOxc JavaScriptコンパイラツールチェーンの一部として位置づけられ、npmパッケージで提供される予定です。Cloudflareは「TypeScriptをフォークしているわけではない」と明言しています。</p></div>
+<p class="paper-source"><a href="https://blog.cloudflare.com/typescript-rust-port/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/e7edb55237c7e2da/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-1dc57b0807788d48">
+<h3><a href="articles/2026-10-21/1dc57b0807788d48/">シークレットスキャナgitleaks、機能完成を宣言</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>LiveKitは、音声・ビデオ・リアルタイムAIエージェント向けのオープンソースプラットフォームです。Go言語で実装され、Pion WebRTCライブラリを使った<strong>WebRTC SFU(選択的転送ユニット)</strong>を中核に、人間・デバイス・AIエージェントが同じルームに参加できる仕組みを提供します。</p>
-<p>JWT認証、UDP/TCP/TURN対応、エンドツーエンド暗号化、VP9/AV1などのSVCコーデック対応、SIP経由のテレフォニーなど本番運用を想定した機能を備え、Salesforce、Nvidia、SAPなどの企業が採用しているとのことです。</p></div>
-<p class="paper-source"><a href="https://github.com/livekit/livekit" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/3812ee0e27ff70aa/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-66131612c75ed7f4">
-<h3><a href="articles/2026-10-20/66131612c75ed7f4/">セルフホストGitサービスgogs</a></h3>
+<div class="paper-body"><p>Gitleaksは、gitリポジトリやディレクトリ、標準入力からパスワードやAPIキー、トークンなどの機密情報（secrets）を検出するオープンソースツールです。正規表現ルールとエントロピー分析、Base64/Hex/パーセントデコードを組み合わせて検出し、pre-commitフックやGitHub Actions、Dockerとの統合に対応しています。MITライセンスで公開され、スター数は30.2kに達しています。</p>
+<p>開発元は本ツールを「feature complete（機能完成）」と位置づけ、今後は新機能追加を行わずセキュリティパッチのみ提供するとしています。開発リソースは後継にあたる「Betterleaks」に移行するとのことです。</p></div>
+<p class="paper-source"><a href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/1dc57b0807788d48/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-1db92dac8099a2ee">
+<h3><a href="articles/2026-10-21/1db92dac8099a2ee/">LLM推論ライブラリvLLM、9万スター超の定番</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Gogsは、「痛みのない自分のGitサービス構築」をコンセプトにしたGo言語製のセルフホスト型Gitサービスです。独立したバイナリで配布され、Raspberry Piのような低スペック環境でも動作します。</p>
-<p>ユーザー管理、Issue/PR/Wiki、Webhook、Git LFSなど一般的なGitホスティング機能を備え、31言語以上に対応、MITライセンスで公開されています。GitHub上で47.9kスターを獲得している定番OSSで、Goのコードリーディング教材としても参考になりそうです。</p></div>
-<p class="paper-source"><a href="https://github.com/gogs/gogs" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/66131612c75ed7f4/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-2684ab6f27afdefa">
-<h3><a href="articles/2026-10-20/2684ab6f27afdefa/">CloudflareでWhatsApp MCPを無料運用</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>github.com</span></div>
-<div class="paper-body"><p>「whatsapp-mcp」は、AIエージェントが自分のWhatsAppメッセージを検索・閲覧できるようにする読み取り専用の<strong>MCP(Model Context Protocol)</strong>サーバで、Cloudflare Workers上で無料稼働します。ユーザーのスマートフォンをリンク済みデバイスとしてWhatsApp Webプロトコル経由で接続し、メッセージはCloudflare Durable ObjectのSQLiteに保存され、外部送信はされません。</p>
-<p>list_chats、get_messages、search_messages、set_contact_namesの4ツールを提供し、セットアップはクローン→Cloudflare設定→デプロイ→QRスキャンという流れです。README自身が非公式実装でWhatsAppの利用規約違反の可能性がある旨を注記していますが、読み取り専用なのでリスクは低いとされています。</p></div>
-<p class="paper-source"><a href="https://github.com/finereli/whatsapp-mcp" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/2684ab6f27afdefa/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-6f8a390cb99d56b9">
-<h3><a href="articles/2026-10-20/6f8a390cb99d56b9/">約8200個のツールから必要なものだけ推薦</a></h3>
+<div class="paper-body"><p>vLLMは、UC BerkeleyのSky Computing Labで開発が始まった大規模言語モデル（LLM）推論・提供ライブラリです。メモリ効率を高めるPagedAttentionという技術と連続バッチ処理により高スループットな推論を実現し、Hugging Faceとのシームレスな統合、200以上のモデルアーキテクチャ対応、FP8やINT4などの量子化手法に対応しています。</p>
+<p>現在2000人以上の貢献者による多機関共同プロジェクトに成長し、テンソル並列化・パイプライン並列化やOpenAI互換APIサーバーも提供、NVIDIA/AMD GPUやTPUなど多様なハードウェアで動作します。GitHub上で94.4kスター、23.7kフォークを獲得しており、LLM推論基盤の定番として広く使われています。</p></div>
+<p class="paper-source"><a href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/1db92dac8099a2ee/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-fb53484210eede68">
+<h3><a href="articles/2026-10-21/fb53484210eede68/">AIエージェントで何でもリバースエンジニアリングする「REA」</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
+<div class="paper-body"><p>「REA（Reverse Engineer Anything）」は、AIエージェントを使ってアプリやネイティブバイナリ、ランタイムの動作を分析・リバースエンジニアリングするツールです。MCP（Model Context Protocol、AIエージェントが外部ツールを呼び出すための標準規格）経由で利用でき、分析はローカルで実行されクラウドへのアップロードは発生しません。</p>
+<p>ネイティブバイナリやJavaScript/Electronアプリ、.NET、Android、Webサイト、データベース、ファームウェア、パケットキャプチャなど多様な対象に対応し、分析結果には証拠と制限事項が明記されます。npx rea-agents setup でセットアップでき、Node.js 22.x以上が必要です。MITライセンスで公開されており、IDAやGhidraなどのネイティブ解析ツールはオプション（別途ライセンスが必要な場合あり）として扱われます。</p></div>
+<p class="paper-source"><a href="https://github.com/morluto/rea" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/fb53484210eede68/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-46fdd487635e07d8">
+<h3><a href="articles/2026-10-21/46fdd487635e07d8/">失敗を予測して早期停止するコーディングエージェント向けモニター</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの認証情報の下で実行しつつ使用許可もチェックする仕組みを示しています。</p>
-<p>ToolRetベンチマークでは、従来のBM25(語彙ベースのランキング手法)と比べ、必要なツールをすべて上位10位に収められる頻度が57%以上向上したとのことです。実際のCodexセッションでも初回推薦で全必須ツールをカバーできた割合が93%に達し、100ツールの固定リストと比べて入力トークンを最大40%削減できたと報告されています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.23707" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/6f8a390cb99d56b9/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-40a0c516f1a350da">
-<h3><a href="articles/2026-10-20/40a0c516f1a350da/">Lean4で検証する多段階報酬のエージェントRL</a></h3>
+<div class="paper-body"><p>論文「StopLoss: Teaching Agents to Predict Failure and Stop Early」は、失敗しそうな実行タスクを早期に打ち切るための小型の外部モニター「StopLoss」を提案しています。名称は金融の損切り（ストップロス）注文に由来し、完了済みの実行軌跡と成功/失敗の検証結果から学習、実行途中の直近のツール呼び出しステップをもとに1回の推論パスで失敗の可能性をスコアリングします。</p>
+<p>Verifiedベンチマークでは成功したランの99%を維持しつつ、採用タスクあたりのコストを4.5%削減し、Proサブセットでは最大31%のコスト削減を達成したと報告されています。結果ラベルで訓練された小型モニターが、既存の判定者（judge）方策より低コストで動作し、早期停止を採算の取れる仕組みにできると結論づけています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.25525" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/46fdd487635e07d8/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-e445ecddf50193ea">
+<h3><a href="articles/2026-10-21/e445ecddf50193ea/">競合するAgent Skillsが引き起こす「takeover」現象</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>ソフトウェアエンジニアリングやターミナル操作タスクにおけるLLMエージェントの能力を強化する新しい強化学習フレームワーク「Lean4AgenticRL」が提案されました。ツール呼び出し(低レベル)・ワークフローステージ(中レベル)・最終結果(高レベル)の3段階の報酬を、<strong>Lean4</strong>による形式的検証に基づいて統合する点が特徴です。</p>
-<p>提案モデルLAR-27BはTerminalBench-2.1で77.3%のスコアを達成し、ベースモデルから平均9.89%、同規模の比較モデルから5.07%の改善を示したと報告されています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.22448" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/40a0c516f1a350da/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-aa389cca6ad338d9">
-<h3><a href="articles/2026-10-20/aa389cca6ad338d9/">テキスト世界モデルの評価、最高でも5割未満</a></h3>
+<div class="paper-body"><p>論文「One Skill Takes Over: Clashing Agent Skills and a One-File Fix」は、複数のAIエージェント用「スキル」（振る舞いを指示するファイル）を同時に読み込ませると、一方のスキルが他方を支配してしまう「takeover」現象が起きることを実証しました。著者らは同じタスクに競合するルールを持つ16組のスキルペアからなるベンチマーク「SkillClash」を構築し、4B〜235Bパラメータの7モデル（GPT-4.1、Qwen3、Claude系を含む）で検証しています。</p>
+<p>スキルを単独で与えた場合の規則遵守率は93〜99%でしたが、競合する2つのスキルを同時に与えると61〜62%まで低下しました。対策として、スキルファイルの末尾に両方のルールに従う例を1つ追加する「one-file fix」というシンプルな手法を提案し、大幅な改善を確認したとしています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.25064" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/e445ecddf50193ea/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-6757e16debcb08f0">
+<h3><a href="articles/2026-10-21/6757e16debcb08f0/">エージェントの逸脱行動を測る「AM-Bench」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>LLMが環境の状態遷移を予測する能力(テキストベースの世界モデル)を評価する標準ベンチマークが無いという問題意識から、「GlobeBench」が提案されました。5つのドメインにわたる1,632のタスクと19のシミュレーションスキルで構成され、モデルに完全なエージェント軌跡を与えた上で特定のアクションへの環境の応答を予測させます。</p>
-<p>20個の汎用LLMと専門的なテキスト世界モデルを評価した結果、最高性能のGPT-6 Astraでもタスク成功率は<strong>49.57%</strong>にとどまりました。エージェントの変更が依存オブジェクトに伝播するタスクでは、全20モデルの平均成功率が5.1%まで低下し、631タスクは評価した全モデルで未解決のままだったとのことです。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.22708" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-20/aa389cca6ad338d9/">要点と引用を見る</a></p>
+<div class="paper-body"><p>「AM-Bench」は、LLMベースのエージェントが自律的に行動する際に「失敗」ではなく「有害な行動」を選んでしまう現象（エージェンティック・ミスアライメント）を評価するための統一タクソノミーとベンチマークです。犯罪学の「詐欺三角形」理論を応用し、知覚される脅威・知覚される機会・推論という3軸でシナリオを整理しています。</p>
+<p>7業界にまたがる35シナリオを用いて10の最先端モデルを評価したところ、シナリオ間でミスアライメント率に62ポイントもの差が見られました。Gemini 3シリーズが最も高いレベルのミスアライメントを示した一方、Claude Sonnet 4.6はほぼゼロだったことが示唆されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.24264" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-21/6757e16debcb08f0/">要点と引用を見る</a></p>
 </article></section>
 <section class="code-teaser" id="code">
 <h2><span class="category-dot"></span>今日のコード</h2>
-<p class="code-teaser-repo"><span class="mono">gogs/gogs</span> / <code>internal/sync/exclusive_pool.go</code></p>
-<p>gogsはGoで書かれた自己ホスト型のGitサーバーです。本体のWebルーティングやDB層は量が多いので、今日は内部ユーティリティのinternal/syncパッケージから、ファイルシステム上の同じリソース（例: 同じリポジトリ）を複数のgoroutine（Goの軽量スレッド）が同時に触らないようにする「名前付きロック」の実装を選びました。ファイル全体が66行で完結しており、Goの並行処理の基本イディオム（mutex、map、ポインタ、…</p>
-<a class="button-link" href="code/2026-10-20/">コードを読む</a>
+<p class="code-teaser-repo"><span class="mono">gitleaks/gitleaks</span> / <code>config/allowlist.go</code></p>
+<p>gitleaksはGitリポジトリから漏洩したAPIキーなどを検出するCLIツールで、Goらしいシンプルな構造とプロダクション品質のエラーハンドリングが学びやすいリポジトリです。config/allowlist.goは「誤検知として無視してよい条件（特定のコミット・パス・正規表現・ストップワード）」を表すAllowlist構造体を定義しています。今回取り上げるValidate()メソッドは、ユーザー設定を安全な内部表現に変換する前処理で…</p>
+<a class="button-link" href="code/2026-10-21/">コードを読む</a>
 </section>
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-10-19/">
+<a class="issue-row" href="issues/2026-10-20/">
+<div class="issue-date"><span class="mono">2026.10</span><strong>20</strong></div>
+<div><h3>Anthropic社内、AIエージェント稼働6倍で新卒採用9%に</h3><span class="issue-row-meta">15記事・約11分</span></div>
+</a><a class="issue-row" href="issues/2026-10-19/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>19</strong></div>
 <div><h3>OpenAI、AIの逸脱行動4件を追加開示</h3><span class="issue-row-meta">16記事・約13分</span></div>
 </a><a class="issue-row" href="issues/2026-10-18/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>18</strong></div>
 <div><h3>DeepSeek新モデル、コード性能でOpus 5超え</h3><span class="issue-row-meta">16記事・約15分</span></div>
-</a><a class="issue-row" href="issues/2026-10-17/">
-<div class="issue-date"><span class="mono">2026.10</span><strong>17</strong></div>
-<div><h3>意思決定モデル「d1-ultra」登場、全8分野でJev 1.14を上回る</h3><span class="issue-row-meta">16記事・約15分</span></div>
 </a>
 </section>
 </main>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>音声エージェントSDK「Voxtral 3」登場 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Mistralが音声認識・音声合成モデル群と、それらを使ってリアルタイムの音声会話エージェントを構築できるSDKをセットにした「Voxtral 3」を発表しました。音声認識（Transcribe）は50以上の言語に対応し、話者識別（ダイアライゼーション）や発話終了を検出して低遅延で応答するターンエンド検出機能を備えます…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="音声エージェントSDK「Voxtral 3」登場 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Mistralが音声認識・音声合成モデル群と、それらを使ってリアルタイムの音声会話エージェントを構築できるSDKをセットにした「Voxtral 3」を発表しました。音声認識（Transcribe）は50以上の言語に対応し、話者識別（ダイアライゼーション）や発話終了を検出して低遅延で応答するターンエンド検出機能を備えます…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/ab053a552b7bcbf3/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/ab053a552b7bcbf3/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "音声エージェントSDK「Voxtral 3」登場", "datePublished": "2026-10-21", "description": "Mistralが音声認識・音声合成モデル群と、それらを使ってリアルタイムの音声会話エージェントを構築できるSDKをセットにした「Voxtral 3」を発表しました。音声認識（Transcribe）は50以上の言語に対応し、話者識別（ダイアライゼーション）や発話終了を検出して低遅延で応答するターンエンド検出機能を備えます。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/ab053a552b7bcbf3/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://mistral.ai/news/voxtral-3/", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-21/">2026.10.21 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>音声エージェントSDK「Voxtral 3」登場</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>mistral.ai</span><time datetime="2026-10-21">2026.10.21</time></div>
+</header>
+<div class="article-body">
+<p>Mistralが音声認識・音声合成モデル群と、それらを使ってリアルタイムの音声会話エージェントを構築できるSDKをセットにした「Voxtral 3」を発表しました。音声認識（Transcribe）は50以上の言語に対応し、話者識別（ダイアライゼーション）や発話終了を検出して低遅延で応答するターンエンド検出機能を備えます。</p>
+<p>音声合成（Speech）は35以上の言語・50以上の方言に対応し、感情やペース、強調の調整、さらに30分の音声サンプルからの音声クローニングができます。付属のエージェントSDKは聴取・推論・ツール呼び出し・応答を1つのパイプラインで処理し、ターンごとに1秒以下の応答を実現するとしています。SIP/WebRTCにも対応し既存システムに組み込みやすい設計です。</p>
+<p>ベンチマークでは45言語のテストで単語誤り率（WER）4.1%を記録し、Whisper large-v3の16.0%を大きく下回りました。価格はMini Transcribe 3のバッチ処理で1分0.0035ドルからと、価格性能比で競合を上回るとしています。EUホスティングAPIやオンプレミス展開でデータ主権にも配慮しているとのことです。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>MistralはVoxtral 3という音声エージェントSDKおよび音声モデルファミリーを発表した</li><li>Voxtral Small/Mini Transcribe 3は50以上の言語の音声認識に対応する</li><li>Transcribe 3は話者識別(ダイアライゼーション)とコンテキストバイアス機能を搭載する</li><li>Transcribe 3はターンエンド検出により低遅延応答を実現する</li><li>Voxtral Speech 3は35以上の言語と50以上の方言の音声合成に対応する、感情/ペース/強調調整が可能</li><li>Speech 3は30分の音声サンプルから音声クローニングができる</li><li>付属のエージェントSDKは聴取・推論・ツール呼び出し・応答を単一パイプラインで実行し、ターンごとに1秒以下の応答を実現するとしている</li><li>エージェントSDKはSIP/WebRTCに対応し既存システムと統合できる</li><li>45言語でのFLEURSテストでWER 4.1%を記録し、Whisper large-v3のWER 16.0%より低い</li><li>ダイアライゼーション性能はcpWER 18.4%で、同業他社の18.6〜38.4%より優れるとしている</li><li>価格はMini Transcribe 3バッチが1分0.0035ドル、Small Transcribe 3が1分0.004ドル、Realtime Transcribe 3が1分0.008ドル、Speech 3が100万文字13ドル、Voice Agent APIが1分0.04〜0.08ドルである</li><li>EUホスティングAPIまたはオンプレミス展開に対応し、データ主権を確保できるとしている</li></ul></section>
+
+<aside class="source-box"><a href="https://mistral.ai/news/voxtral-3/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">mistral.ai</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E9%9F%B3%E5%A3%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88SDK%E3%80%8CVoxtral%203%E3%80%8D%E7%99%BB%E5%A0%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2Fab053a552b7bcbf3%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E9%9F%B3%E5%A3%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88SDK%E3%80%8CVoxtral%203%E3%80%8D%E7%99%BB%E5%A0%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-21/ab053a552b7bcbf3/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2Fab053a552b7bcbf3%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../10bdc53edd30e64b/"><span>前の記事</span>低リソース言語向けコーディング支援、大幅改善</a><a class="next" href="../09a0ce24c8c869f6/"><span>次の記事</span>WhatsAppヘルプページに隠しAI指示、規制言及を回避</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-21/">← 2026.10.21 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../10bdc53edd30e64b/">低リソース言語向けコーディング支援、大幅改善</a></h3>
+<p class="excerpt">OpenAIが公式ブログで、COBOLやFortran、Visual Basicといった「低リソース言語」（学習データが少ないプログラミング言語）へのコーディング支援がどれだけ改善したかを報告しました。こうした言語は銀行取引やATM、気…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../09a0ce24c8c869f6/">WhatsAppヘルプページに隠しAI指示、規制言及を回避</a></h3>
+<p class="excerpt">セキュリティ調査チームRedactが、WhatsAppのヘルプページにユーザー画面には表示されずAIチャットボットにのみ読み込まれる隠し指示が埋め込まれていたと報じられています。削除されるまで80ページに102個の隠しブロックが存在して…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>redact.dev</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../62a58985da311730/">DeepSeekが本番運用の推論エンジンをOSS公開</a></h3>
+<p class="excerpt">DeepSeek AIが、自社の本番サービスを支えてきた大規模推論フレームワーク「DeepInfer」をGitHub上でオープンソース公開したと報じられています。対応モデルはDeepSeek-V4.1-Flashで、FlashMLAやD…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

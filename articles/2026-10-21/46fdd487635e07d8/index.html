@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>失敗を予測して早期停止するコーディングエージェント向けモニター — 1年目向けエンジニア新聞</title>
+<meta name="description" content="論文「StopLoss: Teaching Agents to Predict Failure and Stop Early」は、失敗しそうな実行タスクを早期に打ち切るための小型の外部モニター「StopLoss」を提案しています。名称は金融の損切り（ストップロス）注文に由来し、完了済みの実行軌跡と成功/失敗の検証結果か…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="失敗を予測して早期停止するコーディングエージェント向けモニター — 1年目向けエンジニア新聞">
+<meta property="og:description" content="論文「StopLoss: Teaching Agents to Predict Failure and Stop Early」は、失敗しそうな実行タスクを早期に打ち切るための小型の外部モニター「StopLoss」を提案しています。名称は金融の損切り（ストップロス）注文に由来し、完了済みの実行軌跡と成功/失敗の検証結果か…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/46fdd487635e07d8/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/46fdd487635e07d8/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "失敗を予測して早期停止するコーディングエージェント向けモニター", "datePublished": "2026-10-21", "description": "論文「StopLoss: Teaching Agents to Predict Failure and Stop Early」は、失敗しそうな実行タスクを早期に打ち切るための小型の外部モニター「StopLoss」を提案しています。名称は金融の損切り（ストップロス）注文に由来し、完了済みの実行軌跡と成功/失敗の検証結果から学習、実行途中の直近のツール呼び出しス…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/46fdd487635e07d8/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.25525", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-21/">2026.10.21 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>失敗を予測して早期停止するコーディングエージェント向けモニター</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-21">2026.10.21</time></div>
+</header>
+<div class="article-body">
+<p>論文「StopLoss: Teaching Agents to Predict Failure and Stop Early」は、失敗しそうな実行タスクを早期に打ち切るための小型の外部モニター「StopLoss」を提案しています。名称は金融の損切り（ストップロス）注文に由来し、完了済みの実行軌跡と成功/失敗の検証結果から学習、実行途中の直近のツール呼び出しステップをもとに1回の推論パスで失敗の可能性をスコアリングします。</p>
+<p>Verifiedベンチマークでは成功したランの99%を維持しつつ、採用タスクあたりのコストを4.5%削減し、Proサブセットでは最大31%のコスト削減を達成したと報告されています。結果ラベルで訓練された小型モニターが、既存の判定者（judge）方策より低コストで動作し、早期停止を採算の取れる仕組みにできると結論づけています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは「StopLoss: Teaching Agents to Predict Failure and Stop Early」</li><li>著者はJiarong Liang、Xueguang Ma、Dongfu Jiang、Yuxuan Zhang、Ping Nie、Wenhu Chenの6名</li><li>StopLossはコーディングエージェントの実行を早期停止するための小型の外部モニターである</li><li>StopLossは完了した実行軌跡とその検証結果から失敗認識を学習する</li><li>StopLossという名称は金融の損切り注文にインスピレーションを得ている</li><li>StopLossは単一の前進パス(フォワードパス)で直近のツール呼び出しステップをスコア化する</li><li>StopLossはVerifiedベンチマークにおいて、採用タスクあたりのコストを4.5%削減した</li><li>StopLossはVerifiedベンチマークにおいて、成功した実行の99%を維持した</li><li>StopLossはProサブセットにおいて、最大31%のコスト削減を達成した</li><li>StopLossは既存の判定者(judge)方策よりも低コストで動作すると報告されている</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>StopLoss lowers cost per retained solve by 4.5% on Verified while preserving 99% of successful runs</blockquote><p class="quotes-source">出典: <a href="https://arxiv.org/abs/2610.25525" target="_blank" rel="noopener noreferrer">arxiv.org</a></p></section>
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.25525" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E5%A4%B1%E6%95%97%E3%82%92%E4%BA%88%E6%B8%AC%E3%81%97%E3%81%A6%E6%97%A9%E6%9C%9F%E5%81%9C%E6%AD%A2%E3%81%99%E3%82%8B%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E5%90%91%E3%81%91%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2F46fdd487635e07d8%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E5%A4%B1%E6%95%97%E3%82%92%E4%BA%88%E6%B8%AC%E3%81%97%E3%81%A6%E6%97%A9%E6%9C%9F%E5%81%9C%E6%AD%A2%E3%81%99%E3%82%8B%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E5%90%91%E3%81%91%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-21/46fdd487635e07d8/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2F46fdd487635e07d8%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../fb53484210eede68/"><span>前の記事</span>AIエージェントで何でもリバースエンジニアリングする「REA」</a><a class="next" href="../e445ecddf50193ea/"><span>次の記事</span>競合するAgent Skillsが引き起こす「takeover」現象</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-21/">← 2026.10.21 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../e445ecddf50193ea/">競合するAgent Skillsが引き起こす「takeover」現象</a></h3>
+<p class="excerpt">論文「One Skill Takes Over: Clashing Agent Skills and a One-File Fix」は、複数のAIエージェント用「スキル」（振る舞いを指示するファイル）を同時に読み込ませると、一方のスキル…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../6757e16debcb08f0/">エージェントの逸脱行動を測る「AM-Bench」</a></h3>
+<p class="excerpt">「AM-Bench」は、LLMベースのエージェントが自律的に行動する際に「失敗」ではなく「有害な行動」を選んでしまう現象（エージェンティック・ミスアライメント）を評価するための統一タクソノミーとベンチマークです。犯罪学の「詐欺三角形」理…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-20/6f8a390cb99d56b9/">約8200個のツールから必要なものだけ推薦</a></h3>
+<p class="excerpt">マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

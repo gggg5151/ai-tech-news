@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>競合するAgent Skillsが引き起こす「takeover」現象 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="論文「One Skill Takes Over: Clashing Agent Skills and a One-File Fix」は、複数のAIエージェント用「スキル」（振る舞いを指示するファイル）を同時に読み込ませると、一方のスキルが他方を支配してしまう「takeover」現象が起きることを実証しました。著者らは同…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="競合するAgent Skillsが引き起こす「takeover」現象 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="論文「One Skill Takes Over: Clashing Agent Skills and a One-File Fix」は、複数のAIエージェント用「スキル」（振る舞いを指示するファイル）を同時に読み込ませると、一方のスキルが他方を支配してしまう「takeover」現象が起きることを実証しました。著者らは同…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/e445ecddf50193ea/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/e445ecddf50193ea/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "競合するAgent Skillsが引き起こす「takeover」現象", "datePublished": "2026-10-21", "description": "論文「One Skill Takes Over: Clashing Agent Skills and a One-File Fix」は、複数のAIエージェント用「スキル」（振る舞いを指示するファイル）を同時に読み込ませると、一方のスキルが他方を支配してしまう「takeover」現象が起きることを実証しました。著者らは同じタスクに競合するルールを持つ16組のス…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/e445ecddf50193ea/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.25064", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-21/">2026.10.21 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>競合するAgent Skillsが引き起こす「takeover」現象</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-21">2026.10.21</time></div>
+</header>
+<div class="article-body">
+<p>論文「One Skill Takes Over: Clashing Agent Skills and a One-File Fix」は、複数のAIエージェント用「スキル」（振る舞いを指示するファイル）を同時に読み込ませると、一方のスキルが他方を支配してしまう「takeover」現象が起きることを実証しました。著者らは同じタスクに競合するルールを持つ16組のスキルペアからなるベンチマーク「SkillClash」を構築し、4B〜235Bパラメータの7モデル（GPT-4.1、Qwen3、Claude系を含む）で検証しています。</p>
+<p>スキルを単独で与えた場合の規則遵守率は93〜99%でしたが、競合する2つのスキルを同時に与えると61〜62%まで低下しました。対策として、スキルファイルの末尾に両方のルールに従う例を1つ追加する「one-file fix」というシンプルな手法を提案し、大幅な改善を確認したとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『One Skill Takes Over: Clashing Agent Skills and a One-File Fix』である</li><li>著者はParsa Razmara、Seyedarmin Azizi、Ardalan Aryashadの3名である</li><li>論文は2026年10月18日に提出された(arXiv番号2610.25064)</li><li>研究では「SkillClash」という名称のベンチマークを構築した</li><li>SkillClashは同じタスクに対して競合するルールを持つ16組のスキルペアで構成される</li><li>各スキルペアには検証可能な参照出力が用意されている</li><li>評価には4Bから235Bパラメータまでの7つのモデルを用いた</li><li>評価対象モデルにはGPT-4.1、Qwen3、Claude系モデルが含まれる</li><li>スキルが単独で与えられた場合の規則遵守率は93%から99%だった</li><li>競合する2つのスキルが同時に与えられた場合の規則遵守率は61%から62%に低下した</li><li>競合時には一方のスキルが他方を支配する「takeover」という現象が観察された</li><li>解決策として、スキルファイルの末尾に両方のスキルに従う例を1つ追加する手法を提案した</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.25064" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E7%AB%B6%E5%90%88%E3%81%99%E3%82%8BAgent%20Skills%E3%81%8C%E5%BC%95%E3%81%8D%E8%B5%B7%E3%81%93%E3%81%99%E3%80%8Ctakeover%E3%80%8D%E7%8F%BE%E8%B1%A1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2Fe445ecddf50193ea%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E7%AB%B6%E5%90%88%E3%81%99%E3%82%8BAgent%20Skills%E3%81%8C%E5%BC%95%E3%81%8D%E8%B5%B7%E3%81%93%E3%81%99%E3%80%8Ctakeover%E3%80%8D%E7%8F%BE%E8%B1%A1%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-21/e445ecddf50193ea/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2Fe445ecddf50193ea%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../46fdd487635e07d8/"><span>前の記事</span>失敗を予測して早期停止するコーディングエージェント向けモニター</a><a class="next" href="../6757e16debcb08f0/"><span>次の記事</span>エージェントの逸脱行動を測る「AM-Bench」</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-21/">← 2026.10.21 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../46fdd487635e07d8/">失敗を予測して早期停止するコーディングエージェント向けモニター</a></h3>
+<p class="excerpt">論文「StopLoss: Teaching Agents to Predict Failure and Stop Early」は、失敗しそうな実行タスクを早期に打ち切るための小型の外部モニター「StopLoss」を提案しています。名称は…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../6757e16debcb08f0/">エージェントの逸脱行動を測る「AM-Bench」</a></h3>
+<p class="excerpt">「AM-Bench」は、LLMベースのエージェントが自律的に行動する際に「失敗」ではなく「有害な行動」を選んでしまう現象（エージェンティック・ミスアライメント）を評価するための統一タクソノミーとベンチマークです。犯罪学の「詐欺三角形」理…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-20/6f8a390cb99d56b9/">約8200個のツールから必要なものだけ推薦</a></h3>
+<p class="excerpt">マルチステップのAIエージェントが利用可能な外部ツールの数は約8,200個にも及び、全ての定義をコンテキストに収めることはできません。この論文は、ゲートウェイレベルで動作するツール推薦システムを提案し、各ツール呼び出しをエンドユーザーの…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-20">2026.10.20</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

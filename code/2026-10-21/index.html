@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gitleaks/gitleaks の config/allowlist.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="gitleaksはGitリポジトリから漏洩したAPIキーなどを検出するCLIツールで、Goらしいシンプルな構造とプロダクション品質のエラーハンドリングが学びやすいリポジトリです。config/allowlist.goは「誤検知として無視してよい条件（特定のコミット・パス・正規表現・ストップワード）」を表すAllowli…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="gitleaks/gitleaks の config/allowlist.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="gitleaksはGitリポジトリから漏洩したAPIキーなどを検出するCLIツールで、Goらしいシンプルな構造とプロダクション品質のエラーハンドリングが学びやすいリポジトリです。config/allowlist.goは「誤検知として無視してよい条件（特定のコミット・パス・正規表現・ストップワード）」を表すAllowli…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-21/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-21/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.21</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>gitleaks/gitleaks の <code>config/allowlist.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/gitleaks/gitleaks/blob/HEAD/config/allowlist.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-21">2026.10.21</time></div>
+</header>
+<div class="article-body">
+<p>gitleaksはGitリポジトリから漏洩したAPIキーなどを検出するCLIツールで、Goらしいシンプルな構造とプロダクション品質のエラーハンドリングが学びやすいリポジトリです。config/allowlist.goは「誤検知として無視してよい条件（特定のコミット・パス・正規表現・ストップワード）」を表すAllowlist構造体を定義しています。今回取り上げるValidate()メソッドは、ユーザー設定を安全な内部表現に変換する前処理で、mapを使った重複排除、外部ライブラリのメソッドチェーン、一度きりの初期化フラグなど、1年目が実務で頻繁に出会うGoのイディオムが凝縮されています。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>func (a *Allowlist) Validate() error {
+	if a.validated {
+		return nil
+	}
+
+	// Disallow empty allowlists.
+	if len(a.Commits) == 0 &amp;&amp;
+		len(a.Paths) == 0 &amp;&amp;
+		len(a.Regexes) == 0 &amp;&amp;
+		len(a.StopWords) == 0 {
+		return errors.New(&quot;must contain at least one check for: commits, paths, regexes, or stopwords&quot;)
+	}
+
+	// Deduplicate commits and stopwords.
+	if len(a.Commits) &gt; 0 {
+		uniqueCommits := make(map[string]struct{})
+		for _, commit := range a.Commits {
+			// Commits are case-insensitive.
+			uniqueCommits[strings.TrimSpace(strings.ToLower(commit))] = struct{}{}
+		}
+		a.Commits = maps.Keys(uniqueCommits)
+		a.commitMap = uniqueCommits
+	}
+	if len(a.StopWords) &gt; 0 {
+		uniqueStopwords := make(map[string]struct{})
+		for _, stopWord := range a.StopWords {
+			uniqueStopwords[strings.ToLower(stopWord)] = struct{}{}
+		}
+
+		values := maps.Keys(uniqueStopwords)
+		a.StopWords = values
+		a.stopwordTrie = ahocorasick.NewTrieBuilder().AddStrings(values).Build()
+	}
+
+	// Combine patterns into a single expression.
+	if len(a.Paths) &gt; 0 {
+		a.pathPat = joinRegexOr(a.Paths)
+	}
+	if len(a.Regexes) &gt; 0 {
+		a.regexPat = joinRegexOr(a.Regexes)
+	}
+
+	a.validated = true
+	return nil
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func (a *Allowlist) Validate() error {</code></pre><p>Goではメソッドを関数と区別するために「レシーバ」を書きます。`(a *Allowlist)` がレシーバで、「この関数はAllowlist型の値にくっつくメソッドですよ」という宣言です。`*Allowlist` の `*` はポインタ型を表し、「Allowlist構造体そのものではなく、それが置かれているメモリ上の場所への参照」を意味します。ポインタレシーバにする理由は、このメソッドの中で `a.commitMap` や `a.validated` といったフィールドを書き換えたいからです。値レシーバ（`*`なし）だとコピーに対して書き込むだけで元のデータは変わりません。戻り値の `error` はGoで「失敗するかもしれない処理」の定番の型で、呼び出し側は `if err := x.Validate(); err != nil { ... }` のようにチェックします。</p></div><div class="walk-step"><pre class="walk-quote"><code>if a.validated {
+		return nil
+	}</code></pre><p>`a.validated` はAllowlist構造体に定義されている bool 型のフィールドで、「このメソッドをもう実行済みか」を覚えておくためのフラグです。もしすでに検証・変換済みなら、重い処理（後述のmap作成やトライ木構築）をもう一度やらずに `nil`（エラーなし）を返して即終了します。Goにはコンストラクタがないので、こうした「初回だけ初期化する」パターンは構造体のメソッドの先頭でフラグを見る、という書き方でよく実現されます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if len(a.Commits) == 0 &amp;&amp;
+		len(a.Paths) == 0 &amp;&amp;
+		len(a.Regexes) == 0 &amp;&amp;
+		len(a.StopWords) == 0 {
+		return errors.New(&quot;must contain at least one check for: commits, paths, regexes, or stopwords&quot;)
+	}</code></pre><p>`len()` はスライス（可変長配列）やmapの要素数を返す組み込み関数です。ここでは4つのスライスフィールドが全部空かどうかを `&amp;&amp;`（論理AND）でつないで判定しています。Goは1つの条件式を複数行に分けて書けるので、長い条件は改行してインデントを揃えるのが慣習です。全部空、つまり「何も許可条件がない」設定はバグの可能性が高いので、`errors.New(&quot;...&quot;)` でエラーメッセージ付きのerror値を作って早期リターンしています。「許可リストなのに何も指定されていない」というユーザー設定ミスを早い段階で弾いている、という設計意図です。</p></div><div class="walk-step"><pre class="walk-quote"><code>uniqueCommits := make(map[string]struct{})
+		for _, commit := range a.Commits {
+			// Commits are case-insensitive.
+			uniqueCommits[strings.TrimSpace(strings.ToLower(commit))] = struct{}{}
+		}</code></pre><p>`map[string]struct{}` はキーがstring、値が空の構造体 `struct{}` というmapです。`struct{}` は中身が何もない型で、メモリをほぼ消費しません。Goには集合（Set）型が標準にないため、「値は使わず、キーの有無だけ見たい」ときは慣習的にこの `map[キー型]struct{}` を集合代わりに使います。`for _, commit := range a.Commits` はスライスを先頭から順になめるループで、`_` はインデックス（0,1,2…）を受け取るが使わない、という意味の「捨てる変数」です。ループの中では `strings.ToLower` で小文字化し、`strings.TrimSpace` で前後の空白を除去してからmapのキーとして登録しています。同じコミットハッシュが大文字・小文字や空白違いで複数回書かれていても、ここで1つに正規化・重複排除されます。</p></div><div class="walk-step"><pre class="walk-quote"><code>a.Commits = maps.Keys(uniqueCommits)
+		a.commitMap = uniqueCommits</code></pre><p>`maps.Keys(uniqueCommits)` は `golang.org/x/exp/maps` パッケージの関数で、mapからキーだけを取り出してスライスにして返します。ここで正規化・重複排除済みのコミット一覧を `a.Commits` に書き戻し、さらに判定を高速化するために元のmapそのもの（`a.commitMap`）もフィールドに保存しています。スライス `a.Commits` は人間が読む用・ログ出力用、map `a.commitMap` は「このコミットは含まれているか？」を毎回ループせず `O(1)`（mapの検索は定数時間）で調べる用、という役割分担です。1つのデータを「表示用の形」と「高速検索用の形」の2つで持っておく、という設計判断がここに表れています。</p></div><div class="walk-step"><pre class="walk-quote"><code>values := maps.Keys(uniqueStopwords)
+		a.StopWords = values
+		a.stopwordTrie = ahocorasick.NewTrieBuilder().AddStrings(values).Build()</code></pre><p>ここはコミットと同じ重複排除パターンをストップワード（無視したい単語）に対して行った後、さらに一歩進んでいます。`ahocorasick.NewTrieBuilder().AddStrings(values).Build()` は外部ライブラリの「メソッドチェーン」という書き方で、`NewTrieBuilder()` がビルダーオブジェクトを作り、`.AddStrings(values)` がそのビルダーに単語群を登録して（登録後のビルダー自身を返す）、`.Build()` が最終的な検索用データ構造（トライ木）を組み立てて返す、という3段階の呼び出しを1行でつなげています。Aho-Corasickはたくさんの単語を1回のテキストスキャンでまとめて検索できるアルゴリズムで、ストップワードが何百個あっても高速に「このテキストにどれか含まれているか」を調べられるようにする仕組みです。</p></div><div class="walk-step"><pre class="walk-quote"><code>if len(a.Paths) &gt; 0 {
+		a.pathPat = joinRegexOr(a.Paths)
+	}
+	if len(a.Regexes) &gt; 0 {
+		a.regexPat = joinRegexOr(a.Regexes)
+	}</code></pre><p>`a.Paths` や `a.Regexes` はそれぞれ複数の正規表現（`*regexp.Regexp` のスライス）です。`joinRegexOr` は同じファイル内の別の関数で、複数の正規表現を `(パターン1)|(パターン2)|...` のようなOR条件の1本の正規表現にまとめていると考えられます（この関数自体は今回の引用範囲外です）。これにより、後で実際にパス文字列や秘密情報の文字列をチェックするときに、正規表現を1つずつ順番に試す代わりに、まとめた1本の正規表現に対して1回マッチさせるだけで済みます。設定が増えてもチェック処理の呼び出し回数が増えない、という性能面の工夫です。</p></div><div class="walk-step"><pre class="walk-quote"><code>a.validated = true
+	return nil</code></pre><p>最後に `a.validated` を `true` にしてから `nil` を返します。これで次回以降このメソッドが呼ばれても、冒頭の `if a.validated { return nil }` に引っかかって、ここまでの重複排除やトライ木構築が二度と実行されなくなります。「最初に呼ばれたときだけ重い変換処理を行い、結果をフィールドにキャッシュしておく」という遅延初期化（lazy initialization）のパターンです。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「一度だけ実行したい重い初期化処理」はbool型フラグ（例: validated）で冒頭をガードし、「値は要らずキーの有無だけ知りたい集合」はmap[キー型]struct{}で表現する——この2つのGoイディオムは、今日から自分のコードでそのまま真似できます。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-20/"><span>前の日</span>gogs/gogs</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-21/">← 2026.10.21 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

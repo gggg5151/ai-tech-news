@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="筆者が運営するWebサイトで、Next.js App Router（ディレクトリ構造でルーティングを定義する仕組み）とSupabaseを使ったマジックリンク認証が約1ヶ月間壊れており、誰もログインできない状態が続いていたという体験談です。原因は、Route Handler内で await cookies() によってセ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="筆者が運営するWebサイトで、Next.js App Router（ディレクトリ構造でルーティングを定義する仕組み）とSupabaseを使ったマジックリンク認証が約1ヶ月間壊れており、誰もログインできない状態が続いていたという体験談です。原因は、Route Handler内で await cookies() によってセ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/ce0ba1b6a7caca16/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/ce0ba1b6a7caca16/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」", "datePublished": "2026-10-21", "description": "筆者が運営するWebサイトで、Next.js App Router（ディレクトリ構造でルーティングを定義する仕組み）とSupabaseを使ったマジックリンク認証が約1ヶ月間壊れており、誰もログインできない状態が続いていたという体験談です。原因は、Route Handler内で await cookies() によってセッションCookieを書き込んだ後に N…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-21/ce0ba1b6a7caca16/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/joemike/articles/nextjs-supabase-auth-callback-magic-link-bug-2026", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-21/">2026.10.21 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>Next.js×Supabaseの認証が1ヶ月壊れていた「Cookie落とし穴」</h1>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-21">2026.10.21</time></div>
+</header>
+<div class="article-body">
+<p>筆者が運営するWebサイトで、Next.js App Router（ディレクトリ構造でルーティングを定義する仕組み）とSupabaseを使ったマジックリンク認証が約1ヶ月間壊れており、誰もログインできない状態が続いていたという体験談です。原因は、Route Handler内で await cookies() によってセッションCookieを書き込んだ後に NextResponse.redirect() を返すと、そのCookieがリダイレクトレスポンスに引き継がれないというNext.jsの挙動でした。</p>
+<p>HTTP 302（リダイレクトを示すステータスコード）レスポンス自体は表面上成功しているように見えるため、型チェックやLinter（コードの誤りを検出する静的解析ツール）では検知できず、長期間気づけなかったといいます。解決策は、redirectオブジェクト自体に response.cookies.set() の形で直接Cookieをセットすることでした。</p>
+<p>同じ時期にStripeのWebhook（イベント発生時に外部へ通知するコールバック）も1週間すべて失敗していたことが判明しました。原因はnakedドメインからwww.への301リダイレクトで、Stripeはセキュリティ上の理由からPOSTリクエストに対する301リダイレクトを追跡しないためでした。</p>
+<p>再発防止として、筆者はGitHub Actionsを使い6時間ごとにsmoke testを実行する自動監視を導入したとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者のWebサイトで約1ヶ月間、マジックリンク認証によるログインができない状態が続いていた</li><li>原因はNext.js App RouterのRoute Handlerで await cookies() によりセッションCookieを書き込んだ後に NextResponse.redirect() を返すと、そのCookieがリダイレクトレスポンスに引き継がれないという挙動だった</li><li>HTTP 302レスポンスは表面上成功しているように見えるため、型チェックやLinterではこの不具合を検知できなかった</li><li>解決策はredirectオブジェクト自体に response.cookies.set(name, value, options) の形で直接Cookieをセットすることだった</li><li>著者のStripe Webhookも1週間にわたって全て失敗していた</li><li>Stripe Webhook失敗の原因は、nakedドメインから www. への301リダイレクトだった</li><li>Stripeはセキュリティ上の理由からPOSTリクエストに対する301リダイレクトを追跡しない</li><li>著者は再発防止策として、GitHub Actionsを使い6時間ごとにsmoke testを実行する自動監視を導入した</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>NextResponse.redirect() は Cookie を引き継がない</blockquote><p class="quotes-source">出典: <a href="https://zenn.dev/joemike/articles/nextjs-supabase-auth-callback-magic-link-bug-2026" target="_blank" rel="noopener noreferrer">zenn.dev</a></p></section>
+<aside class="source-box"><a href="https://zenn.dev/joemike/articles/nextjs-supabase-auth-callback-magic-link-bug-2026" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=Next.js%C3%97Supabase%E3%81%AE%E8%AA%8D%E8%A8%BC%E3%81%8C1%E3%83%B6%E6%9C%88%E5%A3%8A%E3%82%8C%E3%81%A6%E3%81%84%E3%81%9F%E3%80%8CCookie%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2Fce0ba1b6a7caca16%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=Next.js%C3%97Supabase%E3%81%AE%E8%AA%8D%E8%A8%BC%E3%81%8C1%E3%83%B6%E6%9C%88%E5%A3%8A%E3%82%8C%E3%81%A6%E3%81%84%E3%81%9F%E3%80%8CCookie%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-21/ce0ba1b6a7caca16/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-21%2Fce0ba1b6a7caca16%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../b53b18104dad38fa/"><span>前の記事</span>Claudeがサソリ神経毒への結合タンパク質を設計</a><a class="next" href="../747d9c495757d6c0/"><span>次の記事</span>GenkitがTypeScript/Go向けAgents APIを公開</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-21/">← 2026.10.21 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../747d9c495757d6c0/">GenkitがTypeScript/Go向けAgents APIを公開</a></h3>
+<p class="excerpt">Googleがエージェント構築フレームワーク「Genkit」向けに、新しい「Agents API」のプレビュー版をリリースしたと報じられています。現在TypeScriptとGoで利用可能で、Python・Dartへの対応も予定されていま…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>infoq.com</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../eb15d922abefeeda/">Go 1.27、strings.CutLastで末尾分割が1行に</a></h3>
+<p class="excerpt">Go 1.27で新たに追加された文字列操作関数 strings.CutLast を紹介する技術記事です。シグネチャは func CutLast(s, sep string) (before, after string, found bo…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../9388c99a9a167ebb/">ESLint+PrettierからOxlint+Oxfmtへ、モノレポ移行の実運用</a></h3>
+<p class="excerpt">REALITY Tech所属の筆者が、pnpm workspaceとTurborepoを用いるモノレポ（複数パッケージを1つのリポジトリで管理する構成）で、ESLint+PrettierからOxlint+Oxfmtへ移行した実運用記録で…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-21">2026.10.21</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
