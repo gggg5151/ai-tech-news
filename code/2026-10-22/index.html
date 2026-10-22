@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tailscale/tailscale の atomicfile/atomicfile.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="TailscaleはWireGuardベースのVPNを誰でも簡単に使えるようにするプロダクトで、デーモン(tailscaled)やCLI、Kubernetesオペレーターなど多数のGoコードベースから成ります。今回選んだ atomicfile/atomicfile.go は「設定ファイルを壊れた状態で保存してしまう」と…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="tailscale/tailscale の atomicfile/atomicfile.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="TailscaleはWireGuardベースのVPNを誰でも簡単に使えるようにするプロダクトで、デーモン(tailscaled)やCLI、Kubernetesオペレーターなど多数のGoコードベースから成ります。今回選んだ atomicfile/atomicfile.go は「設定ファイルを壊れた状態で保存してしまう」と…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-22/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-22/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.22</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>tailscale/tailscale の <code>atomicfile/atomicfile.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/tailscale/tailscale/blob/HEAD/atomicfile/atomicfile.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-22">2026.10.22</time></div>
+</header>
+<div class="article-body">
+<p>TailscaleはWireGuardベースのVPNを誰でも簡単に使えるようにするプロダクトで、デーモン(tailscaled)やCLI、Kubernetesオペレーターなど多数のGoコードベースから成ります。今回選んだ atomicfile/atomicfile.go は「設定ファイルを壊れた状態で保存してしまう」という実運用で起きがちな事故を防ぐための、たった50行ほどの小さなパッケージです。main関数の羅列ではなく、1つの関数で「なぜこう書くか」が完結して学べるため教材に選びました。他にファイルも数点取得して比較しましたが、この関数が最も自己完結していて新卒向けの題材に適していました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>// WriteFile writes data to filename+some suffix, then renames it into filename.
+// The perm argument is ignored on Windows, but if the target filename already
+// exists then the target file&#x27;s attributes and ACLs are preserved. If the target
+// filename already exists but is not a regular file, WriteFile returns an error.
+func WriteFile(filename string, data []byte, perm os.FileMode) (err error) {
+	fi, err := os.Stat(filename)
+	if err == nil &amp;&amp; !fi.Mode().IsRegular() {
+		return fmt.Errorf(&quot;%s already exists and is not a regular file&quot;, filename)
+	}
+	f, err := os.CreateTemp(filepath.Dir(filename), filepath.Base(filename)+&quot;.tmp&quot;)
+	if err != nil {
+		return err
+	}
+	tmpName := f.Name()
+	defer func() {
+		if err != nil {
+			f.Close()
+			os.Remove(tmpName)
+		}
+	}()
+	if _, err := f.Write(data); err != nil {
+		return err
+	}
+	if runtime.GOOS != &quot;windows&quot; {
+		if err := f.Chmod(perm); err != nil {
+			return err
+		}
+	}
+	if err := f.Sync(); err != nil {
+		return err
+	}
+	if err := f.Close(); err != nil {
+		return err
+	}
+	return Rename(tmpName, filename)
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>func WriteFile(filename string, data []byte, perm os.FileMode) (err error) {</code></pre><p>関数の戻り値に `(err error)` という名前が付いています。これは「名前付き戻り値」という構文で、関数の中で `err` という変数がすでに宣言されているのと同じ状態になります。普通なら `func WriteFile(...) error` と書いて `return someErr` としますが、ここでは後述する `defer` の中から `err` の最終的な値を読みたいので、あえて名前を付けています。`[]byte` はバイト列（生データ）を表すGoの基本型で、ファイルに書き込む中身がここに入ります。`os.FileMode` はファイルのパーミッション（`0644`のような権限）を表す型です。</p></div><div class="walk-step"><pre class="walk-quote"><code>fi, err := os.Stat(filename)
+	if err == nil &amp;&amp; !fi.Mode().IsRegular() {
+		return fmt.Errorf(&quot;%s already exists and is not a regular file&quot;, filename)
+	}</code></pre><p>`os.Stat(filename)` は指定したパスのファイル情報（サイズ、種類、権限など）を取得します。ファイルが存在しない場合は `err` にエラーが入り、存在する場合は `err == nil` です。`fi.Mode().IsRegular()` は「それが普通のファイルか（ディレクトリやシンボリックリンクではないか）」を真偽値で返します。`!` は否定なので、「存在していて、かつ普通のファイルではない」ときにエラーを返しています。つまりディレクトリを上書きしようとする事故を事前に防いでいます。`fmt.Errorf` は `fmt.Sprintf` と同じ書式でエラー値を作る関数で、`%s` に `filename` が埋め込まれます。</p></div><div class="walk-step"><pre class="walk-quote"><code>f, err := os.CreateTemp(filepath.Dir(filename), filepath.Base(filename)+&quot;.tmp&quot;)
+	if err != nil {
+		return err
+	}
+	tmpName := f.Name()</code></pre><p>ここがこのコードの核心となる設計判断です。`filename` に直接書き込むのではなく、まず**同じディレクトリに一時ファイルを作る**のです。`filepath.Dir(filename)` はパスからディレクトリ部分だけを取り出し、`filepath.Base(filename)` はファイル名部分だけを取り出します。それに `.tmp` を付けた名前のヒントを渡して `os.CreateTemp` に一時ファイルを作らせています。同じディレクトリに作る理由は後述のリネーム処理に関係します。`f.Name()` で実際に作られた一時ファイルの完全パスを `tmpName` に保存しておきます。</p></div><div class="walk-step"><pre class="walk-quote"><code>defer func() {
+		if err != nil {
+			f.Close()
+			os.Remove(tmpName)
+		}
+	}()</code></pre><p>`defer` はこの関数が（正常終了でもエラーでも）終わる直前に実行される処理を登録する構文です。ここでは無名関数（関数リテラル）を登録し、末尾の `()` でそれをすぐ呼び出す形にしています。中身は「もし最終的に `err` がnilでなければ、開いたままの一時ファイルを閉じて削除する」という後始末です。ポイントは、この無名関数が外側の `err`（名前付き戻り値）をそのまま参照していることです。関数の途中で `return err` されると、Goは戻り値の `err` にその値を代入してからdeferを実行するため、この後始末コードは「最終的に関数がエラーで終わったかどうか」を正しく見られます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if _, err := f.Write(data); err != nil {
+		return err
+	}</code></pre><p>`f.Write(data)` は一時ファイルに実際のデータを書き込みます。戻り値は「書き込んだバイト数」と「エラー」の2つですが、バイト数は使わないので `_`（ブランク識別子、値を捨てる記号）で受けています。注意点として、ここの `err :=` は外側の名前付き戻り値 `err` とは別の、`if` の中だけで有効なローカル変数です（`:=` はスコープ内で新しい変数を作る）。それでも `return err` すれば関数全体の戻り値 `err` にはその値がコピーされるので、先ほどのdeferの後始末は正しく動きます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if runtime.GOOS != &quot;windows&quot; {
+		if err := f.Chmod(perm); err != nil {
+			return err
+		}
+	}</code></pre><p>`runtime.GOOS` はこのプログラムがビルドされた（実行される）OSの名前を表す文字列定数です（&quot;windows&quot;、&quot;linux&quot;、&quot;darwin&quot;など）。Windowsではパーミッションの概念がUnix系と異なるため、ここでは「Windows以外のときだけ」`f.Chmod(perm)` でファイルの権限を引数で渡された `perm` に設定しています。関数冒頭のコメントに書かれていた「perm引数はWindowsでは無視される」という仕様がそのままコードに表れています。</p></div><div class="walk-step"><pre class="walk-quote"><code>if err := f.Sync(); err != nil {
+		return err
+	}
+	if err := f.Close(); err != nil {
+		return err
+	}</code></pre><p>`f.Sync()` はOSのバッファにまだ残っているデータを強制的にディスクへ書き出させる呼び出しです。これを呼ばないと、直後にプロセスやマシンが落ちた場合に書き込んだはずのデータが失われる可能性があります。その後 `f.Close()` でファイルハンドルを閉じます。両方ともエラーを返す可能性があるためチェックしていますが、ここで使われている `err` もこの `if` 文のスコープ内だけの変数です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return Rename(tmpName, filename)
+}</code></pre><p>最後に、一時ファイル `tmpName` を本来の `filename` にリネームします。ここが「アトミック（原子的）」と呼ばれる理由です。多くのOSでは、同じディレクトリ内でのリネームは一瞬で完結し、途中の中間状態が外部から観測されません。つまり他のプロセスが `filename` を読んだとき、必ず「古い内容」か「新しい内容」のどちらか全体を見ることになり、「書き込み途中の壊れた内容」を見ることは原理上ありません。もし先に一時ファイルを別ディレクトリに作っていたら、リネームがディスクをまたぐコピーになってしまい、このアトミック性が崩れる可能性があるため、最初に同じディレクトリに一時ファイルを作ったわけです。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>設定ファイルやキャッシュなど「書き込み途中の状態を絶対に外から見せたくないファイル」を保存するときは、直接上書きせず「同じディレクトリに一時ファイルを作って書き込み→Sync→Closeしてから、最後に目的のファイル名へリネームする」というパターンを使うと、プロセスが途中で落ちても壊れたファイルが残らない。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-21/"><span>前の日</span>gitleaks/gitleaks</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-22/">← 2026.10.22 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

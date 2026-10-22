@@ -104,7 +104,7 @@
 	}</code></pre><p>`a.Paths` や `a.Regexes` はそれぞれ複数の正規表現（`*regexp.Regexp` のスライス）です。`joinRegexOr` は同じファイル内の別の関数で、複数の正規表現を `(パターン1)|(パターン2)|...` のようなOR条件の1本の正規表現にまとめていると考えられます（この関数自体は今回の引用範囲外です）。これにより、後で実際にパス文字列や秘密情報の文字列をチェックするときに、正規表現を1つずつ順番に試す代わりに、まとめた1本の正規表現に対して1回マッチさせるだけで済みます。設定が増えてもチェック処理の呼び出し回数が増えない、という性能面の工夫です。</p></div><div class="walk-step"><pre class="walk-quote"><code>a.validated = true
 	return nil</code></pre><p>最後に `a.validated` を `true` にしてから `nil` を返します。これで次回以降このメソッドが呼ばれても、冒頭の `if a.validated { return nil }` に引っかかって、ここまでの重複排除やトライ木構築が二度と実行されなくなります。「最初に呼ばれたときだけ重い変換処理を行い、結果をフィールドにキャッシュしておく」という遅延初期化（lazy initialization）のパターンです。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「一度だけ実行したい重い初期化処理」はbool型フラグ（例: validated）で冒頭をガードし、「値は要らずキーの有無だけ知りたい集合」はmap[キー型]struct{}で表現する——この2つのGoイディオムは、今日から自分のコードでそのまま真似できます。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-20/"><span>前の日</span>gogs/gogs</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-20/"><span>前の日</span>gogs/gogs</a><a class="next" href="../2026-10-22/"><span>次の日</span>tailscale/tailscale</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-21/">← 2026.10.21 の号を読む</a>
 </div>
 </article>
