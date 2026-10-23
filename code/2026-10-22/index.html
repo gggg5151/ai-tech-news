@@ -99,7 +99,7 @@ func WriteFile(filename string, data []byte, perm os.FileMode) (err error) {
 	}</code></pre><p>`f.Sync()` はOSのバッファにまだ残っているデータを強制的にディスクへ書き出させる呼び出しです。これを呼ばないと、直後にプロセスやマシンが落ちた場合に書き込んだはずのデータが失われる可能性があります。その後 `f.Close()` でファイルハンドルを閉じます。両方ともエラーを返す可能性があるためチェックしていますが、ここで使われている `err` もこの `if` 文のスコープ内だけの変数です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return Rename(tmpName, filename)
 }</code></pre><p>最後に、一時ファイル `tmpName` を本来の `filename` にリネームします。ここが「アトミック（原子的）」と呼ばれる理由です。多くのOSでは、同じディレクトリ内でのリネームは一瞬で完結し、途中の中間状態が外部から観測されません。つまり他のプロセスが `filename` を読んだとき、必ず「古い内容」か「新しい内容」のどちらか全体を見ることになり、「書き込み途中の壊れた内容」を見ることは原理上ありません。もし先に一時ファイルを別ディレクトリに作っていたら、リネームがディスクをまたぐコピーになってしまい、このアトミック性が崩れる可能性があるため、最初に同じディレクトリに一時ファイルを作ったわけです。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>設定ファイルやキャッシュなど「書き込み途中の状態を絶対に外から見せたくないファイル」を保存するときは、直接上書きせず「同じディレクトリに一時ファイルを作って書き込み→Sync→Closeしてから、最後に目的のファイル名へリネームする」というパターンを使うと、プロセスが途中で落ちても壊れたファイルが残らない。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-21/"><span>前の日</span>gitleaks/gitleaks</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-21/"><span>前の日</span>gitleaks/gitleaks</a><a class="next" href="../2026-10-23/"><span>次の日</span>gosom/google-maps-scraper</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-22/">← 2026.10.22 の号を読む</a>
 </div>
 </article>

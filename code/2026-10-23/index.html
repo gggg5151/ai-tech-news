@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gosom/google-maps-scraper の exiter/exiter.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="google-maps-scraperはGoogleマップから店舗情報を並行スクレイピングするツールです。検索キーワード(seed)ごとに複数の店舗(place)が見つかり、それぞれ非同期に処理が完了していきます。「全部終わったらスクレイピング処理を止める」という、並行処理では地味だけど難しい終了判定を、このexite…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="gosom/google-maps-scraper の exiter/exiter.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="google-maps-scraperはGoogleマップから店舗情報を並行スクレイピングするツールです。検索キーワード(seed)ごとに複数の店舗(place)が見つかり、それぞれ非同期に処理が完了していきます。「全部終わったらスクレイピング処理を止める」という、並行処理では地味だけど難しい終了判定を、このexite…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-23/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-23/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.23</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>gosom/google-maps-scraper の <code>exiter/exiter.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/gosom/google-maps-scraper/blob/HEAD/exiter/exiter.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-23">2026.10.23</time></div>
+</header>
+<div class="article-body">
+<p>google-maps-scraperはGoogleマップから店舗情報を並行スクレイピングするツールです。検索キーワード(seed)ごとに複数の店舗(place)が見つかり、それぞれ非同期に処理が完了していきます。「全部終わったらスクレイピング処理を止める」という、並行処理では地味だけど難しい終了判定を、このexiterパッケージが1つの型に閉じ込めて担当しています。mutexと channel の組み合わせがコンパクトに出てくるので、Goの並行処理の実例として選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>package exiter
+
+import (
+	&quot;context&quot;
+	&quot;sync&quot;
+)
+
+type Exiter interface {
+	SetSeedCount(int)
+	SetCancelFunc(context.CancelFunc)
+	IncrSeedCompleted(int)
+	IncrPlacesFound(int)
+	IncrPlacesCompleted(int)
+	Run(context.Context)
+}
+
+type exiter struct {
+	seedCount       int
+	seedCompleted   int
+	placesFound     int
+	placesCompleted int
+
+	mu         *sync.Mutex
+	cancelFunc context.CancelFunc
+	doneCh     chan struct{}
+}
+
+func New() Exiter {
+	return &amp;exiter{
+		mu:     &amp;sync.Mutex{},
+		doneCh: make(chan struct{}, 1),
+	}
+}
+
+// …略…
+
+func (e *exiter) IncrSeedCompleted(val int) {
+	e.mu.Lock()
+	e.seedCompleted += val
+	done := e.seedCompleted &gt;= e.seedCount &amp;&amp; e.placesCompleted &gt;= e.placesFound
+	e.mu.Unlock()
+
+	if done {
+		select {
+		case e.doneCh &lt;- struct{}{}:
+		default:
+		}
+	}
+}
+
+// …略…
+
+func (e *exiter) Run(ctx context.Context) {
+	select {
+	case &lt;-ctx.Done():
+		return
+	case &lt;-e.doneCh:
+		if e.cancelFunc != nil {
+			e.cancelFunc()
+		}
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>type Exiter interface {
+	SetSeedCount(int)
+	SetCancelFunc(context.CancelFunc)
+	...
+}</code></pre><p>Goの`interface`は「これらのメソッドを持っていること」だけを要求する型です。中身（具体的な構造体）を書かずに、外から見える操作一覧だけを宣言しています。こうしておくと、この後に出てくる`exiter`という具体的な実装を、呼び出し側は`Exiter`という抽象名だけ見て使えます。テストで別の実装に差し替えたり、将来実装を変えたりしやすくなるのがメリットです。</p></div><div class="walk-step"><pre class="walk-quote"><code>type exiter struct {
+	seedCount       int
+	seedCompleted   int
+	placesFound     int
+	placesCompleted int
+
+	mu         *sync.Mutex
+	cancelFunc context.CancelFunc
+	doneCh     chan struct{}
+}</code></pre><p>`struct`はフィールドをまとめた型（他言語のクラスのデータ部分に近いもの）です。前半4つのint型フィールドで「探す対象のseed数」「終わったseed数」「見つかったplace数」「終わったplace数」を数えています。`mu *sync.Mutex`の`*`はポインタで、「Mutex本体そのもの」ではなく「Mutexがどこにあるかを指す矢印」を持つという意味です。`sync.Mutex`は複数のgoroutine（Goの軽量スレッド）が同じデータを同時に書き換えて壊してしまわないようにする鍵（排他制御）です。`chan struct{}`は「空の値（struct{}、何のデータも持たない型）だけをやり取りするchannel（goroutine間の通信路）」で、ここでは値そのものより「送られてきたという事実」だけを使う合図用です。</p></div><div class="walk-step"><pre class="walk-quote"><code>func New() Exiter {
+	return &amp;exiter{
+		mu:     &amp;sync.Mutex{},
+		doneCh: make(chan struct{}, 1),
+	}
+}</code></pre><p>`New`はこの型のインスタンスを作るためのコンストラクタ関数で、戻り値の型は構造体ではなく先ほどの`Exiter`インターフェースです。`&amp;exiter{...}`の`&amp;`は「このstructのポインタを作る」という意味で、フィールド名を指定して値を埋める書き方（構造体リテラル）です。`make(chan struct{}, 1)`はchannelを作る組み込み関数`make`の呼び出しで、第2引数の`1`は「バッファサイズ1」、つまり受け手がまだ読んでいなくても1個だけは送信側がブロックされずに送れる、という意味です。このバッファが後の非ブロッキング送信を成立させる鍵になります。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (e *exiter) IncrSeedCompleted(val int) {
+	e.mu.Lock()
+	e.seedCompleted += val
+	done := e.seedCompleted &gt;= e.seedCount &amp;&amp; e.placesCompleted &gt;= e.placesFound
+	e.mu.Unlock()</code></pre><p>`func (e *exiter) IncrSeedCompleted(...)`の`(e *exiter)`はメソッドの「受信者（レシーバ）」です。`exiter`型の値に対して呼べる関数、という意味で、`e`はその値へのポインタとして関数内で使えます。処理の中身は、`mu.Lock()`で鍵をかけてから`seedCompleted`を増やし、「全seedが終わっていて、かつ見つかった全placeも終わっている」という完了条件を`done`という変数に計算し、`mu.Unlock()`で鍵を外しています。複数のgoroutineが同時にこのメソッドを呼んでも、Lockされている間は1つずつ順番に処理されるので、カウンタが壊れません。</p></div><div class="walk-step"><pre class="walk-quote"><code>if done {
+		select {
+		case e.doneCh &lt;- struct{}{}:
+		default:
+		}
+	}</code></pre><p>注目すべきは、`done`の判定を`Unlock()`より前に済ませ、channelへの送信は`Unlock()`した後でやっていることです。鍵をかけたままchannelに送ろうとすると、受け手が詰まっている間ずっと鍵を握り続けてしまい、他のgoroutineがカウンタを更新できなくなる恐れがあるので、わざと鍵を外した後に送信しています。`select { case ...: default: }`はGoの`select`文の特殊な使い方で、「`e.doneCh &lt;- struct{}{}`（channelへの空値送信）が今すぐできるならそれを実行し、できなければ（channelが満杯で待たされるなら）即座に`default`に進んで何もしない」という非ブロッキング送信です。バッファが1つあるので、1回目の送信はすぐ成功し、仮に複数のgoroutineが同時に`done`判定を通っても2回目以降は`default`に落ちて固まりません。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (e *exiter) Run(ctx context.Context) {
+	select {
+	case &lt;-ctx.Done():
+		return
+	case &lt;-e.doneCh:
+		if e.cancelFunc != nil {
+			e.cancelFunc()
+		}
+	}
+}</code></pre><p>`Run`は呼び出し側が「完了を待つ」ために呼ぶメソッドです。ここでの`select`は先ほどと違い、2つの受信待ちのうち先に準備できた方を実行する使い方です。`ctx.Context`はGoで「いつ処理をやめるべきか」を伝える標準的な仕組みで、`ctx.Done()`はそのcontextが（タイムアウトや上位からの中断で）終了を知らせるためのchannelを返します。つまりこのselectは「外部から中断されたら(`ctx.Done()`)何もせず戻る」か「全作業完了の合図(`e.doneCh`)が来たら、登録されていた`cancelFunc`（他のgoroutineに停止を伝える関数）を呼ぶ」かのどちらか早い方を実行し、どちらも来るまでここでブロック（待機）します。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>複数のgoroutineで共有するカウンタを更新するときは、mutexで鍵をかける範囲を「判定に必要な最小限」にとどめ、channelへの送信など待たされる可能性のある操作は鍵を外した後にして、buffered channel + select-default の非ブロッキング送信で済ませると、処理が固まる心配がなくなる。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-22/"><span>前の日</span>tailscale/tailscale</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-23/">← 2026.10.23 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

@@ -25,7 +25,31 @@
 </header>
 <div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../../">今日の号</a><a class=""  href="../../../ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../">開発・技術</a><a class=""  href="../../../github/">リポジトリ</a><a class=""  href="../../../papers/">論文・研究</a><a class="" href="../../../../code/">今日のコード</a><a class="archive-nav " href="../../../../archive/">過去の号</a></nav></div>
 <main id="main" class="wrap">
-<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全223記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<header class="page-heading cat-tech"><h1><span class="category-dot"></span>開発・技術</h1><p>全227記事</p></header><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-18/304c82bcf1e78f61/">Go・MySQL・Valkeyで組むイベントストリーミング</a></h3>
+<p class="excerpt">Go・MySQL・Valkey(Redis互換のインメモリデータストア)を用いたイベントストリーミングシステムの構築方法を解説する技術記事です。APIが注文データとoutboxへの書き込みを同一トランザクションで行うTransactio…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-18">2026.10.18</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-17/74d139e70682eb6b/">AIが書いたTypeScriptの「雑さ」をOxlintで機械的に弾く</a></h3>
+<p class="excerpt">ai-deslopは、AIが生成しがちな「根拠の薄い」コードパターン（二重の型アサーションや広すぎる引数の型など）を検出する、Oxlint（Rust製のリンター）向けのJSプラグインです。2026年10月14日にShow HNで公開され…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-17/7e81fea2e7b3ce9d/">Claude CodeのAPIキーを1Password CLIで平文のまま持たない運用法</a></h3>
+<p class="excerpt">NOT A HOTELのソフトウェアチームに所属するkajinari氏が、Claude Code利用時にディスクへ平文で保存されがちなAI APIキーの漏洩リスクを排除するため、1Password CLIと連携させる実装方法を解説してい…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../../../../articles/2026-10-17/fedb6900c64d2a0b/">AIの同時実行数を1から50へ、LLM処理を7MBのGoゲートウェイに移した話</a></h3>
+<p class="excerpt">筆者のLaravelアプリには翻訳・例文生成・ビジネスメール下書き作成という3つのAI機能がありますが、1回のLLM呼び出しには2〜30秒かかります。既存のPHPキューワーカー方式はタスクを1つずつ処理し待機中もプロセスを占有するため、…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-17">2026.10.17</time></div>
+</article>
+<article class="news-card cat-tech">
 <a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
 <h3><a href="../../../../articles/2026-10-17/94e20bddb8cfa742/">chiの脆弱性修正をきっかけに個人開発の棚卸しで見つかった5つの穴</a></h3>
 <p class="excerpt">筆者はGoとCloud Runを用いた個人開発サービス群を運用しています。chiフレームワークのv5.4.0（10月12日リリース、ClientIPFromXFFの偽装に関する脆弱性修正）とv5.5.0（10月14日リリース、Suppr…</p>
@@ -144,30 +168,6 @@
 <h3><a href="../../../../articles/2026-10-10/e38fbd796d4d5a7a/">Tera Termマクロ運用に限界、Go+WailsでNW一括ログインツールを自作</a></h3>
 <p class="excerpt">ネットワーク保守業務に携わる筆者が、Tera Termマクロによる複数ネットワーク機器への一括ログイン運用の限界を解消するため、Go言語とWails（GoでネイティブGUIアプリを作れるフレームワーク）で一括ログイン・コマンド実行・ログ…</p>
 <div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-10">2026.10.10</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-10-10/2f075427c7c43fc7/">Drizzle ORM、スキーマを正にマイグレーションとバリデーションを一貫管理</a></h3>
-<p class="excerpt">Next.js学習中の筆者が、Drizzle ORMを試して便利だった点を備忘録としてまとめた記事です。TypeScriptでスキーマを定義すると、書き込み用の型と読み込み用の型を自動で推出できます。マイグレーションは、DBに直接スキー…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>qiita.com</span><time datetime="2026-10-10">2026.10.10</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-10-10/ea8d459cd8810280/">NotionとSlackからClaude Codeに仕事を依頼、サブスク枠で運用した話</a></h3>
-<p class="excerpt">筆者が、NotionやSlackからClaude Codeに仕事を依頼できる仕組みを「Claude Code Routines」で自作した体験談です。目的はAPIの従量課金を避けつつ、サブスクリプションの枠内でClaudeを運用し、かつ…</p>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-10">2026.10.10</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-10-10/0a6b29e700d72480/">Claude Codeのバージョン更新だけでコスト34〜43%減、Explore担当をHaikuに</a></h3>
-<p class="excerpt">Claude Codeのサブエージェント「Explore」に使われるモデルをHaiku（軽量モデル）に切り替える設定について、著者が実測検証した記事です。Claude Codeをバージョン2.1.293に上げるだけでExploreの既定…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>qiita.com</span><time datetime="2026-10-10">2026.10.10</time></div>
-</article>
-<article class="news-card cat-tech">
-<a class="category-name" href="../../"><span class="category-dot"></span>開発・技術</a>
-<h3><a href="../../../../articles/2026-10-10/f003b323ed763d4b/">Goのインターフェース1つでTCPもWebSocketも動かすRPC生成ツール「irpc」</a></h3>
-<p class="excerpt">irpc（v0.0.2）は、Go言語用のRPCコード生成ツールです。インターフェースを1つ定義するだけで、クライアント実装やサーバー側アダプタ、引数・戻り値のバイナリシリアライズコードを自動生成できます。net.Pipe、TCP、Web…</p>
-<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-10">2026.10.10</time></div>
 </article></div><nav class="pagination" aria-label="ページ切り替え"><a  href="../../">1</a><a aria-current="page" href="./">2</a><a  href="../3/">3</a><a  href="../4/">4</a><a  href="../5/">5</a><a  href="../6/">6</a><a  href="../7/">7</a><a  href="../8/">8</a><a  href="../9/">9</a><a  href="../10/">10</a></nav>
 </main>
 <footer class="footer wrap">

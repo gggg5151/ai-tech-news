@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>コーディングエージェント、バックアップ実行率はわずか15% — 1年目向けエンジニア新聞</title>
+<meta name="description" content="コーディングエージェントは、ファイルやデータベースなどの状態を変更する操作を行う際、後で元に戻す必要が生じる可能性を予見してバックアップを取る能力（バックアップ認識）が低いことを指摘する研究です。著者らはこれを測るベンチマーク「RegretBench」（205の実行可能タスク）を構築しました。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="コーディングエージェント、バックアップ実行率はわずか15% — 1年目向けエンジニア新聞">
+<meta property="og:description" content="コーディングエージェントは、ファイルやデータベースなどの状態を変更する操作を行う際、後で元に戻す必要が生じる可能性を予見してバックアップを取る能力（バックアップ認識）が低いことを指摘する研究です。著者らはこれを測るベンチマーク「RegretBench」（205の実行可能タスク）を構築しました。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-23/8ff115ab0105ca6e/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-23/8ff115ab0105ca6e/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "コーディングエージェント、バックアップ実行率はわずか15%", "datePublished": "2026-10-23", "description": "コーディングエージェントは、ファイルやデータベースなどの状態を変更する操作を行う際、後で元に戻す必要が生じる可能性を予見してバックアップを取る能力（バックアップ認識）が低いことを指摘する研究です。著者らはこれを測るベンチマーク「RegretBench」（205の実行可能タスク）を構築しました。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-23/8ff115ab0105ca6e/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://arxiv.org/abs/2610.28934", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class="active" aria-current="page" href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-23/">2026.10.23 の号</a><span>/</span><a href="../../../categories/papers/">論文・研究</a></div>
+<article class="article-layout cat-papers">
+<header class="article-header">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h1>コーディングエージェント、バックアップ実行率はわずか15%</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-23">2026.10.23</time></div>
+</header>
+<div class="article-body">
+<p>コーディングエージェントは、ファイルやデータベースなどの状態を変更する操作を行う際、後で元に戻す必要が生じる可能性を予見してバックアップを取る能力（バックアップ認識）が低いことを指摘する研究です。著者らはこれを測るベンチマーク「RegretBench」（205の実行可能タスク）を構築しました。</p>
+<p>6つのフロンティアモデルを評価したところ、タスク完了率は<strong>86.1%</strong>だった一方、バックアップ実行率はわずか<strong>15.2%</strong>にとどまりました。これを解決するため、ツール呼び出しを監視し状態変更前にバックアップを取るプラグイン型レイヤー「BackUpper」を提案。平均92.2%の類似度で状態復元を実現し、コストはタスクあたり0.014ドル、メインエージェントが自己バックアップする場合と比べてトークン使用量も7倍少なかったとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>論文タイトルは『Back Up Before You Regret: Measuring Backup Awareness and Automating Backup in Coding Agents』である</li><li>著者はXu Li、Simon Yu、Minzhou Pan、Yiyou Sun、Zhaorun Chen、Bo Li、Weiyan Shiである</li><li>研究者らはコーディングエージェントの『バックアップ認識』を測定するベンチマーク『RegretBench』を提案した</li><li>RegretBenchは205個の実行可能タスクで構成される</li><li>6つのフロンティアモデルを評価したところ、タスク完了率は86.1%だった</li><li>同評価でバックアップ実行率はわずか15.2%だった</li><li>研究者らはプラグイン型のバックアップレイヤー『BackUpper』を開発した</li><li>BackUpperはすべてのツール呼び出しを監視し、状態変更前に影響を受ける状態を保存する</li><li>BackUpperは一般的な操作には規則ベースの戦略を使用し、複雑なケースには軽量サブエージェントを使用する</li><li>BackUpperは平均92.2%の類似度で状態復元を実現した</li><li>BackUpperのコストはタスクあたり0.014ドルである</li><li>BackUpperはメインエージェントが自己バックアップする場合と比べて使用トークン数が7倍少ない</li></ul></section>
+
+<aside class="source-box"><a href="https://arxiv.org/abs/2610.28934" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">arxiv.org</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%80%81%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E5%AE%9F%E8%A1%8C%E7%8E%87%E3%81%AF%E3%82%8F%E3%81%9A%E3%81%8B15%25%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-23%2F8ff115ab0105ca6e%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%80%81%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E5%AE%9F%E8%A1%8C%E7%8E%87%E3%81%AF%E3%82%8F%E3%81%9A%E3%81%8B15%25%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-23/8ff115ab0105ca6e/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-23%2F8ff115ab0105ca6e%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../9b9d15836e567d33/"><span>前の記事</span>LLMの長期記憶、侵害が持続する新たな脆弱性</a><a class="next" href="../3ebfc7ed80f3eae7/"><span>次の記事</span>LLMエージェントのCS研究力を測るベンチマーク</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-23/">← 2026.10.23 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../9b9d15836e567d33/">LLMの長期記憶、侵害が持続する新たな脆弱性</a></h3>
+<p class="excerpt">LLMの「長期記憶」機能を悪用した新たなセキュリティ脆弱性「メモリインジェクション」に関する研究です。従来のチャットボットでは攻撃の影響がセッション内に限定されていましたが、長期記憶を持つ現代のLLMインターフェースではこの制限がなくな…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-23">2026.10.23</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../3ebfc7ed80f3eae7/">LLMエージェントのCS研究力を測るベンチマーク</a></h3>
+<p class="excerpt">LLMエージェントが実際の研究開発環境を想定したコンピュータサイエンスのR&amp;Dタスクをどこまで遂行できるかを測るベンチマーク「FrontierCS 2」が発表されました。公開タスク48個、非公開タスク100以上を含み、機械学習システム、…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-23">2026.10.23</time></div>
+</article>
+<article class="news-card cat-papers">
+<a class="category-name" href="../../../categories/papers/"><span class="category-dot"></span>論文・研究</a>
+<h3><a href="../../2026-10-22/f740a15bc5e3f02b/">サブエージェントが監督者を出し抜く新攻撃</a></h3>
+<p class="excerpt">本論文は、マルチエージェントLLMシステムにおける新しい攻撃「Show-Up Attack」を提示しています。悪意あるサブエージェントが、監督者（スーパーバイザー）エージェントを操作し、本来割り当てられた範囲を超えたタスクに関与させてし…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span><time datetime="2026-10-22">2026.10.22</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

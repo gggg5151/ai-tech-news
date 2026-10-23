@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAI公式CLIがGo製で登場 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenAIがOpenAI REST API用の公式コマンドラインツール「OpenAI CLI」をGitHubで公開しています。ターミナルやシェルスクリプトからアプリ開発なしでAPIを呼び出せるツールで、画像生成、ファイルのアップロード・ダウンロード、バッチ処理の実行、APIレスポンスの検査などの機能を備えています。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="OpenAI公式CLIがGo製で登場 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenAIがOpenAI REST API用の公式コマンドラインツール「OpenAI CLI」をGitHubで公開しています。ターミナルやシェルスクリプトからアプリ開発なしでAPIを呼び出せるツールで、画像生成、ファイルのアップロード・ダウンロード、バッチ処理の実行、APIレスポンスの検査などの機能を備えています。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-23/4504644b3aca88f8/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-23/4504644b3aca88f8/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "OpenAI公式CLIがGo製で登場", "datePublished": "2026-10-23", "description": "OpenAIがOpenAI REST API用の公式コマンドラインツール「OpenAI CLI」をGitHubで公開しています。ターミナルやシェルスクリプトからアプリ開発なしでAPIを呼び出せるツールで、画像生成、ファイルのアップロード・ダウンロード、バッチ処理の実行、APIレスポンスの検査などの機能を備えています。", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-23/4504644b3aca88f8/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://github.com/openai/openai-cli", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-23/">2026.10.23 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>OpenAI公式CLIがGo製で登場</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>github.com</span><time datetime="2026-10-23">2026.10.23</time></div>
+</header>
+<div class="article-body">
+<p>OpenAIがOpenAI REST API用の公式コマンドラインツール「OpenAI CLI」をGitHubで公開しています。ターミナルやシェルスクリプトからアプリ開発なしでAPIを呼び出せるツールで、画像生成、ファイルのアップロード・ダウンロード、バッチ処理の実行、APIレスポンスの検査などの機能を備えています。</p>
+<p>Go言語（1.26以上）で実装されており、ライセンスはApache License 2.0です。Homebrew、Go、プリビルトバイナリのいずれかでインストールでき、シェル補完など開発者向けの機能も用意されています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>OpenAI CLIはOpenAI REST APIの公式コマンドラインツールである</li><li>ターミナルやシェルスクリプトからOpenAI APIを呼び出すことができる</li><li>画像生成機能があり、プロンプトから画像を生成してローカルに保存できる</li><li>ファイルのアップロード・ダウンロード・管理機能がある</li><li>JSONL形式のリクエストファイルをバッチで送信・処理する機能がある</li><li>JSON/JSONL形式でAPIデータを取得してスクリプトで活用できるデータエクスポート機能がある</li><li>Go言語(1.26以上)で実装されている</li><li>Apache License 2.0のもとで公開されている</li><li>インストール方法としてHomebrew、Go、プリビルトバイナリが用意されている</li><li>シェル補完などの開発者向けの利便機能を備えている</li></ul></section>
+
+<aside class="source-box"><a href="https://github.com/openai/openai-cli" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">github.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=OpenAI%E5%85%AC%E5%BC%8FCLI%E3%81%8CGo%E8%A3%BD%E3%81%A7%E7%99%BB%E5%A0%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-23%2F4504644b3aca88f8%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=OpenAI%E5%85%AC%E5%BC%8FCLI%E3%81%8CGo%E8%A3%BD%E3%81%A7%E7%99%BB%E5%A0%B4%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-23/4504644b3aca88f8/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-23%2F4504644b3aca88f8%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../481e0f029ccd718a/"><span>前の記事</span>LLMに「自信度」を聞いても意味がない、という指摘</a><a class="next" href="../970ac09674742911/"><span>次の記事</span>Claude Codeに投げるべきセキュリティ問いかけ20選</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-23/">← 2026.10.23 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../e8881b411e355d72/">中国系ハッカー集団、AIエージェントで大規模侵入 ARTEX悪用</a></h3>
+<p class="excerpt">Microsoftのセキュリティブログが、2021年から活動する中国国家支援の攻撃グループ「Storm-0940」が、オープンソースのAI駆動型ペネトレーションテスト（侵入テスト）フレームワーク「ARTEX」を使い、2026年10月に大…</p>
+<div class="article-meta"><span class="badge reported">報道</span><span>microsoft.com</span><time datetime="2026-10-23">2026.10.23</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../a012be2c9f93d5da/">OpenAI、PHP重大脆弱性対応で「Patch the Planet」始動</a></h3>
+<p class="excerpt">OpenAIが「Patch the Planet」という取り組みを主導し、PHPの重大な脆弱性に対処する連合（coalition）を結成したと発表しました。記事は、フロンティアAIが攻撃者より先に脆弱性を発見したことで、メンテナーやセキ…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-23">2026.10.23</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../37b3bf56baea9baa/">OpenAI、サイバー防御者支援の政策提言を公開</a></h3>
+<p class="excerpt">OpenAIは「フロンティアAIの民主的ガバナンス」シリーズの第2部として、サイバー防御者を支援するための政策提言（ブループリント）を公開しました。AIがサイバーセキュリティの速度・規模・経済性を変えつつあり、脆弱性の発見・修正や侵入検…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-23">2026.10.23</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>
