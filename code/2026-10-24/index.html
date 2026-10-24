@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gin-gonic/gin の auth.go を読む — 1年目向けエンジニア新聞</title>
+<meta name="description" content="GinはGo製の高速Webフレームワークで、スター数9万近い定番ライブラリです。今日はauth.goを読みます。これはBasic認証（ユーザー名とパスワードをリクエストヘッダーに載せる、一番シンプルな認証方式）を実装しているミドルウェアで、「安全な文字列比較」と「Ginのミドルウェアを作る型」という、1年目が実務で必ず…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="gin-gonic/gin の auth.go を読む — 1年目向けエンジニア新聞">
+<meta property="og:description" content="GinはGo製の高速Webフレームワークで、スター数9万近い定番ライブラリです。今日はauth.goを読みます。これはBasic認証（ユーザー名とパスワードをリクエストヘッダーに載せる、一番シンプルな認証方式）を実装しているミドルウェアで、「安全な文字列比較」と「Ginのミドルウェアを作る型」という、1年目が実務で必ず…">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/code/2026-10-24/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/code/2026-10-24/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/style.css">
+<script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../">今日の号</a><a class=""  href="../../categories/ai_news/">AIニュース</a><a class=""  href="../../categories/tech/">開発・技術</a><a class=""  href="../../categories/github/">リポジトリ</a><a class=""  href="../../categories/papers/">論文・研究</a><a class="active" href="../">今日のコード</a><a class="archive-nav " href="../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../">今日の号</a><span>/</span><a href="../">今日のコード</a><span>/</span><span>2026.10.24</span></div>
+<article class="article-layout code-layout">
+<header class="article-header">
+<span class="category-name"><span class="category-dot"></span>今日のコード・go</span>
+<h1>gin-gonic/gin の <code>auth.go</code> を読む</h1>
+<div class="article-meta"><a href="https://github.com/gin-gonic/gin/blob/HEAD/auth.go" target="_blank" rel="noopener noreferrer">GitHub で実物を見る ↗</a><time datetime="2026-10-24">2026.10.24</time></div>
+</header>
+<div class="article-body">
+<p>GinはGo製の高速Webフレームワークで、スター数9万近い定番ライブラリです。今日はauth.goを読みます。これはBasic認証（ユーザー名とパスワードをリクエストヘッダーに載せる、一番シンプルな認証方式）を実装しているミドルウェアで、「安全な文字列比較」と「Ginのミドルウェアを作る型」という、1年目が実務で必ず出会う2つのパターンが詰まっています。auth.go、utils.go、mode.goを実際に取得して読んだ上で、この一塊を選びました。</p>
+<h2>コード</h2>
+<pre class="code-block"><code>type authPair struct {
+	value string
+	user  string
+}
+
+type authPairs []authPair
+
+func (a authPairs) searchCredential(authValue string) (string, bool) {
+	if authValue == &quot;&quot; {
+		return &quot;&quot;, false
+	}
+	for _, pair := range a {
+		if subtle.ConstantTimeCompare(bytesconv.StringToBytes(pair.value), bytesconv.StringToBytes(authValue)) == 1 {
+			return pair.user, true
+		}
+	}
+	return &quot;&quot;, false
+}
+
+// BasicAuthForRealm returns a Basic HTTP Authorization middleware. It takes as arguments a map[string]string where
+// the key is the user name and the value is the password, as well as the name of the Realm.
+// If the realm is empty, &quot;Authorization Required&quot; will be used by default.
+// (see http://tools.ietf.org/html/rfc2617#section-1.2)
+func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
+	if realm == &quot;&quot; {
+		realm = &quot;Authorization Required&quot;
+	}
+	realm = &quot;Basic realm=&quot; + strconv.Quote(realm)
+	pairs := processAccounts(accounts)
+	return func(c *Context) {
+		// Search user in the slice of allowed credentials
+		user, found := pairs.searchCredential(c.requestHeader(&quot;Authorization&quot;))
+		if !found {
+			// Credentials doesn&#x27;t match, we return 401 and abort handlers chain.
+			c.Header(&quot;WWW-Authenticate&quot;, realm)
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+
+		// The user credentials was found, set user&#x27;s id to key AuthUserKey in this context, the user&#x27;s id can be read later using
+		// c.MustGet(gin.AuthUserKey).
+		c.Set(AuthUserKey, user)
+	}
+}</code></pre>
+<p class="code-note">引用はリポジトリの実物と機械で照合しています。「// …略…」は省略した行です。</p>
+<h2>上から順に読む</h2>
+<div class="walk-step"><pre class="walk-quote"><code>type authPair struct {
+	value string
+	user  string
+}</code></pre><p>structはGoの「構造体」。複数の値を1つの型にまとめる仕組みで、TypeScriptのinterfaceやCのstructに近いです。ここではvalue（&quot;Basic &quot;+base64文字列、つまりAuthorizationヘッダーに来るはずの正解の値）と、そのペアに対応するuser名の2つのstring型フィールドを持つ型authPairを定義しています。フィールド名の後に型を書くのがGoの書き方で、JSONのように{}の中にkey: valueを書くのではなく、宣言の形で書く点に注意してください。</p></div><div class="walk-step"><pre class="walk-quote"><code>type authPairs []authPair</code></pre><p>[]authPairは「authPair型の要素を持つスライス（可変長配列）」です。これに authPairs という名前を付けています。Goでは既存の型（ここではスライス）に別名を付けて新しい型として扱うことができ、これを『名前付き型』と呼びます。単なるタイプエイリアスではなく独立した型なので、この型にだけ専用のメソッド（次の項目）を持たせられるのがポイントです。</p></div><div class="walk-step"><pre class="walk-quote"><code>func (a authPairs) searchCredential(authValue string) (string, bool) {</code></pre><p>Goにはクラスがなく、代わりに「関数の前にレシーバを書く」ことで、特定の型にメソッドを紐づけます。(a authPairs) の部分がレシーバで、「authPairs型の値aに対してこのメソッドを呼べる」という意味です。呼び出し側は pairs.searchCredential(...) のように、変数の後にドットでつなげて呼びます。戻り値が (string, bool) と2つ並んでいるのもGoの特徴で、1つ目が見つかったuser名、2つ目が「見つかったかどうか」のbool値です。Goには例外機構がなく、こうして戻り値のbool（またはerror）で成功・失敗を伝えるのが定番パターンです。</p></div><div class="walk-step"><pre class="walk-quote"><code>if authValue == &quot;&quot; {
+		return &quot;&quot;, false
+	}</code></pre><p>入力のauthValue（Authorizationヘッダーの生の文字列）が空文字なら、即座に user=&quot;&quot;, found=false を返して処理を打ち切っています。こうした『まず異常系をチェックして早期returnする』書き方はGoでは非常に頻出で、if文の中にネストを増やさずに関数の見通しを良くするための習慣です。</p></div><div class="walk-step"><pre class="walk-quote"><code>for _, pair := range a {</code></pre><p>for ... range はスライスやmapを1つずつ順に取り出すループです。range a は authPairs型のスライスaの各要素を返しますが、本来は (インデックス, 要素) のペアが返ってくるところを、インデックスの方を _ （ブランク識別子、「受け取るけど使わない」という意味の特別な変数名）で捨てて、要素だけをpairという変数で受け取っています。インデックスを使わないのにエラーにならないのはこの_のおかげです。</p></div><div class="walk-step"><pre class="walk-quote"><code>if subtle.ConstantTimeCompare(bytesconv.StringToBytes(pair.value), bytesconv.StringToBytes(authValue)) == 1 {</code></pre><p>ここが認証の核心です。普通ならpair.value == authValueと書きたくなりますが、Goの文字列比較は先頭から1文字ずつ順に比較して最初に違う文字が見つかった時点で処理を終えるため、「正解に近い文字列ほど比較に時間がかかる」というわずかな時間差が生まれ、攻撃者がその時間差を測ってパスワードを1文字ずつ当てられてしまう危険があります（タイミング攻撃）。subtle.ConstantTimeCompareは、結果に関係なく常に同じ時間で比較を終える関数で、戻り値はboolではなくint（一致なら1）です。bytesconv.StringToBytesは文字列をバイト列[]byteに変換するGinの内部ユーティリティで、この比較関数がstringではなく[]byteを引数に取るために必要な変換です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return pair.user, true
+		}
+	}
+	return &quot;&quot;, false</code></pre><p>一致するペアが見つかった時点でそのuser名とtrueを返して関数を抜けます（returnは即座に関数全体を終了させます）。forループを最後まで回しても一致しなかった場合は、ループの外側で最終的に &quot;&quot;, false を返します。全部見てから結論を出す、という流れです。</p></div><div class="walk-step"><pre class="walk-quote"><code>func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {</code></pre><p>この関数は「関数を返す関数」です。戻り値の型HandlerFuncは（このファイルの外で定義されている）Ginのミドルウェア用の関数型で、だいたいfunc(*Context)のような形をしています。つまりBasicAuthForRealmは『設定（ユーザー一覧とレルム名）を受け取って、実際にリクエストごとに動くミドルウェア関数を作って返す工場』のような役割です。router.Use(gin.BasicAuthForRealm(accounts, &quot;&quot;))のように、ルーティング設定時に1回だけ呼ばれます。</p></div><div class="walk-step"><pre class="walk-quote"><code>if realm == &quot;&quot; {
+		realm = &quot;Authorization Required&quot;
+	}</code></pre><p>引数realmが空文字（呼び出し側が指定しなかった場合）なら、デフォルト値&quot;Authorization Required&quot;を代わりに使います。Goには引数のデフォルト値を宣言時に書く機能が無いため、関数の先頭でこうして『空だったら上書きする』というガード文を書くのが定番のやり方です。</p></div><div class="walk-step"><pre class="walk-quote"><code>realm = &quot;Basic realm=&quot; + strconv.Quote(realm)</code></pre><p>文字列の+は連結です。strconv.Quote(realm)は、realmの文字列をダブルクォートで囲み、中に特殊文字があればエスケープした安全な文字列を返します（例: Authorization Required → &quot;Authorization Required&quot;）。これはHTTPのWWW-Authenticateヘッダーの仕様（Basic realm=&quot;...&quot;という形式）に沿った正しい値を作るためです。こうして作った文字列を、元のローカル変数realmに再代入して使い回しています。</p></div><div class="walk-step"><pre class="walk-quote"><code>pairs := processAccounts(accounts)</code></pre><p>:=は型を明示せずに変数を宣言して代入する記法で、右辺の戻り値の型から自動的に型が決まります（型推論）。重要なのは『この行がBasicAuthForRealm呼び出し時に1回だけ実行される』という点です。processAccountsはAccounts（map[string]string、ユーザー名→パスワードの辞書）を受け取り、各組をBasicヘッダー形式の文字列に変換したauthPairsを作ります。これをリクエストが来るたびにやり直すと無駄なので、ミドルウェアのセットアップ時に前もって計算しておく、という設計判断です。</p></div><div class="walk-step"><pre class="walk-quote"><code>return func(c *Context) {</code></pre><p>ここでBasicAuthForRealmの本体の戻り値である『実際のミドルウェア関数』を定義して返しています。この内側のfunc(c *Context){...}は、外側の関数のローカル変数であるpairsとrealmを自分の中で使い続けられます（これを『クロージャ』と呼びます）。*Contextの*はポインタを表し、Contextという構造体の実体そのものではなく、それがメモリ上のどこにあるかを指す「住所」を受け取るという意味です。Ginはリクエストが来るたびにこの内側の関数をそのContextを渡して呼び出します。</p></div><div class="walk-step"><pre class="walk-quote"><code>c.Header(&quot;WWW-Authenticate&quot;, realm)
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return</code></pre><p>認証に失敗した場合の処理です。c.Header(...)でレスポンスにWWW-Authenticateヘッダーをセットし、c.AbortWithStatus(http.StatusUnauthorized)でステータスコード401を設定した上で、Ginに『この後に続くはずだった他のミドルウェアやハンドラは実行しないでくれ』と伝えます（Abortは中断の意味）。最後のreturnでこの内側の関数自体を終了させ、下のc.Set(...)には到達しません。</p></div><div class="walk-step"><pre class="walk-quote"><code>c.Set(AuthUserKey, user)</code></pre><p>認証に成功した場合だけ実行される行です。c.Setは、そのリクエスト専用のContextに任意のキーと値を保存する機能で、ここではAuthUserKey（ファイル冒頭で定義されている&quot;user&quot;という文字列の定数）をキーに、認証されたユーザー名を保存しています。これにより、この後に実行される別のハンドラがc.MustGet(gin.AuthUserKey)で『今どのユーザーとして認証されたか』を取り出せるようになります。ミドルウェア間で情報を受け渡す、Ginの基本的な作法です。</p></div>
+<aside class="takeaway"><h2>今日覚えて帰ること</h2><p>「設定を受け取る外側の関数」と「リクエストごとに動く内側の関数（クロージャ）」を分け、重い処理（ここではprocessAccountsによる前計算）は外側で1回だけ行う——これがGinのミドルウェアを書くときの基本形です。func Something(config) HandlerFunc { 準備処理; return func(c *Context) { 毎回の処理 } } という形を覚えておくと、自分でミドルウェアを書くときにそのまま使えます。</p></aside>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-23/"><span>前の日</span>gosom/google-maps-scraper</a><span></span></nav>
+<a class="back-to-issue" href="../../issues/2026-10-24/">← 2026.10.24 の号を読む</a>
+</div>
+</article>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../about/">このサイトについて</a><a href="../../archive/">過去の号</a><a href="../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

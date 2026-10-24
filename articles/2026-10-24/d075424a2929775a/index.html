@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DynamoDBのGSI設計、書き込みコストをWCUで数値化して比較 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="Go/クラウドインフラを専門とするソフトウェアエンジニアによる記事です。DynamoDBのGSI(グローバルセカンダリインデックス、メインテーブルとは別のキーで検索を可能にする仕組み)はアクセスパターンを満たすために追加するものですが、追加した分だけWCU(書き込みキャパシティユニット)が増えるというトレードオフがあり…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="DynamoDBのGSI設計、書き込みコストをWCUで数値化して比較 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="Go/クラウドインフラを専門とするソフトウェアエンジニアによる記事です。DynamoDBのGSI(グローバルセカンダリインデックス、メインテーブルとは別のキーで検索を可能にする仕組み)はアクセスパターンを満たすために追加するものですが、追加した分だけWCU(書き込みキャパシティユニット)が増えるというトレードオフがあり…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-24/d075424a2929775a/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-24/d075424a2929775a/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "DynamoDBのGSI設計、書き込みコストをWCUで数値化して比較", "datePublished": "2026-10-24", "description": "Go/クラウドインフラを専門とするソフトウェアエンジニアによる記事です。DynamoDBのGSI(グローバルセカンダリインデックス、メインテーブルとは別のキーで検索を可能にする仕組み)はアクセスパターンを満たすために追加するものですが、追加した分だけWCU(書き込みキャパシティユニット)が増えるというトレードオフがあります。著者は「メインテーブルのキーで解け…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-24/d075424a2929775a/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://zenn.dev/kyrenzk/articles/dynamodb-gsi-access-pattern-tradeoffs", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class=""  href="../../../categories/ai_news/">AIニュース</a><a class="active" aria-current="page" href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-24/">2026.10.24 の号</a><span>/</span><a href="../../../categories/tech/">開発・技術</a></div>
+<article class="article-layout cat-tech">
+<header class="article-header">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h1>DynamoDBのGSI設計、書き込みコストをWCUで数値化して比較</h1>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span><time datetime="2026-10-24">2026.10.24</time></div>
+</header>
+<div class="article-body">
+<p>Go/クラウドインフラを専門とするソフトウェアエンジニアによる記事です。DynamoDBの<strong>GSI</strong>(グローバルセカンダリインデックス、メインテーブルとは別のキーで検索を可能にする仕組み)はアクセスパターンを満たすために追加するものですが、追加した分だけ<strong>WCU</strong>(書き込みキャパシティユニット)が増えるというトレードオフがあります。著者は「メインテーブルのキーで解けないアクセスパターンのみGSI候補にすべき」「GSIのキー属性が変わると索引への書き込みが2回分になる」「ALL射影は索引のキーに含まれない属性の更新まで書き込みに波及する」という3点を指摘しています。</p>
+<p>注文管理システムを例に、GSIなし(D0)、全属性射影のGSIを2本追加(D1)、射影を絞りスパース化したGSI(D2)の3パターンで、注文作成から状態遷移3回・メモ更新2回までのライフサイクルにおける消費WCUを比較しています。結果はD0が合計12、D1が合計42(D0の3.5倍)、D2が合計20(D1から約52%削減)となり、設計次第で書き込みコストが大きく変わることを数値で示しています。</p>
+<p>著者はこの比較モデルについて「DynamoDB本体の実装検証ではなく、課金ルールの解釈に基づくモデルである」と明記し、実環境ではReturnConsumedCapacityを使って実際のWCU消費量を確認するよう勧めています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>著者はGo/クラウドインフラを専門とするソフトウェアエンジニアで、受託・自社開発の両方で設計から運用まで担当していると述べている</li><li>記事はDynamoDBのGSI設計におけるアクセスパターンと書き込みコストのトレードオフを扱っている</li><li>著者は「メインテーブルのキーで解けないアクセスパターンのみGSI候補にすべき」と主張している</li><li>著者は「GSIのキー属性が変わると、旧エントリの削除と新エントリの追加が発生し、索引への書き込みが2回分になる」と主張している</li><li>著者は「ALL射影（全属性射影）は、索引のキーに含まれない属性の更新まで索引への書き込みに波及する」と主張している</li><li>著者は「必要な属性のみを射影すること」と「条件を満たさない場合に属性を削除するスパース索引」によって書き込みコストを削減できると主張している</li><li>記事内の注文管理システムの例で、1注文(約1.1KB)のライフサイクル(作成→状態遷移3回→メモ更新2回)における消費WCUを比較するモデルを提示している</li><li>GSIなしのシナリオ(D0)では合計WCUが12であると記事は示している</li><li>全属性射影のGSIを2本追加し、statusをキーにしたシナリオ(D1)では合計WCUが42(D0の3.5倍)であると記事は示している</li><li>射影を絞り込みスパース索引を適用したシナリオ(D2)では合計WCUが20となり、D1から約52%削減されたと記事は示している</li><li>著者はこのWCU計算モデルについて「DynamoDB本体の実装を検証したものではなく、課金ルールの解釈に基づくモデルである」と明記している</li><li>著者は実環境ではReturnConsumedCapacityを使って実際のWCU消費量を確認することを推奨している</li></ul></section>
+
+<aside class="source-box"><a href="https://zenn.dev/kyrenzk/articles/dynamodb-gsi-access-pattern-tradeoffs" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">zenn.dev</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=DynamoDB%E3%81%AEGSI%E8%A8%AD%E8%A8%88%E3%80%81%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92WCU%E3%81%A7%E6%95%B0%E5%80%A4%E5%8C%96%E3%81%97%E3%81%A6%E6%AF%94%E8%BC%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-24%2Fd075424a2929775a%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=DynamoDB%E3%81%AEGSI%E8%A8%AD%E8%A8%88%E3%80%81%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92WCU%E3%81%A7%E6%95%B0%E5%80%A4%E5%8C%96%E3%81%97%E3%81%A6%E6%AF%94%E8%BC%83%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-24/d075424a2929775a/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-24%2Fd075424a2929775a%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../dbc44d1e2c165df6/"><span>前の記事</span>数億件テーブルの部分削除、Goバッチで安全に進める運用設計</a><a class="next" href="../787d4d3ec7571273/"><span>次の記事</span>IntelliJ IDEAがLSP対応、VS CodeやCursor、Neovimからも利用可能に</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-24/">← 2026.10.24 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../ef6654d51fa53d0b/">Lambda Web Functionsで実測、Next.jsの同時アクセス・キャッシュ・費用</a></h3>
+<p class="excerpt">筆者(km氏)が2026年10月、AWSの新機能「Lambda Web Functions」上でNext.js(v16.4.2)を動かし、従来の「Lambda Event Functions」(Lambda Web Adapter使用)…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-24">2026.10.24</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../f5122b56a5775f59/">TypeScript 7.1「Content Mappers」で.graphqlファイルを直接型付け</a></h3>
+<p class="excerpt">TypeScript 7.1で追加されたContent Mappers機能を使い、Next.jsプロジェクトで.graphqlファイルを中間生成物なしに直接インポート・型付けする方法を解説する記事です。コンパイラが未知の拡張子に遭遇する…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-24">2026.10.24</time></div>
+</article>
+<article class="news-card cat-tech">
+<a class="category-name" href="../../../categories/tech/"><span class="category-dot"></span>開発・技術</a>
+<h3><a href="../dbc44d1e2c165df6/">数億件テーブルの部分削除、Goバッチで安全に進める運用設計</a></h3>
+<p class="excerpt">日本トレカセンターのバックエンドエンジニアが執筆した記事で、サービス運用で蓄積された役割を終えたデータを、数億件規模のMySQLテーブルから部分削除する運用設計を解説しています。削除対象がインデックスで絞り込めないため、まずBigQue…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span><time datetime="2026-10-24">2026.10.24</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

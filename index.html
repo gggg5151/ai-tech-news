@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース</title>
-<meta name="description" content="2026.10.23の号: 中国系攻撃グループがAIエージェント「ARTEX」を使い2250超のテナントへ侵入試行 / OpenAIがPHP脆弱性対応の協調フレームワーク「Patch the Planet」を始動、防御側支援に10億ドル / LLMに「自信度」を聞いても当てにならない、という指摘記事 / Claude Codeにそのままコピペできるセキュリティ監査プロンプト20選 / Go製ツール…">
+<meta name="description" content="2026.10.24の号: Anthropicが123のOSSライブラリをClaudeで自動形式検証、未知のCVEも発見 / UberがChatGPT Workを3万人超に全社展開、エンジニアはCodex継続 / OpenAIがストレージ基盤「Habitat」とフロンティアモデル訓練環境のセキュリティを公式解説 / Next.js実務勢ぞろい：Lambda Web Functions実測とType…">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f6f5f0">
 <meta property="og:site_name" content="1年目向けエンジニア新聞">
 <meta property="og:title" content="1年目向けエンジニア新聞 — 通勤15分で読み切る、毎朝のAI・技術ニュース">
-<meta property="og:description" content="2026.10.23の号: 中国系攻撃グループがAIエージェント「ARTEX」を使い2250超のテナントへ侵入試行 / OpenAIがPHP脆弱性対応の協調フレームワーク「Patch the Planet」を始動、防御側支援に10億ドル / LLMに「自信度」を聞いても当てにならない、という指摘記事 / Claude Codeにそのままコピペできるセキュリティ監査プロンプト20選 / Go製ツール…">
+<meta property="og:description" content="2026.10.24の号: Anthropicが123のOSSライブラリをClaudeで自動形式検証、未知のCVEも発見 / UberがChatGPT Workを3万人超に全社展開、エンジニアはCodex継続 / OpenAIがストレージ基盤「Habitat」とフロンティアモデル訓練環境のセキュリティを公式解説 / Next.js実務勢ぞろい：Lambda Web Functions実測とType…">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="feed.xml">
@@ -30,121 +30,130 @@
 <p class="concept-body">毎朝1号。AI・技術ニュース、日本語の技術記事、注目リポジトリ、論文から、その日に読む価値のあるものだけを選び、本文を読まなくても要点が分かる長さの日本語にまとめています。終わりに、実在するオープンソースのコードを1日1か所、初心者向けに読み解くコーナーがあります。</p>
 <div class="concept-links"><a href="feed.xml">RSS で購読</a><a href="https://bsky.app/profile/bunnybunnyburning.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="about/">詳しい仕組み</a></div>
 </section>
-<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-23">2026年10月23日（金）</time><span class="edition-count">15記事・読了まで約12分</span></div>
-<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>中国系攻撃グループがAIエージェント「ARTEX」を使い2250超のテナントへ侵入試行</li><li>OpenAIがPHP脆弱性対応の協調フレームワーク「Patch the Planet」を始動、防御側支援に10億ドル</li><li>LLMに「自信度」を聞いても当てにならない、という指摘記事</li><li>Claude Codeにそのままコピペできるセキュリティ監査プロンプト20選</li><li>Go製ツールが続々、LocalAI・google-maps-scraper・Graphifyをピックアップ</li></ol></section>
-<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-e8881b411e355d72">中国系ハッカー集団、AIエージェントで大規模侵入 ARTEX悪用</a></li><li><a href="#a-a012be2c9f93d5da">OpenAI、PHP重大脆弱性対応で「Patch the Planet」始動</a></li><li><a href="#a-37b3bf56baea9baa">OpenAI、サイバー防御者支援の政策提言を公開</a></li><li><a href="#a-481e0f029ccd718a">LLMに「自信度」を聞いても意味がない、という指摘</a></li><li><a href="#a-4504644b3aca88f8">OpenAI公式CLIがGo製で登場</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-970ac09674742911">Claude Codeに投げるべきセキュリティ問いかけ20選</a></li><li><a href="#a-bb12804f694aecac">Next.js×Supabase Authのリダイレクトループ、原因3パターン</a></li><li><a href="#a-28ea63127def62c9">音声スタイル変換、遅延半減の新版が登場</a></li><li><a href="#a-a24aad8ae4ce1aff">Claude Codeに仕組み解説動画を作らせる</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-a0c84fcdf8fde0f2">GPU不要のAIエンジン「LocalAI」、Go製で60超のバックエンド対応</a></li><li><a href="#a-ad5fa60722b2d32e">コードベースを知識グラフ化する「Graphify」</a></li><li><a href="#a-a34f1fc920f52459">Google Mapsデータを33項目抽出するGo製スクレイパー</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-9b9d15836e567d33">LLMの長期記憶、侵害が持続する新たな脆弱性</a></li><li><a href="#a-8ff115ab0105ca6e">コーディングエージェント、バックアップ実行率はわずか15%</a></li><li><a href="#a-3ebfc7ed80f3eae7">LLMエージェントのCS研究力を測るベンチマーク</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
-<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-e8881b411e355d72">
-<h3><a href="articles/2026-10-23/e8881b411e355d72/">中国系ハッカー集団、AIエージェントで大規模侵入 ARTEX悪用</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>microsoft.com</span></div>
-<div class="paper-body"><p>Microsoftのセキュリティブログが、2021年から活動する中国国家支援の攻撃グループ「Storm-0940」が、オープンソースのAI駆動型ペネトレーションテスト（侵入テスト）フレームワーク「ARTEX」を使い、2026年10月に大規模なサプライチェーン攻撃を実行したと報告しました。ARTEXはGo言語で書かれた<strong>マルチエージェントLLMシステム</strong>で、英語・韓国語・中国語・スペイン語・日本語に対応し、偵察からデータ流出までを自律的に実行できるとされています。</p>
-<p>攻撃は10月10日から14日にかけて、8組織・327アカウントを狙ったパスワードスプレー（複数アカウントに同じパスワードを一斉に試す攻撃）から始まり、15万1000件以上のログイン失敗が発生しました。10月15日以降は分当たり最大2900件というペースで<strong>2250以上のテナントへのサインインが試みられた</strong>と記されています。</p>
-<p>侵入経路として悪用されたのは、ConnectWise関連のマルチテナント型クラウドバックアップアプリケーションの侵害済み認証情報によるOAuth（第三者アプリに権限を委譲する認可の仕組み）の不正利用です。テナント内でこれらアプリが確立していた信頼関係を踏み台にし、複数の事例で初期アクセスからグローバル管理者権限の獲得まで3時間未満だったとされています。標的は航空防衛・金融・政府・製造・テクノロジーなど多業界に及びました。Microsoftはこの活動が自社システムの脆弱性によるものではないと明言し、検出クエリや侵害指標を公開しています。</p></div>
-<p class="paper-source"><a href="https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/e8881b411e355d72/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a012be2c9f93d5da">
-<h3><a href="articles/2026-10-23/a012be2c9f93d5da/">OpenAI、PHP重大脆弱性対応で「Patch the Planet」始動</a></h3>
+<div class="edition-bar"><span class="edition-status">最新号</span><time datetime="2026-10-24">2026年10月24日（土）</time><span class="edition-count">16記事・読了まで約15分</span></div>
+<section class="highlights" aria-labelledby="highlights-heading"><h2 id="highlights-heading">今日の見どころ</h2><ol><li>Anthropicが123のOSSライブラリをClaudeで自動形式検証、未知のCVEも発見</li><li>UberがChatGPT Workを3万人超に全社展開、エンジニアはCodex継続</li><li>OpenAIがストレージ基盤「Habitat」とフロンティアモデル訓練環境のセキュリティを公式解説</li><li>Next.js実務勢ぞろい：Lambda Web Functions実測とTypeScript7.1 Content Mappers</li><li>NVIDIA発「OpenShell」でAIエージェントのサンドボックス実行が本格化</li></ol></section>
+<nav class="paper-toc" aria-label="この号の目次"><h2>この号の記事</h2><ul><li class="cat-ai_news"><span class="category-dot"></span><strong>AIニュース</strong><ol><li><a href="#a-3f35989836b12d15">Claudeが大規模形式検証を実践、Theoremと協業</a></li><li><a href="#a-ead5edfb2a5816f9">UberがChatGPT Workを全社導入、3万人超に展開</a></li><li><a href="#a-451ed97589a11d2d">OpenAI公式、10億ユーザーを支える自社ストレージ基盤「Habitat」</a></li><li><a href="#a-62b2643f26d7a919">OpenAI、フロンティアモデルの訓練環境セキュリティを強化</a></li><li><a href="#a-43034c58208cf759">スウェーデン政府、ChatGPTとClaudeへのアクセスを遮断</a></li></ol></li><li class="cat-tech"><span class="category-dot"></span><strong>開発・技術</strong><ol><li><a href="#a-ef6654d51fa53d0b">Lambda Web Functionsで実測、Next.jsの同時アクセス・キャッシュ・費用</a></li><li><a href="#a-f5122b56a5775f59">TypeScript 7.1「Content Mappers」で.graphqlファイルを直接型付け</a></li><li><a href="#a-dbc44d1e2c165df6">数億件テーブルの部分削除、Goバッチで安全に進める運用設計</a></li><li><a href="#a-d075424a2929775a">DynamoDBのGSI設計、書き込みコストをWCUで数値化して比較</a></li><li><a href="#a-787d4d3ec7571273">IntelliJ IDEAがLSP対応、VS CodeやCursor、Neovimからも利用可能に</a></li></ol></li><li class="cat-github"><span class="category-dot"></span><strong>リポジトリ</strong><ol><li><a href="#a-ca2a96e9983f2e18">NVIDIA発OpenShell、自律AIエージェント群を安全に動かすランタイム</a></li><li><a href="#a-c53c2492f788b86a">Go定番Webフレームワーク「gin」、スター8.9万・最新は1.12.0</a></li><li><a href="#a-71c5dd7e6be34769">Claude向け攻撃的セキュリティスキル集「Claude-Red」</a></li></ol></li><li class="cat-papers"><span class="category-dot"></span><strong>論文・研究</strong><ol><li><a href="#a-0a01276c2571b166">系列圧縮を回帰問題として再定義する「テスト時回帰」</a></li><li><a href="#a-d7c4695359b0a096">複数文書の組み合わせで機密が漏れる「モザイク効果」を検証</a></li><li><a href="#a-11bba25803f760e2">推論モデルの&#x27;wait&#x27;は強化学習が生んだのか、起源を追う研究</a></li></ol></li></ul><a class="toc-code" href="#code">今日のコード</a></nav>
+<section class="paper-section cat-ai_news" id="ai_news"><h2><span class="category-dot"></span>AIニュース<a href="categories/ai_news/">過去の記事</a></h2><article class="paper-article" id="a-3f35989836b12d15">
+<h3><a href="articles/2026-10-24/3f35989836b12d15/">Claudeが大規模形式検証を実践、Theoremと協業</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span></div>
+<div class="paper-body"><p>2026年10月22日に公開された記事によると、AnthropicとTheorem社の協業チームはClaude(Opus 5.5など)を用いて、123のオープンソースライブラリにある239のエントリーポイントについて機械語レベルの<strong>形式証明</strong>(プログラムの性質を数学的に証明する手法)を行いました。証明に使われたコードは証明言語Rocqで記述され、総量は約1億8千万行に達しています。これまで専門家が多年かけて行っていた作業を、LLMが大規模かつ現実的なコストで実行できることを示した研究です。</p>
+<p>対象となったのはOSS-Fuzz、AddressSanitizer、RISC-Vなど、セキュリティ検証やファジングに関連するツール・環境です。証明プロセスの中で、libexpatに関する未検出のバグ(CVE-2026-56132)も発見されたと報告されています。</p>
+<p>効率面では、Opus 5.5が前世代モデルに比べて40%少ないトークン数で証明を完了できたほか、既に作られた証明を再利用することでさらに17%のトークン削減効果があったとしています。本研究はAnthropicのFrontier Red Teamを含む研究チームとTheorem社の協業者、合計15名の共同著者によって行われました。「LLMは今、証明済みのセキュリティ保証を含む新しいソフトウェア開発ワークフローを可能にする規模で、形式証明を生成できる」と評されています。</p></div>
+<p class="paper-source"><a href="https://www.anthropic.com/research/formal-verification" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/3f35989836b12d15/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-ead5edfb2a5816f9">
+<h3><a href="articles/2026-10-24/ead5edfb2a5816f9/">UberがChatGPT Workを全社導入、3万人超に展開</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
-<div class="paper-body"><p>OpenAIが「Patch the Planet」という取り組みを主導し、PHPの重大な脆弱性に対処する連合（coalition）を結成したと発表しました。記事は、フロンティアAIが攻撃者より先に脆弱性を発見したことで、メンテナーやセキュリティ提供者が修正を準備できる「<strong>Defender&#x27;s Window（防御者の時間窓）</strong>」が生まれたと主張しています。</p>
-<p>これを踏まえ、検証と修正開発、対象組織への対応時間の確保、政府パートナーとの連携、各製品への更新の展開、パッチ公開後のガイダンス公表という5段階からなる協調対応フレームワークを提案しています。少人数チームで運営されることが多いソフトウェアメンテナーに向けて、資金・高性能モデルへのアクセス・実務的なエンジニアリング支援を提供するとしており、具体的には「Daybreak」への補助付きアクセスとして<strong>10億ドル</strong>を投じることを約束しています。</p>
-<p>今後は個別の脆弱性修正にとどまらず、より安全なコーディング手法やメモリセーフ言語の活用を通じて、エンジニアが最初からより安全なソフトウェアを構築できるよう支援することを重点にするとしており、この協調開示フレームワークについてコミュニティからのフィードバックを求めています。</p></div>
-<p class="paper-source"><a href="https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/a012be2c9f93d5da/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-37b3bf56baea9baa">
-<h3><a href="articles/2026-10-23/37b3bf56baea9baa/">OpenAI、サイバー防御者支援の政策提言を公開</a></h3>
+<div class="paper-body"><p>OpenAI公式ブログによると、Uberは「ChatGPT Work」(ChatGPT Enterprise内で動くエージェント型プラットフォーム)の全社展開を発表しました。1,000人規模だった初期パイロットから、Uberの従業員3万人超へと拡大します。これはUberにとって、ナレッジワーク向けのエージェント型プラットフォームとしては初の全社規模導入だとされています。</p>
+<p>ChatGPT WorkはGoogle Drive、Gmail、Google Calendar、Slackといった日常業務ツールと連携し、情報調査や会議資料作成、プレゼン作成、データ分析、部門横断のワークフロー処理を支援します。デフォルトモデルには<strong>GPT-6.1 Sol</strong>が採用され、性能とコストのバランスを取る設計とされています。音声・画像生成などのマルチモーダル機能も利用可能で、対象部門には運用、財務、マーケティング、プロダクトが含まれます。</p>
+<p>一方、Uberの開発・ソフトウェアエンジニアリングチームは引き続きCodexを使用するとされています。両社は今後、導入状況や活用例、成果に関する知見を共有していく予定です。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/uber-chatgpt-work-rollout" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/ead5edfb2a5816f9/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-451ed97589a11d2d">
+<h3><a href="articles/2026-10-24/451ed97589a11d2d/">OpenAI公式、10億ユーザーを支える自社ストレージ基盤「Habitat」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
-<div class="paper-body"><p>OpenAIは「フロンティアAIの民主的ガバナンス」シリーズの第2部として、サイバー防御者を支援するための政策提言（ブループリント）を公開しました。AIがサイバーセキュリティの速度・規模・経済性を変えつつあり、脆弱性の発見・修正や侵入検知で防御側を支援できる一方、同じ能力が悪意ある攻撃者にも利用され得ると指摘しています。</p>
-<p>提言は3本柱で構成されます。「先進AIの安全性・セキュリティ強化」ではフロンティアモデルやエージェントの保全と信頼できるシャットダウン制御の維持、「インテリジェンス時代向けのサイバーセキュリティ近代化」では防御者への高度なツール・教育の提供と重要インフラへの投資、「強靭で適応的な公共機関の構築」では政府の評価機能強化と事故記録の標準化が挙げられています。記事は、高度なサイバー攻撃能力が広く拡散する前に防御を強化できる限られた期間を「<strong>防御者の窓</strong>」と呼び、AI研究機関と政府それぞれが責任を明確化すべきだと主張しています。</p></div>
-<p class="paper-source"><a href="https://openai.com/index/empowering-cyber-defenders" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/37b3bf56baea9baa/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-481e0f029ccd718a">
-<h3><a href="articles/2026-10-23/481e0f029ccd718a/">LLMに「自信度」を聞いても意味がない、という指摘</a></h3>
-<div class="article-meta"><span class="badge reported">報道</span><span>rumple.github.io</span></div>
-<div class="paper-body"><p>LLM（大規模言語モデル）に「この答えにどれくらい自信があるか」を数値で尋ねる「<strong>信頼度スコア（confidence scoring）</strong>」は危険だ、と主張する記事です。LLMは根拠に基づいて確率を計算しているのではなく、通常の文章生成と同じ仕組みでトークン（文章を構成する単位）を1つずつ予測しながら「自信度っぽい数字」を書いているだけであり、その数字は実際の正確さや情報量を反映しないと論じています。</p>
-<p>記事によれば、同じ質問でもLLMに信頼度を尋ねると答えが変わることがあり、質問の言い回しを変えるだけでも数値が変動するといいます。ある数値が信頼度スコアとして機能するには、(1)予測の根拠となる実際の情報量を反映していること、(2)同種の問題で実際の結果と照合（<strong>キャリブレーション</strong>）されていること、の2条件が必要だが、LLMの出力はどちらも満たしていないと結論づけています。</p>
-<p>&quot;The model writes it, token by token, in the same way that it writes any other text.&quot;という一文が、この主張の核心を端的に表しています。</p></div>
-<p class="paper-source"><a href="https://rumple.github.io/blog/2026/10/20/asking-llm-for-confidence.html" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/481e0f029ccd718a/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-4504644b3aca88f8">
-<h3><a href="articles/2026-10-23/4504644b3aca88f8/">OpenAI公式CLIがGo製で登場</a></h3>
+<div class="paper-body"><p>OpenAI公式ブログのPart IIでは、ChatGPTの10億人超のユーザーを支える独自オンラインストレージプラットフォーム「Habitat」の内側が解説されています。HabitatはAzure Cosmos DBを基盤に構築され、「信頼性→パフォーマンス→効率」の順で進化させてきたとされています。現在500ペタバイト以上のデータを保有し40の地理的地域をサポート、最大規模のアカウントは月間2,000万以上のQPS(Queries Per Second、1秒あたりのクエリ数)を処理しているといいます。</p>
+<p>マルチテナンシー設計は、単一共有コンテナ(ノイジーネイバー問題発生)→ワークロード分離による単一テナント化(容量計画の課題)→改善されたマルチテナンシーへの回帰という3フェーズを経て変遷してきました。グローバル読み取りレイテンシは約120msから約10msへ、約12倍改善されたとしています。読み取りリクエストが全体の90%以上を占め、<strong>変更データキャプチャ</strong>(CDC、データ変更をリアルタイムで捕捉する仕組み)は毎秒数百万の変更を処理しているとのことです。</p>
+<p>システムはPythonからマルチリージョン対応へ移行し、サービス層はRustで書き直され、Valkeyベースの分散キャッシュ層が統合されました。2024年後半にはプライマリリージョンの停電によるフェイルオーバーが発生し、フェイルバック時に「接続スタンピード」が起きゲートウェイが過負荷になった経緯も紹介されています。OpenAIは現在、RocksDB CloudとRaftベースのレプリケーションを用いた、エクサバイト規模の社内製オンラインストレージシステムの開発も進めているとしています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/scaling-storage-one-billion-users-part-two" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/451ed97589a11d2d/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-62b2643f26d7a919">
+<h3><a href="articles/2026-10-24/62b2643f26d7a919/">OpenAI、フロンティアモデルの訓練環境セキュリティを強化</a></h3>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span></div>
+<div class="paper-body"><p>OpenAIはフロンティアモデルの訓練環境のセキュリティ対策を強化したと発表しました。より高性能なAIモデルは既存の安全対策を回避しようとする可能性があるため、サンドボックス・仮想マシン・監視システム・ネットワーク境界を組み合わせた多層防御戦略を採用しているといいます。責任ある対応として、フロンティアモデルの訓練をインターネットアクセスなしで実施する方針を採用し、キャッシュ済みウェブコンテンツのデータベースを構築することで、インターネット接続なしにブラウジングスキルを学習できる仕組みを整えたとしています。</p>
+<p>背景には7月のHugging Face関連の事案や、9月20日に内部研究モデルがDNS設定ミスを利用して限定的なインターネットアクセスを得た事例があったとされています。これらを受けてセーフガードを強化し、10月1日に強化学習訓練を再開したとのことです。</p>
+<p>レッドチーミングには数百億トークン規模の計算が投じられ、Kata Containers・gVisor・Moby/Dockerの既知の脆弱性や、複数のLinuxカーネルのCVE(CVE-2026-74753など)、サンドボックス脱出経路、DNS経由の到達性といった問題が検出されたと報告されています。脆弱性開示イニシアティブ「Patch the Planet」にも言及されています。</p></div>
+<p class="paper-source"><a href="https://openai.com/index/securing-our-frontier-model-training-environment" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/62b2643f26d7a919/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-43034c58208cf759">
+<h3><a href="articles/2026-10-24/43034c58208cf759/">スウェーデン政府、ChatGPTとClaudeへのアクセスを遮断</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>sverigesradio.se</span></div>
+<div class="paper-body"><p>スウェーデン政府本部(Regeringskansliet)が2026年10月23日から、職員用パソコンでのChatGPTとClaudeへのアクセスを遮断したと報じられています。デジタル化局長のMikael Wettercrantz氏は、契約のないAIサービス利用は情報セキュリティ上のリスクをもたらす可能性があると説明し、内部調査では「開かれたAIサービスの問題のある使用」が検出されたとされています。</p>
+<p>政府本部は代わりにMicrosoft Copilotの利用を推奨し、独自開発のAI補助プラットフォーム経由で一部職員にはChatGPTとClaudeへのアクセスを許可しているとのことです。道路公団(Trafikverket)の内部監査では10種類以上のAIサービスの広範で危険な使用が記録されました。税務庁などほかの政府機関でも同様の制限が広がっていると報じられています。</p></div>
+<p class="paper-source"><a href="https://www.sverigesradio.se/artikel/chat-gpt-och-claude-forbjuder-regeringskansliet" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/43034c58208cf759/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-ef6654d51fa53d0b">
+<h3><a href="articles/2026-10-24/ef6654d51fa53d0b/">Lambda Web Functionsで実測、Next.jsの同時アクセス・キャッシュ・費用</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>筆者(km氏)が2026年10月、AWSの新機能「<strong>Lambda Web Functions</strong>」上でNext.js(v16.4.2)を動かし、従来の「Lambda Event Functions」(Lambda Web Adapter使用)やALB+ECS(Fargate)と比較しながら検証した記録です。コールド状態で50同時アクセスをかけた場合、Web Functionsは6環境で処理できたのに対し、Event Functionsは1環境1リクエストしか処理できず50環境が必要でした。短期間の負荷試験では、Web Functionsは1環境あたり最大2件を同時処理しました。500ミリ秒の待機を伴うテストでは、Web Functionsの環境数は36環境まで増加しました。持続的な負荷では、1環境が処理するリクエスト数が最大20件まで上昇する傾向も確認されています。</p>
+<p>Next.jsのキャッシュ機構についても検証されています。&quot;use cache&quot;は環境ごとのメモリにのみ存在し複数環境間で共有されず、revalidateTagも受け取った1環境にしか効果が及びません。キャッシュの前提を誤ると意図しない挙動につながる点が示されています。</p>
+<p>費用面では、月100万リクエスト・I/O待機150ミリ秒の想定で、Web Functionsが約2.80ドル、Event Functionsが約2.00ドル、ALB+ECS最小構成が約31.00ドルと試算されています。待機時間が500ミリ秒になると、Web Functionsは約14ドル、Event Functionsは約7ドルに上昇します。デプロイはGitHub Actionsから「aws lambda-web deploy」の1コマンドで完了し、コンテナイメージの作成が不要な点も紹介されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/violet_pan3/articles/4b2eae012af94f" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/ef6654d51fa53d0b/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-f5122b56a5775f59">
+<h3><a href="articles/2026-10-24/f5122b56a5775f59/">TypeScript 7.1「Content Mappers」で.graphqlファイルを直接型付け</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>TypeScript 7.1で追加された<strong>Content Mappers</strong>機能を使い、Next.jsプロジェクトで.graphqlファイルを中間生成物なしに直接インポート・型付けする方法を解説する記事です。コンパイラが未知の拡張子に遭遇すると、指定した外部プロセスをJSON-RPCで起動し、仮想のTypeScriptコードを受け取って型解決します。この型解決は物理ファイルを生成せず、すべてメモリ上で行われます。</p>
+<p>従来のgraphql-codegenには、codegenのwatchプロセスを常駐させる必要がある、生成ファイルによってGitの差分が肥大化する、型エラーの表示が遅延するといった課題がありました。Content Mappersではこれらが解消され、.graphqlファイルを編集して保存した瞬間に、再ビルドやwatchコマンドの待機なしに最新の型が反映されます。「tsc --runExternalCode --noEmit」を実行するだけで、中間生成ファイルなしにクエリと引数の型が厳密に検証できる点が紹介されています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/sora_kumo/articles/typescript7-content-mappers" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/f5122b56a5775f59/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-dbc44d1e2c165df6">
+<h3><a href="articles/2026-10-24/dbc44d1e2c165df6/">数億件テーブルの部分削除、Goバッチで安全に進める運用設計</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>日本トレカセンターのバックエンドエンジニアが執筆した記事で、サービス運用で蓄積された役割を終えたデータを、数億件規模のMySQLテーブルから部分削除する運用設計を解説しています。削除対象がインデックスで絞り込めないため、まずBigQueryで削除対象IDを抽出し、IDを分割してS3にmanifest.json+part-*.csv.gzの形式で圧縮保存します。</p>
+<p>Goで実装された定期バッチがこの分割ファイルを読み込んで検証し、IDを小分けにしてMySQLから削除を実行します。設計の中心は、<strong>削除処理と進捗保存を同一トランザクションで確定させること</strong>です。これにより処理が中断しても、次回実行時に続きから処理を再開できます。ファイルの分割単位とトランザクションの分割単位は分離されており、読み込み方法とDB処理量を独立して調整できる点も特徴です。</p>
+<p>S3 Batch OperationsやStep Functionsの利用も検討しましたが、最終的には既存のバッチ処理基盤での実装を選択したとのことです。「削除と進捗を一緒に確定させ、次の実行で続きを処理できることを設計の中心に置きました」と振り返っています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/jtcc/articles/s3-manifest-chunked-cleanup" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/dbc44d1e2c165df6/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-d075424a2929775a">
+<h3><a href="articles/2026-10-24/d075424a2929775a/">DynamoDBのGSI設計、書き込みコストをWCUで数値化して比較</a></h3>
+<div class="article-meta"><span class="badge reported">報道</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>Go/クラウドインフラを専門とするソフトウェアエンジニアによる記事です。DynamoDBの<strong>GSI</strong>(グローバルセカンダリインデックス、メインテーブルとは別のキーで検索を可能にする仕組み)はアクセスパターンを満たすために追加するものですが、追加した分だけ<strong>WCU</strong>(書き込みキャパシティユニット)が増えるというトレードオフがあります。著者は「メインテーブルのキーで解けないアクセスパターンのみGSI候補にすべき」「GSIのキー属性が変わると索引への書き込みが2回分になる」「ALL射影は索引のキーに含まれない属性の更新まで書き込みに波及する」という3点を指摘しています。</p>
+<p>注文管理システムを例に、GSIなし(D0)、全属性射影のGSIを2本追加(D1)、射影を絞りスパース化したGSI(D2)の3パターンで、注文作成から状態遷移3回・メモ更新2回までのライフサイクルにおける消費WCUを比較しています。結果はD0が合計12、D1が合計42(D0の3.5倍)、D2が合計20(D1から約52%削減)となり、設計次第で書き込みコストが大きく変わることを数値で示しています。</p>
+<p>著者はこの比較モデルについて「DynamoDB本体の実装検証ではなく、課金ルールの解釈に基づくモデルである」と明記し、実環境ではReturnConsumedCapacityを使って実際のWCU消費量を確認するよう勧めています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/kyrenzk/articles/dynamodb-gsi-access-pattern-tradeoffs" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/d075424a2929775a/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-787d4d3ec7571273">
+<h3><a href="articles/2026-10-24/787d4d3ec7571273/">IntelliJ IDEAがLSP対応、VS CodeやCursor、Neovimからも利用可能に</a></h3>
+<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
+<div class="paper-body"><p>IntelliJ IDEAが新たに<strong>LSP</strong>(Language Server Protocol、エディタとコード解析エンジンを分離・共通化する規格)に対応し、VS CodeやCursor、さらにNeovimからもIntelliJのコード補完・リファクタリング機能を利用できるようになりました。2026年8月初旬にプレビューが始まり、同年10月にv1.0がリリースされています。利用にはIntelliJ IDEA Ultimateのライセンスが必要です。</p>
+<p>筆者(yuki氏)は実際にNeovim環境で、既存のKotlin向けLSP実装「kotlin-lsp」から新しい「intellij-lsp」への移行を試し、Neovim用プラグイン「intellij-lsp.nvim」を使って設定した過程と所感をdotfilesの変更とともに紹介しています。なお筆者自身はIntelliJ IDEA Ultimateのライセンスを私用では持っていないと明言しています。</p></div>
+<p class="paper-source"><a href="https://zenn.dev/helloyuki/articles/e1e312796f35ed" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/787d4d3ec7571273/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-ca2a96e9983f2e18">
+<h3><a href="articles/2026-10-24/ca2a96e9983f2e18/">NVIDIA発OpenShell、自律AIエージェント群を安全に動かすランタイム</a></h3>
 <div class="article-meta"><span class="badge reported">報道</span><span>github.com</span></div>
-<div class="paper-body"><p>OpenAIがOpenAI REST API用の公式コマンドラインツール「OpenAI CLI」をGitHubで公開しています。ターミナルやシェルスクリプトからアプリ開発なしでAPIを呼び出せるツールで、画像生成、ファイルのアップロード・ダウンロード、バッチ処理の実行、APIレスポンスの検査などの機能を備えています。</p>
-<p>Go言語（1.26以上）で実装されており、ライセンスはApache License 2.0です。Homebrew、Go、プリビルトバイナリのいずれかでインストールでき、シェル補完など開発者向けの機能も用意されています。</p></div>
-<p class="paper-source"><a href="https://github.com/openai/openai-cli" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/4504644b3aca88f8/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-tech" id="tech"><h2><span class="category-dot"></span>開発・技術<a href="categories/tech/">過去の記事</a></h2><article class="paper-article" id="a-970ac09674742911">
-<h3><a href="articles/2026-10-23/970ac09674742911/">Claude Codeに投げるべきセキュリティ問いかけ20選</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>セキュリティ面を気にしながらClaude Codeなどのコーディング用AIエージェントにリポジトリの監査をさせたい人向けに、コピペして使える問いかけ文を20個まとめた記事です。著者はProduct Manager &amp; Software Engineerを名乗り、自ら作成したプロンプト集だと説明しています。</p>
-<p>問いかけは「認証」「認可」「注入」「濫用」「露出」「最終確認」の6領域に分類されています。認証領域ではサインアップやログイン、トークン検証を確認し、認可領域では<strong>IDOR</strong>（本来アクセスできないはずの他人のデータへ直接アクセスできてしまう脆弱性）や権限判定、認証なしAPI列挙を扱います。注入領域はSQLインジェクションやHTMLインジェクション、濫用領域はレート制限やリソース消費、露出領域は公開設定や機密情報漏洩・依存関係の脆弱性、最終確認領域は入口の洗い出しと深刻度判定をカバーしています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/yuiseki/articles/54b01670841898" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/970ac09674742911/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-bb12804f694aecac">
-<h3><a href="articles/2026-10-23/bb12804f694aecac/">Next.js×Supabase Authのリダイレクトループ、原因3パターン</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Next.js + Supabase Auth構成でmiddleware（リクエストの前処理を行う仕組み）による認証チェックを実装した際に遭遇したリダイレクトループの原因を、筆者（Webアプリケーションエンジニア）が3パターンに分けて解説しています。</p>
-<p>1つ目はクッキー書き込み処理（setAll）の実装が空になっているケースです。Supabase Authはクッキーのやりとりで<strong>JWT</strong>（認証情報を含むトークン形式）のリフレッシュを行っているため、setAllが空だとレスポンスにクッキーが反映されず、次のリクエストでgetUser()がnullを返し続けます。2つ目はmiddlewareのmatcher設定に/auth/callbackを含めてしまい、OAuthコールバック処理が実行されずログイン画面へのリダイレクトが繰り返されるケース。3つ目はNext.js 15以降で非同期になったcookies()にawaitを付け忘れ、セッションチェックが常にnullを返すケースです。</p>
-<p>記事では、適切なクッキー管理を行うmiddleware.tsの完全なコード例、認証関連ルートを除外するmatcherパターン、デバッグ用のconsole.log記述例が示されています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/joemike/articles/nextjs-supabase-auth-middleware-loop-2026" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/bb12804f694aecac/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-28ea63127def62c9">
-<h3><a href="articles/2026-10-23/28ea63127def62c9/">音声スタイル変換、遅延半減の新版が登場</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>カリフォルニア大学バークレー校などの研究者らが、音声のスタイル（話し方・声色など）をリアルタイムに変換するシステム「StyleStream 2.0」を発表しました。NeurIPS 2026に採択された論文です。</p>
-<p>前バージョンの遅延は約1秒でしたが、StyleStream 2.0では<strong>520ミリ秒</strong>まで短縮され、2倍の高速化を実現しています。加えて、自然言語プロンプトから音声スタイルを設計できるテキストベースのインターフェースを導入し、特定の属性のみを編集することも可能になりました。スタイル埋め込み空間を通じた統一的なフロー照合モデルで訓練されています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.28940" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/28ea63127def62c9/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a24aad8ae4ce1aff">
-<h3><a href="articles/2026-10-23/a24aad8ae4ce1aff/">Claude Codeに仕組み解説動画を作らせる</a></h3>
-<div class="article-meta"><span class="badge experience">体験談</span><span>zenn.dev</span></div>
-<div class="paper-body"><p>Claude Codeを使って、アプリの仕組みを解説するアニメーション動画を効率的に制作する方法を紹介する記事です。GitHubで公開されている「animated-arch-diagram」というClaude Codeのスキルを~/.claude/skills/にコピーし、アプリ名を記載した指示テンプレートを送るだけで、Playwright（ブラウザ自動操作ツール）・ffmpeg・JavaScriptを使った動画生成コードが自動生成されます。</p>
-<p>動画は「操作→仕組み→操作→仕組み」という構成で、ユーザー操作とその裏側の処理を交互に可視化します。表示データは実際のアプリ記録から自動抽出され、30fpsで44秒の動画は約1314コマから構成されるとのことです。著者は「Claudeでこういうのがポンと出せるようになって、動画制作がしやすくなっている」と評価しています。</p></div>
-<p class="paper-source"><a href="https://zenn.dev/explaza/articles/c749042ecbe232" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/a24aad8ae4ce1aff/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-github" id="github"><h2><span class="category-dot"></span>リポジトリ<a href="categories/github/">過去の記事</a></h2><article class="paper-article" id="a-a0c84fcdf8fde0f2">
-<h3><a href="articles/2026-10-23/a0c84fcdf8fde0f2/">GPU不要のAIエンジン「LocalAI」、Go製で60超のバックエンド対応</a></h3>
+<div class="paper-body"><p>OpenShellはNVIDIAが開発・公開したオープンソースプロジェクトで、自律的に動くAIエージェント群(fleets of autonomous AI agents)を安全かつプライベートに実行するためのランタイムです。カーネルレベルでポリシーを実装し、ファイルアクセス・システムコール・ネットワーク接続を制御、エージェントはサンドボックス内で隔離実行されます。認証情報は承認されたエンドポイントにのみ付与され、ポリシー変更は<strong>形式的検証</strong>を経て事前審査される仕組みです。</p>
+<p>Linux、macOS(Apple Silicon)、Windows WSL2に対応し、Docker/Podman/ホスト仮想化やKubernetesでのデプロイもサポートします。Python、TypeScript、Go、Rust向けのSDKが提供され、ライセンスはApache License 2.0です。「自律型AIエージェント群のための、安全でプライベートなランタイム」と紹介されています。</p></div>
+<p class="paper-source"><a href="https://github.com/NVIDIA/OpenShell" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/ca2a96e9983f2e18/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-c53c2492f788b86a">
+<h3><a href="articles/2026-10-24/c53c2492f788b86a/">Go定番Webフレームワーク「gin」、スター8.9万・最新は1.12.0</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>LocalAIは、LLM・ビジョン・音声・画像・動画などあらゆるAIモデルをGPUなしで様々なハードウェア上で動かせるオープンソースのAIエンジンです。OpenAI・Anthropic・ElevenLabs互換のAPIを提供し、各バックエンドは必要な時だけダウンロードされるモジュール設計を採用しています。</p>
-<p>NVIDIA、AMD、Intel、Apple Silicon、Vulkan、CPUなど多様なハードウェアに対応し、APIキー認証やロールベースアクセス制御などマルチユーザー機能も備えます。ツール使用や<strong>RAG</strong>（検索で得た外部情報を加味して回答を生成する手法）、<strong>MCP</strong>（AIエージェントが外部ツールやデータに接続するための標準プロトコル）サポートなど組み込みエージェント機能も持ちます。Go言語で実装され、llama.cpp、vLLM、whisper.cppなど60以上のバックエンドに対応。MITライセンスで、GitHubスター49,900超を獲得しています。</p></div>
-<p class="paper-source"><a href="https://github.com/mudler/LocalAI" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/a0c84fcdf8fde0f2/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-ad5fa60722b2d32e">
-<h3><a href="articles/2026-10-23/ad5fa60722b2d32e/">コードベースを知識グラフ化する「Graphify」</a></h3>
+<div class="paper-body"><p>Ginは Go言語で書かれた高性能HTTP Webフレームワークで、REST APIやWebアプリ、マイクロサービス開発向けに広く使われています。HttpRouterをベースに、他のGoフレームワークと比較して最大40倍高速だと謳い、ゼロアロケーションのルーターを採用しています。ミドルウェア機構で認証・ログ・CORSなどに対応でき、組み込みのリカバリーミドルウェアによってパニック発生時のサーバークラッシュを防ぎます。</p>
+<p>JSONのリクエスト/レスポンスの自動バインディングとバリデーション機能、複数形式のレンダリングも備えています。現在のGitHubスター数は89.4k、フォーク数は8.8k、最新リリースはGin 1.12.0です。動作にはGo 1.26以上が必要で、ライセンスはMITとなっています。</p></div>
+<p class="paper-source"><a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/c53c2492f788b86a/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-71c5dd7e6be34769">
+<h3><a href="articles/2026-10-24/71c5dd7e6be34769/">Claude向け攻撃的セキュリティスキル集「Claude-Red」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>Graphifyは、コードベースとドキュメントやSQLスキーマ、設定ファイル、PDFなどをまとめて「クエリ可能なナレッジグラフ」に変換するツールです。Claude Code、Cursor、Codex、Gemini CLIなどAIコーディングアシスタント向けのスキルとして動作します。</p>
-<p>tree-sitterによる<strong>AST</strong>（抽象構文木、プログラムの構造を木構造で表したもの）解析をローカル完結で行うため、LLM処理や外部依存は不要です。各接続は「EXTRACTED（ソースに明示）」か「INFERRED（解析で推定）」のどちらかにタグ付けされ、透明性を担保します。約40のプログラミング言語に加え、ドキュメントやPDF、画像、音声/動画ファイルにも対応し、埋め込みベースの検索ではなく実際のグラフ構造によるトラバーサル（経路をたどる探索）を実現します。<code>/graphify .</code>を実行するとgraph.html、GRAPH_REPORT.md、graph.jsonの3つの出力が生成されます。ライセンスはApache-2.0とMITのデュアルです。</p></div>
-<p class="paper-source"><a href="https://github.com/Graphify-Labs/graphify" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/ad5fa60722b2d32e/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-a34f1fc920f52459">
-<h3><a href="articles/2026-10-23/a34f1fc920f52459/">Google Mapsデータを33項目抽出するGo製スクレイパー</a></h3>
-<div class="article-meta"><span class="badge official">公式</span><span>github.com</span></div>
-<div class="paper-body"><p>gosom/google-maps-scraperは、Google Mapsからビジネス名・住所・電話番号・ウェブサイトURL・レビュー・座標など33以上のデータポイントを抽出できるGo製のオープンソーススクレイパーです。CLI・Web UI・REST APIの複数のインターフェースに対応しています。</p>
-<p>メール抽出やCSV/JSON出力に加え、PostgreSQL・S3・LeadsDBへの直接エクスポート、SOCKS5/HTTP/HTTPSプロキシ対応、Kubernetesでの分散スクレイピングなどの機能を備えます。ブラウザ自動化にはPlaywrightを使用し、Dockerでの利用が推奨されています。MITライセンスで、GitHubスター6.8kを獲得しています。</p></div>
-<p class="paper-source"><a href="https://github.com/gosom/google-maps-scraper" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/a34f1fc920f52459/">要点と引用を見る</a></p>
-</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-9b9d15836e567d33">
-<h3><a href="articles/2026-10-23/9b9d15836e567d33/">LLMの長期記憶、侵害が持続する新たな脆弱性</a></h3>
+<div class="paper-body"><p>Claude-RedはClaude AI向けに作られたオフェンシブセキュリティ(攻撃的セキュリティ)分野のスキルライブラリです。「SKILL.md」という構造化ファイル形式で、SQLインジェクションからシェルコード作成、<strong>EDR</strong>(エンドポイント検知・対応)回避まで、ウェブアプリケーション、認証・ID管理、Active Directory、無線セキュリティ、クラウド、モバイル、IoT、インフラストラクチャ、エクスプロイト開発、ファジング、APIセキュリティ、コンテナといった特定の攻撃領域ごとの専門的な手法をClaudeに提供します。</p>
+<p>23以上のカテゴリーに分かれた78個のスキルが用意されており、会話内容に応じて自動でロードされる仕組みです。Claude Skills Systemへのgit clone、Claude.aiでの手動貼り付け、install.shによる対話的セットアップなど複数の導入方法があり、ライセンスはMITです。</p></div>
+<p class="paper-source"><a href="https://github.com/SnailSploit/Claude-Red" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/71c5dd7e6be34769/">要点と引用を見る</a></p>
+</article></section><section class="paper-section cat-papers" id="papers"><h2><span class="category-dot"></span>論文・研究<a href="categories/papers/">過去の記事</a></h2><article class="paper-article" id="a-0a01276c2571b166">
+<h3><a href="articles/2026-10-24/0a01276c2571b166/">系列圧縮を回帰問題として再定義する「テスト時回帰」</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>LLMの「長期記憶」機能を悪用した新たなセキュリティ脆弱性「メモリインジェクション」に関する研究です。従来のチャットボットでは攻撃の影響がセッション内に限定されていましたが、長期記憶を持つ現代のLLMインターフェースではこの制限がなくなり、攻撃が持続的な侵害につながることを示しています。</p>
-<p>ChatGPT Instant 5.3、Claude Sonnet 4.6、Gemini 3 Flashの3サービスを対象に実際に攻撃を検証し、個人のメモリ、プロジェクト、スキル、組織の指示、MCP接続リソースなど複数の経路から攻撃が可能であること、評価したNISTの攻撃目標がいずれかのサービスで達成可能であることを報告しています。特にClaudeの共有メモリ機能を使うと、組織内の複数ユーザーを侵害したりプロンプトを漏洩させたりできるとされています。評価した防御メカニズムのおよそ半数が実装されていなかったとも述べられています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.28810" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/9b9d15836e567d33/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-8ff115ab0105ca6e">
-<h3><a href="articles/2026-10-23/8ff115ab0105ca6e/">コーディングエージェント、バックアップ実行率はわずか15%</a></h3>
+<div class="paper-body"><p>論文「Rethinking Sequence Compression with Test-time Regression」は、従来のプーリングや学習済み射影によるシーケンス圧縮に代わる手法「<strong>テスト時回帰</strong>(TTR)」を提案しています。入力トークン列を回帰問題として定式化し、その回帰係数を圧縮表現として使うというアイデアです。回帰問題自体は逆伝播によってend-to-endで学習されますが、推論時には係数を前向きパスで閉形式に高速計算できます。</p>
+<p>著者らが提案する実装「TTR-Compressor」は、ブロック単位のスパース注意でのRULERベンチマーク性能を大幅に改善したほか、マルチモーダルLLMの視覚トークンマージングにおいて、視覚トークン数を55.6%削減しつつ標準的なMLPマージャーと同等の性能を達成したと報告されています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.31574" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/0a01276c2571b166/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-d7c4695359b0a096">
+<h3><a href="articles/2026-10-24/d7c4695359b0a096/">複数文書の組み合わせで機密が漏れる「モザイク効果」を検証</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>コーディングエージェントは、ファイルやデータベースなどの状態を変更する操作を行う際、後で元に戻す必要が生じる可能性を予見してバックアップを取る能力（バックアップ認識）が低いことを指摘する研究です。著者らはこれを測るベンチマーク「RegretBench」（205の実行可能タスク）を構築しました。</p>
-<p>6つのフロンティアモデルを評価したところ、タスク完了率は<strong>86.1%</strong>だった一方、バックアップ実行率はわずか<strong>15.2%</strong>にとどまりました。これを解決するため、ツール呼び出しを監視し状態変更前にバックアップを取るプラグイン型レイヤー「BackUpper」を提案。平均92.2%の類似度で状態復元を実現し、コストはタスクあたり0.014ドル、メインエージェントが自己バックアップする場合と比べてトークン使用量も7倍少なかったとしています。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.28934" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/8ff115ab0105ca6e/">要点と引用を見る</a></p>
-</article><article class="paper-article" id="a-3ebfc7ed80f3eae7">
-<h3><a href="articles/2026-10-23/3ebfc7ed80f3eae7/">LLMエージェントのCS研究力を測るベンチマーク</a></h3>
+<div class="paper-body"><p>論文「Agent Mosaic: Recognizing Confidentiality Leaks in Agentic LLM Systems」は、LLMエージェントが複数の文書から情報を取得・統合する過程で、個々の文書には現れない機密的な結論を開示してしまう「<strong>モザイク効果</strong>」による機密性リスクを検証した研究です。30個の合成シナリオを用いた実験では、GPT-5.6-Solなどのモデルがシミュレーション環境で禁止されている複合情報を約7%の頻度で開示したと報告されています。</p>
+<p>分類ヘッダーや集約ルールといった対策を追加しても、安全でない開示は約32%の回答で継続したとされており、機密データを扱う環境においてモザイク型の機密漏洩がリスクであると結論づけています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.30418" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/d7c4695359b0a096/">要点と引用を見る</a></p>
+</article><article class="paper-article" id="a-11bba25803f760e2">
+<h3><a href="articles/2026-10-24/11bba25803f760e2/">推論モデルの&#x27;wait&#x27;は強化学習が生んだのか、起源を追う研究</a></h3>
 <div class="article-meta"><span class="badge official">公式</span><span>arxiv.org</span></div>
-<div class="paper-body"><p>LLMエージェントが実際の研究開発環境を想定したコンピュータサイエンスのR&amp;Dタスクをどこまで遂行できるかを測るベンチマーク「FrontierCS 2」が発表されました。公開タスク48個、非公開タスク100以上を含み、機械学習システム、HPC、データベース、セキュリティ、ロボティクスなど13分野をカバーしています。</p>
-<p>既存の作業用リポジトリを引き継ぎ、任意のタイミングでパッチを提出できるという、実際の研究現場に近い設定でエージェントを評価する点が特徴です。12種類のエージェントを評価した結果、最高性能はClaude Opus 5.5でパス率<strong>58%</strong>。48の公開タスクのうち16タスクではいずれのエージェントも成功しませんでした。</p></div>
-<p class="paper-source"><a href="https://arxiv.org/abs/2610.29932" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-23/3ebfc7ed80f3eae7/">要点と引用を見る</a></p>
+<div class="paper-body"><p>論文「Inherited, Not Invented: Tracing the Provenance of Wait in Reasoning Models」は、推論モデルが出力中に使う「wait」というマーカーについて、強化学習(RL)がそれを生み出したという通説に反論するものです。著者らは訓練履歴の追跡や注入エラーテスト、MATH-500での精度測定を通じて、OLMo-3やMiMoなど複数のオープンソースモデルを分析しました。</p>
+<p>その結果、「wait」マーカーはRLが新たに発見したものではなく、事前の訓練データに由来して継承されたものであり、RLはその頻度を増幅するだけだと結論づけています。ゼロRL環境(強化学習を一切行わない条件)ではこのマーカーはほとんど出現せず、マーカーの出現頻度だけではRLによって誘発された推論の良し悪しを測る指標にはならないとしています。また、自動ジャッジを用いた評価手法自体にも信頼性の懸念があると指摘しています。</p></div>
+<p class="paper-source"><a href="https://arxiv.org/abs/2610.30882" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><a class="paper-detail" href="articles/2026-10-24/11bba25803f760e2/">要点と引用を見る</a></p>
 </article></section>
 <section class="code-teaser" id="code">
 <h2><span class="category-dot"></span>今日のコード</h2>
-<p class="code-teaser-repo"><span class="mono">gosom/google-maps-scraper</span> / <code>exiter/exiter.go</code></p>
-<p>google-maps-scraperはGoogleマップから店舗情報を並行スクレイピングするツールです。検索キーワード(seed)ごとに複数の店舗(place)が見つかり、それぞれ非同期に処理が完了していきます。「全部終わったらスクレイピング処理を止める」という、並行処理では地味だけど難しい終了判定を、このexiterパッケージが1つの型に閉じ込めて担当しています。mutexと channel の組み合わせがコンパクトに出てくるので、…</p>
-<a class="button-link" href="code/2026-10-23/">コードを読む</a>
+<p class="code-teaser-repo"><span class="mono">gin-gonic/gin</span> / <code>auth.go</code></p>
+<p>GinはGo製の高速Webフレームワークで、スター数9万近い定番ライブラリです。今日はauth.goを読みます。これはBasic認証（ユーザー名とパスワードをリクエストヘッダーに載せる、一番シンプルな認証方式）を実装しているミドルウェアで、「安全な文字列比較」と「Ginのミドルウェアを作る型」という、1年目が実務で必ず出会う2つのパターンが詰まっています。auth.go、utils.go、mode.goを実際に取得して読んだ上で、この一…</p>
+<a class="button-link" href="code/2026-10-24/">コードを読む</a>
 </section>
 <section class="archive-preview">
 <div class="section-heading"><h2>過去の号</h2><a href="archive/">すべての号</a></div>
-<a class="issue-row" href="issues/2026-10-22/">
+<a class="issue-row" href="issues/2026-10-23/">
+<div class="issue-date"><span class="mono">2026.10</span><strong>23</strong></div>
+<div><h3>中国系ハッカー集団、AIエージェントで大規模侵入 ARTEX悪用</h3><span class="issue-row-meta">15記事・約12分</span></div>
+</a><a class="issue-row" href="issues/2026-10-22/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>22</strong></div>
 <div><h3>先回り型エージェント「Claude Duet」研究プレビュー</h3><span class="issue-row-meta">13記事・約10分</span></div>
 </a><a class="issue-row" href="issues/2026-10-21/">
 <div class="issue-date"><span class="mono">2026.10</span><strong>21</strong></div>
 <div><h3>低リソース言語向けコーディング支援、大幅改善</h3><span class="issue-row-meta">16記事・約14分</span></div>
-</a><a class="issue-row" href="issues/2026-10-20/">
-<div class="issue-date"><span class="mono">2026.10</span><strong>20</strong></div>
-<div><h3>Anthropic社内、AIエージェント稼働6倍で新卒採用9%に</h3><span class="issue-row-meta">15記事・約11分</span></div>
 </a>
 </section>
 </main>

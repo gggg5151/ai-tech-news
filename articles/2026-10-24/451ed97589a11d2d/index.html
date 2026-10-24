@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAI公式、10億ユーザーを支える自社ストレージ基盤「Habitat」 — 1年目向けエンジニア新聞</title>
+<meta name="description" content="OpenAI公式ブログのPart IIでは、ChatGPTの10億人超のユーザーを支える独自オンラインストレージプラットフォーム「Habitat」の内側が解説されています。HabitatはAzure Cosmos DBを基盤に構築され、「信頼性→パフォーマンス→効率」の順で進化させてきたとされています。現在500ペタバ…">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f5f0">
+<meta property="og:site_name" content="1年目向けエンジニア新聞">
+<meta property="og:title" content="OpenAI公式、10億ユーザーを支える自社ストレージ基盤「Habitat」 — 1年目向けエンジニア新聞">
+<meta property="og:description" content="OpenAI公式ブログのPart IIでは、ChatGPTの10億人超のユーザーを支える独自オンラインストレージプラットフォーム「Habitat」の内側が解説されています。HabitatはAzure Cosmos DBを基盤に構築され、「信頼性→パフォーマンス→効率」の順で進化させてきたとされています。現在500ペタバ…">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://gggg5151.github.io/ai-tech-news/articles/2026-10-24/451ed97589a11d2d/"><meta property="og:image" content="https://gggg5151.github.io/ai-tech-news/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://gggg5151.github.io/ai-tech-news/articles/2026-10-24/451ed97589a11d2d/"><link rel="alternate" type="application/rss+xml" title="1年目向けエンジニア新聞" href="../../../feed.xml">
+<link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "OpenAI公式、10億ユーザーを支える自社ストレージ基盤「Habitat」", "datePublished": "2026-10-24", "description": "OpenAI公式ブログのPart IIでは、ChatGPTの10億人超のユーザーを支える独自オンラインストレージプラットフォーム「Habitat」の内側が解説されています。HabitatはAzure Cosmos DBを基盤に構築され、「信頼性→パフォーマンス→効率」の順で進化させてきたとされています。現在500ペタバイト以上のデータを保有し40の地理的地域…", "inLanguage": "ja", "mainEntityOfPage": "https://gggg5151.github.io/ai-tech-news/articles/2026-10-24/451ed97589a11d2d/", "publisher": {"@type": "Organization", "name": "1年目向けエンジニア新聞"}, "isBasedOn": "https://openai.com/index/scaling-storage-one-billion-users-part-two", "image": "https://gggg5151.github.io/ai-tech-news/assets/og.png"}</script><script data-goatcounter="https://gggg5151.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="masthead wrap">
+<div class="brand-block"><a class="brand" href="../../../">1年目向けエンジニア新聞</a><span class="brand-tagline">通勤15分で読み切る、毎朝のAI・技術ニュース</span></div>
+<a class="search-link" href="../../../search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>記事を探す</span></a>
+</header>
+<div class="nav-shell"><nav class="main-nav wrap" aria-label="メインナビゲーション"><a class="" href="../../../">今日の号</a><a class="active" aria-current="page" href="../../../categories/ai_news/">AIニュース</a><a class=""  href="../../../categories/tech/">開発・技術</a><a class=""  href="../../../categories/github/">リポジトリ</a><a class=""  href="../../../categories/papers/">論文・研究</a><a class="" href="../../../code/">今日のコード</a><a class="archive-nav " href="../../../archive/">過去の号</a></nav></div>
+<main id="main" class="wrap">
+<div class="breadcrumb"><a href="../../../">今日の号</a><span>/</span><a href="../../../issues/2026-10-24/">2026.10.24 の号</a><span>/</span><a href="../../../categories/ai_news/">AIニュース</a></div>
+<article class="article-layout cat-ai_news">
+<header class="article-header">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h1>OpenAI公式、10億ユーザーを支える自社ストレージ基盤「Habitat」</h1>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-24">2026.10.24</time></div>
+</header>
+<div class="article-body">
+<p>OpenAI公式ブログのPart IIでは、ChatGPTの10億人超のユーザーを支える独自オンラインストレージプラットフォーム「Habitat」の内側が解説されています。HabitatはAzure Cosmos DBを基盤に構築され、「信頼性→パフォーマンス→効率」の順で進化させてきたとされています。現在500ペタバイト以上のデータを保有し40の地理的地域をサポート、最大規模のアカウントは月間2,000万以上のQPS(Queries Per Second、1秒あたりのクエリ数)を処理しているといいます。</p>
+<p>マルチテナンシー設計は、単一共有コンテナ(ノイジーネイバー問題発生)→ワークロード分離による単一テナント化(容量計画の課題)→改善されたマルチテナンシーへの回帰という3フェーズを経て変遷してきました。グローバル読み取りレイテンシは約120msから約10msへ、約12倍改善されたとしています。読み取りリクエストが全体の90%以上を占め、<strong>変更データキャプチャ</strong>(CDC、データ変更をリアルタイムで捕捉する仕組み)は毎秒数百万の変更を処理しているとのことです。</p>
+<p>システムはPythonからマルチリージョン対応へ移行し、サービス層はRustで書き直され、Valkeyベースの分散キャッシュ層が統合されました。2024年後半にはプライマリリージョンの停電によるフェイルオーバーが発生し、フェイルバック時に「接続スタンピード」が起きゲートウェイが過負荷になった経緯も紹介されています。OpenAIは現在、RocksDB CloudとRaftベースのレプリケーションを用いた、エクサバイト規模の社内製オンラインストレージシステムの開発も進めているとしています。</p>
+<section class="facts"><h2>出典が伝えている要点</h2><ul><li>OpenAIは「Habitat」という独自のオンラインストレージプラットフォームを運用している</li><li>HabitatはAzure Cosmos DBをベースに構築されている</li><li>Habitatは500ペタバイト以上のデータを保有し　40の地理的地域をサポートしている</li><li>現在の最大Azure Cosmos DBアカウントは10sペタバイト規模のデータを保存し、月間20M以上のQPSを処理している</li><li>マルチテナンシー設計はフェーズI（単一共有コンテナ、ノイジーネイバー問題発生）→フェーズII（ワークロード分離による単一テナント化、容量計画の課題）→フェーズIII（改善されたマルチテナンシーに回帰）の順で変遷した</li><li>グローバル読み取りレイテンシは約120msから約10msに削減された（約12倍の改善）</li><li>読み取りリクエストが全体の90%以上を占める</li><li>変更データキャプチャ(CDC)は毎秒数百万の変更を処理している</li><li>システムはPythonからマルチリージョン対応のシステムへ移行し、サービス層はRustで書き直され、Valkeyベースの分散キャッシュ層が統合されている</li><li>2024年後半にプライマリリージョンの停電によるフェイルオーバーが発生し、フェイルバック時に「接続スタンピード」が発生しゲートウェイが過負荷になった</li><li>OpenAIはRocksDB CloudとRaftベースのレプリケーションを用いた社内製のエクサバイト規模オンラインストレージシステムを開発中である</li></ul></section>
+<section class="quotes"><h2>原文より</h2><blockquote>約120msから約10msに削減</blockquote><blockquote>毎秒数百万の変更</blockquote><p class="quotes-source">出典: <a href="https://openai.com/index/scaling-storage-one-billion-users-part-two" target="_blank" rel="noopener noreferrer">openai.com</a></p></section>
+<aside class="source-box"><a href="https://openai.com/index/scaling-storage-one-billion-users-part-two" target="_blank" rel="noopener noreferrer">元記事を読む ↗</a><span class="source-domain">openai.com</span></aside>
+<div class="share"><span>共有</span><a href="https://x.com/intent/post?text=OpenAI%E5%85%AC%E5%BC%8F%E3%80%8110%E5%84%84%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%82%92%E6%94%AF%E3%81%88%E3%82%8B%E8%87%AA%E7%A4%BE%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E5%9F%BA%E7%9B%A4%E3%80%8CHabitat%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E&amp;url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-24%2F451ed97589a11d2d%2F" target="_blank" rel="noopener noreferrer">X</a><a href="https://bsky.app/intent/compose?text=OpenAI%E5%85%AC%E5%BC%8F%E3%80%8110%E5%84%84%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%82%92%E6%94%AF%E3%81%88%E3%82%8B%E8%87%AA%E7%A4%BE%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E5%9F%BA%E7%9B%A4%E3%80%8CHabitat%E3%80%8D%20%7C%201%E5%B9%B4%E7%9B%AE%E5%90%91%E3%81%91%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%96%B0%E8%81%9E%0Ahttps%3A//gggg5151.github.io/ai-tech-news/articles/2026-10-24/451ed97589a11d2d/" target="_blank" rel="noopener noreferrer">Bluesky</a><a href="https://b.hatena.ne.jp/entry/panel/?url=https%3A%2F%2Fgggg5151.github.io%2Fai-tech-news%2Farticles%2F2026-10-24%2F451ed97589a11d2d%2F" target="_blank" rel="noopener noreferrer">はてなブックマーク</a></div>
+<nav class="neighbors" aria-label="同じ号の前後の記事"><a class="prev" href="../ead5edfb2a5816f9/"><span>前の記事</span>UberがChatGPT Workを全社導入、3万人超に展開</a><a class="next" href="../62b2643f26d7a919/"><span>次の記事</span>OpenAI、フロンティアモデルの訓練環境セキュリティを強化</a></nav>
+<a class="back-to-issue" href="../../../issues/2026-10-24/">← 2026.10.24 の号を通しで読む</a>
+</div>
+</article>
+<section class="related"><div class="section-heading"><h2>同じカテゴリの記事</h2></div><div class="news-grid"><article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../3f35989836b12d15/">Claudeが大規模形式検証を実践、Theoremと協業</a></h3>
+<p class="excerpt">2026年10月22日に公開された記事によると、AnthropicとTheorem社の協業チームはClaude(Opus 5.5など)を用いて、123のオープンソースライブラリにある239のエントリーポイントについて機械語レベルの形式証…</p>
+<div class="article-meta"><span class="badge experience">体験談</span><span>anthropic.com</span><time datetime="2026-10-24">2026.10.24</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../ead5edfb2a5816f9/">UberがChatGPT Workを全社導入、3万人超に展開</a></h3>
+<p class="excerpt">OpenAI公式ブログによると、Uberは「ChatGPT Work」(ChatGPT Enterprise内で動くエージェント型プラットフォーム)の全社展開を発表しました。1,000人規模だった初期パイロットから、Uberの従業員3万…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-24">2026.10.24</time></div>
+</article>
+<article class="news-card cat-ai_news">
+<a class="category-name" href="../../../categories/ai_news/"><span class="category-dot"></span>AIニュース</a>
+<h3><a href="../62b2643f26d7a919/">OpenAI、フロンティアモデルの訓練環境セキュリティを強化</a></h3>
+<p class="excerpt">OpenAIはフロンティアモデルの訓練環境のセキュリティ対策を強化したと発表しました。より高性能なAIモデルは既存の安全対策を回避しようとする可能性があるため、サンドボックス・仮想マシン・監視システム・ネットワーク境界を組み合わせた多層…</p>
+<div class="article-meta"><span class="badge official">公式</span><span>openai.com</span><time datetime="2026-10-24">2026.10.24</time></div>
+</article></div></section>
+</main>
+<footer class="footer wrap">
+<p>AIニュース・注目リポジトリ・技術記事を、AIのワークフローが毎日自動で収集・要約・校閲して掲載しています。誤りが残る場合があるため、詳細は各記事の出典をご確認ください。</p>
+<div><a href="../../../about/">このサイトについて</a><a href="../../../archive/">過去の号</a><a href="../../../feed.xml">RSS</a><a href="https://github.com/gggg5151/ai-tech-news/issues" target="_blank" rel="noopener noreferrer">ご意見・誤りの報告</a></div>
+</footer>
+</body>
+</html>

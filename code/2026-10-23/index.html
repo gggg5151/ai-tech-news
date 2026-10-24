@@ -137,7 +137,7 @@ func (e *exiter) Run(ctx context.Context) {
 	}
 }</code></pre><p>`Run`は呼び出し側が「完了を待つ」ために呼ぶメソッドです。ここでの`select`は先ほどと違い、2つの受信待ちのうち先に準備できた方を実行する使い方です。`ctx.Context`はGoで「いつ処理をやめるべきか」を伝える標準的な仕組みで、`ctx.Done()`はそのcontextが（タイムアウトや上位からの中断で）終了を知らせるためのchannelを返します。つまりこのselectは「外部から中断されたら(`ctx.Done()`)何もせず戻る」か「全作業完了の合図(`e.doneCh`)が来たら、登録されていた`cancelFunc`（他のgoroutineに停止を伝える関数）を呼ぶ」かのどちらか早い方を実行し、どちらも来るまでここでブロック（待機）します。</p></div>
 <aside class="takeaway"><h2>今日覚えて帰ること</h2><p>複数のgoroutineで共有するカウンタを更新するときは、mutexで鍵をかける範囲を「判定に必要な最小限」にとどめ、channelへの送信など待たされる可能性のある操作は鍵を外した後にして、buffered channel + select-default の非ブロッキング送信で済ませると、処理が固まる心配がなくなる。</p></aside>
-<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-22/"><span>前の日</span>tailscale/tailscale</a><span></span></nav>
+<nav class="neighbors" aria-label="前後の日のコード"><a class="prev" href="../2026-10-22/"><span>前の日</span>tailscale/tailscale</a><a class="next" href="../2026-10-24/"><span>次の日</span>gin-gonic/gin</a></nav>
 <a class="back-to-issue" href="../../issues/2026-10-23/">← 2026.10.23 の号を読む</a>
 </div>
 </article>
